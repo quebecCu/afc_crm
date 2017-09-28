@@ -32,86 +32,107 @@ CREATE TABLE public."PERSONNE" (
   adresse  varchar(50),
   num_tel  varchar(10),
   mail  varchar(30)
-)
+);
 
 CREATE TABLE public."FOURNISSEUR" (
-  idfournisseur  serial  PRIMARY KEY,
-
-)
+  idfournisseur  serial  PRIMARY KEY
+);
 
 CREATE TABLE public."CATEGORIE"(
   idcategorie  serial  PRIMARY KEY,
   libellecategorie  varchar(20)
-)
+);
 
 CREATE TABLE public."POSTE" (
   idposte serial PRIMARY KEY,
   libelleposte  varchar(20),
-  idcategorie  integer REFERENCES CATEGORIE (idcategorie)
-)
+  idcategorie  integer REFERENCES "CATEGORIE" (idcategorie)
+);
 
 CREATE TABLE public."ETAT" (
   idetat  serial  PRIMARY KEY,
   libelleetat  varchar(20)
-)
+);
 
 CREATE TABLE public."ROLE" (
   idrole  serial  PRIMARY KEY,
   libellerole  varchar(30)
-)
+);
 
 CREATE TABLE public."CLIENT" (
   idclient  serial  PRIMARY KEY,
-  idetat  integer  REFERENCES ETAT (idetat)
-)
+  idetat  integer  REFERENCES "ETAT" (idetat)
+);
 
 CREATE TABLE public."DOMAINE_ASSURANCE" (
   iddomaineass  serial  PRIMARY KEY,
   libelledomaine  varchar(20)
-)
+);
 
 CREATE TABLE public."AVANTAGES" (
   idavantage  serial  PRIMARY KEY,
   libelleavantage  varchar(30),
-  iddomaineass  integer  REFERENCES  DOMAINE_ASSURANCE (iddomaineass)
-)
+  iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass)
+);
 
 CREATE TABLE public."EMPLOYES" (
-)
+  idclient  integer  REFERENCES  "CLIENT" (idclient),
+  idposte  integer  REFERENCES  "POSTE" (idposte),
+  idpersonne  integer  REFERENCES  "PERSONNE" (idpersonne),
+  date_emploi  date,
+  salaire_annuel  decimal(10,2),
+  statut  varchar(20),
+  CONSTRAINT  pk_EMPLOYES  PRIMARY KEY (idclient, idposte, idpersonne)
+);
 
 CREATE TABLE public."RELATION" (
+  idclient  integer  REFERENCES "CLIENT" (idclient),
+  idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
+  idrole  integer  REFERENCES  "ROLE" (idrole),
+  CONSTRAINT  pk_RELATION  PRIMARY KEY (idclient, idpersonne, idrole)
+);
 
-)
+CREATE TABLE public."CONTRAT" (
+  idcontrat  serial  PRIMARY KEY,
+  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
+  idclient  integer REFERENCES  "CLIENT" (idclient)
+);
 
 CREATE TABLE public."CONTRAT_INDIVIDUEL" (
-
-)
+  idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat)
+);
 
 CREATE TABLE public."CONTRAT_COLLECTIF" (
-
-)
+  idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat)
+);
 
 CREATE TABLE public."MODULE" (
   idmodule  serial  PRIMARY KEY,
-  id
-)
+  iddomaineass  integer REFERENCES "DOMAINE_ASSURANCE" (iddomaineass),
+  idcontrat  integer  REFERENCES  "CONTRAT" (idcontrat),
+  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur)
+);
 
 CREATE TABLE public."BENEFICIAIRES" (
-
-)
+  idpersonne  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idmodule  integer  REFERENCES  "MODULE" (idmodule),
+  CONSTRAINT  pk_BENEFICIAIRES  PRIMARY KEY (idpersonne, idmodule)
+);
 
 
 CREATE TABLE public."SOUSCRIPTIONS" (
-
-)
-
-CREATE TABLE public."MODULE" (
-
-)
+  idmodule  integer  REFERENCES  "MODULE" (idmodule),
+  idavantage  integer  REFERENCES  "AVANTAGES" (idavantage),
+  CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idmodule, idavantage)
+);
 
 CREATE TABLE public."CLIENT_INDIVIDUEL" (
-)
+  idclient  integer  REFERENCES  "CLIENT" (idclient),
+  idpersonne  integer  REFERENCES  "PERSONNE" (idpersonne),
+  CONSTRAINT  pk_CLIENT_INDIVIDUEL  PRIMARY KEY (idclient, idpersonne)
+);
 
 CREATE TABLE public."ENTREPRISE" (
-
-)
+  idclient  integer  PRIMARY KEY REFERENCES "CLIENT" (idclient),
+  nomentreprise  varchar(30) NOT NULL
+);
