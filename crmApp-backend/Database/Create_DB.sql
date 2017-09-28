@@ -103,7 +103,12 @@ CREATE TABLE public."CONTRAT_INDIVIDUEL" (
 );
 
 CREATE TABLE public."CONTRAT_COLLECTIF" (
-  idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat)
+  idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat),
+  prime  integer,
+  pdate  date,
+  regle  integer,
+  date_signature  date,
+  idautrevendeur  integer  REFERENCES  PERSONNE (idpersonne)
 );
 
 CREATE TABLE public."MODULE" (
@@ -134,5 +139,21 @@ CREATE TABLE public."CLIENT_INDIVIDUEL" (
 
 CREATE TABLE public."ENTREPRISE" (
   idclient  integer  PRIMARY KEY REFERENCES "CLIENT" (idclient),
-  nomentreprise  varchar(30) NOT NULL
+  nomentreprise  varchar(30) NOT NULL,
+  addr_rue  varchar(30),
+  addr_ville  varchar(20),
+  addr_province  varchar(10),
+  addr_codepostal  char(7),
+  tel_principal  char(10),
+  tel_secondaire  char(10),
+  fax  char(10),
+  mail  varchar(30),
+  date_creation  date  DEFAULT  current_date,
+  nb_etq_a_imprimer  int2,
+  idsecretaire  integer  REFERENCES  PERSONNE (idpersonne),
+  idresponsable  integer  REFERENCES  PERSONNE (idpersonne),
+  idadministrateur  integer  REFERENCES  PERSONNE (idpersonne),
+  idrepresentant  integer  REFERENCES  PERSONNE (idpersonne),
+  idreference  integer  REFERENCES  PERSONNE (idpersonne),
+  nb_mois_entente  integer
 );
