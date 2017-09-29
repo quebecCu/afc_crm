@@ -1,0 +1,6 @@
+--## SCRIPT D'INSERTION TEST 								        ###
+--## PLATEFORME: PostgreSQL								          ###
+--## AUTEURS: Equipe CRM - UdeS A17                 ###
+--## DECEMBRE 2017                                  ###
+--## COPYRIGHT (c)                                  ###
+--#####################################################
