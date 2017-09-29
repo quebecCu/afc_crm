@@ -24,6 +24,9 @@ DROP TABLE IF EXISTS "SOUSCRIPTIONS" CASCADE;
 DROP TABLE IF EXISTS "AVANTAGES" CASCADE;
 DROP TABLE IF EXISTS "FOURNISSEUR" CASCADE;
 DROP TABLE IF EXISTS "BENEFICIAIRES" CASCADE;
+DROP TABLE IF EXISTS "REGLE" CASCADE;
+DROP TABLE IF EXISTS "ACTIVITE" CASCADE;
+DROP TABLE IF EXISTS "CHAMBRE_COMMERCE" CASCADE;
 
 CREATE TABLE public."PERSONNE" (
   idpersonne  serial PRIMARY KEY,
@@ -102,13 +105,25 @@ CREATE TABLE public."CONTRAT_INDIVIDUEL" (
   idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat)
 );
 
+CREATE TABLE public."REGLE" (
+  idregle  serial  PRIMARY KEY,
+  libelleregle  varchar(20)
+);
+
 CREATE TABLE public."CONTRAT_COLLECTIF" (
   idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat),
   prime  integer,
   pdate  date,
-  regle  integer,
   date_signature  date,
-  idautrevendeur  integer  REFERENCES  PERSONNE (idpersonne)
+  split  integer,
+  autre_vendeur_paye  integer,
+  autre_vendeur_datepaye  date,
+  base  integer,
+  boni  integer,
+  bdu  integer,
+  rem  varchar(30),
+  idregle  integer  REFERENCES "REGLE" (idregle),
+  idautrevendeur  integer  REFERENCES  "PERSONNE" (idpersonne)
 );
 
 CREATE TABLE public."MODULE" (
@@ -124,7 +139,6 @@ CREATE TABLE public."BENEFICIAIRES" (
   CONSTRAINT  pk_BENEFICIAIRES  PRIMARY KEY (idpersonne, idmodule)
 );
 
-
 CREATE TABLE public."SOUSCRIPTIONS" (
   idmodule  integer  REFERENCES  "MODULE" (idmodule),
   idavantage  integer  REFERENCES  "AVANTAGES" (idavantage),
@@ -135,6 +149,16 @@ CREATE TABLE public."CLIENT_INDIVIDUEL" (
   idclient  integer  REFERENCES  "CLIENT" (idclient),
   idpersonne  integer  REFERENCES  "PERSONNE" (idpersonne),
   CONSTRAINT  pk_CLIENT_INDIVIDUEL  PRIMARY KEY (idclient, idpersonne)
+);
+
+CREATE TABLE public."ACTIVITE" (
+  idactivite  serial  PRIMARY KEY,
+  libelleactivite  varchar(30)
+);
+
+CREATE TABLE public."CHAMBRE_COMMERCE" (
+  idchambrecommerce  serial  PRIMARY KEY,
+  libellechambrecommerce  varchar(30)
 );
 
 CREATE TABLE public."ENTREPRISE" (
@@ -150,10 +174,12 @@ CREATE TABLE public."ENTREPRISE" (
   mail  varchar(30),
   date_creation  date  DEFAULT  current_date,
   nb_etq_a_imprimer  int2,
-  idsecretaire  integer  REFERENCES  PERSONNE (idpersonne),
-  idresponsable  integer  REFERENCES  PERSONNE (idpersonne),
-  idadministrateur  integer  REFERENCES  PERSONNE (idpersonne),
-  idrepresentant  integer  REFERENCES  PERSONNE (idpersonne),
-  idreference  integer  REFERENCES  PERSONNE (idpersonne),
-  nb_mois_entente  integer
+  nb_mois_entente  integer,
+  idsecretaire  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idresponsable  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idadministrateur  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idreference  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
+  idactivite  integer  REFERENCES  "ACTIVITE" (idactivite)
 );
