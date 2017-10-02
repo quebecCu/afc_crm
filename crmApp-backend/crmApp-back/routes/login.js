@@ -10,13 +10,13 @@ router.post('/login', function(req, res) {
 	console.log("Nom d'utilisateur", req.body.username); 
 	
 
-	var usernameText = JSON.stringify(req.body.username);
-	var mdpText = JSON.stringify(req.body.password);
+	var usernameText = req.body.username;
+	var mdpText = req.body.password;
 	var test2 = "aziz";
 	var test4= "aziz";
 	
 //	remplacer la condition par le test avec la BD	
-	if( (usernameText = test2)  && (mdpText = test4) ){
+	if( (usernameText === test2)  && (mdpText === test4) ){
 		console.log("Condition reussie pour cet utilisateur", req.body.username); 
 		res.send({ 
 			name : 'CRM First Application',

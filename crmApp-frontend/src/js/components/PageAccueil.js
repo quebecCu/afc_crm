@@ -15,7 +15,7 @@ export class PageAccueil extends Component {
                 </div>
                     <ButtonsComponent page='PageAccueil'/>
                 <h2 className="titre-historique">Derniers dossiers consultés</h2>
-                <HistoriqueContainer/>
+                <HistoriqueContainer page='PageAccueil' history={this.props.history}/>
             </div>
         );
     }

@@ -8,7 +8,7 @@ export class PageCollectivesClients extends Component {
                 <div>
                     <h1>Assurances collectives</h1>
                     <h2>Clients</h2>
-                    <HistoriqueContainer/>
+                    <HistoriqueContainer page="PageCollectivesClients" history={this.props.history}/>
                     <RechercheComponent/>
                 </div>
         );

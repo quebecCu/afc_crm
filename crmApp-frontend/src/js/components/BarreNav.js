@@ -6,7 +6,8 @@ import {PageFournisseurs} from "./PageFournisseurs";
 import {PageCollectivesClients} from "./PageCollectivesClients";
 import {
     Route
-} from 'react-router-dom'
+} from 'react-router-dom';
+import { page1 } from "../../containers/page1";
 
 export class BarreNav extends Component {
     constructor(props) {
@@ -19,28 +20,28 @@ export class BarreNav extends Component {
         }
     }
     render() {
-        let liens = [{path: '/', nom: 'Accueil'},
-            {path: '/assu-ind', nom: 'Assurances individuelles'},
-            {path: '/assu-col', nom: 'Assurances collectives'},
-            {path: '/placements', nom: 'Placements'},
-            {path: '/fournisseurs', nom: 'Fournisseurs'},
+        let liens = [{path: '/PageAccueil', nom: 'Accueil'},
+            {path: '/PageAccueil/assu-ind', nom: 'Assurances individuelles'},
+            {path: '/PageAccueil/assu-col', nom: 'Assurances collectives'},
+            {path: '/PageAccueil/placements', nom: 'Placements'},
+            {path: '/PageAccueil/fournisseurs', nom: 'Fournisseurs'},
             {path: '/', nom: 'Déconnexion'},
             {path: '/', nom: 'Retour'}];
 
         switch (this.props.location.pathname){
-            case "/assu-ind":
+            case "/PageAccueil/assu-ind":
                 liens[1].active = true;
                 break;
-            case "/assu-col":
+            case "/PageAccueil/assu-col":
                 liens[2].active = true;
                 break;
-            case "/placements":
+            case "/PageAccueil/placements":
                 liens[3].active = true;
                 break;
-            case "/fournisseurs":
+            case "/PageAccueil/fournisseurs":
                 liens[4].active = true;
                 break;
-            case "/assu-col/clients":
+            case "/PageAccueil/assu-col/clients":
                 liens[2].active = true;
                 break;
         }
@@ -72,12 +73,14 @@ export class BarreNav extends Component {
                     </ul>
                 </div>
                 <div id="main">
-                    <Route exact path={'/assu-col'} component={PageCollectives}/>
-                    <Route path={'/fournisseurs'} component={PageFournisseurs}/>
-
-                    <Route path="/assu-col/clients" component={PageCollectivesClients}/>
+                    <Route exact path='/PageAccueil/assu-col' component={PageCollectives}/>
+                    <Route exact path='/PageAccueil/fournisseurs' component={PageFournisseurs}/>
+                    <Route exact path="/PageAccueil/assu-col/clients" render={() => (
+                        <PageCollectivesClients history={this.props.history} />
+                    )} />
+                    <Route path="/PageAccueil/assu-col/clients/client_1" component={page1}/>
                 </div>
             </div>
         );
     }
-} 
+}

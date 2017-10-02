@@ -5,14 +5,14 @@ export class ButtonsComponent extends Component {
     render() {
         let buttons;
         if (this.props.page === 'PageAccueil') {
-            buttons = [{path: '/assu-col', nom: 'Assurances collectives'},
-                {path: '/assu-ind', nom: 'Assurances individuelles'},
-                {path: '/placements', nom: 'Placements'},
-                {path: '/fournisseurs', nom: 'Fournisseurs'}];
+            buttons = [{path: '/PageAccueil/assu-col', nom: 'Assurances collectives'},
+                {path: '/PageAccueil/assu-ind', nom: 'Assurances individuelles'},
+                {path: '/PageAccueil/placements', nom: 'Placements'},
+                {path: '/PageAccueil/fournisseurs', nom: 'Fournisseurs'}];
         }
         else if (this.props.page === 'PageCollectives') {
-            buttons = [{path: '/assu-col/clients', nom: 'Clients'},
-                {path: '/assu-col/fournisseurs', nom:'Fournisseurs'}];
+            buttons = [{path: '/PageAccueil/assu-col/clients', nom: 'Clients'},
+                {path: '/PageAccueil/assu-col/fournisseurs', nom:'Fournisseurs'}];
         }
         return (
             <div>

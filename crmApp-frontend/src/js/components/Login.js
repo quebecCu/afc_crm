@@ -1,49 +1,40 @@
 //import MyInput from './../components/Input';
 import React, { Component } from 'react';
 import '../../style/Login.css';
+import validateInput from '../../shared/validations/login';
 import { connect  } from 'react-redux';
-//import { push } from 'redux-react-router';
-
 import Request from 'superagent' ;
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
 
 
 
-export class Login extends React.Component   {
+export class Login extends Component   {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			username:'',
 			password: '',
 			errors: {},
 			isLoading: false,
-			resultat:'',
-			callbackResponse:''
+			resultat:''
 		};
 		this.onChange = this.onChange.bind(this);
 		this.submit = this.submit.bind(this);
 	}
 
-
 	submit(e) {
 		e.preventDefault();
 		const { errors, username, password, isLoading , resultat} = this.state;
 		this.setState({ errors: {}, isLoading: true });
+		let historique = this.props.history;
 		var server = "http://localhost:3002/login";
-
 		axios.post(server, {
 			username: username,
 			password: password
 		})
 		.then(function (response) {
-
-		callbackResponse: {response.data.res}
-		console.log(response.data.res); 
-//		push('/PageAccueil');
-//		if(response.data.res ="true")
-//		this.props.router.push('/PageAccueil')
-//		withRouter({ history.('/PageAccueil') })		
+			callbackResponse: {response.data.res}
+			historique.push('/PageAccueil');
 		})
 		.catch(function (error) {
 			console.log(error);
