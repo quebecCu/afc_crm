@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../RechercheComponent.css';
+import '../../style/RechercheComponent.css';
 
 export class RechercheComponent extends Component {
     render() {

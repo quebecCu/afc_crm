@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { HistoriqueContainer } from "./containers/HistoriqueContainer";
-import {RechercheComponent} from "./components/RechercheComponent";
+import { HistoriqueContainer } from "../../containers/HistoriqueContainer";
+import {RechercheComponent} from "./RechercheComponent";
 
 export class PageCollectivesClients extends Component {
     render() {

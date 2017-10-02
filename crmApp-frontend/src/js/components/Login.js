@@ -1,10 +1,12 @@
 //import MyInput from './../components/Input';
 import React, { Component } from 'react';
-import './Login.css';
-import validateInput from './shared/validations/login'
+import '../../style/Login.css';
 import { connect  } from 'react-redux';
+//import { push } from 'redux-react-router';
+
 import Request from 'superagent' ;
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -16,7 +18,8 @@ export class Login extends React.Component   {
 			password: '',
 			errors: {},
 			isLoading: false,
-			resultat:''
+			resultat:'',
+			callbackResponse:''
 		};
 		this.onChange = this.onChange.bind(this);
 		this.submit = this.submit.bind(this);
@@ -34,10 +37,13 @@ export class Login extends React.Component   {
 			password: password
 		})
 		.then(function (response) {
-			
-			 callbackResponse: {response.data.res}
 
-		
+		callbackResponse: {response.data.res}
+		console.log(response.data.res); 
+//		push('/PageAccueil');
+//		if(response.data.res ="true")
+//		this.props.router.push('/PageAccueil')
+//		withRouter({ history.('/PageAccueil') })		
 		})
 		.catch(function (error) {
 			console.log(error);

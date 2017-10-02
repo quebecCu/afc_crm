@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { DossiersComponent } from "../components/DossiersComponent";
-import '../PageAccueil.css';
+import { DossiersComponent } from "../js/components/DossiersComponent";
+import '../style/PageAccueil.css';
 
 export class HistoriqueContainer extends Component {
     constructor(props) {

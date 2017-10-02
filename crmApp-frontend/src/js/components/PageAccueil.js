@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../../style/logo.svg';
+import '../../style/App.css';
 
-import { ButtonsComponent } from "./components/ButtonsComponent";
-import { HistoriqueContainer } from "./containers/HistoriqueContainer";
+import { ButtonsComponent } from "./ButtonsComponent";
+import { HistoriqueContainer } from "../../containers/HistoriqueContainer";
 
 export class PageAccueil extends Component {
     render() {
