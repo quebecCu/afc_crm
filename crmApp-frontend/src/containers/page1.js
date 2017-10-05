@@ -9,7 +9,7 @@ export class page1 extends React.Component{
             clients: [
                 {
                     id: 123456,
-                    nomEntreprise: "Fukiko Corporation",
+                    nomEntreprise: "NomEntreprise X",
                     date: "22-06-1992",
                     nbEmployes: 4,
                     adresse: {
@@ -18,49 +18,49 @@ export class page1 extends React.Component{
                         province: "seine St Denis",
                         codePostal: 93140
                     },
-                    numTel: "0178085828",
-                    extension: "",
-                    secteurActi: "Revente de chiens",
+                    numTel: "0123456789",
+                    extension: "1121",
+                    secteurActi: "Commerce",
                     division: "Site de Bondy",
-                    AGA: null,
-                    RVER: "",
-                    chambreCommerce: "93bitch",
-                    referentDossClient: "Biscotte Bibi",
+                    AGA: "AGA",
+                    RVER: "RVER",
+                    chambreCommerce: "ChambreX",
+                    referentDossClient: "Paul Mendes",
                     contacts: [
                         {
                             id: 310,
-                            nom: "Garbe",
-                            prenom: "Fukiko",
+                            nom: "Mendes",
+                            prenom: "Paul",
                             dateNaissance: "06-05-2013",
-                            sexe: "mâle",
+                            sexe: "H",
                             numTel:
                                 {
-                                    bureau: "O178085828",
-                                    cell: "0626252711"
+                                    bureau: "023456683",
+                                    cell: "345768490"
                                 },
 
-                            email: "FukiCutieDog@Doggy.dog",
-                            poste: "PDG secteur chiens"
+                            email: "paul.mendes@mail.com",
+                            poste: "PDG"
                         },
                         {
                             id: 120,
-                            nom: "Garbe",
-                            prenom: "Bibichoune",
+                            nom: "Perez",
+                            prenom: "Marina",
                             dateNaissance: "04-04-2015",
-                            sexe: "femelle",
+                            sexe: "F",
                             numTel:
                                 {
                                     bureau: "",
-                                    cell: "0626252711"
+                                    cell: "0656789456"
                                 },
-                            email: "BiscotteRules@kittykat.chat",
-                            poste: "Responsable chats"
+                            email: "Perez.marina@mail.com",
+                            poste: "Responsable RH"
                         }
                     ],
                     assureurs: [
                         {
                             nomCompagnie: "assureur",
-                            referent: "Gilles Garbe",
+                            referent: "Aline Ladriere",
                             police: "#123432",
                             moisRenouv: 12,
                             admissible: 4,
@@ -69,8 +69,8 @@ export class page1 extends React.Component{
                             primeMens: 300,
                             primeAnn: 200,
                             dateMAJPrime: "13-07-2009",
-                            vendeur2: null,
-                            split: null,
+                            vendeur2: "Pierrick Levendeur",
+                            split: "50%",
                         }
                     ],
                     historiqueTaux: [
@@ -78,20 +78,20 @@ export class page1 extends React.Component{
                             annee: 2010,
                             employes: 6,
                             compagnie: "assureur2",
-                            difference: null,
-                            vie: null,
+                            difference: "x",
+                            vie: "x",
                         },
                         {
                             annee: 2011,
                             employes: 8,
                             compagnie: "assureur2",
                             diff: 4,
-                            vie: null
+                            vie: "x"
                         }
                     ],
                     poste: "Bulletin, calendrier, carte noel, carte voeux",
-                    provenance: "gueule à oreille",
-                    infos: "C'est un très bon chien"
+                    provenance: "Bouche à oreille",
+                    infos: "Première fiche client"
                 }
             ],
         }
