@@ -19,14 +19,13 @@ export class Login extends Component   {
 			resultat:''
 		};
 		this.onChange = this.onChange.bind(this);
-		this.submit = this.submit.bind(this);
+		this.login = this.login.bind(this);
 	}
 
-	submit(e) {
+	login(e) {
 		e.preventDefault();
 		const { errors, username, password, isLoading , resultat} = this.state;
 		this.setState({ errors: {}, isLoading: true });
-		let historique = this.props.history;
 		var server = "http://localhost:3002/login";
 		axios.post(server, {
 			username: username,
@@ -34,7 +33,6 @@ export class Login extends Component   {
 		})
 		.then(function (response) {
 			callbackResponse: {response.data.res}
-			historique.push('/PageAccueil');
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -64,7 +62,7 @@ export class Login extends Component   {
 				<form>
 				<input type="text" name="username" placeholder="Nom d'utilisateur" onChange={this.onChange} value={this.state.username} required />
 				<input type="password" name="password"  placeholder="Mot de passe" onChange={this.onChange} value={this.state.password}  required />
-				<div className="form-group" onClick = {this.submit} ><button className="btn btn-primary btn-lg" disabled={this.isLoading}>Login</button></div>
+				<div className="form-group" onClick = {this.login} ><button className="btn btn-primary btn-lg" id="loginButton" disabled={this.isLoading}>Login</button></div>
 				</form>
 				<div className="login-help">
 				<a href="#"> Demande de session utilisateur / invité</a> <br/>

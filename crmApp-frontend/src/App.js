@@ -20,7 +20,7 @@ class App extends Component {
     }
     render(){
         return (
-			<Router history={history}>
+			<Router >
 				<div>
 					<Route exact path="/" component={Login}/>
 					<Route path="/PageAccueil/:id" component={BarreNav} />
