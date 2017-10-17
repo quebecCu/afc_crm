@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DossiersComponent } from "../js/components/DossiersComponent";
+import { DossiersComponent } from "../components/DossiersComponent";
 import '../style/PageAccueil.css';
 
 export class HistoriqueContainer extends Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../style/FicheClient.css';
+import '../style/FicheClient.css';
 
 export class TitreValeur extends React.Component{
     constructor(props){

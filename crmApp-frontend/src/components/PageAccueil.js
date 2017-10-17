@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from '../../style/logo.svg';
-import '../../style/App.css';
+import logo from '../style/logo.svg';
+import '../style/App.css';
 
 import { ButtonsComponent } from "./ButtonsComponent";
-import { HistoriqueContainer } from "../../containers/HistoriqueContainer";
+import { HistoriqueContainer } from "../containers/HistoriqueContainer";
 
 export class PageAccueil extends Component {
     render() {
@@ -18,5 +18,5 @@ export class PageAccueil extends Component {
                 <HistoriqueContainer page='PageAccueil' history={this.props.history}/>
             </div>
         );
-    }
+    } 
 }

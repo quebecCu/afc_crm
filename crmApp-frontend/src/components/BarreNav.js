@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../../style/NavBar.css';
+import '../style/NavBar.css';
 import {PageCollectives} from "./PageCollectives";
 import {PageFournisseurs} from "./PageFournisseurs";
 import {PageCollectivesClients} from "./PageCollectivesClients";
 import {
     Route
 } from 'react-router-dom';
-import { page1 } from "../../containers/page1";
+import { page1 } from "../containers/page1";
 
 export class BarreNav extends Component {
     constructor(props) {

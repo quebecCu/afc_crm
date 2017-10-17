@@ -1,5 +1,5 @@
 import React from 'react';
-import {TitreValeur} from '../js/components/TitreValeur.js';
+import {TitreValeur} from '../components/TitreValeur.js';
 import '../style/FicheClient.css';
 import update from 'react-addons-update';
 
