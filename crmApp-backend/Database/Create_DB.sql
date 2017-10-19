@@ -6,6 +6,7 @@
 --#####################################################
 
 DROP TABLE IF EXISTS "ADRESSE" CASCADE;
+DROP TABLE IF EXISTS "AVANTAGES" CASCADE;
 DROP TABLE IF EXISTS "CONTACT_CLIENT" CASCADE;
 DROP TABLE IF EXISTS "CONTACT_FOURNISSEUR" CASCADE;
 DROP TABLE IF EXISTS "STATUT_CONTACT" CASCADE;
@@ -113,7 +114,7 @@ CREATE TABLE public."FOURNISSEUR" (
   groupe varchar(20),
   sous_groupe varchar(20),
   services varchar(180),
-  notes text 
+  notes text
 );
 
 CREATE TABLE public."CATEGORIE"(
@@ -141,7 +142,7 @@ CREATE TABLE public."CLIENT" (
   idclient  serial  PRIMARY KEY,
   idetat  integer  REFERENCES "ETAT" (idetat),
   idprovenance  integer  REFERENCES "PROVENANCE" (idprovenance),
-  notes text 
+  notes text
 );
 
 CREATE TABLE public."DOMAINE_ASSURANCE" (
@@ -185,7 +186,7 @@ CREATE TABLE public."CONTRAT" (
   idaga  integer REFERENCES  "AGA" (idaga),
   date_signature  date,
   police integer,
-  notes text 
+  notes text
 );
 
 CREATE TABLE public."CONTRAT_INDIVIDUEL" (
@@ -255,7 +256,7 @@ CREATE TABLE public."ENTREPRISE" (
   tel_secondaire  char(10),
   ext_tel_secondaire  char(3),
   fax  char(10),
-  sous_groupe varchar(20), 
+  sous_groupe varchar(20),
   mail  varchar(30),
   poste varchar(10),
   date_creation  date  DEFAULT  current_date,
@@ -298,5 +299,5 @@ CREATE TABLE public."CONDITION" (
   idmodalite  integer  REFERENCES "MODALITE" (idmodalite),
   CONSTRAINT  pk_CONDITION  PRIMARY KEY (idfournisseur, idmodalite),
   idtype  integer  REFERENCES "TYPE" (idtype),
-  valeur varchar(20) 
+  valeur varchar(20)
 );
