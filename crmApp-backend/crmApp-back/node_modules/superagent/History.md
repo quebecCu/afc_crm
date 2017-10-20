@@ -1,3 +1,15 @@
+# 3.7.0 (2017-10-17)
+
+ * Limit maximum response size. Prevents zip bombs (Kornel)
+ * Catch and pass along errors in `.ok()` callback (Jeremy Ruppel)
+ * Fixed parsing of XHR headers without a newline (nsf)
+
+# 3.6.2 (2017-10-02)
+
+ * Upgrade MIME type dependency to a newer, secure version
+ * Recognize PDF MIME as binary
+ * Fix for error in subsequent require() calls (Steven de Salas)
+
 # 3.6.0 (2017-08-20)
 
  * Support disabling TCP_NODELAY option (#1240) (xiamengyu)

@@ -3,7 +3,7 @@ import {take, call, fork, put} from 'redux-saga/effects';
 import {LOGIN_REQUEST, SENDING_REQUEST, CHANGE_FORM, CLEAR_SESSION, LOGOUT, SET_AUTH} from '../actions/crmLogin';
 import {hashSync , genSaltSync} from 'bcryptjs';
 //importer le salt pour le username et password
-//import genSalt from '../salt';.
+//import genSalt from '../salt';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
@@ -13,9 +13,9 @@ export function * loginFlow (){
 		
 		let request = yield take(LOGIN_REQUEST);
 		let {username, password} = request.data;
-//		let salt = genSaltSync (10);
-//		let hash = hashSync(password  , salt );
-		
+		let salt = genSaltSync (10);
+		let hash = hashSync(password   , salt  );
+		 
 		yield put ({ type: SENDING_REQUEST, sending:true})
 		
 		//communication avec server
@@ -24,7 +24,7 @@ export function * loginFlow (){
 		
 		axios.post(server, {
 			username: username,
-			password: password
+			password: hash
 		})
 		.then(function (response) {
 //			console.log(response.data.res);

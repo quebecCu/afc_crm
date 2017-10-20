@@ -7,6 +7,8 @@ import {
 import {PageAccueil} from "./components/PageAccueil";
 import {BarreNav} from "./components/BarreNav";
 import LoginPage from "./containers/LoginPage";
+import ForgotPass from "./components/form/ForgotPass";
+
 //import history from './history';
 import {store} from './store.js';
 
@@ -26,6 +28,7 @@ class App extends Component {
 					<Route exact path="/" component={LoginPage}/>
 					<Route path="/PageAccueil/:id" component={BarreNav} />
 					<Route exact path="/PageAccueil" component={PageAccueil} />
+					<Route exact path="/ForgotPass" component={ForgotPass} />
 					</div>
 			</ConnectedRouter>
 			</Provider>

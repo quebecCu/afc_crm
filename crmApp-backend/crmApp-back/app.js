@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
-var database = require('./database');
 var app = express();
+var database = require('./models/database')
 
 //view engine setup 
 app.set('views', path.join(__dirname, 'views'));

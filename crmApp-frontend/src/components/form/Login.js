@@ -4,7 +4,8 @@ import '../../style/Login.css';
 import validateInput from '../../shared/validations/login';
 //import { connect  } from 'react-redux';
 import Request from 'superagent' ;
-
+import {store} from '../../store';
+import {push} from 'react-router-redux';
 
 
 
@@ -63,9 +64,9 @@ class Login extends Component   {
 		this.props.changeForm(newFormState);
 	}
 	
-//	onChange(e) {
-//		this.setState({[e.target.name]: e.target.value});
-//	}
+	_forgotten(e) {
+		store.dispatch(push('/ForgotPass'));
+	}
 
 	render() {
 //		const { errors, username, password, isLoading , resultat} = this.state;
@@ -83,8 +84,7 @@ class Login extends Component   {
 				<div className="form-group" onClick = {this._login} ><button className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
 				</form>
 				<div className="login-help">
-				<a href="#"> Demande de session utilisateur / invité</a> <br/>
-				<a href="#"> Mot de passe oublié?</a>
+				<a onClick = {this._forgotten}> Mot de passe oublié?</a>
 				</div>
 				</div>
 				</div>

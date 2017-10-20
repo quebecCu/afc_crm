@@ -1,13 +1,61 @@
-
-var express = require('express');
-var router = express.Router();
-var app = express();
-
-pg = require('pg');
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/postgres';
-
-const client = new pg.Client(connectionString);
-client.connect();
-const query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-
-//query.on('end', () => { client.end(); });
+//
+//
+//const Sequelize = require('sequelize');
+//// base de donnees
+//const sequelize = new Sequelize('postgres', 'postgres', '123456', {
+//	host: 'localhost',
+//	dialect: 'postgres',
+//
+//	pool: {
+//		max: 5,
+//		min: 0,
+//		idle: 10000
+//	},
+//
+//});
+//
+//sequelize 
+//.authenticate()
+//.then(() => {
+//	console.log('Connection has been established successfully.');
+//})
+//.catch(err => {
+//	console.error('Unable to connect to the database:', err);
+//});
+/////////////////////////////////////////////////////////////////////////
+////partie creation de tables
+//// CREATION D'UNE TABLE USER 
+/////////////////////////////////////////////////////////////////////////
+//
+//
+//
+//
+//const Users = sequelize.define('users', {
+//	username: {
+//		type: Sequelize.STRING
+//	}, 
+//	password: {
+//		type: Sequelize.STRING
+//	}
+//});
+//
+//
+////force: true will drop the table if it already exists
+//Users.sync({force: true}).then(() => {
+//	// Table created
+//	return Users.create({
+//		username: 'aziz',
+//		password: 'aziz'
+//	});
+//});  
+//
+//Users.findOne().then(user => {
+//	  console.log(user.get('firstName'));
+//	});
+//
+//
+//// pour creer la table si celle ci n'existe pas deja
+//sequelize.sync();
+//
+//
+//

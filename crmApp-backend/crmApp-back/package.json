@@ -7,17 +7,24 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "bcrypt": "^1.0.3",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
+    "nodemon": "^1.12.1",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "request": "^2.83.0",
-    "sequelize": "^4.11.5",
+    "sequelize": "^4.15.0",
     "serve-favicon": "~2.4.2",
     "superagent": "^3.6.0"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
