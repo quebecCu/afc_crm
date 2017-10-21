@@ -19,6 +19,10 @@ class Reset extends Component   {
 		e.preventDefault();
 		this.props.onSubmit(this.props.formState);
 	}
+	_back(e) {
+		e.preventDefault();
+		store.dispatch(push('/'));
+	}
 	
 	_changeEmail (event){
 		this._emitChange({...this.props.formState , email: event.target.value});
@@ -40,7 +44,8 @@ class Reset extends Component   {
 						<p> Entrez le courriel courrespondant a votre dossier</p>
 						<form>
 							<input type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} />
-							<div className="form-group" onClick = {this._submit} ><button className="btn btn-primary btn-lg"  disabled={this.props.isloading ? true : false }>Valider</button></div>
+							<div className="form-group" onClick = {this._submit} ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
+							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button></div>
 							</form>
 					</div>
 				</div>

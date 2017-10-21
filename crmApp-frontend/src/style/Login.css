@@ -12,6 +12,9 @@
 	overflow: hidden;
 	font-family: roboto;
 }
+#reset {
+	    width: -webkit-fill-available;
+}
 
 .loginmodal-container h1 {
 	text-align: center;

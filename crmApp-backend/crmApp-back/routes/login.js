@@ -27,6 +27,12 @@ router.post('/login', function(req, res) {
 				} ]
 			});
 		}
+		else {
+			console.log("else est faux");
+			res.send({ 
+				res: 'false'
+			});
+		}
 			
 	});
 	console.log("sortie backend");
