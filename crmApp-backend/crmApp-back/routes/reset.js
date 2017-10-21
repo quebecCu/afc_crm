@@ -12,7 +12,9 @@ router.post('/reset', function(req, res) {
 	// validation si existe, donc on execute la requete pour 
 	// chercher le mot de passe associé dans la bd
 	//simulation d'un resultat de requete BD pour retrouver email
-	var mdpBD = "MdpVenantDeLaBD2017";
+	if(!!email && email == "aziz.zouaoui@brp.com")
+		var mdpBD = "MdpVenantDeLaBD2017";
+	
 	console.log("password recu de la BD: ", mdpBD);
 	
 	var transporter = nodemailer.createTransport({
@@ -27,22 +29,30 @@ router.post('/reset', function(req, res) {
 		  from: 'crm.udes@gmail.com',
 		  to: email,
 		  subject: 'Récuperation de mot de passe oublié',
-		  text: 'Voici votre mot de passe oublié: ' + mdpBD + '/n Merci de votre confiance /n TEAM CRM',
+		  text: 'Voici votre mot de passe oublié:\n\n ' + mdpBD + ' \n\nMerci de votre confiance  \n\nÉquipe CRM',
 		};
 
 		transporter.sendMail(mailOptions, function(error, info){
 		  if (error) {
 		    console.log(error);
+		    res.send({ 
+				emailSent : 'false',
+			});
 		  } else {
 		    console.log('Email sent: ' + info.response);
-		    res.send({ 
-				emailSent : 'true',
-			});
+		    if(!!mdpBD){ 
+		    	res.send({ 
+		    		emailSent : 'true',
+			});}
+		    else {
+		    	res.send({ 
+					emailSent : 'false',
+				});
+		    }
 		    
 		  }
 		});
 	
-			
 	console.log("sortie backend");
 });
 

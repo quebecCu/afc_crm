@@ -26,9 +26,13 @@ export function * resetFlow (){
 			email: email,
 		})
 		.then(function (response) {
-			console.log(response.data);
-			if(!!response.data){
+//			console.log(response.data.emailSent);
+			if(!!response.data.emailSent == "true"){
 				store.dispatch(push('/'));
+			}
+			else {
+				// rajouter une alert 
+				alert("Ce courriel n'est pas present dans nos dossiers ");
 			}
 //			callbackResponse: {response.data.res}
 		})
