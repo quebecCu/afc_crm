@@ -12,14 +12,31 @@ export function * resetFlow (){
 	while(true){
 		
 		let reset = yield take(RESET_REQUEST);
-		let {email} = request.data;
+		let {email} = reset.data;
 		 
 		yield put ({ type: SENDING_REQUEST, sending:true})
 		
+		//communication avec server
+		var server = "http://localhost:3002/reset";
+		//changer la location de la variable server pour plus de securite 
+		
+		axios.post(server, {
+			email: email,
+		})
+		.then(function (response) {
+//			console.log(response.data.res);
+			if(!!response.data.res){
+				store.dispatch(push('/PageAccueil'));
+			}
+//			callbackResponse: {response.data.res}
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 	}
 }  
 
 
-export function * AuthFlow () {
+export function * ResetEmailFlow () {
 	yield fork (resetFlow)
 }
