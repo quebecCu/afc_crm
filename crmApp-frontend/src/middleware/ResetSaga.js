@@ -27,7 +27,7 @@ export function * resetFlow (){
 		})
 		.then(function (response) {
 //			console.log(response.data.emailSent);
-			if(!!response.data.emailSent == "true"){
+			if(!!response.data.emailSent && response.data.emailSent == "true"){
 				store.dispatch(push('/'));
 			}
 			else {
