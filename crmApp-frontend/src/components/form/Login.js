@@ -65,7 +65,7 @@ class Login extends Component   {
 	}
 	
 	_forgotten(e) {
-		store.dispatch(push('/ForgotPass'));
+		store.dispatch(push('/Reset'));
 	}
 
 	render() {
