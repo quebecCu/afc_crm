@@ -26,8 +26,8 @@ export function * resetFlow (){
 			email: email,
 		})
 		.then(function (response) {
-			console.log(response.data.res);
-			if(!!response.data.res){
+			console.log(response.data);
+			if(!!response.data){
 				store.dispatch(push('/PageAccueil'));
 			}
 //			callbackResponse: {response.data.res}

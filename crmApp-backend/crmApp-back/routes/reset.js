@@ -30,8 +30,8 @@ router.post('/reset', function(req, res) {
 		var mailOptions = {
 		  from: 'crm.udes@gmail.com',
 		  to: 'aziz.zouaoui@brp.com',
-		  subject: 'Sending Email using Node.js test reset password',
-		  text: 'Voici votre mot de passe oublié: ' + mdpBD,
+		  subject: 'Récuperation de mot de passe oublié',
+		  text: 'Voici votre mot de passe oublié: ' + mdpBD + '/n Merci de votre confiance /n TEAM CRM',
 		};
 
 		transporter.sendMail(mailOptions, function(error, info){
