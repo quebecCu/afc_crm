@@ -28,7 +28,7 @@ export function * resetFlow (){
 		.then(function (response) {
 			console.log(response.data);
 			if(!!response.data){
-				store.dispatch(push('/PageAccueil'));
+				store.dispatch(push('/'));
 			}
 //			callbackResponse: {response.data.res}
 		})

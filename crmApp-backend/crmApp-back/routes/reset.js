@@ -3,10 +3,7 @@ var router = express.Router();
 var app = express();
 var nodemailer = require('nodemailer');
 
-console.log("entree node mailer: RESET");
 /* GET Email reset logic && send email. */
-
-
 router.post('/reset', function(req, res) {
 
 	var email = req.body.email;
@@ -14,7 +11,6 @@ router.post('/reset', function(req, res) {
 	//requete verifiant si le courriel existe
 	// validation si existe, donc on execute la requete pour 
 	// chercher le mot de passe associé dans la bd
-	
 	//simulation d'un resultat de requete BD pour retrouver email
 	var mdpBD = "MdpVenantDeLaBD2017";
 	console.log("password recu de la BD: ", mdpBD);
@@ -29,7 +25,7 @@ router.post('/reset', function(req, res) {
 
 		var mailOptions = {
 		  from: 'crm.udes@gmail.com',
-		  to: 'aziz.zouaoui@brp.com',
+		  to: email,
 		  subject: 'Récuperation de mot de passe oublié',
 		  text: 'Voici votre mot de passe oublié: ' + mdpBD + '/n Merci de votre confiance /n TEAM CRM',
 		};
