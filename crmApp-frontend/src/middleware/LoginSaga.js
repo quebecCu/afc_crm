@@ -28,8 +28,11 @@ export function * loginFlow (){
 		})
 		.then(function (response) {
 //			console.log(response.data.res);
-			if(!!response.data.res){
+			if(!!response.data.res && response.data.res== "true"){
 				store.dispatch(push('/PageAccueil'));
+			}
+			else {
+				alert ("identifiant ou mot de passe incorrects");
 			}
 //			callbackResponse: {response.data.res}
 		})

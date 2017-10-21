@@ -34,21 +34,6 @@ class Login extends Component   {
 	_login(e) {
 		e.preventDefault();
 		this.props.onSubmit(this.props.formState);
-		// rajouter ces fonctions dans le container
-		//TODO
-//		const { errors, username, password, isLoading , resultat} = this.state;
-//		this.setState({ errors: {}, isLoading: true });
-//		var server = "http://localhost:3002/login";
-//		axios.post(server, {
-//			username: username,
-//			password: password
-//		})
-//		.then(function (response) {
-//			callbackResponse: {response.data.res}
-//		})
-//		.catch(function (error) {
-//			console.log(error);
-//		});
 
 	}
 	
@@ -65,7 +50,7 @@ class Login extends Component   {
 	}
 	
 	_forgotten(e) {
-		store.dispatch(push('/ForgotPass'));
+		store.dispatch(push('/Reset'));
 	}
 
 	render() {
