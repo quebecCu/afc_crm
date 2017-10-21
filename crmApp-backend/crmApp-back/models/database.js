@@ -59,3 +59,19 @@
 //
 //
 //
+
+const pg = require('pg');
+
+const client = new pg.Client({
+	  user: 'postgres',
+	  host: 'localhost',
+	  database: 'CRM',
+	  password: 'password',
+	  port: 5432,
+	})
+
+client.connect();
+
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/CRM';
+
+module.exports = client;
