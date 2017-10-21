@@ -7,6 +7,8 @@ import {hashSync , genSaltSync} from 'bcryptjs';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
 
 export function * resetFlow (){
 	while(true){
@@ -17,14 +19,14 @@ export function * resetFlow (){
 		yield put ({ type: SENDING_REQUEST, sending:true})
 		
 		//communication avec server
-		var server = "http://localhost:3002/reset";
+		var server = "http://localhost:3002/Reset";
 		//changer la location de la variable server pour plus de securite 
 		
 		axios.post(server, {
 			email: email,
 		})
 		.then(function (response) {
-//			console.log(response.data.res);
+			console.log(response.data.res);
 			if(!!response.data.res){
 				store.dispatch(push('/PageAccueil'));
 			}
@@ -32,6 +34,7 @@ export function * resetFlow (){
 		})
 		.catch(function (error) {
 			console.log(error);
+			Alert.error('Test message 3');
 		});
 	}
 }  

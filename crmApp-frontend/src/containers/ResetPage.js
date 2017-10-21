@@ -14,7 +14,7 @@ class ResetPage extends Component   {
 		return(
 		<div className = "row">
 		<div className = "col-md-4 col-md-offset-4">
-		<Login 		onSubmit = {this.props.resetRequest}
+		<Reset 		onSubmit = {this.props.resetRequest}
 					formState = {formState}
 					isLoading = {isLoading}
 					error = {error}

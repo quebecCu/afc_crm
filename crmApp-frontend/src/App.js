@@ -7,7 +7,7 @@ import {
 import {PageAccueil} from "./components/PageAccueil";
 import {BarreNav} from "./components/BarreNav";
 import LoginPage from "./containers/LoginPage";
-import Reset from "./components/form/Reset";
+import ResetPage from "./containers/ResetPage";
 
 //import history from './history';
 import {store} from './store.js';
@@ -28,7 +28,7 @@ class App extends Component {
 					<Route exact path="/" component={LoginPage}/>
 					<Route path="/PageAccueil/:id" component={BarreNav} />
 					<Route exact path="/PageAccueil" component={PageAccueil} />
- 					<Route exact path="/Reset" component={Reset} />
+ 					<Route exact path="/Reset" component={ResetPage} />
 					</div>
 			</ConnectedRouter>
 			</Provider>

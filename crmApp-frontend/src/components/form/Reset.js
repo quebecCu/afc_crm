@@ -6,10 +6,9 @@ import {store} from '../../store';
 import {push} from 'react-router-redux';
 
 
-
 class Reset extends Component   {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 		
 		this._changeEmail = this._changeEmail.bind(this);
 		this._emitChange = this._emitChange.bind(this);
@@ -40,9 +39,9 @@ class Reset extends Component   {
 						<h1>Mot de passe oublié</h1>
 						<p> Entrez le courriel courrespondant a votre dossier</p>
 						<form>
-							<input type="text" placeholder="Your e-mail address" value="aziz.zouaoui@brp.com" onChange={this._changeEmail} />
-							<input type="submit" placeholder="Reset my Password"  />
-						</form>
+							<input type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} />
+							<div className="form-group" onClick = {this._submit} ><button className="btn btn-primary btn-lg"  disabled={this.props.isloading ? true : false }>Valider</button></div>
+							</form>
 					</div>
 				</div>
 				<div className="copy-right">
