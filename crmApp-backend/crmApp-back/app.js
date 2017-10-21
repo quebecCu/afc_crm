@@ -35,9 +35,8 @@ app.use(function(req, res, next) {
 });
 
 
-bcrypt.hash("jeanne", null, null, function(err, hash) {
+var hash = bcrypt.hashSync("bacon");
 	  console.log(hash);
-	});
 
 //error handler
 app.use(function(err, req, res, next) {
