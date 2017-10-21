@@ -13,15 +13,6 @@ class Login extends Component   {
 	constructor(props) {
 		super(props);
 		
-//		this.state = {
-//				username:'',
-//				password: '',
-//				errors: {},
-//				isLoading: false,
-//				resultat:''
-//		};
-		
-		
 		this._changeUsername = this._changeUsername.bind(this);
 
 		this._changePassword = this._changePassword.bind(this);
@@ -54,7 +45,6 @@ class Login extends Component   {
 	}
 
 	render() {
-//		const { errors, username, password, isLoading , resultat} = this.state;
 		console.log(this.props, "sdfsdfdsf"); 
 
 		return (
@@ -69,6 +59,7 @@ class Login extends Component   {
 				<div className="form-group" onClick = {this._login} ><button className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
 				</form>
 				<div className="login-help">
+				<br/>
 				<a onClick = {this._forgotten}> Mot de passe oublié?</a>
 				</div>
 				</div>
