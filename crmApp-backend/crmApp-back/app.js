@@ -9,7 +9,6 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
 var app = express();
-var database = require('./models/database')
 
 //view engine setup 
 app.set('views', path.join(__dirname, 'views'));
@@ -34,9 +33,6 @@ app.use(function(req, res, next) {
 	err.status = 404;
 	next(err);
 });
-
-
-
 
 //error handler
 app.use(function(err, req, res, next) {

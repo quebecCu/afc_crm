@@ -1,9 +1,10 @@
-
+/**
 
 const Sequelize = require('sequelize');
 // base de donnees
 const sequelize = new Sequelize('postgres', 'postgres', '123456', {
 	host: 'localhost',
+    port: '5433',
 	dialect: 'postgres',
 
 	pool: {
@@ -112,9 +113,6 @@ sequelize.sync({force: true})
     });
 })
 .then(displayResults)
-    /*
-          Query testing code here
-    */
     .then(function () {
         process.exit(0);
     }); 
@@ -123,8 +121,7 @@ sequelize.sync({force: true})
 //Users.findOne().then(user => {
 //	  console.log(user.get('username'));
 //	});
-
-
+**/
 
 
 //pour creer la table si celle ci n'existe pas deja
