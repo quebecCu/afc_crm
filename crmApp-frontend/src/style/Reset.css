@@ -25,6 +25,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 .reset .elelment 
 {
     padding: 1px;
+    margin:0px;
 h2 {
     font-size: 2.5em;
     color: #fff;
@@ -53,8 +54,8 @@ h2 {
     text-align:center;
 }
 .reset .element-main input[type="email"] {
-    font-size: 1em;
-    color: #A29E9E;
+    font-size: 1.5em;
+    color: #FFFF;
     padding: 1em 0.5em;
     display: block;
     width: 95%;
