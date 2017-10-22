@@ -60,7 +60,7 @@ class Login extends Component   {
 				</form>
 				<div className="login-help">
 				<br/>
-				<a onClick = {this._forgotten}> Mot de passe oublié?</a>
+				<button className="btn btn-primary btn-lg" onClick = {this._forgotten} id="loginButton" > Mot de passe oublié?</button>
 				</div>
 				</div>
 				</div>

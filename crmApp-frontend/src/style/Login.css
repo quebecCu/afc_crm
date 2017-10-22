@@ -3,10 +3,9 @@
 /****** LOGIN MODAL ******/
 .loginmodal-container {
 	padding: 30px;
-	max-width: 350px;
-	width: 100% !important;
+	width: 27%;
 	background-color: #F7F7F7;
-	margin: 0 auto;
+	margin: 4em auto 0em;
 	border-radius: 2px;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
@@ -31,7 +30,7 @@
 
 .loginmodal-container input[type=text], input[type=password] {
 	height: 44px;
-	font-size: 16px;
+	font-size: 150%;
 	width: 100%;
 	margin-bottom: 10px;
 	-webkit-appearance: none;
