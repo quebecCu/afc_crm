@@ -9,12 +9,12 @@ import {store} from '../store';
 export function * getListFournisseurs (){
     while(true){
 
-        let request = yield take(SENDING_REQUEST_FOUR);
+        yield take(SENDING_REQUEST_FOUR);
 
 
         //communication avec server
         var server = "http://localhost:3002/fournisseurs";
-        let res;
+
         axios.post(server, {
         })
             .then(function (response) {

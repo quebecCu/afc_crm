@@ -6,15 +6,16 @@ import { connect  } from 'react-redux';
 import {searchRequestFour, changeFormFour, sendingRequestFour} from '../actions/crmRechercheFournisseur';
 
 class PageFournisseurs extends Component {
+    componentWillMount() {
+        this.props.sendingRequestFour();
+    }
     render() {
         let { formState, dossiersState } = this.props.crmRechercheFournisseur;
         console.log(dossiersState);
         return(
-
             <div>
                 <h1>Fournisseurs</h1>
-                <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}
-                                     getList = {this.props.sendingRequestFour}/>
+                <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}/>
                 <RechercheComponent
                     onSubmit = {this.props.searchRequestFour}
                     formState = {formState}
@@ -24,9 +25,6 @@ class PageFournisseurs extends Component {
             </div>
 
         );
-    }
-    componentWillUpdate() {
-        console.log("Page Four update");
     }
 }
 

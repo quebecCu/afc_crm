@@ -15,108 +15,57 @@ class HistoriqueContainer extends Component {
                 ]
             };
         }
-    componentWillMount() {
-        this.props.getList();
-        switch (this.props.page) {
-            case 'PageAccueil':
-                this.table = (
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Nom</th>
-                            <th>Type</th>
-                        </tr>
-                        </thead>
-                        <DossiersComponent historique={this.state.historique} history={this.props.history}/>
-                    </table>
-                );
-                break;
-            case 'PageCollectivesClients':
-                this.table = (
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Nom de l'entreprise</th>
-                            <th>Nom employé</th>
-                            <th>N° de police</th>
-                            <th>Mois de renouvellement</th>
-                            <th>Assureur</th>
-                        </tr>
-                        </thead>
-                        <DossiersComponent dossiers={this.state.dossiers} history={this.props.history}/>
-                    </table>
-                );
-                break;
-            case 'PageFournisseurs':
-                this.table = (
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Nom de l'assurance</th>
-                            <th>Nom contact</th>
-                        </tr>
-                        </thead>
-                        <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
-                    </table>
-                );
-                break;
-            default:
 
-                break;
-        }
-    }
-    componentWillUpdate() {
-        switch (this.props.page) {
-            case 'PageAccueil':
-                this.table = (
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Nom</th>
-                            <th>Type</th>
-                        </tr>
-                        </thead>
-                        <DossiersComponent historique={this.state.historique} history={this.props.history}/>
-                    </table>
-                );
-                break;
-            case 'PageCollectivesClients':
-                this.table = (
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Nom de l'entreprise</th>
-                            <th>Nom employé</th>
-                            <th>N° de police</th>
-                            <th>Mois de renouvellement</th>
-                            <th>Assureur</th>
-                        </tr>
-                        </thead>
-                        <DossiersComponent dossiers={this.state.dossiers} history={this.props.history}/>
-                    </table>
-                );
-                break;
-            case 'PageFournisseurs':
-                this.table = (
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Nom de l'assurance</th>
-                            <th>Nom contact</th>
-                        </tr>
-                        </thead>
-                        <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
-                    </table>
-                );
-                break;
-            default:
 
-                break;
-        }
-    }
     render() {
+        switch (this.props.page) {
+            case 'PageAccueil':
+                this.table = (
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Nom</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        <DossiersComponent historique={this.state.historique} history={this.props.history}/>
+                    </table>
+                );
+                break;
+            case 'PageCollectivesClients':
+                this.table = (
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Nom de l'entreprise</th>
+                            <th>Nom employé</th>
+                            <th>N° de police</th>
+                            <th>Mois de renouvellement</th>
+                            <th>Assureur</th>
+                        </tr>
+                        </thead>
+                        <DossiersComponent dossiers={this.state.dossiers} history={this.props.history}/>
+                    </table>
+                );
+                break;
+            case 'PageFournisseurs':
+                this.table = (
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Nom de l'assurance</th>
+                            <th>Nom contact</th>
+                        </tr>
+                        </thead>
+                        <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
+                    </table>
+                );
+                break;
+            default:
+
+                break;
+        }
         return this.table;
     }
 }

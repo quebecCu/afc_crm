@@ -7,7 +7,9 @@ class DossiersComponent extends Component {
     handleClick() {
         this.props.history.push('/PageAccueil/assu-col/clients/client_1');
     }
-    componentWillMount() {
+
+    render() {
+        console.log(this.props.fournisseur);
         if (this.props.historique) {
             this.rows = (
                 <tbody>
@@ -44,6 +46,7 @@ class DossiersComponent extends Component {
             this.rows = (
                 <tbody>
                 {this.props.fournisseur.map(element => {
+                    console.log(element);
                     return (
                         <tr onClick={this.handleClick.bind(this)}>
                             <td>{element.nom}</td>
@@ -54,8 +57,6 @@ class DossiersComponent extends Component {
                 </tbody>
             );
         }
-    }
-    render() {
         return this.rows;
     }
 }
