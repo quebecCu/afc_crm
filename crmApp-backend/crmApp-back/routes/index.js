@@ -7,21 +7,24 @@ var db = require('../models');
 router.get('/test2', function(req, res) {
 
 	console.log("Test backend");
-    db.sequelize.query('SELECT * FROM public."PERSONNE"',
+    /*db.sequelize.query('SELECT * FROM public."PERSONNE"',
         {
             type: db.sequelize.QueryTypes.SELECT
         }).then(function (results) {
         console.log(results);
-    });
+    });*/
+    db.User.findAll({
+        attributes: ['idpersonne', 'nom', 'prenom']
+	}).then(users => {
+		//console.log(users);
+        console.log("nom: " + users[0].dataValues.nom);
+        console.log("prenom: " + users[0].dataValues.prenom);
+    })
 	res.send({
 		name : 'CRM First Application',
 		title : 'welcome to the CRM team',
 		version : '0.0',
-		utilisateur : [{
-			"id" : "1",
-			"first_name": "aziz",
-			"last_name": "zouaoui"
-		} ]
+		utilisateur : [{}]
 	});
 	console.log("sortie backend");
 });

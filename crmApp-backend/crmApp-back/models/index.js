@@ -45,11 +45,16 @@ Object.keys(db).forEach(function(modelName) {
     }
 });*/
 
-
+const User = sequelize.define('PERSONNE', {
+    login: Sequelize.STRING,
+    password: Sequelize.STRING
+}, {
+    tableName: 'PERSONNE'});
 
 
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.User = User;
 
 module.exports = db;
