@@ -6,7 +6,7 @@ var Sequelize = require("sequelize");
 //-----------------------------bdname-----username-----password----
 var sequelize = new Sequelize('postgres', 'postgres', 'root', {
     host: 'localhost',
-    port: '5433',
+    port: '5432',
     dialect: 'postgres',
 
     pool: {
@@ -44,6 +44,10 @@ Object.keys(db).forEach(function(modelName) {
         db[modelName].associate(db);
     }
 });*/
+
+
+
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

@@ -8,6 +8,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
+var models = require('./models');
+
 var app = express();
 
 //view engine setup 
