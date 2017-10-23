@@ -1,6 +1,4 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-/crmApp-frontend/node_modules
-/crmApp-backend/crmApp-back/node_modules
 
 .idea
