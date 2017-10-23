@@ -8,8 +8,9 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
+var assurancesCollectives = require('./routes/assurancesCollectives');
 var app = express();
-
+ 
 //view engine setup 
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
@@ -26,6 +27,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/', login);
 app.use('/', reset);
+app.use('/', assurancesCollectives);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

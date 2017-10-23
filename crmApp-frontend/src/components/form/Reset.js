@@ -43,7 +43,7 @@ class Reset extends Component   {
 						<h1>Mot de passe oublié</h1>
 						<p> Entrez le courriel courrespondant a votre dossier</p>
 						<form>
-							<input type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} />
+							<input  type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} />
 							<div className="form-group" onClick = {this._submit} ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
 							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button></div>
 							</form>

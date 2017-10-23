@@ -45,7 +45,6 @@ class Login extends Component   {
 	}
 
 	render() {
-		console.log(this.props, "sdfsdfdsf"); 
 
 		return (
 

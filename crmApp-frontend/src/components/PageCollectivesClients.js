@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { HistoriqueContainer } from "../containers/HistoriqueContainer";
-import {RechercheComponent} from "./RechercheComponent";
+import RechercheComponent from "./RechercheComponent";
 
-export class PageCollectivesClients extends Component {
+class PageCollectivesClients extends Component {
     render() {
         return(
                 <div>
@@ -14,3 +14,4 @@ export class PageCollectivesClients extends Component {
         );
     }
 }
+export default (PageCollectivesClients);
