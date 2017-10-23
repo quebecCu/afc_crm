@@ -3,10 +3,11 @@ import { routerReducer} from 'react-router-redux';
 import {CLEAR_SESSION} from '../actions/crmLogin';
 import {RESET_REQUEST} from '../actions/crmReset';
 import {SEARCH_REQUEST} from '../actions/crmRechercheCollective';
+import {SEARCH_REQUEST_FOUR} from '../actions/crmRechercheFournisseur';
 import crmLogin from './crmLogin';
 import crmReset from './crmReset';
 import crmRechercheCollective from './crmRechercheCollective';
-
+import crmRechercheFournisseur from './crmRechercheFournisseur';
 // TODO les autres reducers a rajouter ici 
 
 
@@ -14,8 +15,8 @@ const appReducer = combineReducers ({
 	routerReducer,
 	crmLogin,
 	crmReset,
-	crmRechercheCollective
-	
+	crmRechercheCollective,
+	crmRechercheFournisseur
 })
 
 
@@ -32,6 +33,10 @@ const rootReducer = (state, action) => {
 	case SEARCH_REQUEST: {
 		const {routerReducer, crmRechercheCollective} = state;
 		state =  {routerReducer, crmRechercheCollective};
+	}
+	case SEARCH_REQUEST_FOUR: {
+		const {routerReducer, crmRechercheFournisseur} = state;
+		state = {routerReducer, crmRechercheFournisseur};
 	}
 	}
 	return appReducer(state, action);
