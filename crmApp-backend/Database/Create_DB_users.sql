@@ -1,9 +1,12 @@
---## SCRIPT DE CREATION DES TABLES Users						###
---## PLATEFORME: PostgreSQL								          ###
+--## SCRIPT DE CREATION DES TABLES Users			###
+--## PLATEFORME: PostgreSQL						    ###
 --## AUTEURS: Equipe CRM - UdeS A17                 ###
 --## DECEMBRE 2017                                  ###
 --## COPYRIGHT (c)                                  ###
 --#####################################################
+
+DROP SCHEMA IF EXISTS users CASCADE;
+CREATE SCHEMA IF NOT EXISTS users;
 
 DROP TABLE IF EXISTS users."UTILISATEUR" CASCADE;
 DROP TABLE IF EXISTS users."ROLEADM" CASCADE;

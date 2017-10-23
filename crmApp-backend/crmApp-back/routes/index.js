@@ -13,13 +13,23 @@ router.get('/test2', function(req, res) {
         }).then(function (results) {
         console.log(results);
     });*/
-    db.User.findAll({
+    db.Person.findAll({
         attributes: ['idpersonne', 'nom', 'prenom']
-	}).then(users => {
+	}).then(person => {
 		//console.log(users);
-        console.log("nom: " + users[0].dataValues.nom);
-        console.log("prenom: " + users[0].dataValues.prenom);
-    })
+        console.log("nom: " + person[0].dataValues.nom);
+        console.log("prenom: " + person[0].dataValues.prenom);
+    });
+    db.User.findAll({
+        attributes: ['iduser', 'login', 'password']
+    }).then(users => {
+        //console.log(users);
+		for(let i = 0; i < users.length; i++)
+		{
+            console.log("nom: " + users[0].dataValues.login);
+            console.log("prenom: " + users[0].dataValues.password);
+		}
+    });
 	res.send({
 		name : 'CRM First Application',
 		title : 'welcome to the CRM team',

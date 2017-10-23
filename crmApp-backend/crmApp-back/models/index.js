@@ -6,7 +6,7 @@ var Sequelize = require("sequelize");
 //-----------------------------bdname-----username-----password----
 var sequelize = new Sequelize('postgres', 'postgres', 'root', {
     host: 'localhost',
-    port: '5432',
+    port: '5433',
     dialect: 'postgres',
 
     pool: {
@@ -45,14 +45,21 @@ Object.keys(db).forEach(function(modelName) {
     }
 });*/
 
-const User = sequelize.define('PERSONNE', {
-    login: Sequelize.STRING,
-    password: Sequelize.STRING
+const Person = sequelize.define('PERSONNE', {
+    nom: Sequelize.STRING,
+    prenom: Sequelize.STRING
 }, {
     tableName: 'PERSONNE'});
 
+const User = sequelize.define('UTILISATEUR', {
+    login: Sequelize.STRING,
+    password: Sequelize.STRING
+}, {
+    schema: 'users',
+    tableName: '"UTILISATEUR"'});
 
 
+db.Person = Person;
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.User = User;
