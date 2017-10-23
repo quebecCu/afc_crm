@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../style/logo.svg';
 import '../style/App.css';
 import { ButtonsComponent } from "./ButtonsComponent";
-import { HistoriqueContainer } from "../containers/HistoriqueContainer";
+import HistoriqueContainer from "../containers/HistoriqueContainer";
 import Request from 'superagent' ;
 import {store} from '../store';
 import {push} from 'react-router-redux';

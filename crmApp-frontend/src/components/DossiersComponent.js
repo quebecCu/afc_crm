@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 
-export class DossiersComponent extends Component {
+class DossiersComponent extends Component {
     constructor(props) {
         super(props);
     }
     handleClick() {
-        console.log(this.props);
         this.props.history.push('/PageAccueil/assu-col/clients/client_1');
     }
     componentWillMount() {
-        console.log(this.props);
         if (this.props.historique) {
             this.rows = (
                 <tbody>
@@ -61,3 +59,5 @@ export class DossiersComponent extends Component {
         return this.rows;
     }
 }
+
+export default (DossiersComponent);

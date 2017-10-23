@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
-import { HistoriqueContainer } from "../containers/HistoriqueContainer";
+import HistoriqueContainer from "../containers/HistoriqueContainer";
 import  RechercheComponent  from "./RechercheComponent";
 import { connect  } from 'react-redux';
 /// TODO
-import {searchRequestFour, changeFormFour} from '../actions/crmRechercheFournisseur';
+import {searchRequestFour, changeFormFour, sendingRequestFour} from '../actions/crmRechercheFournisseur';
 
 class PageFournisseurs extends Component {
     render() {
-        let { formState, changeForm } = this.props.crmRechercheFournisseur;
-
+        let { formState, dossiersState } = this.props.crmRechercheFournisseur;
+        console.log(dossiersState);
         return(
 
             <div>
                 <h1>Fournisseurs</h1>
-                <HistoriqueContainer page="PageFournisseurs" history={this.props.history}/>
+                <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}
+                                     getList = {this.props.sendingRequestFour}/>
                 <RechercheComponent
                     onSubmit = {this.props.searchRequestFour}
                     formState = {formState}
-                    changeForm = {this.props.changeFormFour}/>
+                    changeForm = {this.props.changeFormFour}
+                    />
+
             </div>
 
         );
+    }
+    componentWillUpdate() {
+        console.log("Page Four update");
     }
 }
 
@@ -38,8 +44,11 @@ const  mapDispatchToProps = (dispatch) => {
         searchRequestFour: (formData) => {
             dispatch(searchRequestFour(formData))
         },
-        changeFormFour : (newFormState) => {
+        changeFormFour: (newFormState) => {
             dispatch(changeFormFour(newFormState))
+        },
+        sendingRequestFour: () => {
+            dispatch(sendingRequestFour())
         }
     }
 }

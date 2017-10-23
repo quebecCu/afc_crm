@@ -27,7 +27,7 @@ export function * loginFlow (){
 			password: hash
 		})
 		.then(function (response) {
-			if(!!response.data.res && response.data.res== "true"){
+			if(!!response.data.res && response.data.res=== "true"){
 				store.dispatch(push('/PageAccueil'));
 			}
 			else {

@@ -8,6 +8,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
+var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
 var app = express();
  
@@ -28,6 +29,7 @@ app.use('/users', users);
 app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
+app.use('/', fournisseurs);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

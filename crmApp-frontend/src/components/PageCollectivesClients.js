@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HistoriqueContainer } from "../containers/HistoriqueContainer";
+import HistoriqueContainer from "../containers/HistoriqueContainer";
 import RechercheComponent from "./RechercheComponent";
 import {ButtonsComponent} from "./ButtonsComponent";
 

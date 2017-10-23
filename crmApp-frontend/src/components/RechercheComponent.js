@@ -22,6 +22,8 @@ class RechercheComponent extends Component {
 //	moisRenouvellement:'',
 //	clientActif: true,
 //	statutProspect: false
+
+
 	_recherche(e) {
 		e.preventDefault();
 		this.props.onSubmit(this.props.formState);
