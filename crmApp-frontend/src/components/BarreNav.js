@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom';
 import { page1 } from "../containers/page1";
 import {CreationClient} from "../containers/CreationClient";
-import {gestionUser} from "../containers/gestionUser";
 
 export class BarreNav extends Component {
     constructor(props) {
@@ -86,7 +85,6 @@ export class BarreNav extends Component {
                     )} />
                     <Route path="/PageAccueil/assu-col/clients/client_1" component={page1}/>
                     <Route path="/PageAccueil/assu-col/clients/NouveauClient" component={CreationClient} />
-                    <Route path="/PageAccueil/admin" component={gestionUser} />
                 </div>
             </div>
         );

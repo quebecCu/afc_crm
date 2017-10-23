@@ -4,12 +4,6 @@ table {
     width: 1000px;
 }
 
-table.user{
-    border-collapse: collapse;
-    margin: 0 auto;
-    width: 700px;
-}
-
 th, td {
     text-align: left;
     padding: 8px;
