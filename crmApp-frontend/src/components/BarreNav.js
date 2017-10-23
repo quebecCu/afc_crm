@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/NavBar.css';
-import {PageCollectives} from "./PageCollectives";
+import PageCollectives from "./PageCollectives";
 import {PageFournisseurs} from "./PageFournisseurs";
-import {PageCollectivesClients} from "./PageCollectivesClients";
+import PageCollectivesClients from "./PageCollectivesClients";
 import {
     Route
 } from 'react-router-dom';

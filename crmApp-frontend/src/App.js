@@ -4,10 +4,12 @@ import {
     Switch,
     Route
 } from 'react-router-dom'
-import {PageAccueil} from "./components/PageAccueil";
 import {BarreNav} from "./components/BarreNav";
 import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
+import AccueilPageContainer from "./containers/AccueilPageContainer";
+import CollectivePageContainer from "./containers/CollectivePageContainer";
+
 
 //import history from './history';
 import {store} from './store.js';
@@ -27,7 +29,7 @@ class App extends Component {
         	<div>
 					<Route exact path="/" component={LoginPage}/>
 					<Route path="/PageAccueil/:id" component={BarreNav} />
-					<Route exact path="/PageAccueil" component={PageAccueil} />
+					<Route exact path="/PageAccueil" component={AccueilPageContainer} />
  					<Route exact path="/Reset" component={ResetPage} />
 					</div>
 			</ConnectedRouter>
