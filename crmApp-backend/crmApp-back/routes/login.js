@@ -12,7 +12,7 @@ router.post('/login', function(req, res) {
 	var query= ''
 	var usernameText = req.body.username;	
 	var mdpText = req.body.password;
-	db.sequelize.query('SELECT * FROM "UTILISATEUR"',
+	db.sequelize.query('SELECT * FROM users."UTILISATEUR"',
 			{ 
 		type: db.sequelize.QueryTypes.SELECT
 			}).then(function (results) {
