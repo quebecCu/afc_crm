@@ -14,6 +14,9 @@ export class ButtonsComponent extends Component {
             buttons = [{path: '/PageAccueil/assu-col/clients', nom: 'Clients'},
                 {path: '/PageAccueil/assu-col/fournisseurs', nom:'Fournisseurs'}];
         }
+        else if (this.props.page === 'PageCollectivesClients') {
+            buttons = [{path: '/PageAccueil/assu-col/clients/NouveauClient', nom: 'Nouveau Client'}]
+        }
         return (
             <div>
                 {

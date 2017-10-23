@@ -8,6 +8,7 @@ import {
     Route
 } from 'react-router-dom';
 import { page1 } from "../containers/page1";
+import {CreationClient} from "../containers/CreationClient";
 
 export class BarreNav extends Component {
     constructor(props) {
@@ -25,6 +26,7 @@ export class BarreNav extends Component {
             {path: '/PageAccueil/assu-col', nom: 'Assurances collectives'},
             {path: '/PageAccueil/placements', nom: 'Placements'},
             {path: '/PageAccueil/fournisseurs', nom: 'Fournisseurs'},
+            {path: '/PageAccueil/admin', nom: 'Gestion des utilisateurs'},
             {path: '/', nom: 'Déconnexion'},
             {path: '/', nom: 'Retour'}];
 
@@ -40,6 +42,9 @@ export class BarreNav extends Component {
                 break;
             case "/PageAccueil/fournisseurs":
                 liens[4].active = true;
+                break;
+            case "/PageAccueil/admin":
+                liens[5].active = true;
                 break;
             case "/PageAccueil/assu-col/clients":
                 liens[2].active = true;
@@ -79,6 +84,7 @@ export class BarreNav extends Component {
                         <PageCollectivesClients history={this.props.history} />
                     )} />
                     <Route path="/PageAccueil/assu-col/clients/client_1" component={page1}/>
+                    <Route path="/PageAccueil/assu-col/clients/NouveauClient" component={CreationClient} />
                 </div>
             </div>
         );
