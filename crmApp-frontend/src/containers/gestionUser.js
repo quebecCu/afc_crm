@@ -1,6 +1,8 @@
 import React from 'react';
 import '../style/PageAccueil.css';
 import {ListUsers} from '../components/ListUsers.js';
+import {store} from '../store';
+import {push} from 'react-router-redux';
 
 export class gestionUser extends React.Component{
 
@@ -55,7 +57,7 @@ export class gestionUser extends React.Component{
 
 
 
-        <button>Créer utilisateur</button>
+        <button onClick={(e) => store.dispatch(push("/PageAccueil/admin/createUser"))}>Créer utilisateur</button>
 
         </div>;
 
