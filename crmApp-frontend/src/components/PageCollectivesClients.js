@@ -4,6 +4,9 @@ import RechercheComponent from "./RechercheComponent";
 import {ButtonsComponent} from "./ButtonsComponent";
 
 class PageCollectivesClients extends Component {
+	constructor(props) {
+		super(props);
+	}
     render() {
         return(
                 <div>

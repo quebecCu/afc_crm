@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { ButtonsComponent } from "./ButtonsComponent";
 
 class PageCollectives extends Component {
+	constructor(props) {
+		super(props);
+	}
     render() {
         return(
 

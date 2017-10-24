@@ -3,7 +3,9 @@ import '../style/RechercheComponent.css';
 import Request from 'superagent' ;
 import {store} from '../store';
 import {push} from 'react-router-redux';
-
+//import state  from '../reducer/crmRechercheCollective';
+import { connect  } from 'react-redux';
+import {searchRequest, changeForm} from '../actions/crmRechercheCollective'
 
 class RechercheComponent extends Component {
 	
@@ -49,13 +51,15 @@ class RechercheComponent extends Component {
 //	}
 	
     render() {
+		let { formState, changeForm } = this.props.crmRechercheCollective;
+
         return(
             <form action="" id="recherche" style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left'}}>
-                <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
-                <input type="text" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={this.props.formState.nomEmploye} />
-                <input type="text" placeholder="N° police"onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>
-                <input type="text" placeholder="Mois renouvellement" value={this.props.formState.numeroPolice}/>
-                <input type="text" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
+                <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={formState.nomEntreprise} />
+                <input type="text" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={formState.nomEmploye} />
+                <input type="text" placeholder="N° police"onChange={this._changeNumeroPolice} value={formState.numeroPolice}/>
+                <input type="text" placeholder="Mois renouvellement" value={formState.numeroPolice}/>
+                <input type="text" placeholder="Assureur" onChange={this._changeNomAssureur}  value={formState.nomAssureur}/>
                 <select>
                     <option value="actif">Actif</option>
                     <option value="annulé">Annulé</option>
@@ -70,4 +74,25 @@ class RechercheComponent extends Component {
     }
 }
 
-export default (RechercheComponent);
+function mapStateToProps (state) {
+	
+	return{
+		crmRechercheCollective: state.crmRechercheCollective
+	}
+}
+
+//fonctions
+const  mapDispatchToProps = (dispatch) => {
+	
+	return{
+		searchRequest: (formData) => {
+			dispatch(searchRequest(formData))
+		},
+		changeForm : (newFormState) => {
+			dispatch(changeForm(newFormState))
+		}		
+	}
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (RechercheComponent);
