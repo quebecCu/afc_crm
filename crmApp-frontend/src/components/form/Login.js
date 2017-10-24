@@ -13,15 +13,6 @@ class Login extends Component   {
 	constructor(props) {
 		super(props);
 		
-//		this.state = {
-//				username:'',
-//				password: '',
-//				errors: {},
-//				isLoading: false,
-//				resultat:''
-//		};
-		
-		
 		this._changeUsername = this._changeUsername.bind(this);
 
 		this._changePassword = this._changePassword.bind(this);
@@ -54,8 +45,6 @@ class Login extends Component   {
 	}
 
 	render() {
-//		const { errors, username, password, isLoading , resultat} = this.state;
-		console.log(this.props, "sdfsdfdsf"); 
 
 		return (
 
@@ -63,13 +52,14 @@ class Login extends Component   {
 				<div className="modal-dialog">
 				<div className="loginmodal-container">
 				<h1> Connexion </h1><br/>
-				<form>
-				<input type="text" name="username" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
-				<input type="password" name="password"  placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
-				<div className="form-group" onClick = {this._login} ><button className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
+				<form method="POST" onSubmit = {this._login}>
+				<input className= "form-control" type='text' name="username" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
+				<input className= "form-control" type='password' name="password"  placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
+				<div className="form-group"><button type= "submit" className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
 				</form>
 				<div className="login-help">
-				<a onClick = {this._forgotten}> Mot de passe oublié?</a>
+				<br/>
+				<button className="btn btn-primary btn-lg" onClick = {this._forgotten} id="loginButton" > Mot de passe oublié?</button>
 				</div>
 				</div>
 				</div>

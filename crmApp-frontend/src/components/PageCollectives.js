@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { ButtonsComponent } from "./ButtonsComponent";
 
-export class PageCollectives extends Component {
+class PageCollectives extends Component {
+	constructor(props) {
+		super(props);
+	}
     render() {
         return(
 
@@ -13,3 +16,5 @@ export class PageCollectives extends Component {
         );
     }
 }
+
+export default (PageCollectives);

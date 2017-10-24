@@ -28,6 +28,8 @@ export function * resetFlow (){
 		.then(function (response) {
 //			console.log(response.data.emailSent);
 			if(!!response.data.emailSent && response.data.emailSent == "true"){
+				alert("Le mot de passe vous a été transmis par courriel");
+
 				store.dispatch(push('/'));
 			}
 			else {
@@ -38,7 +40,6 @@ export function * resetFlow (){
 		})
 		.catch(function (error) {
 			console.log(error);
-			Alert.error('Test message 3');
 		});
 	}
 }  

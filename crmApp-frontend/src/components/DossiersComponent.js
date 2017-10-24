@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-export class DossiersComponent extends Component {
+class DossiersComponent extends Component {
     constructor(props) {
         super(props);
     }
     handleClick() {
-        console.log(this.props);
         this.props.history.push('/PageAccueil/assu-col/clients/client_1');
     }
-    componentWillMount() {
-        console.log(this.props);
+
+    render() {
+        console.log(this.props.fournisseur);
         if (this.props.historique) {
             this.rows = (
                 <tbody>
@@ -46,6 +46,7 @@ export class DossiersComponent extends Component {
             this.rows = (
                 <tbody>
                 {this.props.fournisseur.map(element => {
+                    console.log(element);
                     return (
                         <tr onClick={this.handleClick.bind(this)}>
                             <td>{element.nom}</td>
@@ -56,8 +57,8 @@ export class DossiersComponent extends Component {
                 </tbody>
             );
         }
-    }
-    render() {
         return this.rows;
     }
 }
+
+export default (DossiersComponent);

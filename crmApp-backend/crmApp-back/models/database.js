@@ -45,7 +45,7 @@
 //	// Table created
 //	return Users.create({
 //		username: 'aziz',
-//		password: 'aziz'
+//		password: 'zouaoui'
 //	});
 //});  
 //
