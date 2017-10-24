@@ -8,26 +8,25 @@ class createUser extends React.Component{
 
     constructor(props){
         super(props);
-        this.onChangeRole = this.onChangeRole.bind(this);
+
     }
 
-    onChangeRole(event){
-        this.props.changeForm({...this.props.formState , role: event.target.value});
-    }
+
 
     render(){
-
+        let {formState} = this.props.crmCreateUser;
         return <div><h1>Créer utilisateur</h1>
-            <FormCreateUser onChangeRole={this.onChangeRole} />
+            <FormCreateUser formState={formState}
+                             changeForm={this.props.changeForm}/>
 
         </div>;
     }
 }
 
 function mapStateToProps (state) {
-
+    console.log("mapstatetoprops");
     return{
-        crmCreateUser: state.crmLogin
+        crmCreateUser: state.crmCreateUser
     }
 }
 
