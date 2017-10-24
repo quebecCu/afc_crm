@@ -70,4 +70,28 @@ router.post('/login', function(req, res) {
     .catch(e => console.error(e.stack));
 });*/
 
+router.post('/login/add', (req, res, next) => {
+	var usernameText = req.body.username;
+	console.log("username: ", usernameText);
+	var mdpText = req.body.password;
+	console.log("password recu hashed: ", mdpText);
+	
+	let salt = bcrypt.genSaltSync(2);
+	console.log("lolillol");
+	let hash = bcrypt.hashSync(password, salt);
+	console.log("lolillol");
+    client.query('INSERT INTO public."UTILISATEURS" VALUES (DEFAULT, ' + usernameText + ', ' + hash + ', 0);')
+    .then(respg => res.send({ 
+		name : 'CRM First Application',
+		title : 'welcome to the CRM App',
+		res: 'true',
+		utilisateur : [{
+			"id" : respg.rows[0].iduser,
+			"first_name": respg.rows[0].login,
+			"last_name": respg.rows[0].password
+		} ]
+	}))
+    .catch(e => console.error(e.stack));
+});
+
 module.exports = router;
