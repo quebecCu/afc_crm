@@ -10,7 +10,9 @@ CREATE SCHEMA IF NOT EXISTS users;
 
 DROP TABLE IF EXISTS users."UTILISATEUR" CASCADE;
 DROP TABLE IF EXISTS users."ROLEADM" CASCADE;
-DROP TABLE IF EXISTS users."PERMISSION" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONROLE" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONUTIL" CASCADE;
+DROP TABLE IF EXISTS users."INVITE" CASCADE;
 DROP TABLE IF EXISTS users."OPERATION" CASCADE;
 DROP TABLE IF EXISTS users."MENU" CASCADE;
 DROP TABLE IF EXISTS users."TAB" CASCADE;
@@ -26,6 +28,8 @@ CREATE TABLE users."UTILISATEUR" (
   iduser serial PRIMARY KEY,
   login  varchar(20),
   password  varchar(20),
+  mail  varchar(40),
+  name  varchar(20),
   idrole  integer REFERENCES users."ROLEADM" (idrole)
 );
 
@@ -39,17 +43,30 @@ CREATE TABLE users."OPERATION" (
   description  varchar(30)
 );
 
-CREATE TABLE users."PERMISSION" (
-  idpermission serial PRIMARY KEY,
+CREATE TABLE users."PERMISSIONROLE" (
   idrole  integer REFERENCES users."ROLEADM" (idrole),
   idmenu  integer REFERENCES users."MENU" (idmenu),
-  idoperation  integer REFERENCES users."OPERATION" (idoperation)
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONROLE  PRIMARY KEY (idrole, idmenu, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONUTIL" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idmenu  integer REFERENCES users."MENU" (idmenu),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONUTIL  PRIMARY KEY (iduser, idmenu, idoperation)
 );
 
 CREATE TABLE users."TAB" (
   idtab serial PRIMARY KEY,
   description  varchar(30),
   idmenu  integer REFERENCES users."MENU" (idmenu)
+);
+
+CREATE TABLE users."INVITE" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idclient  integer REFERENCES public."CLIENT" (idclient),
+  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient) 
 );
 
 CREATE TABLE users."TYPE" (

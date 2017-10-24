@@ -14,8 +14,6 @@ var app = express();
 var database = require('./models/database');
 var bcrypt = require('bcrypt');
 
- 
->>>>>>> branch 'front-end-maquettes' of https://minla.dinf.usherbrooke.ca/projets-a17/eq14.git
 //view engine setup 
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
@@ -28,6 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', index);
+app.use('/users', users);
+app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
 app.use('/', fournisseurs);
