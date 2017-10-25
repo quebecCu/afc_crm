@@ -13,13 +13,17 @@ router.post('/login', function(req, res) {
 	var query= ''
 	var usernameText = req.body.username;	
 	var mdpText = req.body.password;
-	db.sequelize.query('SELECT * FROM users."UTILISATEUR"',
-			{ 
-		type: db.sequelize.QueryTypes.SELECT
-			}).then(function (results) {
-				for (var i=0; i < results.length; i++) {
-					if (results[i].login === usernameText){
-						bcrypt.compare(results[i].password, mdpText, function(err, ress) {
+	 db.User.findAll({
+	        attributes: ['login', 'password'],
+	 where: {
+		    login: usernameText
+		  }
+	    }).then(function (users) {
+	    	
+				for (let  i=0; i < users.length; i++) {
+	            	if (users[i].dataValues.login === usernameText){
+
+						bcrypt.compare(users[i].password, mdpText, function(err, ress) {
 							// ress === true
 							if(!!ress){
 								res.send({ 
@@ -51,37 +55,6 @@ router.post('/login', function(req, res) {
 
 	console.log("sortie backend");
 });
-
-/*router.post('/login/v2', (req, res, next) => {
-	var usernameText = req.body.username;
-	console.log("username: ", usernameText);
-	var mdpText = req.body.password;
-	console.log("password recu hashed: ", mdpText);
-	
-	bcrypt.compare("aziz", mdpText, function(err, ress) {
-	    // ress === true
-		if(!!ress){
-			res.send({ 
-				name : 'CRM First Application',
-				title : 'welcome to the CRM App',
-				res: 'true',
-				utilisateur : [{
-					"id" : "1",
-					"first_name": "aziz",
-					"last_name": "zouaoui"
-				} ]
-			});
-		}
-			
-	});
-	
-	console.log("sortie backend");
-	const results = [];
-    console.log("Woow");
-    client.query('SELECT * FROM public."UTILISATEUR" ORDER BY iduser ASC;')
-    .then(res => console.log(res.rows[0]))
-    .catch(e => console.error(e.stack));
-});*/
 
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;

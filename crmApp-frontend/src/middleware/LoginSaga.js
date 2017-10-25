@@ -7,27 +7,32 @@ import {hashSync , genSaltSync} from 'bcryptjs';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
+import Crypto from 'crypto-js';
 
 export function * loginFlow (){
 	while(true){
-		
 		let request = yield take(LOGIN_REQUEST);
 		let {username, password} = request.data;
-		let salt = genSaltSync (10);
-		let hash = hashSync(password   , salt  );
+//		let salt = genSaltSync (10);
+//		let hash = hashSync(password   , salt  );
 		 
-		yield put ({ type: SENDING_REQUEST, sending:true})
+		yield put ({ type: SENDING_REQUEST, sending:true});
 		
+		let cryptedPassword = Crypto.AES.encrypt(password, 'secretKey13579');
+//		let bytes  = Crypto.AES.decrypt(cryptedPassword.toString(), 'secretKey13579');
+//		let text = bytes.toString(Crypto.enc.Utf8);
+//		console.log(text);
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
 		
 		axios.post(server, {
 			username: username,
-			password: hash
+			password: cryptedPassword
 		})
 		.then(function (response) {
 			if(!!response.data.res && response.data.res=== "true"){
+
 				store.dispatch(push('/PageAccueil'));
 			}
 			else {
