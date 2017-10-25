@@ -17,7 +17,6 @@ router.post('/login', function(req, res) {
 	var encodedMdp = req.body.password;
 	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
 	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
-	 
 	 db.User.findAll({
 	        attributes: ['login', 'password'],
 	 where: {
@@ -26,7 +25,7 @@ router.post('/login', function(req, res) {
 	    }).then(function (users) {
 				for (let  i=0; i < users.length; i++) {
 	            	if (users[i].dataValues.login === usernameText){
-						bcrypt.compare(users[i].dataValues.password, mdpText, function(err, ress) {
+						bcrypt.compare(mdpText, users[i].dataValues.password, function(err, ress) {
 							// ress === true
 							if(!!ress){
 								/*var token = jwt.sign({ login: login, idrole: idrole}, 'aplsszjknbndsj', { expiresIn: '24h' });

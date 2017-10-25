@@ -13,8 +13,6 @@ export function * loginFlow (){
 	while(true){
 		let request = yield take(LOGIN_REQUEST);
 		let {username, password} = request.data;
-		let salt = genSaltSync (10);
-//		let hash = hashSync(password   , salt  );
 		 
 		yield put ({ type: SENDING_REQUEST, sending:true});
 				
