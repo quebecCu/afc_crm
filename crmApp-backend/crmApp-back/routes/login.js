@@ -18,18 +18,21 @@ router.post('/login', function(req, res) {
 	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
 	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
 	 db.User.findAll({
-	        attributes: ['login', 'password'],
+	        attributes: ['login', 'password', 'idrole'],
 	 where: {
 		    login: usernameText
 		  }
 	    }).then(function (users) {
 				for (let  i=0; i < users.length; i++) {
-	            	if (users[i].dataValues.login === usernameText){
-						bcrypt.compare(mdpText, users[i].dataValues.password, function(err, ress) {
+					var loginRetrieved = users[i].dataValues.login;
+					var mdpRetrieved = users[i].dataValues.password;
+					var idroleRetrieved = users[i].dataValues.idrole;
+	            	if ( loginRetrieved === usernameText){
+						bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
 							// ress === true
 							if(!!ress){
-								/*var token = jwt.sign({ login: login, idrole: idrole}, 'aplsszjknbndsj', { expiresIn: '24h' });
-								res.cookie('token', token, { maxAge: 900000, httpOnly: true });*/
+								var token = jwt.sign({ login: loginRetrieved, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h' });
+								res.cookie('token', token, { maxAge: 900000, httpOnly: true });
 								res.send({ 
 									status : 'success',
 									message : null
@@ -69,8 +72,11 @@ router.post('/login', function(req, res) {
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;
 	console.log("username: ", usernameText);
-	var mdpText = req.body.password;
+	var encodedMdp = req.body.password;
 	console.log("encrypted password: ", mdpText);
+	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
+	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
+	
 	/*var mail = req.body.mail;
 	console.log("mail: ", mail);
 	var idrole = req.body.idrole;
