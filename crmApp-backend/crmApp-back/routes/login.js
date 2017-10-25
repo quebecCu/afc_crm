@@ -3,7 +3,7 @@ var router = express.Router();
 var app = express();
 var client = require('../models/database');
 //Load the bcrypt module
-var bcrypt = require('bcrypt');
+var {hashSync , genSaltSync} = require ('bcryptjs');
 var db = require('../models');
 
 
@@ -83,28 +83,42 @@ router.post('/login', function(req, res) {
     .catch(e => console.error(e.stack));
 });*/
 
+/*var jwt = require('jsonwebtoken');
+var token = jwt.sign({ login: login, idrole: idrole}, 'aplsszjknbndsj', { expiresIn: '24h' });
+res.cookie('token', token, { maxAge: 900000, httpOnly: true });*/
+
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;
 	console.log("username: ", usernameText);
 	var mdpText = req.body.password;
-	console.log("password recu hashed: ", mdpText);
+	console.log("encrypted password: ", mdpText);
+	/*var mail = req.body.mail;
+	console.log("mail: ", mail);
+	var idrole = req.body.idrole;
+	console.log("idrole: ", idrole);*/
+
+	let salt = genSaltSync (10);
+	let hash = hashSync(mdpText, salt);
+	console.log(hash);
 	
-	let salt = bcrypt.genSaltSync(2);
-	console.log("lolillol");
-	let hash = bcrypt.hashSync(password, salt);
-	console.log("lolillol");
-    client.query('INSERT INTO public."UTILISATEURS" VALUES (DEFAULT, ' + usernameText + ', ' + hash + ', 0);')
-    .then(respg => res.send({ 
-		name : 'CRM First Application',
-		title : 'welcome to the CRM App',
-		res: 'true',
-		utilisateur : [{
-			"id" : respg.rows[0].iduser,
-			"first_name": respg.rows[0].login,
-			"last_name": respg.rows[0].password
-		} ]
-	}))
-    .catch(e => console.error(e.stack));
+	db.User.findCreateFind({where: {login: usernameText}, defaults: {password: hash}})
+	  .spread(function(user, created) {
+		    console.log(user.get({
+		      plain: true
+		    }));
+		    console.log(created);
+		    if (!created) {
+				res.send({ 
+					status : 'fail',
+					message : 'Ce login n\'est pas disponible'
+				});
+			} else {
+				res.send({ 
+					status : 'success',
+					message : null
+				});
+			}
+	  });
 });
 
 module.exports = router;

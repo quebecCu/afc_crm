@@ -4,13 +4,13 @@ var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 //-----------------------------bdname-----username-----password----
-var sequelize = new Sequelize('postgres', 'postgres', 'root', {
-    host: 'localhost',
+var sequelize = new Sequelize('tboluoek', 'tboluoek', 'pl3bxNOTdACJyxSawxgeM1wtNcCgN9no', {
+    host: 'horton.elephantsql.com',
     port: '5432',
     dialect: 'postgres',
 
     pool: {
-        max: 5,
+        max: 3,
         min: 0,
         idle: 10000
     },
@@ -52,9 +52,18 @@ const Person = sequelize.define('PERSONNE', {
     tableName: 'PERSONNE'});
 
 const User = sequelize.define('UTILISATEUR', {
+	iduser: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     login: Sequelize.STRING,
-    password: Sequelize.STRING
+    password: Sequelize.STRING,
+    mail: Sequelize.STRING,
+    name: Sequelize.STRING,
+    idrole: Sequelize.INTEGER
 }, {
+	timestamps: false,
     schema: 'users',
     tableName: '"UTILISATEUR"'});
 
