@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS users."OPERATION" CASCADE;
 DROP TABLE IF EXISTS users."MENU" CASCADE;
 DROP TABLE IF EXISTS users."TAB" CASCADE;
 DROP TABLE IF EXISTS users."CHAMP" CASCADE;
-DROP TABLE IF EXISTS users."TYPE" CASCADE;
+DROP TABLE IF EXISTS users."TYPECHAMP" CASCADE;
 
 CREATE TABLE users."ROLEADM" (
   idrole serial PRIMARY KEY,
@@ -35,7 +35,7 @@ CREATE TABLE users."UTILISATEUR" (
 
 CREATE TABLE users."MENU" (
   idmenu serial PRIMARY KEY,
-  description  varchar(30)
+  description  varchar(60)
 );
 
 CREATE TABLE users."OPERATION" (
@@ -69,7 +69,7 @@ CREATE TABLE users."INVITE" (
   CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient) 
 );
 
-CREATE TABLE users."TYPE" (
+CREATE TABLE users."TYPECHAMP" (
   idtype serial PRIMARY KEY,
   description  varchar(30)
 );
@@ -77,7 +77,7 @@ CREATE TABLE users."TYPE" (
 CREATE TABLE users."CHAMP" (
   idchamp serial PRIMARY KEY,
   idtab  integer REFERENCES users."TAB" (idtab),
-  idtype  integer REFERENCES users."TYPE" (idtype),
+  idtype  integer REFERENCES users."TYPECHAMP" (idtype),
   description  varchar(30),
   priorité  integer,
   obligatoire  boolean,
