@@ -19,9 +19,6 @@ export function * loginFlow (){
 		yield put ({ type: SENDING_REQUEST, sending:true});
 		
 		let cryptedPassword = Crypto.AES.encrypt(password, 'secretKey13579');
-//		let bytes  = Crypto.AES.decrypt(cryptedPassword.toString(), 'secretKey13579');
-//		let text = bytes.toString(Crypto.enc.Utf8);
-//		console.log(text);
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
