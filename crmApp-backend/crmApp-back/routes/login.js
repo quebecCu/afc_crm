@@ -5,6 +5,8 @@ var client = require('../models/database');
 //Load the bcrypt module
 var {hashSync , genSaltSync} = require ('bcryptjs');
 var db = require('../models');
+var crypto = require ('crypto-js');
+var jwt = require('jsonwebtoken');
 
 
 /* GET home page. */
@@ -12,24 +14,36 @@ router.post('/login', function(req, res) {
 
 	var query= ''
 	var usernameText = req.body.username;	
-	var mdpText = req.body.password;
-	db.sequelize.query('SELECT * FROM users."UTILISATEUR"',
-			{ 
-		type: db.sequelize.QueryTypes.SELECT
-			}).then(function (results) {
-				for (var i=0; i < results.length; i++) {
-					if (results[i].login === usernameText){
-						bcrypt.compare(results[i].password, mdpText, function(err, ress) {
+	var encodedMdp = req.body.password;
+	
+	var bytes  = cryptoJS.AES.decrypt(encodedMdp.toString(), 'secretKey13579');
+	var mdpText = bytes.toString(cryptoJS.enc.Utf8);
+	 
+	 db.User.findAll({
+	        attributes: ['login', 'password'],
+	 where: {
+		    login: usernameText
+		  }
+	    }).then(function (users) {
+	    	
+				for (let  i=0; i < users.length; i++) {
+	            	if (users[i].dataValues.login === usernameText){
+
+						bcrypt.compare(users[i].password, mdpText, function(err, ress) {
 							// ress === true
 							if(!!ress){
+								/*var token = jwt.sign({ login: login, idrole: idrole}, 'aplsszjknbndsj', { expiresIn: '24h' });
+								res.cookie('token', token, { maxAge: 900000, httpOnly: true });*/
 								res.send({ 
-									res: 'true',
+									status : 'success',
+									message : null
 								});
 							}
 							else {
 								console.log("else est faux");
 								res.send({ 
-									res: 'false'
+									status : 'error',
+									message : 'L\'identification n\'a pas pu être réalisée'
 								});
 							}
 						});
@@ -42,7 +56,8 @@ router.post('/login', function(req, res) {
 					{
 						console.log("Username n'existe pas")
 						res.send({ 
-							res: 'false'
+							status : 'fail',
+							message : 'Le login est incorrect'
 						});
 					}
 				}
@@ -52,40 +67,8 @@ router.post('/login', function(req, res) {
 	console.log("sortie backend");
 });
 
-/*router.post('/login/v2', (req, res, next) => {
-	var usernameText = req.body.username;
-	console.log("username: ", usernameText);
-	var mdpText = req.body.password;
-	console.log("password recu hashed: ", mdpText);
-	
-	bcrypt.compare("aziz", mdpText, function(err, ress) {
-	    // ress === true
-		if(!!ress){
-			res.send({ 
-				name : 'CRM First Application',
-				title : 'welcome to the CRM App',
-				res: 'true',
-				utilisateur : [{
-					"id" : "1",
-					"first_name": "aziz",
-					"last_name": "zouaoui"
-				} ]
-			});
-		}
-			
-	});
-	
-	console.log("sortie backend");
-	const results = [];
-    console.log("Woow");
-    client.query('SELECT * FROM public."UTILISATEUR" ORDER BY iduser ASC;')
-    .then(res => console.log(res.rows[0]))
-    .catch(e => console.error(e.stack));
-});*/
 
-/*var jwt = require('jsonwebtoken');
-var token = jwt.sign({ login: login, idrole: idrole}, 'aplsszjknbndsj', { expiresIn: '24h' });
-res.cookie('token', token, { maxAge: 900000, httpOnly: true });*/
+
 
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;
