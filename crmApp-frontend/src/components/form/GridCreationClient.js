@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../../../node_modules/react-grid-layout/css/styles.css';
-import '../../../node_modules/react-resizable/css/styles.css';
+import '../../style/grid-layout.css.css';
+import '../../style/grid-rezisable.css.css';
 import '../../style/GridCreationClient.css';
 import ReactGridLayout from 'react-grid-layout';
 
