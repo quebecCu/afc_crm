@@ -5,9 +5,9 @@ var client = require('../models/database');
 //Load the bcrypt module
 var {hashSync , genSaltSync} = require ('bcryptjs');
 var db = require('../models');
-var crypto = require ('crypto-js');
+var CryptoJS = require("crypto-js");
 var jwt = require('jsonwebtoken');
-
+var bcrypt = require ('bcryptjs');
 
 /* GET home page. */
 router.post('/login', function(req, res) {
@@ -15,9 +15,8 @@ router.post('/login', function(req, res) {
 	var query= ''
 	var usernameText = req.body.username;	
 	var encodedMdp = req.body.password;
-	
-	var bytes  = cryptoJS.AES.decrypt(encodedMdp.toString(), 'secretKey13579');
-	var mdpText = bytes.toString(cryptoJS.enc.Utf8);
+	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
+	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
 	 
 	 db.User.findAll({
 	        attributes: ['login', 'password'],
@@ -25,11 +24,9 @@ router.post('/login', function(req, res) {
 		    login: usernameText
 		  }
 	    }).then(function (users) {
-	    	
 				for (let  i=0; i < users.length; i++) {
 	            	if (users[i].dataValues.login === usernameText){
-
-						bcrypt.compare(users[i].password, mdpText, function(err, ress) {
+						bcrypt.compare(users[i].dataValues.password, mdpText, function(err, ress) {
 							// ress === true
 							if(!!ress){
 								/*var token = jwt.sign({ login: login, idrole: idrole}, 'aplsszjknbndsj', { expiresIn: '24h' });
