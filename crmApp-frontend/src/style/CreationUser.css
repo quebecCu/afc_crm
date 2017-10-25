@@ -6,3 +6,26 @@ span.titre{
     text-decoration: underline;
     font-weight: bold;
 }
+
+button.ok{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    border-radius:8px;
+}
+button.ok:disabled{
+    opacity: 0.4;
+    cursor: default;
+}
+
+
+button.del{
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    border-radius:8px;
+}

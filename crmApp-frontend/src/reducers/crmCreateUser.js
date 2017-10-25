@@ -9,23 +9,25 @@ let initialState={
         login: '',
         mdpProv: '',
         mail:'',
-        permissionsDefault:[{
-            role:'employe',
-            droits:["lecture","ecriture"],
-            tables:["clientsColl","fournisseursColl"]
+        permissionsDefault:[
+            {
+                role:'employe',
+                perm:[{idDroit: 0, droit:"lecture", table:"clientsColl"},
+                    {idDroit:1,droit:"ecriture",table:"clientsColl"},
+                    {idDroit:2,droit:"lecture",table:"fournisseursColl"},
+                    {idDroit:3,droit:"ecriture",table:"fournisseursColl"}]
             },
             {
                 role:'visiteurClient',
-                droits:["lecture"],
-                tables:["clientsColl"]
+                perm:[{idDroit: 0, droit:"lecture", table:"clientsColl"}]
             },
             {
                 role:'visiteurFournisseur',
-                droits:["lecture"],
-                tables:["fournisseursColl"]
+                perm:[{idDroit: 0, droit:"lecture", table:"fournisseursColl"}]
+
             }
         ],
-        permissionsUser:{}
+        permissionsUser:[]
 
     },
     errors:'',

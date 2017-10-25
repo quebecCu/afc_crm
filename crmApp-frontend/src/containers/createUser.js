@@ -24,7 +24,6 @@ class createUser extends React.Component{
 }
 
 function mapStateToProps (state) {
-    console.log("mapstatetoprops");
     return{
         crmCreateUser: state.crmCreateUser
     }
