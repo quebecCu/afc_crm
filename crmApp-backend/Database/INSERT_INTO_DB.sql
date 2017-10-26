@@ -72,22 +72,22 @@ INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (1, 8, 4)
 
 --User--
 INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 1, 1);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 1, 4);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 1, 5);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 1, 6);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 1, 7);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 1, 8);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 4, 1);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 5, 1);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 6, 1);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 7, 1);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (2, 8, 1);
 
 --INVITE--
 INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (3, 1, 1);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (3, 1, 4);
-INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (3, 1, 7);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (3, 4, 1);
+INSERT INTO users."PERMISSIONROLE"(idrole, idmenu, idoperation) VALUES (3, 7, 1);
 
 
 --BEGINDATATEST
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('alain_prouvist', 'crm2017', 'ceciestuntest@test.com', 1);
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('maxime_isation', 'crm2017', 'ceciestuntest@test.com', 2);
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('jean_neymar', 'crm2017', 'ceciestuntest@test.com', 3);
+INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('alain_prouvist', 'crm2017', 'ceciestuntest@test.com', 'iamatest', 1);
+INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('maxime_isation', 'crm2017', 'ceciestuntest@test.com', 'iamatest',  2);
+INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('jean_neymar', 'crm2017', 'ceciestuntest@test.com', 'iamatest',  3);
 --ENDDATATEST
 -----end user schema -----
 
