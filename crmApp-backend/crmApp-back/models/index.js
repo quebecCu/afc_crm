@@ -4,8 +4,8 @@ var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 //-----------------------------bdname-----username-----password----
-var sequelize = new Sequelize('postgres', 'postgres', 'password', {
-    host: 'localhost',
+var sequelize = new Sequelize('tboluoek', 'tboluoek', 'pl3bxNOTdACJyxSawxgeM1wtNcCgN9no', {
+    host: 'horton.elephantsql.com',
     port: '5432',
     dialect: 'postgres',
 
@@ -67,10 +67,47 @@ const User = sequelize.define('UTILISATEUR', {
     schema: 'users',
     tableName: '"UTILISATEUR"'});
 
+const PermissionUtil = sequelize.define('PERMISSIONUTIL', {
+}, {
+	timestamps: false,
+    schema: 'users',
+    tableName: '"PERMISSIONUTIL"'});
+
+const Operation = sequelize.define('OPERATION', {
+	idoperation: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    }
+}, {
+	timestamps: false,
+    schema: 'users',
+    tableName: '"OPERATION"'});
+
+const Menu = sequelize.define('Menu', {
+	idmenu: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    }
+}, {
+	timestamps: false,
+    schema: 'users',
+    tableName: '"MENU"'});
+
+User.hasMany(PermissionUtil, {foreignKey: 'iduser'});
+PermissionUtil.belongsTo(User, {foreignKey: 'iduser'});
+Operation.hasMany(PermissionUtil, {foreignKey: 'idoperation'});
+PermissionUtil.belongsTo(Operation, {foreignKey: 'idoperation'});
+Menu.hasMany(PermissionUtil, {foreignKey: 'idmenu'});
+PermissionUtil.belongsTo(Menu, {foreignKey: 'idmenu'});
 
 db.Person = Person;
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.User = User;
+db.Menu = Menu;
+db.Operation = Operation;
+db.PermissionUtil = PermissionUtil;
 
 module.exports = db;
