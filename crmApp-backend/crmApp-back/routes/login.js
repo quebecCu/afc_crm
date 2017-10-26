@@ -79,7 +79,7 @@ router.post('/login/add', (req, res, next) => {
 	console.log("mail: ", mail);
 	var idrole = req.body.idrole;
 	console.log("idrole: ", idrole);*/
-
+	
 	let salt = genSaltSync (10);
 	let hash = hashSync(mdpText, salt);
 	console.log(hash);
@@ -96,10 +96,16 @@ router.post('/login/add', (req, res, next) => {
 					message : 'Ce login n\'est pas disponible'
 				});
 			} else {
-				res.send({ 
+			 	res.send({ 
 					status : 'success',
 					message : null
 				});
+			    /*security.addDefaultRights(user.login, 2, function() { 
+				    	res.send({ 
+						status : 'success',
+						message : null
+					});
+			    	});	*/
 			}
 	  });
 });

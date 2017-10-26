@@ -27,7 +27,7 @@ CREATE TABLE users."ROLEADM" (
 CREATE TABLE users."UTILISATEUR" (
   iduser serial PRIMARY KEY,
   login  varchar(20),
-  password  varchar(20),
+  password  varchar(200),
   mail  varchar(40),
   name  varchar(20),
   idrole  integer REFERENCES users."ROLEADM" (idrole)

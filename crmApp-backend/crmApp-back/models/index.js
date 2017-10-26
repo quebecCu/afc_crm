@@ -95,12 +95,36 @@ const Menu = sequelize.define('Menu', {
     schema: 'users',
     tableName: '"MENU"'});
 
+const PermissionRole = sequelize.define('PERMISSIONUTIL', {
+}, {
+	timestamps: false,
+    schema: 'users',
+    tableName: '"PERMISSIONROLE"'});
+
+const Role = sequelize.define('Menu', {
+	idrole: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    }
+}, {
+	timestamps: false,
+    schema: 'users',
+    tableName: '"ROLEADM"'});
+
 User.hasMany(PermissionUtil, {foreignKey: 'iduser'});
 PermissionUtil.belongsTo(User, {foreignKey: 'iduser'});
 Operation.hasMany(PermissionUtil, {foreignKey: 'idoperation'});
 PermissionUtil.belongsTo(Operation, {foreignKey: 'idoperation'});
 Menu.hasMany(PermissionUtil, {foreignKey: 'idmenu'});
 PermissionUtil.belongsTo(Menu, {foreignKey: 'idmenu'});
+
+Role.hasMany(PermissionRole, {foreignKey: 'idrole'});
+PermissionRole.belongsTo(Role, {foreignKey: 'idrole'});
+Operation.hasMany(PermissionRole, {foreignKey: 'idoperation'});
+PermissionRole.belongsTo(Operation, {foreignKey: 'idoperation'});
+Menu.hasMany(PermissionRole, {foreignKey: 'idmenu'});
+PermissionRole.belongsTo(Menu, {foreignKey: 'idmenu'});
 
 db.Person = Person;
 db.sequelize = sequelize;
@@ -109,5 +133,7 @@ db.User = User;
 db.Menu = Menu;
 db.Operation = Operation;
 db.PermissionUtil = PermissionUtil;
+db.PermissionRole = PermissionRole;
+db.Role = Role;
 
 module.exports = db;
