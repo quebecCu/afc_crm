@@ -8,6 +8,7 @@ var db = require('../models');
 var CryptoJS = require("crypto-js");
 var jwt = require('jsonwebtoken');
 var bcrypt = require ('bcryptjs');
+var security = require ('../security/security');
 
 /* GET home page. */
 router.post('/login', function(req, res) {
@@ -17,48 +18,45 @@ router.post('/login', function(req, res) {
 	var encodedMdp = req.body.password;
 	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
 	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
-	 db.User.findAll({
+	 db.User.findOne({
 	        attributes: ['login', 'password', 'idrole'],
 	 where: {
 		    login: usernameText
 		  }
-	    }).then(function (users) {
-				for (let  i=0; i < users.length; i++) {
-					var loginRetrieved = users[i].dataValues.login;
-					var mdpRetrieved = users[i].dataValues.password;
-					var idroleRetrieved = users[i].dataValues.idrole;
-	            	if ( loginRetrieved === usernameText){
-						bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
-							// ress === true
-							if(!!ress){
-								var token = jwt.sign({ login: loginRetrieved, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h' });
-								res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-								res.send({ 
-									status : 'success',
-									message : null
-								});
-							}
-							else {
-								console.log("else est faux");
-								res.send({ 
-									status : 'error',
-									message : 'L\'identification n\'a pas pu être réalisée'
-								});
-							}
-						});
-					
-						break;
-					}
+	    }).then(function (user) {
+			if(user !== null) {
+				var loginRetrieved = user.dataValues.login;
+				var mdpRetrieved = user.dataValues.password;
+				var idroleRetrieved = user.dataValues.idrole;
+					bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
+						// ress === true
+						if(!!ress){
+							var token = jwt.sign({ login: loginRetrieved, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h' });
+							res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+							res.send({ 
+								status : 'success',
+								message : null
+							});
+						}
+						else {
+							console.log("else est faux");
+							res.send({ 
+								status : 'error',
+								message : 'L\'identification n\'a pas pu être réalisée'
+							});
+						}
+					});
+				
+				}
 
-					else
-					
-					{
-						console.log("Username n'existe pas")
-						res.send({ 
-							status : 'fail',
-							message : 'Le login est incorrect'
-						});
-					}
+				else
+				
+				{
+					console.log("Username n'existe pas")
+					res.send({ 
+						status : 'fail',
+						message : 'Le login est incorrect'
+					});
 				}
 			});
 
