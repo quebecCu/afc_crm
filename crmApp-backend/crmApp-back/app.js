@@ -11,7 +11,6 @@ var reset = require('./routes/reset');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
 var app = express();
-var database = require('./models/database');
 var bcrypt = require('bcrypt');
 
 //view engine setup 

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var app = express();
-var client = require('../models/database');
 //Load the bcrypt module
 var {hashSync , genSaltSync} = require ('bcryptjs');
 var db = require('../models');

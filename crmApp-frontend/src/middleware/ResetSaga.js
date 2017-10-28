@@ -27,9 +27,8 @@ export function * resetFlow (){
 		})
 		.then(function (response) {
 //			console.log(response.data.emailSent);
-			if(!!response.data.emailSent && response.data.emailSent == "true"){
-				alert("Le mot de passe vous a été transmis par courriel");
-
+			if(!!response.data && response.data.status === "success"){
+				alert("Veuillez consulter vos courriels svp");
 				store.dispatch(push('/'));
 			}
 			else {
