@@ -60,7 +60,9 @@ const User = sequelize.define('UTILISATEUR', {
     password: Sequelize.STRING,
     mail: Sequelize.STRING,
     name: Sequelize.STRING,
-    idrole: Sequelize.INTEGER
+    idrole: Sequelize.INTEGER,
+    resetPasswordToken: Sequelize.STRING,
+    resetPasswordExpires: Sequelize.STRING
 }, {
 	timestamps: false,
     schema: 'users',

@@ -30,7 +30,9 @@ CREATE TABLE users."UTILISATEUR" (
   password  varchar(200),
   mail  varchar(40),
   name  varchar(20),
-  idrole  integer REFERENCES users."ROLEADM" (idrole)
+  idrole  integer REFERENCES users."ROLEADM" (idrole),
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 );
 
 CREATE TABLE users."MENU" (

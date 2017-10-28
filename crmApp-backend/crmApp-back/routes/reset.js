@@ -10,7 +10,7 @@ router.post('/reset', function(req, res) {
 	var emailReceived = req.body.email;
 	var _send = false;
 	var _token = Math.random().toString(36).slice(2);
-
+	var chrono = Date.now() + 3600000;
  	var transporter = nodemailer.createTransport({
         service: 'gmail',
         secure: false, 
@@ -30,11 +30,13 @@ router.post('/reset', function(req, res) {
           };
 	
 	 db.User.findOne({
-	        attributes: ['iduser','login', 'password', 'idrole', 'mail', 'name'],
+	        attributes: ['iduser','login', 'password', 'idrole', 'mail', 'name', 'resetpasswordtoken','resetpasswordexpires'],
 	 where: {
 		 mail: emailReceived
 		  }
 	 }).then(function (user) {
+		 var test = user.dataValues.resetpasswordtoken;
+		 console.log("testtttttt  " + test );
 		 if(!user) {
 			 res.send({ 
 				 status : 'fail',
@@ -50,13 +52,27 @@ router.post('/reset', function(req, res) {
 		              console.log('Email sent: ' + info.response);
 		                  }
 		        });
+
+			  _updateFunction(_token, chrono);
 			 res.send({ 
+				 
 				 resetPasswordToken : _token,
 				 resetPasswordExpires : Date.now() + 3600000,
 				 status : 'success'
 			 });
 		 }
+		 
+	
 	 });
+	
+	 function _updateFunction (_token, chrono) {
+		 console.log("_________resetpasswordtoken   " + _token);
+		    
+		 db.sequelize.query('UPDATE users."UTILISATEUR" SET resetpasswordtoken=\''+ _token + ' \''  + ' where mail = \'' +  emailReceived + '\'')
+
+		 db.sequelize.query('UPDATE users."UTILISATEUR" SET resetpasswordexpires=\''+ chrono + ' \''  + ' where mail = \'' +  emailReceived + '\'')
+
+}
 });
 
 module.exports = router;
