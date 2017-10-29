@@ -2,10 +2,12 @@ import {combineReducers} from 'redux';
 import { routerReducer} from 'react-router-redux';
 import {CLEAR_SESSION} from '../actions/crmLogin';
 import {RESET_REQUEST} from '../actions/crmReset';
+import {RESET_PASSWORD_REQUEST} from '../actions/crmResetPassword';
 import {SEARCH_REQUEST} from '../actions/crmRechercheCollective';
 import {SEARCH_REQUEST_FOUR} from '../actions/crmRechercheFournisseur';
 import crmLogin from './crmLogin';
 import crmReset from './crmReset';
+import crmResetPassword from './crmResetPassword';
 import crmRechercheCollective from './crmRechercheCollective';
 import crmRechercheFournisseur from './crmRechercheFournisseur';
 import crmCreateUser from './crmCreateUser';
@@ -18,7 +20,8 @@ const appReducer = combineReducers ({
 	crmReset,
 	crmRechercheCollective,
 	crmRechercheFournisseur,
-	crmCreateUser
+	crmCreateUser,
+	crmResetPassword
 })
 
 
@@ -39,6 +42,10 @@ const rootReducer = (state, action) => {
 	case SEARCH_REQUEST_FOUR: {
 		const {routerReducer, crmRechercheFournisseur} = state;
 		state = {routerReducer, crmRechercheFournisseur};
+	}
+	case RESET_PASSWORD_REQUEST: {
+		const {routerReducer, crmResetPassword} = state;
+		state = {routerReducer, crmResetPassword};
 	}
 	}
 	return appReducer(state, action);

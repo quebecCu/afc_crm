@@ -7,6 +7,8 @@ import {
 import {BarreNav} from "./components/BarreNav";
 import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
+
+import ResetPagePassword from "./containers/ResetPagePasswordContainer";
 import AccueilPageContainer from "./containers/AccueilPageContainer";
 import CollectivePageContainer from "./containers/CollectivePageContainer";
 
@@ -30,7 +32,8 @@ class App extends Component {
 					<Route exact path="/" component={LoginPage}/>
 					<Route path="/PageAccueil/:id" component={BarreNav} />
 					<Route exact path="/PageAccueil" component={AccueilPageContainer} />
- 					<Route exact path="/Reset" component={ResetPage} />
+					<Route exact path="/Reset" component={ResetPage} />
+					<Route exact path="/ResetPassword" component={ResetPagePassword} />
 					</div>
 			</ConnectedRouter>
 			</Provider>
