@@ -142,6 +142,7 @@ CREATE TABLE public."CLIENT" (
   idclient  serial  PRIMARY KEY,
   idetat  integer  REFERENCES "ETAT" (idetat),
   idprovenance  integer  REFERENCES "PROVENANCE" (idprovenance),
+  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   notes text
 );
 
@@ -268,7 +269,6 @@ CREATE TABLE public."ENTREPRISE" (
   rver_rmq varchar(180),
   nb_etq_a_imprimer  int2,
   nb_mois_entente  integer, -- ?
-  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idactivite  integer  REFERENCES  "ACTIVITE" (idactivite)
 );

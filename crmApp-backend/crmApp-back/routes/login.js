@@ -26,9 +26,7 @@ router.post('/login', function(req, res) {
 				var loginRetrieved = user.dataValues.login;
 				var mdpRetrieved = user.dataValues.password;
 				var idroleRetrieved = user.dataValues.idrole;
-
 					bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
-
 						// ress === true
 						if(!!ress) {
 							var token = jwt.sign({ login: loginRetrieved, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h' });
@@ -62,10 +60,9 @@ router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;
 	console.log("username: ", usernameText);
 	var encodedMdp = req.body.password;
-	console.log("encrypted password: ", mdpText);
+	console.log("encrypted password: ", encodedMdp);
 	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
 	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
-	
 	/*var mail = req.body.mail;
 	console.log("mail: ", mail);
 	var idrole = req.body.idrole;
