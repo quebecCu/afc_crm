@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
 export class ButtonsComponent extends Component {
+	constructor(props) {
+		super(props);
+	}
     render() {
         let buttons;
         if (this.props.page === 'PageAccueil') {
@@ -13,6 +16,9 @@ export class ButtonsComponent extends Component {
         else if (this.props.page === 'PageCollectives') {
             buttons = [{path: '/PageAccueil/assu-col/clients', nom: 'Clients'},
                 {path: '/PageAccueil/assu-col/fournisseurs', nom:'Fournisseurs'}];
+        }
+        else if (this.props.page === 'PageCollectivesClients') {
+            buttons = [{path: '/PageAccueil/assu-col/clients/NouveauClient', nom: 'Nouveau Client'}]
         }
         return (
             <div>

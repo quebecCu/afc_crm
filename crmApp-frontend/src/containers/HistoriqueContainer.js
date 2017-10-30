@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { DossiersComponent } from "../components/DossiersComponent";
+import DossiersComponent from "../components/DossiersComponent";
 import '../style/PageAccueil.css';
 
-export class HistoriqueContainer extends Component {
+class HistoriqueContainer extends Component {
     constructor(props) {
         super(props);
         this.state = { historique: [{date: "20/09/2017", nom: "Kim", type: "Individuelle"},{date: "18/09/2017", nom: "Co", type: "Collective"}],
@@ -12,16 +12,12 @@ export class HistoriqueContainer extends Component {
                     {nom: 'Goal', employe: 'Fry Rob', police: '43H98O', mois: 'Septembre', assureur: 'Pomm'},
                     {nom: 'GRILL', employe: 'Some Guy', police: 'FFFFFF', mois: 'Decembre', assureur: 'Med'},
                     {nom: 'Fukiko Corp.', employe: 'Fukiko Garbe', police: '123432', mois: 'Decembre', assureur: 'Gilles Garbe'}
-                ],
-                fournisseur: [
-                    {nom: 'Enterprise', contact: 'Gael Fou'},
-                    {nom: 'Pomm', contact: 'Sasha Du'},
-                    {nom: 'Med', contact: 'Elo Si'},
-                    {nom: 'RE', contact: 'Maxime Tar'}
                 ]
             };
         }
-    componentWillMount() {
+
+
+    render() {
         switch (this.props.page) {
             case 'PageAccueil':
                 this.table = (
@@ -62,7 +58,7 @@ export class HistoriqueContainer extends Component {
                             <th>Nom contact</th>
                         </tr>
                         </thead>
-                        <DossiersComponent fournisseur={this.state.fournisseur} history={this.props.history}/>
+                        <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
                     </table>
                 );
                 break;
@@ -70,8 +66,8 @@ export class HistoriqueContainer extends Component {
 
                 break;
         }
-    }
-    render() {
         return this.table;
     }
 }
+
+export default (HistoriqueContainer);

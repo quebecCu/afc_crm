@@ -6,6 +6,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
 
 /*--login start here--*/
+.alert-danger {
+	color: red;
+}
  .reset {
    font-size: 100%;
    background:#0086E5; 
@@ -34,7 +37,7 @@ h2 {
     font-weight: 700;
 }}
 .reset .element-main {
-    width:27%;
+    width:50%;
     background: #fff;
     margin:4em auto 0em;
     border-radius: 5px;

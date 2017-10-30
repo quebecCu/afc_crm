@@ -8,7 +8,10 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
+var fournisseurs = require('./routes/fournisseurs');
+var assurancesCollectives = require('./routes/assurancesCollectives');
 var app = express();
+var bcrypt = require('bcrypt');
 
 //view engine setup 
 app.set('views', path.join(__dirname, 'views'));
@@ -22,10 +25,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use( function(req, res, next) {
+	  res.header('Access-Control-Allow-Origin', '*');
+	  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+	  next();
+	});
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/', login);
 app.use('/', reset);
+app.use('/', assurancesCollectives);
+app.use('/', fournisseurs);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

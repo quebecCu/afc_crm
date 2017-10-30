@@ -1,9 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
 /****** LOGIN MODAL ******/
+#login-modal {
+	margin-top: 15em;
+}
 .loginmodal-container {
 	padding: 30px;
-	width: 27%;
+	width: 50%;
 	background-color: #F7F7F7;
 	margin: 4em auto 0em;
 	border-radius: 2px;
@@ -113,3 +116,8 @@
 .login-help {
 	font-size: 12px;
 }
+
+@media (max-width: 880px) and (min-width: 375px) {
+	.loginmodal-container {
+    width: auto;}
+	}

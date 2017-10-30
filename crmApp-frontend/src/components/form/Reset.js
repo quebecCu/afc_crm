@@ -9,7 +9,7 @@ import {push} from 'react-router-redux';
 class Reset extends Component   {
 	constructor() {
 		super();
-		
+		this.state = {error: false};
 		this._changeEmail = this._changeEmail.bind(this);
 		this._emitChange = this._emitChange.bind(this);
 		this._submit = this._submit.bind(this);
@@ -34,7 +34,7 @@ class Reset extends Component   {
 	
 
 	render() {
-		return (
+		return ( 
 
 				<div className ="reset">
 				<div className="elelment">
@@ -42,11 +42,13 @@ class Reset extends Component   {
 					<div className="element-main">
 						<h1>Mot de passe oublié</h1>
 						<p> Entrez le courriel courrespondant a votre dossier</p>
-						<form>
-							<input type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} />
-							<div className="form-group" onClick = {this._submit} ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
-							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button></div>
-							</form>
+						<form method="POST" onSubmit = {this._submit}>
+							<input  type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} required/>
+							<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
+							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button>
+							</div>
+						</form>
+						
 					</div>
 				</div>
 				<div className="copy-right">

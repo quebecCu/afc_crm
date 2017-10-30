@@ -1,5 +1,5 @@
---## SCRIPT DE CREATION DES TABLES 								  ###
---## PLATEFORME: PostgreSQL								          ###
+--## SCRIPT DE CREATION DES TABLES 				    ###
+--## PLATEFORME: PostgreSQL							###
 --## AUTEURS: Equipe CRM - UdeS A17                 ###
 --## DECEMBRE 2017                                  ###
 --## COPYRIGHT (c)                                  ###
@@ -243,7 +243,7 @@ CREATE TABLE public."ACTIVITE" (
 
 CREATE TABLE public."CHAMBRE_COMMERCE" (
   idchambrecommerce  serial  PRIMARY KEY,
-  libellechambrecommerce  varchar(30)
+  libellechambrecommerce  varchar(60)
 );
 
 CREATE TABLE public."ENTREPRISE" (

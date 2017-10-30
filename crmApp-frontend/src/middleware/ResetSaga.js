@@ -27,7 +27,8 @@ export function * resetFlow (){
 		})
 		.then(function (response) {
 //			console.log(response.data.emailSent);
-			if(!!response.data.emailSent && response.data.emailSent == "true"){
+			if(!!response.data && response.data.status === "success"){
+				alert("Veuillez consulter vos courriels svp");
 				store.dispatch(push('/'));
 			}
 			else {
@@ -38,7 +39,6 @@ export function * resetFlow (){
 		})
 		.catch(function (error) {
 			console.log(error);
-			Alert.error('Test message 3');
 		});
 	}
 }  

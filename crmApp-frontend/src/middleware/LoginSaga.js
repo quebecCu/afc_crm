@@ -7,34 +7,34 @@ import {hashSync , genSaltSync} from 'bcryptjs';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
+import CryptoJS from 'crypto-js';
 
 export function * loginFlow (){
 	while(true){
-		
 		let request = yield take(LOGIN_REQUEST);
 		let {username, password} = request.data;
-		let salt = genSaltSync (10);
-		let hash = hashSync(password   , salt  );
 		 
-		yield put ({ type: SENDING_REQUEST, sending:true})
-		
+		yield put ({ type: SENDING_REQUEST, sending:true});
+				
+
+		var encrypted = CryptoJS.AES.encrypt(password, "secretKey13579").toString();
+	
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
 		
 		axios.post(server, {
 			username: username,
-			password: hash
+			password: encrypted
 		})
 		.then(function (response) {
-//			console.log(response.data.res);
-			if(!!response.data.res && response.data.res== "true"){
+			if(!!response.data.status && response.data.status=== "success"){
+
 				store.dispatch(push('/PageAccueil'));
 			}
 			else {
 				alert ("identifiant ou mot de passe incorrects");
 			}
-//			callbackResponse: {response.data.res}
 		})
 		.catch(function (error) {
 			console.log(error);
