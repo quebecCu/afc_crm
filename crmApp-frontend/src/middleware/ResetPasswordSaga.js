@@ -6,9 +6,10 @@ import {hashSync , genSaltSync} from 'bcryptjs';
 //import genSalt from '../salt';
 import axios from 'axios';
 import {push} from 'react-router-redux';
-import {store} from '../store';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
+import {store} from '../store';
+import CryptoJS from 'crypto-js';
 
 export function * resetPasswordFlow (){
 	while(true){
@@ -18,13 +19,15 @@ export function * resetPasswordFlow (){
 		 
 		yield put ({ type: SENDING_PASSWORD_REQUEST, sending:true})
 		
+		var encryptedNewPassword = CryptoJS.AES.encrypt(newPassword, "secretKey24680").toString();
+		var encryptedConfirmPassword = CryptoJS.AES.encrypt(confirmPassword, "secretKey24680").toString();
 		//communication avec server
 		var server = "http://localhost:3002/ResetPassword";
 		//changer la location de la variable server pour plus de securite 
 		
 		axios.post(server, {
-			newPassword: newPassword,
-			confirmPassword: confirmPassword 
+			newPassword: encryptedNewPassword,
+			confirmPassword: encryptedConfirmPassword 
 		})
 		.then(function (response) {
 //			console.log(response.data.emailSent);

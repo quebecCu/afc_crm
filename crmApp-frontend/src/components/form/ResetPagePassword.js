@@ -48,9 +48,9 @@ class ResetPagePassword extends Component   {
 						<p> Entrez votre nouveau mot de passe</p>
 						<form method="POST" onSubmit = {this._submit}>
 	
-						<input  type="password" placeholder="Votre nouveau mot de passe"  onChange={this._changeNewPassword} value={this.props.formState.newPassword} required/>
+						<input  pattern=".{5,10}" type="password" placeholder="Votre nouveau mot de passe"  onChange={this._changeNewPassword} value={this.props.formState.newPassword} required/>
 						<p> Confirmation du mot de passe </p>
-						<input  type="password" placeholder="Confirmation du mot de passe"  onChange={this._changeConfirmPassword} value={this.props.formState.confirmPassword} required/>
+						<input  type="password" pattern=".{5,10}" placeholder="Confirmation du mot de passe"  onChange={this._changeConfirmPassword} value={this.props.formState.confirmPassword} required/>
 
 						<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Changer</button></div>
 							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Quitter</button>
