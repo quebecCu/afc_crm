@@ -20,12 +20,8 @@ let initialState={
             {
                 role:'visiteurClient',
                 perm:[{idDroit: 0, droit:"lecture", table:"clientsColl"}]
-            },
-            {
-                role:'visiteurFournisseur',
-                perm:[{idDroit: 0, droit:"lecture", table:"fournisseursColl"}]
-
             }
+
         ],
         permissionsUser:[]
 
