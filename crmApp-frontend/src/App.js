@@ -7,20 +7,14 @@ import {
 import {BarreNav} from "./components/BarreNav";
 import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
-
 import ResetPagePassword from "./containers/ResetPagePasswordContainer";
 import AccueilPageContainer from "./containers/AccueilPageContainer";
-import CollectivePageContainer from "./containers/CollectivePageContainer";
-
-
-//import history from './history';
 import {store} from './store.js';
-
 import {history} from './store.js';
 import {Provider } from 'react-redux';
-
 import {ConnectedRouter} from 'react-router-redux';
-
+import CollectivePageContainer from "./containers/CollectivePageContainer";
+//import history from './history';
 
 class App extends Component {
 
@@ -40,6 +34,5 @@ class App extends Component {
         );
     }
 }
-
 
 export default App;

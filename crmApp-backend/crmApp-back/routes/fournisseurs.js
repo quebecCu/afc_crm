@@ -17,7 +17,7 @@ router.post('/fournisseurs', function(req, res) {
         ]});
 
 
-    console.log("sortie backend pour les fournisseurs");
+    console.log("end post /fournisseurs");
 });
 
 module.exports = router;

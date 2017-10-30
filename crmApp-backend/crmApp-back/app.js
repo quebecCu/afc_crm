@@ -12,7 +12,6 @@ var resetPassword = require('./routes/ResetPassword');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
 var app = express();
-var bcrypt = require('bcrypt');
 
 //view engine setup 
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +39,6 @@ app.use('/', reset);
 app.use('/', assurancesCollectives);
 app.use('/', fournisseurs);
 app.use('/', resetPassword);
-
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,11 +4,11 @@ var app = express();
 var nodemailer = require('nodemailer');
 var db = require('../models');
 var crypto = require('crypto');
+
 /* GET Email reset logic && send email. */
 router.post('/reset', function(req, res) {
 
 	var emailReceived = req.body.email;
-	var _send = false;
 	var _token = Math.random().toString(36).slice(2);
 	var chrono = Date.now() + 3600000;
  	var transporter = nodemailer.createTransport({
@@ -42,9 +42,7 @@ router.post('/reset', function(req, res) {
 				 status : 'fail',
 				 message : 'Le courriel est incorrect'
 			 });
-		 }
-		 else
-		 {		
+		 } else {
 			  transporter.sendMail(mailOptions, function(error, info){
 		            if (error) {
 		              console.log(error);
@@ -54,15 +52,12 @@ router.post('/reset', function(req, res) {
 		        });
 
 			  _updateFunction(_token, chrono);
-			 res.send({ 
-				 
+			 res.send({
 				 resetPasswordToken : _token,
 				 resetPasswordExpires : Date.now() + 3600000,
 				 status : 'success'
 			 });
 		 }
-		 
-	
 	 });
 	
 	 function _updateFunction (_token, chrono) {

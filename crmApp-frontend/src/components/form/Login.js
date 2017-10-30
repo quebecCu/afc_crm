@@ -9,8 +9,7 @@ import validateInput from '../../shared/validations/login';
 import Request from 'superagent' ;
 import {store} from '../../store';
 import {push} from 'react-router-redux';
-
-import Img from 'react-image';
+//import Img from 'react-image';
 
 class Login extends Component   {
 	constructor(props) {
@@ -50,14 +49,10 @@ class Login extends Component   {
 	render() {
 
 		return (
-				
-				
 				<div className="logoCompany">
 				<div id ="logoCo"> 
-				<Img src={logoCo} alt="logoCompany" width="300" height="200" />
-				</div> 
-				
-				
+				<img src={logoCo} alt="logoCompany" width="300" height="200" />
+				</div>
 
 				<div className="modal fade" id="login-modal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 				<div className="modal-dialog">
@@ -79,53 +74,35 @@ class Login extends Component   {
 				<footer className="footer-distributed">
 
 				<div className="footer-left">
-
 					<div>
 						<i className="fa fa-map-marker"></i>
 						<p><span>4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
 					</div>
-					
-					
 				</div>
 
 				<div className="footer-center">
-
-					
-
 					<div>
 						<i className="fa fa-phone"></i>
 						<p>+1 (819) 823-1443</p> 
 					</div>
-
-					
-
 				</div>
 
 				<div className="footer-right">
-
 					<div>
 						<i className="fa fa-envelope"></i>
 						<p><a href="mailto:crm.udes@gmail.com">crm.udes@gmail.com</a></p>
 					</div>
-
 					<div className="footer-icons">
-
-					
 						<a href="https://ca.linkedin.com/in/alainproulx"><i className="fa fa-linkedin"></i></a>
 						<a href="https://github.com/azizou69004/CRM-UDES-2017"><i className="fa fa-github"></i></a>
-
 					</div>
-
 				</div>
 				<p className="footer-copyright">  © 2017 CRM Application UDES. All rights reserved </p>
 			</footer>
-				
-				
-				</div> 
+				</div>
 				
 		);
 	}
 }
-
 
 export default (Login);

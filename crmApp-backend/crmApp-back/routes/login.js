@@ -12,7 +12,6 @@ var security = require ('../security/security');
 /* GET home page. */
 router.post('/login', function(req, res) {
 
-	var query= ''
 	var usernameText = req.body.username;	
 	var encodedMdp = req.body.password;
 	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
@@ -27,17 +26,18 @@ router.post('/login', function(req, res) {
 				var loginRetrieved = user.dataValues.login;
 				var mdpRetrieved = user.dataValues.password;
 				var idroleRetrieved = user.dataValues.idrole;
+
 					bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
+
 						// ress === true
-						if(!!ress){
+						if(!!ress) {
 							var token = jwt.sign({ login: loginRetrieved, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h' });
 							res.cookie('token', token, { maxAge: 900000, httpOnly: true });
 							res.send({ 
 								status : 'success',
 								message : null
 							});
-						}
-						else {
+						} else {
 							console.log("else est faux");
 							res.send({ 
 								status : 'error',
@@ -45,12 +45,8 @@ router.post('/login', function(req, res) {
 							});
 						}
 					});
-				
-				}
-
-				else
-				
-				{
+					//A supprimer. Je le laisse pour le debugg
+				} else {
 					console.log("Username n'existe pas")
 					res.send({ 
 						status : 'fail',
@@ -59,12 +55,8 @@ router.post('/login', function(req, res) {
 				}
 			});
 
-
-	console.log("sortie backend");
+	console.log("end post /login");
 });
-
-
-
 
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;

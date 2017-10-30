@@ -4,7 +4,8 @@ var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 //-----------------------------bdname-----username-----password----
-var sequelize = new Sequelize('postgres', 'postgres', 'password', {
+var sequelize = new Sequelize('tboluoek', 'tboluoek', 'pl3bxNOTdACJyxSawxgeM1wtNcCgN9no', {
+    host: 'horton.elephantsql.com',
     port: '5432',
     dialect: 'postgres',
 
@@ -26,23 +27,6 @@ sequelize
     });
 
 var db = {};
-
-//A suivre pour l'utilisation des Models
-/*fs
-    .readdirSync(__dirname)
-    .filter(function(file) {
-        return (file.indexOf(".") !== 0) && (file !== "index.js");
-    })
-    .forEach(function(file) {
-        var model = sequelize["import"](path.join(__dirname, file));
-        db[model.name] = model;
-    });
-
-Object.keys(db).forEach(function(modelName) {
-    if ("associate" in db[modelName]) {
-        db[modelName].associate(db);
-    }
-});*/
 
 const Person = sequelize.define('PERSONNE', {
     nom: Sequelize.STRING,

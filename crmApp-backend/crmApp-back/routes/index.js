@@ -7,12 +7,7 @@ var db = require('../models');
 router.get('/test2', function(req, res) {
 
 	console.log("Test backend");
-    /*db.sequelize.query('SELECT * FROM public."PERSONNE"',
-        {
-            type: db.sequelize.QueryTypes.SELECT
-        }).then(function (results) {
-        console.log(results);
-    });*/
+
     db.Person.findAll({
         attributes: ['idpersonne', 'nom', 'prenom']
 	}).then(person => {
@@ -34,7 +29,8 @@ router.get('/test2', function(req, res) {
 		version : '0.0',
 		utilisateur : [{}]
 	});
-	console.log("sortie backend");
+
+	console.log("end get /test2");
 });
 
 module.exports = router;

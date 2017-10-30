@@ -13,6 +13,7 @@ router.post('/assurancesCollectives', function(req, res) {
 	console.log("password recu hashed: ", mdpText);
 	
 	bcrypt.compare("aziz", mdpText, function(err, ress) {
+
 	    // ress === true
 		if(!!ress){
 			res.send({ 
@@ -27,14 +28,14 @@ router.post('/assurancesCollectives', function(req, res) {
 			});
 		}
 		else {
-			console.log("else est faux");
+			console.log('"aziz" != de  mdpText :' + mdpText);
 			res.send({ 
 				res: 'false'
 			});
 		}
 			
 	});
-	console.log("sortie backend");
+	console.log("end post /assurancesCollectives");
 });
 
 module.exports = router;
