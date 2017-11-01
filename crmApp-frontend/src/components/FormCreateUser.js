@@ -12,7 +12,12 @@ export class FormCreateUser extends React.Component{
         this.onChangeMdp =this.onChangeMdp.bind(this);
         this.onChangeMail=this.onChangeMail.bind(this);
         this.onChangePermissionsUser =this.onChangePermissionsUser.bind(this);
+        this.handleClick=this.handleClick.bind(this);
 
+    }
+
+    handleClick(event){
+        this.props.submitUser(this.props.formState);
     }
 
     onChangeRole(event){
@@ -100,13 +105,12 @@ export class FormCreateUser extends React.Component{
 
     render(){
         let test = this.whatToRender();
-        return  <form><span className="titre">Rôle :</span> <select name="role" onChange={this.onChangeRole}>
+        return  <div><form><span className="titre">Rôle :</span> <select name="role" onChange={this.onChangeRole}>
             <option value="employe">Employé</option>
             <option value="visiteurClient">Visiteur client</option>
-            <option value="visiteurFournisseur">Visiteur fournisseur</option>
         </select>
             {test}
-
-        </form>;
+        </form>
+            <button onClick={this.handleClick}>Créer l'utilisateur</button></div>;
     }
 }

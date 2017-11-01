@@ -17,7 +17,6 @@ var pgp = require('pg-promise')(options);
 var connectionString = 'postgres://'+dbConfig.user+':'+dbConfig.password+'@'+dbConfig.host+':'+dbConfig.port+'/'+dbConfig.database;
 var db = pgp(connectionString);
 
-
 db.query(squel.select()
     .field('NOW()')
     .toString())
@@ -27,5 +26,8 @@ db.query(squel.select()
     .catch(e => {
         console.error('query error', e.message, e.stack)
     })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
 
 module.exports = db;
