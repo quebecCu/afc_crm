@@ -1,124 +1,31 @@
 "use strict";
 
-var fs        = require("fs");
-var path      = require("path");
-var Sequelize = require("sequelize");
-//-----------------------------bdname-----username-----password----
-var sequelize = new Sequelize('tboluoek', 'tboluoek', 'pl3bxNOTdACJyxSawxgeM1wtNcCgN9no', {
+var squel = require("squel");
+var promise = require('bluebird');
+var options = {
+    promiseLib: promise
+};
+const dbConfig = {
+    database: 'tboluoek',
+    user: 'tboluoek',
+    password: 'pl3bxNOTdACJyxSawxgeM1wtNcCgN9no',
+    port: 5432,
     host: 'horton.elephantsql.com',
-    port: '5432',
-    dialect: 'postgres',
+    ssl: true
+}
+var pgp = require('pg-promise')(options);
+var connectionString = 'postgres://'+dbConfig.user+':'+dbConfig.password+'@'+dbConfig.host+':'+dbConfig.port+'/'+dbConfig.database;
+var db = pgp(connectionString);
 
-    pool: {
-        max: 3,
-        min: 0,
-        idle: 10000
-    },
 
-});
-
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
+db.query(squel.select()
+    .field('NOW()')
+    .toString())
+    .then(res => {
+        console.log('time is', res[0].now)
     })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
-
-var db = {};
-
-const Person = sequelize.define('PERSONNE', {
-    nom: Sequelize.STRING,
-    prenom: Sequelize.STRING
-}, {
-    tableName: 'PERSONNE'});
-
-const User = sequelize.define('UTILISATEUR', {
-	iduser: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    login: Sequelize.STRING,
-    password: Sequelize.STRING,
-    mail: Sequelize.STRING,
-    name: Sequelize.STRING,
-    idrole: Sequelize.INTEGER,
-    resetPasswordToken: Sequelize.STRING,
-    resetPasswordExpires: Sequelize.STRING
-}, {
-	timestamps: false,
-    schema: 'users',
-    tableName: '"UTILISATEUR"'});
-
-const PermissionUtil = sequelize.define('PERMISSIONUTIL', {
-}, {
-	timestamps: false,
-    schema: 'users',
-    tableName: '"PERMISSIONUTIL"'});
-
-const Operation = sequelize.define('OPERATION', {
-	idoperation: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    }
-}, {
-	timestamps: false,
-    schema: 'users',
-    tableName: '"OPERATION"'});
-
-const Menu = sequelize.define('Menu', {
-	idmenu: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    }
-}, {
-	timestamps: false,
-    schema: 'users',
-    tableName: '"MENU"'});
-
-const PermissionRole = sequelize.define('PERMISSIONUTIL', {
-}, {
-	timestamps: false,
-    schema: 'users',
-    tableName: '"PERMISSIONROLE"'});
-
-const Role = sequelize.define('Menu', {
-	idrole: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    }
-}, {
-	timestamps: false,
-    schema: 'users',
-    tableName: '"ROLEADM"'});
-
-User.hasMany(PermissionUtil, {foreignKey: 'iduser'});
-PermissionUtil.belongsTo(User, {foreignKey: 'iduser'});
-Operation.hasMany(PermissionUtil, {foreignKey: 'idoperation'});
-PermissionUtil.belongsTo(Operation, {foreignKey: 'idoperation'});
-Menu.hasMany(PermissionUtil, {foreignKey: 'idmenu'});
-PermissionUtil.belongsTo(Menu, {foreignKey: 'idmenu'});
-
-Role.hasMany(PermissionRole, {foreignKey: 'idrole'});
-PermissionRole.belongsTo(Role, {foreignKey: 'idrole'});
-Operation.hasMany(PermissionRole, {foreignKey: 'idoperation'});
-PermissionRole.belongsTo(Operation, {foreignKey: 'idoperation'});
-Menu.hasMany(PermissionRole, {foreignKey: 'idmenu'});
-PermissionRole.belongsTo(Menu, {foreignKey: 'idmenu'});
-
-db.Person = Person;
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-db.User = User;
-db.Menu = Menu;
-db.Operation = Operation;
-db.PermissionUtil = PermissionUtil;
-db.PermissionRole = PermissionRole;
-db.Role = Role;
+    .catch(e => {
+        console.error('query error', e.message, e.stack)
+    })
 
 module.exports = db;
