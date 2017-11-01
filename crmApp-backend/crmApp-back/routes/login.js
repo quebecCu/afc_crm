@@ -21,7 +21,7 @@ router.post('/login', function(req, res) {
 
 	db.query(squel.select()
 		.from('users."UTILISATEUR"')
-        .field('login', 'password', 'idrole')
+        .field('login', 'password')
 		.where('login like ?', usernameText)
 		.toString())
 		.then(function (user) {
