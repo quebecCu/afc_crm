@@ -49,7 +49,7 @@ router.post('/login', function(req, res) {
 						}
 					});
 				} else {
-					console.log('Le username ' +usernameText+ ' n'existe pas')
+					console.log('Le username ' +usernameText+ ' n\'existe pas')
 					res.send({ 
 						status : 'fail',
 						message : 'Le login est incorrect'
