@@ -18,6 +18,9 @@ class RechercheComponent extends Component {
 		this._changeNomEmploye = this._changeNomEmploye.bind(this);
 		this._emitChange = this._emitChange.bind(this);
 		this._recherche = this._recherche.bind(this);
+		this._changeMoisRenouvellement = this._changeMoisRenouvellement.bind(this);
+
+		
 	}
 //	
 //	nomEmploye: '',
@@ -32,6 +35,9 @@ class RechercheComponent extends Component {
 	}
 	_changeNomEmploye (event){
 		this._emitChange({...this.props.formState , nomEmploye: event.target.value});
+	}
+	_changeMoisRenouvellement (event){
+		this._emitChange({...this.props.formState , moisRenouvellement: event.target.value});
 	}
 	_changeNomAssureur (event){
 		this._emitChange({...this.props.formState , nomAssureur: event.target.value});
@@ -56,8 +62,8 @@ class RechercheComponent extends Component {
             <form action="" id="recherche" style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left'}}>
                 <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
                 <input type="text" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={this.props.formState.nomEmploye} />
-                <input type="text" placeholder="N° police"onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>
-                <input type="text" placeholder="Mois renouvellement" value={this.props.formState.numeroPolice}/>
+                <input type="text" placeholder="N° police" onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>
+                <input type="text" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
                 <input type="text" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
                 <select>
                     <option value="actif">Actif</option>

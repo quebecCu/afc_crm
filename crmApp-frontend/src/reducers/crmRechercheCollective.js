@@ -14,8 +14,8 @@ let initialState = {
 			numeroPolice:'',
 			nomAssureur:'',
 			moisRenouvellement:'',
-			clientActif: '',
-			statutProspect: ''
+			clientActif: 'actif',
+			statutProspect: 'false'
 		},
     dossiersState: [
 
