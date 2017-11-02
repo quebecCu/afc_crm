@@ -11,6 +11,7 @@ var reset = require('./routes/reset');
 var resetPassword = require('./routes/ResetPassword');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
+var createUser = require('./routes/createUser');
 var app = express();
 
 //view engine setup 
@@ -39,6 +40,7 @@ app.use('/', reset);
 app.use('/', assurancesCollectives);
 app.use('/', fournisseurs);
 app.use('/', resetPassword);
+app.use('/', createUser);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

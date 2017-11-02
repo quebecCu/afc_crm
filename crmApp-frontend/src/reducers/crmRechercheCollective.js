@@ -1,6 +1,7 @@
 import {
-	CHANGE_FORM,
-	SEARCH_REQUEST,
+	CHANGE_FORM_COLL,
+	SEARCH_REQUEST_COLL,
+    GET_REQUEST_CLIENT_COLL,
 }  from '../actions/crmRechercheCollective';
 
 //ajouter le reste dans l'import 
@@ -13,9 +14,12 @@ let initialState = {
 			numeroPolice:'',
 			nomAssureur:'',
 			moisRenouvellement:'',
-			clientActif: '',
-			statutProspect: ''
+			clientActif: 'actif',
+			statutProspect: 'false'
 		},
+    dossiersState: [
+
+    ],
 		errors: '',
 };
 
@@ -23,11 +27,12 @@ export default function reducer (state = initialState, action ){
 
 	switch (action.type){
 
-	case SEARCH_REQUEST:
+	case CHANGE_FORM_COLL:
 		return {...state ,formState: action.newFormState , error:''}
-	case CHANGE_FORM:
-		return {...state ,formState: action.newFormState , error:''}
-		
+	case GET_REQUEST_CLIENT_COLL:
+    	return {...state ,formState: action.newDossiersState , error:''}
+	case SEARCH_REQUEST_COLL:
+    	return {...state ,formState: action.newFormState , error:''}
 	default:
 		return state
 

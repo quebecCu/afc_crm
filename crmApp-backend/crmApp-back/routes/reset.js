@@ -4,6 +4,7 @@ var app = express();
 var nodemailer = require('nodemailer');
 var db = require('../models');
 var crypto = require('crypto');
+var squel = require('squel');
 
 /* GET Email reset logic && send email. */
 router.post('/reset', function(req, res) {
@@ -28,45 +29,60 @@ router.post('/reset', function(req, res) {
             subject: 'Récuperation de mot de passe oublié',
             text: 'Voici votre mot de passe oublié:\n\n  http://localhost:3000/Reset/' + _token + '\n\nÉquipe CRM',
           };
-	
-	 db.User.findOne({
-	        attributes: ['iduser','login', 'password', 'idrole', 'mail', 'name', 'resetpasswordtoken','resetpasswordexpires'],
-	 where: {
-		 mail: emailReceived
-		  }
-	 }).then(function (user) {
-		 var test = user.dataValues.resetpasswordtoken;
-		 console.log("testtttttt  " + test );
-		 if(!user) {
-			 res.send({ 
-				 status : 'fail',
-				 message : 'Le courriel est incorrect'
-			 });
-		 } else {
-			  transporter.sendMail(mailOptions, function(error, info){
-		            if (error) {
-		              console.log(error);
-		            } else {
-		              console.log('Email sent: ' + info.response);
-		                  }
-		        });
+    db.query(
+    	squel.select()
+			.from('users."UTILISATEUR" AS u')
+			.field('iduser')
+			.field('login')
+			.field('password')
+			.field('idrole')
+			.field('mail')
+			.field('name')
+			.field('resetpasswordtoken')
+			.field('resetpasswordexpires')
+			.where('u.mail like ?', emailReceived)
+			.toString())
+		.then(function (user) {
+		var resetPasswordToken = user.resetpasswordtoken;
+		console.log("reset password token from" + user.mail +" is " + resetPasswordToken );
+		if(!user) {
+			res.send({
+				status : 'fail',
+				message : 'Le courriel est incorrect'
+			});
+		} else {
+			transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+					console.log(error);
+				} else {
+					console.log('Email sent: ' + info.response);
+				}
+			});
 
-			  _updateFunction(_token, chrono);
-			 res.send({
-				 resetPasswordToken : _token,
-				 resetPasswordExpires : Date.now() + 3600000,
-				 status : 'success'
-			 });
-		 }
-	 });
-	
-	 function _updateFunction (_token, chrono) {
-		 console.log("_________resetpasswordtoken   " + _token);
-		    
-		 db.sequelize.query('UPDATE users."UTILISATEUR" SET resetpasswordtoken=\''+ _token + ' \''  + ' where mail = \'' +  emailReceived + '\'')
+			_updateFunction(_token, chrono);
+			res.send({
+				resetPasswordToken : _token,
+				resetPasswordExpires : Date.now() + 3600000,
+				status : 'success'
+			});
+		}
+	});
 
-		 db.sequelize.query('UPDATE users."UTILISATEUR" SET resetpasswordexpires=\''+ chrono + ' \''  + ' where mail = \'' +  emailReceived + '\'')
+    function _updateFunction (_token, chrono) {
 
+    	console.log("Trying to resetpasswordtoken " + _token);
+
+		db.query(
+			squel.update()
+				.table('users."UTILISATEUR"')
+				.set('resetpasswordtoken', _token)
+				.set('resetpasswordexpires', chrono)
+				.where('mail like ?', emailReceived)
+				.toString())
+			.then()
+			.catch(e => {
+                console.error('query error', e.message, e.stack)
+            })
 }
 });
 

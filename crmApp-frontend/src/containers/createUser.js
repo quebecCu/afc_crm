@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {FormCreateUser} from '../components/FormCreateUser.js';
 import '../style/CreationUser.css';
-import {changeFormCreateUser} from "../actions/crmCreateUser";
+import {changeFormCreateUser, submitUser} from "../actions/crmCreateUser";
 
 class createUser extends React.Component{
 
@@ -17,7 +17,8 @@ class createUser extends React.Component{
         let {formState} = this.props.crmCreateUser;
         return <div><h1>Créer utilisateur</h1>
             <FormCreateUser formState={formState}
-                             changeForm={this.props.changeForm}/>
+                             changeForm={this.props.changeForm}
+                            submitUser={this.props.submitUser}/>
 
         </div>;
     }
@@ -36,6 +37,9 @@ const  mapDispatchToProps = (dispatch) => {
 
         changeForm : (newFormState) => {
             dispatch(changeFormCreateUser(newFormState))
+        },
+        submitUser : (newUser) => {
+            dispatch(submitUser(newUser))
         }
     }
 }
