@@ -4,6 +4,7 @@ var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 //-----------------------------bdname-----username-----password----
+
 var sequelize = new Sequelize('tboluoek', 'tboluoek', 'pl3bxNOTdACJyxSawxgeM1wtNcCgN9no', {
     host: 'horton.elephantsql.com',
     port: '5432',

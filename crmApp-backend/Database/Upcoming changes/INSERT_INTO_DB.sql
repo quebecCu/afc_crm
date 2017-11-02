@@ -13,7 +13,8 @@ SELECT setval('users."OPERATION_idoperation_seq"', 1, FALSE);
 
 ---ROLEADM---
 INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
-INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur');
+INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_All');
+INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_Limited');
 INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
 
 ---OPERATION---
@@ -26,7 +27,7 @@ INSERT INTO users."OPERATION"(description) VALUES ('DELETE');
 INSERT INTO users."ENTITE"(description) VALUES ('Accueil');
 INSERT INTO users."ENTITE"(description) VALUES ('Gestion des accès');
 INSERT INTO users."ENTITE"(description) VALUES ('Gestion des utilisateurs');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des clients');
+INSERT INTO users."ENTITE"(description) VALUES ('Gestion des clients - ACollectives');
 INSERT INTO users."ENTITE"(description) VALUES ('Gestion des prospects');
 INSERT INTO users."ENTITE"(description) VALUES ('Gestion des fournisseurs');
 INSERT INTO users."ENTITE"(description) VALUES ('Gestion des contrats - ACollectives');
@@ -67,7 +68,7 @@ INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 3);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 4);
 
---User--
+--User_Limited--
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 1, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 4, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 5, 1);
@@ -75,10 +76,18 @@ INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 7, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 8, 1);
 
---INVITE--
+--User_All--
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 1, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 4, 1);
+INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 5, 1);
+INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 6, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 7, 1);
+INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 8, 1);
+
+--INVITE--
+INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 1, 1);
+INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 4, 1);
+INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 7, 1);
 
 
 --BEGINDATATEST

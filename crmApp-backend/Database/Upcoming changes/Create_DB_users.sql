@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS users."ENTREPRISE_AFFICHAGE" CASCADE;
 DROP TABLE IF EXISTS users."FOURNISSEUR_AFFICHAGE" CASCADE;
 DROP TABLE IF EXISTS users."MODIFICATION_CLIENT" CASCADE;
 DROP TABLE IF EXISTS users."EMPLOYE_INT" CASCADE;
+DROP TABLE IF EXISTS users."POSITION" CASCADE;
 
 CREATE TABLE users."ROLEADM" (
   idrole serial PRIMARY KEY,
@@ -46,6 +47,12 @@ CREATE TABLE users."UTILISATEUR" (
 CREATE TABLE users."ENTITE" (
   identite serial PRIMARY KEY,
   description  varchar(60)
+);
+
+CREATE TABLE users."POSITION" (
+  idposition serial PRIMARY KEY,
+  identite  integer REFERENCES users."ENTITE" (identite),
+  position varchar(1000)
 );
 
 CREATE TABLE users."OPERATION" (
@@ -112,24 +119,22 @@ CREATE TABLE users."PERMISSIONUTIL_FOURN" (
 CREATE TABLE users."INVITE" (
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
   idclient  integer REFERENCES public."CLIENT" (idclient),
-  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient) 
+  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne),
+  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient, idpersonne) 
 );
 
 CREATE TABLE users."CONTRAT_COLLECTIF_AFFICHAGE" (
   idattrcontratcoll  integer REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
-  priorité  integer,
   affichage  boolean
 );
 
 CREATE TABLE users."FOURNISSEUR_AFFICHAGE" (
   idattrfournisseur  integer REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
-  priorité  integer,
   affichage  boolean
 );
 
 CREATE TABLE users."ENTREPRISE_AFFICHAGE" (
   idattrentreprise  integer PRIMARY KEY REFERENCES public."ENTREPRISE_ATTR" (idattrentreprise),
-  priorité  integer,
   affichage  boolean
 );
 
@@ -142,6 +147,5 @@ CREATE TABLE users."MODIFICATION_CLIENT" (
 
 CREATE TABLE users."EMPLOYE_INT" (
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
-  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne),
-  CONSTRAINT  pk_EMPLOYE_INT  PRIMARY KEY (iduser, idpersonne) 
+  idemploye  integer PRIMARY KEY REFERENCES public."PERSONNE" (idpersonne)
 );
