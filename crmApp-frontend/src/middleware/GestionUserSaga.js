@@ -19,7 +19,7 @@ export function * createUser (){
             permissionsUser
         } = user.newUser;
 
-        console.log(role + nom + login + mdpProv + mail + permissionsUser[0].table + permissionsUser[1]);
+        console.log(role + nom + login + mdpProv + mail + permissionsUser[0] + permissionsUser[1]);
 
         //communication avec server
         var server = "http://localhost:3002/createUser";
