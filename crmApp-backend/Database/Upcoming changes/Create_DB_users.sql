@@ -41,7 +41,7 @@ CREATE TABLE users."UTILISATEUR" (
   name  varchar(20),
   idrole  integer REFERENCES users."ROLEADM" (idrole),
   resetPasswordToken varchar(200),
-  resetPasswordExpires date
+  resetPasswordExpires bigint 
 );
 
 CREATE TABLE users."ENTITE" (
