@@ -13,41 +13,32 @@ class SearchCompSuppliers extends Component {
         super(props);
 
         this._changeNomEntreprise = this._changeNomEntreprise.bind(this);
-        this._changeNomAssureur = this._changeNomAssureur.bind(this);
-        this._changeNumeroPolice = this._changeNumeroPolice.bind(this);
-        this._changeNomEmploye = this._changeNomEmploye.bind(this);
+        this._changeNomContact = this._changeNomContact.bind(this);
+        this._changeCode = this._changeCode.bind(this);
+        this._changeNombreEmployes = this._changeNombreEmployes.bind(this);
         this._emitChange = this._emitChange.bind(this);
         this._recherche = this._recherche.bind(this);
-        this._changeMoisRenouvellement = this._changeMoisRenouvellement.bind(this);
     }
-//
-//	nomEmploye: '',
-//	moisRenouvellement:'',
-//	clientActif: true,
-//	statutProspect: false
 
 
     _recherche(e) {
         e.preventDefault();
         this.props.onSubmit(this.props.formState);
     }
-    _changeNomEmploye (event){
-        this._emitChange({...this.props.formState , nomEmploye: event.target.value});
+    _changeNombreEmployes (event){
+        this._emitChange({...this.props.formState , nombreEmployes: event.target.value});
     }
-    _changeMoisRenouvellement (event){
-        this._emitChange({...this.props.formState , moisRenouvellement: event.target.value});
-    }
-    _changeNomAssureur (event){
-        this._emitChange({...this.props.formState , nomAssureur: event.target.value});
+    _changeNomContact (event){
+        this._emitChange({...this.props.formState , nomContact: event.target.value});
     }
     _changeNomEntreprise (event){
         this._emitChange({...this.props.formState , nomEntreprise: event.target.value});
     }
-    _changeNumeroPolice(event){
-        this._emitChange({...this.props.formState , numeroPolice: event.target.value});
+    _changeCode(event){
+        this._emitChange({...this.props.formState , code: event.target.value});
     }
     _emitChange (newFormState){
-        this.props.changeFormColl(newFormState);
+        this.props.changeForm(newFormState);
     }
 
 //	_forgotten(e) {
@@ -57,21 +48,14 @@ class SearchCompSuppliers extends Component {
     render() {
 
         return(
-            <form action="" id="recherche" style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left'}}>
-                <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
-                <input type="text" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={this.props.formState.nomEmploye} />
-                <input type="text" placeholder="N° police" onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>
-                <input type="text" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
-                <input type="text" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
-                <select>
-                    <option value="actif">Actif</option>
-                    <option value="annulé">Annulé</option>
-                </select>
-                <div>
-                    <input type="checkbox" id="prospects" name="prospects" value="prospects"/>
-                    <label for="prospects">Prospects</label>
+            <form action="">
+                <div id="recherche">
+                    <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
+                    <input type="text" placeholder="Nombre d'employés" onChange={this._changeNombreEmployes}  value={this.props.formState.nombreEmployes} />
+                    <input type="text" placeholder="Nom d'un contact" onChange={this._changeNomContact} value={this.props.formState.nomContact}/>
+                    <input type="text" placeholder="Code" onChange={this._changeCode} value={this.props.formState.code} />
+                    <input type="submit" value="Rechercher" />
                 </div>
-                <input type="submit" value="Rechercher" />
             </form>
         );
     }

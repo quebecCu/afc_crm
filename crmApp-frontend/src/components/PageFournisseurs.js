@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import HistoriqueContainer from "../containers/HistoriqueContainer";
-import  RechercheComponent  from "./RechercheComponent";
 import { connect  } from 'react-redux';
 /// TODO
 import {searchRequestFour, changeFormFour, sendingRequestFour} from '../actions/crmRechercheFournisseur';
+import SearchCompSuppliers from "./SearchCompSuppliers";
 
 class PageFournisseurs extends Component {
     componentWillMount() {
@@ -16,7 +16,7 @@ class PageFournisseurs extends Component {
             <div>
                 <h1>Fournisseurs</h1>
                 <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}/>
-                <RechercheComponent
+                <SearchCompSuppliers
                     onSubmit = {this.props.searchRequestFour}
                     formState = {formState}
                     changeForm = {this.props.changeFormFour}
