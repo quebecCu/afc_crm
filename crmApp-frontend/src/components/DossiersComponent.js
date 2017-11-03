@@ -48,11 +48,12 @@ class DossiersComponent extends Component {
             this.rows = (
                 <tbody>
                 {this.props.fournisseur.map(element => {
-                    console.log(element);
                     return (
                         <tr onClick={this.handleClick.bind(this)}>
                             <td>{element.nom}</td>
+                            <td>{element.employes}</td>
                             <td>{element.contact}</td>
+                            <td>{element.code}</td>
                         </tr>
                     );
                 })}

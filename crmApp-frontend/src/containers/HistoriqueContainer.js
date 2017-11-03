@@ -57,7 +57,9 @@ class HistoriqueContainer extends Component {
                         <thead>
                         <tr>
                             <th>Nom de l'assurance</th>
+                            <th>Nombre d'employés</th>
                             <th>Nom contact</th>
+                            <th>Code</th>
                         </tr>
                         </thead>
                         <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
