@@ -99,14 +99,15 @@ router.post('/createUser', function(req, res) {
     			    	var addRights = squel.insert()
     			    	.into('users."PERMISSIONUTIL_GLOB"')
     			    	.setFieldsRows(newRights)
-    			    	.returning('*');
-    			    	
+    			    	.returning('*')
+						.toParam();
+
     			    	db.any(addRights.toString())
     			        .then(data => {
     			        		res.send({ 
     							status : 'success',
-    							message : null
-    						});;
+    							message : data
+    						});
     			        })
     			        .catch(error => {
     			            console.log('ERROR:', error); // print error;

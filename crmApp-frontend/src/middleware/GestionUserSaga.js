@@ -35,7 +35,10 @@ export function * createUser (){
         })
             .then(function (response) {
                 if(!!response.data.status && response.data.status === "success"){
+                    alert ('L\'utilisateur a été créé avec succès');
                     store.dispatch(push("/PageAccueil/admin"));
+                } else {
+                    alert ('Erreur lors de la création de l\'utilisateur');
                 }
             })
             .catch(function (error) {
