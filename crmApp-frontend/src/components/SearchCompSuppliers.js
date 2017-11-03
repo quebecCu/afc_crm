@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import '../style/RechercheComponent.css';
-import Request from 'superagent' ;
-import {store} from '../store';
-import {push} from 'react-router-redux';
-//import state  from '../reducer/crmRechercheCollective';
-import { connect  } from 'react-redux';
-import {searchRequestColl, changeFormColl, getRequestClientColl} from '../actions/crmRechercheCollective';
 
 class SearchCompSuppliers extends Component {
 
@@ -23,29 +17,19 @@ class SearchCompSuppliers extends Component {
 
     _reset(e) {
         e.preventDefault();
-        /*document.getElementById("nomEmploye").value = "";
-        document.getElementById("nomAssureur").value = "";
-        document.getElementById("moisRenouvellement").value = "";
-        document.getElementById("numeroPolice").value = "";
-        document.getElementById("nomEntreprise").value = "";
-        document.getElementById("prospects").checked = false;
-        document.getElementById("prospects").value = "on";*/
 
         let form = document.getElementById("formFournisseurs").elements;
-        console.log(form);
 
         for(let input in form) {
             if (form.hasOwnProperty(input) && form[input].value !== 'Reset') {
-                console.log(form[input].value);
                 form[input].value = '';
             }
         }
-        let table, tr, td, i;
+        let table, tr, i;
         table = document.getElementById("PageFournisseursTable");
         tr = table.getElementsByTagName("tr");
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[5];
             tr[i].style.display = "";
         }
     }

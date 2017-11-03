@@ -1,9 +1,6 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
-import {SENDING_REQUEST_FOUR, GET_REQUEST_FOUR, getRequestFour} from '../actions/crmRechercheFournisseur';
-import {hashSync , genSaltSync} from 'bcryptjs';
+import {take, fork} from 'redux-saga/effects';
+import {SENDING_REQUEST_FOUR, getRequestFour} from '../actions/crmRechercheFournisseur';
 import axios from 'axios';
-import {push} from 'react-router-redux';
 import {store} from '../store';
 
 export function * getListFournisseurs (){

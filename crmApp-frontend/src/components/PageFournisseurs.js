@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import HistoriqueContainer from "../containers/HistoriqueContainer";
 import { connect  } from 'react-redux';
-/// TODO
-import {searchRequestFour, changeFormFour, sendingRequestFour} from '../actions/crmRechercheFournisseur';
+import {changeFormFour, sendingRequestFour, searchFour} from '../actions/crmRechercheFournisseur';
 import SearchCompSuppliers from "./SearchCompSuppliers";
 
 class PageFournisseurs extends Component {
@@ -10,15 +9,16 @@ class PageFournisseurs extends Component {
         this.props.sendingRequestFour();
     }
     render() {
-        let { formState, dossiersState } = this.props.crmRechercheFournisseur;
+        let { formState, dossiersState, searchList } = this.props.crmRechercheFournisseur;
         return(
             <div>
                 <h1>Fournisseurs</h1>
                 <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}/>
                 <SearchCompSuppliers
-                    onSubmit = {this.props.searchRequestFour}
                     formState = {formState}
+                    searchList = {searchList}
                     changeForm = {this.props.changeFormFour}
+                    searchFour = {this.props.searchFour}
                     />
             </div>
 
@@ -37,16 +37,16 @@ function mapStateToProps (state) {
 const  mapDispatchToProps = (dispatch) => {
 
     return{
-        searchRequestFour: (formData) => {
-            dispatch(searchRequestFour(formData))
-        },
         changeFormFour: (newFormState) => {
             dispatch(changeFormFour(newFormState))
         },
         sendingRequestFour: () => {
             dispatch(sendingRequestFour())
+        },
+        searchFour: (newSearchList) => {
+            dispatch(searchFour(newSearchList))
         }
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps) (PageFournisseurs)
