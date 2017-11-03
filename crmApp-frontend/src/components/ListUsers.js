@@ -1,4 +1,7 @@
 import React from 'react';
+import {store} from '../store';
+import {push} from 'react-router-redux';
+
 
 export class ListUsers extends React.Component{
     constructor(props){
@@ -9,8 +12,10 @@ export class ListUsers extends React.Component{
 
     handleClick(element){
         //Ducoup quand on clique ça affiche la page de l'utilisateur, changer le path? Faire un linkto ?
-
+        store.dispatch(push('/PageAccueil/admin/'+element.id));
         console.log(element.id);
+
+
     }
 
     componentWillMount(){
