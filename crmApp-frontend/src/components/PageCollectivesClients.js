@@ -4,14 +4,17 @@ import RechercheComponent from "./RechercheComponent";
 import {ButtonsComponent} from "./ButtonsComponent";
 import PageCollectives from '../components/PageCollectives';
 import { connect  } from 'react-redux';
-import {searchRequestColl, changeFormColl, getRequestClientColl} from '../actions/crmRechercheCollective';
+import {searchRequestColl, changeFormColl, sendingRequestColl} from '../actions/crmRechercheCollective';
 
 
 
 class PageCollectivesClients extends Component {
 	constructor(props) {
 		super(props);
+        sendingRequestColl();
+
 	}
+	
     render() {
 		let { formState, changeForm } = this.props.crmRechercheCollective;
 
@@ -47,7 +50,11 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		changeFormColl : (newFormState) => {
 			dispatch(changeFormColl(newFormState))
-		}		
+		},
+		sendingRequestColl : () => {
+			dispatch(sendingRequestColl())
+		}
+		
 	}
 }
 

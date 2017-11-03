@@ -2,6 +2,7 @@ import {
 	CHANGE_FORM_COLL,
 	SEARCH_REQUEST_COLL,
     GET_REQUEST_CLIENT_COLL,
+    SENDING_REQUEST_COLL,
 }  from '../actions/crmRechercheCollective';
 
 //ajouter le reste dans l'import 
@@ -33,6 +34,9 @@ export default function reducer (state = initialState, action ){
     	return {...state ,formState: action.newDossiersState , error:''}
 	case SEARCH_REQUEST_COLL:
     	return {...state ,formState: action.newFormState , error:''}
+	case SENDING_REQUEST_COLL:
+    	return {...state ,formState: action.newFormState , error:''}
+    	
 	default:
 		return state
 

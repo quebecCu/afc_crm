@@ -36,6 +36,8 @@ class DossiersComponent extends Component {
                             <td>{element.police}</td>
                             <td>{element.mois}</td>
                             <td>{element.assureur}</td>
+                            <td>{element.statut}</td>
+                            <td>{element.prospect}</td>
                         </tr>
                     );
                 })}
