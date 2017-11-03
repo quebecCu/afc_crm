@@ -38,8 +38,8 @@ const  mapDispatchToProps = (dispatch) => {
         changeForm : (newFormState) => {
             dispatch(changeFormCreateUser(newFormState))
         },
-        submitUser : (newUser) => {
-            dispatch(submitUser(newUser))
+        submitUser : (formData) => {
+            dispatch(submitUser(formData))
         }
     }
 }

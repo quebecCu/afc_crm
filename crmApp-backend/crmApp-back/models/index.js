@@ -30,7 +30,7 @@ db.query(squel.select()
     .field('NOW()')
     .toString())
     .then(res => {
-        console.log('time is', res[0].now)
+        console.log('time is', res[0].now);
     })
     .catch(e => {
         console.error('query error', e.message, e.stack)
