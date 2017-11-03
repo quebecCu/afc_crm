@@ -10,12 +10,9 @@ import {
 let initialState = {
     formState:{
         nomEntreprise:'',
-        nomEmploye: '',
-        numeroPolice:'',
-        nomAssureur:'',
-        moisRenouvellement:'',
-        clientActif: '',
-        statutProspect: ''
+        nombreEmployes: '',
+        nomContact: '',
+        code: ''
     },
     dossiersState: [
 

@@ -101,8 +101,9 @@ router.post('/createUser', function(req, res) {
     			    	var addRights = squel.insert()
     			    	.into('users."PERMISSIONUTIL_GLOB"')
     			    	.setFieldsRows(newRights)
-    			    	.returning('*');
-    			    	
+    			    	.returning('*')
+						.toParam();
+
     			    	db.any(addRights.toString())
     			        .then(data => {
     			        		createEmployee (user, userCreated, res);

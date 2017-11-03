@@ -19,7 +19,7 @@ export function * createUser (){
             permissionsUser
         } = user.newUser;
 
-        console.log(role + nom + login + mdpProv + mail + permissionsUser[0].table + permissionsUser[1]);
+        console.log(role + nom + login + mdpProv + mail + permissionsUser[0] + permissionsUser[1]);
 
         //communication avec server
         var server = "http://localhost:3002/createUser";
@@ -35,7 +35,10 @@ export function * createUser (){
         })
             .then(function (response) {
                 if(!!response.data.status && response.data.status === "success"){
+                    alert ('L\'utilisateur a été créé avec succès');
                     store.dispatch(push("/PageAccueil/admin"));
+                } else {
+                    alert ('Erreur lors de la création de l\'utilisateur');
                 }
             })
             .catch(function (error) {

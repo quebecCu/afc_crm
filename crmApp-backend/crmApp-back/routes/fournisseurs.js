@@ -10,10 +10,10 @@ router.post('/fournisseurs', function(req, res) {
 
     //var query= '';
     res.send({fournisseur: [
-        {nom: 'Enterprise', contact: 'Gael Fou'},
-        {nom: 'Pomm', contact: 'Sasha Du'},
-        {nom: 'Med', contact: 'Elo Si'},
-        {nom: 'RE', contact: 'Maxime Tar'}
+        {nom: 'Enterprise', employes: 20, contact: 'Gael Fou', code: 'AAAA'},
+        {nom: 'Pomm', employes: 10, contact: 'Sasha Du', code: 'AAAA'},
+        {nom: 'Med', employes: 34, contact: 'Elo Si', code: 'AAAA'},
+        {nom: 'RE', employes: 15, contact: 'Maxime Tar', code: 'AAAA'}
         ]});
 
 

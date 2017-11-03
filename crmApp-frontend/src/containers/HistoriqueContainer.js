@@ -7,11 +7,11 @@ class HistoriqueContainer extends Component {
         super(props);
         this.state = { historique: [{date: "20/09/2017", nom: "Kim", type: "Individuelle"},{date: "18/09/2017", nom: "Co", type: "Collective"}],
                 dossiers: [
-                    {nom: 'Eagle', employe: 'Bob lee', police: '76A34F', mois: 'Juin', assureur: 'Enterprise'},
-                    {nom: 'Hut', employe: 'Marine Hu', police: '76B74C', mois: 'Octobre', assureur: 'Enterprise'},
-                    {nom: 'Goal', employe: 'Fry Rob', police: '43H98O', mois: 'Septembre', assureur: 'Pomm'},
-                    {nom: 'GRILL', employe: 'Some Guy', police: 'FFFFFF', mois: 'Decembre', assureur: 'Med'},
-                    {nom: 'Fukiko Corp.', employe: 'Fukiko Garbe', police: '123432', mois: 'Decembre', assureur: 'Gilles Garbe'}
+                    {nom: 'Eagle', employe: 'Bob lee', police: '76A34F', mois: 'Juin', assureur: 'Enterprise', statut: 'actif', prospect : 'prospect'},
+                    {nom: 'Hut', employe: 'Marine Hu', police: '76B74C', mois: 'Octobre', assureur: 'Enterprise', statut: 'annulé', prospect : 'prospect'},
+                    {nom: 'Goal', employe: 'Fry Rob', police: '43H98O', mois: 'Septembre', assureur: 'Pomm', statut: 'annulé', prospect : ''},
+                    {nom: 'GRILL', employe: 'Some Guy', police: 'FFFFFF', mois: 'Decembre', assureur: 'Med', statut: 'actif', prospect : ''},
+                    {nom: 'Fukiko Corp.', employe: 'Fukiko Garbe', police: '123432', mois: 'Decembre', assureur: 'Gilles Garbe', statut: 'actif', prospect : 'prospect'}
                 ]
             };
         }
@@ -35,7 +35,7 @@ class HistoriqueContainer extends Component {
                 break;
             case 'PageCollectivesClients':
                 this.table = (
-                    <table>
+                    <table id="PageCollectivesClientsTable">
                         <thead>
                         <tr>
                             <th>Nom de l'entreprise</th>
@@ -43,6 +43,8 @@ class HistoriqueContainer extends Component {
                             <th>N° de police</th>
                             <th>Mois de renouvellement</th>
                             <th>Assureur</th>
+                            <th>Statut</th>
+                            <th>Prospect</th>
                         </tr>
                         </thead>
                         <DossiersComponent dossiers={this.state.dossiers} history={this.props.history}/>
@@ -51,11 +53,13 @@ class HistoriqueContainer extends Component {
                 break;
             case 'PageFournisseurs':
                 this.table = (
-                    <table>
+                    <table id="PageFournisseursTable">
                         <thead>
                         <tr>
                             <th>Nom de l'assurance</th>
+                            <th>Nombre d'employés</th>
                             <th>Nom contact</th>
+                            <th>Code</th>
                         </tr>
                         </thead>
                         <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
