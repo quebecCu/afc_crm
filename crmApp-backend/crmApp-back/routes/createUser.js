@@ -19,8 +19,9 @@ router.post('/createUser', function(req, res) {
         login: req.body.login,
         mdpProv: req.body.mdpProv,
         mail: req.body.mail,
-        permissionsUser: req.body.permissionsUser
+        permissionsUser: req.body.permissionsUser,
     };
+    
     console.log(user);
     
     var geExistingUser = squel.select()
@@ -55,7 +56,7 @@ router.post('/createUser', function(req, res) {
     
     db.any(geExistingUser.toString())
     .then(existUser => {
-    	if(existUser.length === 0) {
+    	if(existUser.length === 0) {	
     		db.multi(getIdRole.toString() + ";" + getOp.toString() + ";" + getEntities.toString())
     		.then(data => {
     			var idRole = data[0][0].idrole;
@@ -81,6 +82,7 @@ router.post('/createUser', function(req, res) {
     			
     			db.one(addUser.toString())
     		    .then(userCreated => {
+    		    		
     		    		user.permissionsUser.forEach(function(element) {
     			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
     			    		if(element.level >= 1){
@@ -103,10 +105,7 @@ router.post('/createUser', function(req, res) {
     			    	
     			    	db.any(addRights.toString())
     			        .then(data => {
-    			        		res.send({ 
-    							status : 'success',
-    							message : null
-    						});;
+    			        		createEmployee (user, userCreated, res);
     			        })
     			        .catch(error => {
     			            console.log('ERROR:', error); // print error;
@@ -133,5 +132,39 @@ router.post('/createUser', function(req, res) {
    
     console.log("end post /createUser");
 });
+
+function createEmployee(userInformations, userCreated, res) {
+	 var addPersonne = squel.insert()
+		.into('public."PERSONNE"')
+		.set("nom", userInformations.nom.split(" ")[1])
+		.set("prenom", userInformations.nom.split(" ")[0])
+		.set("titre", "Mr")
+		.returning('*');	
+		
+	db.one(addPersonne.toString())
+    .then( personCreated => {
+    	
+    		var addEmployee = squel.insert()
+		.into('users."EMPLOYE_INT"')
+		.set("iduser", userCreated.iduser)
+		.set("idpersonne", personCreated.idpersonne)
+		.returning('*');
+    		
+    		db.one(addEmployee.toString())
+    	    .then(employeeCreated => {
+	    	    	res.send({ 
+		    			status : 'success',
+		    			message : null
+		    		});; 
+	    })
+ 		.catch(error => {
+ 			 console.log('ERROR:', error); // print error;
+ 		});
+    		
+	})
+	.catch(error => {
+		 console.log('ERROR:', error); // print error;
+	});
+} 
 
 module.exports = router;

@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS users."ENTREPRISE_AFFICHAGE" CASCADE;
 DROP TABLE IF EXISTS users."FOURNISSEUR_AFFICHAGE" CASCADE;
 DROP TABLE IF EXISTS users."MODIFICATION_CLIENT" CASCADE;
 DROP TABLE IF EXISTS users."EMPLOYE_INT" CASCADE;
+DROP TABLE IF EXISTS users."RELATION_FOURNISSEUR" CASCADE;
 DROP TABLE IF EXISTS users."POSITION" CASCADE;
 
 CREATE TABLE users."ROLEADM" (
@@ -146,6 +147,14 @@ CREATE TABLE users."MODIFICATION_CLIENT" (
 );
 
 CREATE TABLE users."EMPLOYE_INT" (
+  idemploye serial PRIMARY KEY,
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
-  idemploye  integer PRIMARY KEY REFERENCES public."PERSONNE" (idpersonne)
+  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne)
+);
+
+CREATE TABLE users."RELATION_FOURNISSEUR" (
+  idemploye  integer REFERENCES users."EMPLOYE_INT" (idemploye),
+  idfournisseur  integer REFERENCES public."FOURNISSEUR" (idfournisseur),
+  code_fournisseur varchar(100),
+  CONSTRAINT  pk_RELATION_FOURNISSEUR  PRIMARY KEY (idemploye, idfournisseur) 
 );
