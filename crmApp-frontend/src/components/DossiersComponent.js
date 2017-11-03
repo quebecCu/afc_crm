@@ -9,7 +9,6 @@ class DossiersComponent extends Component {
     }
 
     render() {
-        console.log(this.props.fournisseur);
         if (this.props.historique) {
             this.rows = (
                 <tbody>

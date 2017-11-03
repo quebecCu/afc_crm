@@ -11,7 +11,6 @@ class PageFournisseurs extends Component {
     }
     render() {
         let { formState, dossiersState } = this.props.crmRechercheFournisseur;
-        console.log(dossiersState);
         return(
             <div>
                 <h1>Fournisseurs</h1>
@@ -21,7 +20,6 @@ class PageFournisseurs extends Component {
                     formState = {formState}
                     changeForm = {this.props.changeFormFour}
                     />
-
             </div>
 
         );

@@ -53,7 +53,7 @@ class HistoriqueContainer extends Component {
                 break;
             case 'PageFournisseurs':
                 this.table = (
-                    <table>
+                    <table id="PageFournisseursTable">
                         <thead>
                         <tr>
                             <th>Nom de l'assurance</th>
