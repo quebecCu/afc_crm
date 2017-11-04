@@ -35,7 +35,8 @@ class HistoriqueContainer extends Component {
                 break;
             case 'PageCollectivesClients':
                 this.table = (
-                    <table id="PageCollectivesClientsTable">
+                		<div style={{ overflow: 'auto', height:'300px',}}>
+                    <table id="PageCollectivesClientsTable" >
                         <thead>
                         <tr>
                             <th>Nom de l'entreprise</th>
@@ -49,11 +50,13 @@ class HistoriqueContainer extends Component {
                         </thead>
                         <DossiersComponent dossiers={this.state.dossiers} history={this.props.history}/>
                     </table>
+                        </div>
                 );
                 break;
             case 'PageFournisseurs':
                 this.table = (
-                    <table id="PageFournisseursTable">
+                		<div style={{ overflow: 'auto', height:'300px',}}>
+                    <table id="PageFournisseursTable" >
                         <thead>
                         <tr>
                             <th>Nom de l'assurance</th>
@@ -64,6 +67,8 @@ class HistoriqueContainer extends Component {
                         </thead>
                         <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
                     </table>
+                        </div>
+
                 );
                 break;
             default:
