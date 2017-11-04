@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import NavBarLink from "../components/NavBarLink";
 import {logout} from "../actions/crmLogin";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
+import {changeViewUserManagement} from "../actions/crmUserManagement";
 
 class NavBar extends Component {
 
@@ -16,7 +17,7 @@ class NavBar extends Component {
                 <NavBarLink name="Assurances Collectives" id="collIns" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewCollective}/>
                 <NavBarLink name="Placements" id="placements" handleClick={this.props.changeViewDashboard} view={this.props.view} />
                 <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} />
-                <NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} />
+                <NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement}/>
                 <div  id="logout" onClick={this.props.logout} className="link">Déconnexion</div>
                 <NavBarLink name="Retour" id="back" />
             </div>
@@ -42,7 +43,11 @@ const  mapDispatchToProps = (dispatch) => {
         },
         changeViewCollective: (newView) => {
             dispatch(changeViewCollective(newView));
+        },
+        changeViewUserManagement: (newView) => {
+            dispatch(changeViewUserManagement(newView));
         }
+
     }
 };
 

@@ -9,8 +9,8 @@ import {
 } from 'react-router-dom';
 import { page1 } from "../containers/page1";
 import {CreationClient} from "../containers/CreationClient";
-import gestionUser from "../containers/GestionUser";
-import createUser from "../containers/createUser";
+import GestionUser from "../containers/GestionUser";
+import CreateUser from "../containers/CreateUser";
 
 export class BarreNav extends Component {
     constructor(props) {
@@ -87,8 +87,8 @@ export class BarreNav extends Component {
                     )} />
                     <Route path="/PageAccueil/assu-col/clients/client_1" component={page1}/>
                     <Route path="/PageAccueil/assu-col/clients/NouveauClient" component={CreationClient} />
-                    <Route exact path='/PageAccueil/admin' component={gestionUser} />
-                    <Route path="/PageAccueil/admin/createUser" component={createUser} />
+                    <Route exact path='/PageAccueil/admin' component={GestionUser} />
+                    <Route path="/PageAccueil/admin/createUser" component={CreateUser} />
                 </div>
             </div>
         );

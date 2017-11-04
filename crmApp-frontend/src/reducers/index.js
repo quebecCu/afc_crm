@@ -11,7 +11,8 @@ import crmRechercheCollective from './crmRechercheCollective';
 import crmRechercheFournisseur from './crmRechercheFournisseur';
 import crmCreateUser from './crmCreateUser';
 import crmDashboard from "./crmDashboard";
-import crmCollectiveContainer from './crmCollectiveContainer'
+import crmCollectiveContainer from './crmCollectiveContainer';
+import crmUserManagement from './crmUserManagement';
 // TODO les autres reducers a rajouter ici 
 
 
@@ -25,6 +26,7 @@ const appReducer = combineReducers ({
 	crmResetPassword,
 	crmDashboard,
 	crmCollectiveContainer,
+	crmUserManagement
 });
 
 

@@ -3,22 +3,22 @@ import {store} from '../store';
 import {push} from 'react-router-redux';
 
 
-export class ListUsers extends React.Component{
+class ListUsers extends React.Component{
     constructor(props){
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this._handleClick = this._handleClick.bind(this);
 
     }
 
-    handleClick(element){
+   /* handleClick(element){
         //Ducoup quand on clique ça affiche la page de l'utilisateur, changer le path? Faire un linkto ?
         store.dispatch(push('/PageAccueil/admin/'+element.id));
         console.log(element.id);
 
 
-    }
-
-    componentWillMount(){
+    }*/
+//DOIT avoir lesinfos du backend pour l'affichage
+   /* componentWillMount(){
         this.rows = (
           <tbody>
           {this.props.users.map(element => {
@@ -34,9 +34,31 @@ export class ListUsers extends React.Component{
 
         );
 
-    }
+    }*/
+
+   _handleClick(event){
+       event.preventDefault();
+       this.props.handleClick("CreateUser");
+   }
 
     render(){
-        return this.rows;
+        return <div><table className="user">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Nom prénom</th>
+                <th>Rôle</th>
+            </tr>
+            </thead>
+
+        </table>
+
+
+
+            <button onClick={this._handleClick}>Créer utilisateur</button>
+
+        </div>;
     }
 }
+
+export default (ListUsers);

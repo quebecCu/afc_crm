@@ -4,7 +4,7 @@ import {FormCreateUser} from '../components/FormCreateUser.js';
 import '../style/CreationUser.css';
 import {changeFormCreateUser, submitUser} from "../actions/crmCreateUser";
 
-class createUser extends React.Component{
+class CreateUser extends React.Component{
 
     constructor(props){
         super(props);
@@ -17,7 +17,7 @@ class createUser extends React.Component{
         let {formState} = this.props.crmCreateUser;
         return <div><h1>Créer utilisateur</h1>
             <FormCreateUser formState={formState}
-                             changeForm={this.props.changeForm}
+                            changeForm={this.props.changeForm}
                             submitUser={this.props.submitUser}/>
 
         </div>;
@@ -44,4 +44,4 @@ const  mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (createUser);
+export default connect(mapStateToProps, mapDispatchToProps) (CreateUser);
