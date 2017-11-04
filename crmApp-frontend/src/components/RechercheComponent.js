@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../style/RechercheComponent.css';
+import '../style/RechercheFournisseur.css';
 import Request from 'superagent' ;
 import {store} from '../store';
 import {push} from 'react-router-redux';

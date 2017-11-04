@@ -117,7 +117,7 @@ class SearchCompSuppliers extends Component {
 
         return(
             <form action="" id="formFournisseurs">
-                <div id="recherche">
+                <div id="rechercheFournisseur">
                     <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
                     <input type="text" placeholder="Nombre d'employés" onChange={this._changeNombreEmployes}  value={this.props.formState.nombreEmployes} />
                     <input type="text" placeholder="Nom d'un contact" onChange={this._changeNomContact} value={this.props.formState.nomContact}/>
