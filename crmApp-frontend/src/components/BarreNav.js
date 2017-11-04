@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import { page1 } from "../containers/page1";
 import {CreationClient} from "../containers/CreationClient";
-import {gestionUser} from "../containers/gestionUser";
+import gestionUser from "../containers/GestionUser";
 import createUser from "../containers/createUser";
 
 export class BarreNav extends Component {

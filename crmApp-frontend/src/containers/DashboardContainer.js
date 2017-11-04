@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import AccueilPageContainer from "./AccueilPageContainer";
 import NavBar from "./NavBar";
-import PageCollectives from "../components/PageCollectives";
 import PageFournisseurs from "../components/PageFournisseurs";
+import GestionUser from './GestionUser';
 import '../style/Dashboard.css'
+import CollectivePageContainer from "./CollectivePageContainer";
 
 class DashboardContainer extends Component {
 
@@ -18,13 +19,13 @@ class DashboardContainer extends Component {
                         view === "Home" && <AccueilPageContainer />
                     }
                     {
-                        view === "collIns" && <PageCollectives />
+                        view === "collIns" && <CollectivePageContainer />
                     }
                     {
                         view === "suppliers" && <PageFournisseurs />
                     }
                     {
-                        view === "usersManagement" && <gestionUser />
+                        view === "usersManagement" && <GestionUser />
                     }
                 </div>
 

@@ -4,7 +4,7 @@ import {ListUsers} from '../components/ListUsers.js';
 import {store} from '../store';
 import {push} from 'react-router-redux';
 
-export class gestionUser extends React.Component{
+class GestionUser extends React.Component{
 
     constructor(props){
         super(props);
@@ -63,3 +63,5 @@ export class gestionUser extends React.Component{
 
     }
 }
+
+export default (GestionUser)

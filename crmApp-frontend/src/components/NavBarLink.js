@@ -6,8 +6,11 @@ class NavBarLink extends Component {
         this._handleClick = this._handleClick.bind(this);
     }
 
-    _handleClick(event) {
+    _handleClick() {
         this.props.handleClick(this.props.id);
+        if(this.props.resetView){
+            this.props.resetView("");
+        }
     }
 
     render() {

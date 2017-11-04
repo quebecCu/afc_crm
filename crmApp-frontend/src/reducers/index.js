@@ -11,6 +11,7 @@ import crmRechercheCollective from './crmRechercheCollective';
 import crmRechercheFournisseur from './crmRechercheFournisseur';
 import crmCreateUser from './crmCreateUser';
 import crmDashboard from "./crmDashboard";
+import crmCollectiveContainer from './crmCollectiveContainer'
 // TODO les autres reducers a rajouter ici 
 
 
@@ -22,8 +23,9 @@ const appReducer = combineReducers ({
 	crmRechercheFournisseur,
 	crmCreateUser,
 	crmResetPassword,
-	crmDashboard
-})
+	crmDashboard,
+	crmCollectiveContainer,
+});
 
 
 const rootReducer = (state, action) => {

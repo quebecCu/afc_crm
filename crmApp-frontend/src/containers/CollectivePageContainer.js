@@ -1,26 +1,54 @@
 import React, { Component } from 'react';
-//import Login from './Login';
-
+import {connect} from 'react-redux'
 import PageCollectives from '../components/PageCollectives';
 import PageCollectivesClients from '../components/PageCollectivesClients';
-import RechercheComponent from '../components/RechercheComponent';
-import HistoriqueContainer from "../containers/HistoriqueContainer";
+import {changeViewCollective} from "../actions/crmCollectiveContainer";
 
-import '../style/Login.css';
-/// TODO 
 
 class CollectivePageContainer extends Component   {
+	constructor(props){
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick(event) {
+		event.preventDefault();
+		this.props.changeViewCollective(event.target.className);
+	}
 	
 	render() {
-		
+        let {view} = this.props.crmCollectiveContainer;
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
-			<HistoriqueContainer page="PageFournisseurs" history={this.props.history} />
-		</div>
+		<div>
+			{
+				view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
+			}
+			{
+				view === "" && <button onClick={this.handleClick} className="suppliers">Fournisseurs</button>
+			}
+			{
+				view === "customers" && <PageCollectivesClients/>
+			}
 		</div>
 		
-		)
+		);
 	}
 }
-export default (CollectivePageContainer);
+
+function mapStateToProps (state) {
+
+    return{
+        crmCollectiveContainer: state.crmCollectiveContainer
+    }
+}
+
+//fonctions
+const  mapDispatchToProps = (dispatch) => {
+    return{
+        changeViewCollective : (newView) => {
+            dispatch(changeViewCollective(newView))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (CollectivePageContainer)
