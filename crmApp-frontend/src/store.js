@@ -18,7 +18,9 @@ middlewares.push(saga);
 
 
 let middleware = applyMiddleware (...middlewares);
-middleware = compose(middleware, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+if(window.__REDUX_DEVTOOLS_EXTENSION__){
+    middleware = compose(middleware, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+}
 
 //create store
 const store = createStore(reducers, middleware);
