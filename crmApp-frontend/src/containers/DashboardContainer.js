@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import AccueilPageContainer from "./AccueilPageContainer";
 import NavBar from "./NavBar";
-import PageFournisseurs from "../components/PageFournisseurs";
+import PageFournisseurs from "./PageFournisseurs";
 import GestionUser from './GestionUser';
 import '../style/Dashboard.css'
 import CollectivePageContainer from "./CollectivePageContainer";

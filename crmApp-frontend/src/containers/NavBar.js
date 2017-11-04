@@ -5,6 +5,7 @@ import NavBarLink from "../components/NavBarLink";
 import {logout} from "../actions/crmLogin";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {changeViewUserManagement} from "../actions/crmUserManagement";
+import '../style/NavBar.css';
 
 class NavBar extends Component {
 

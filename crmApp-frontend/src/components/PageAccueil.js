@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../style/logo.svg';
 import '../style/App.css';
-import { ButtonsComponent } from "./ButtonsComponent";
 import HistoriqueContainer from "../containers/HistoriqueContainer";
 
 class PageAccueil extends Component {

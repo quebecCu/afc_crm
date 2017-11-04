@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import PageCollectives from '../components/PageCollectives';
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 
@@ -20,6 +19,9 @@ class CollectivePageContainer extends Component   {
         let {view} = this.props.crmCollectiveContainer;
 		return(
 		<div>
+			{
+				view === "" && <h1>Assurances collectives</h1>
+			}
 			{
 				view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
 			}

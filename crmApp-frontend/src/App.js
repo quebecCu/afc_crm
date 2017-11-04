@@ -4,7 +4,6 @@ import {
     Switch,
     Route
 } from 'react-router-dom'
-import {BarreNav} from "./components/BarreNav";
 import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
 import ResetPagePassword from "./containers/ResetPagePasswordContainer";
