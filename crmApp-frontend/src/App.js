@@ -11,25 +11,24 @@ import ResetPagePassword from "./containers/ResetPagePasswordContainer";
 import AccueilPageContainer from "./containers/AccueilPageContainer";
 import {store} from './store.js';
 import {history} from './store.js';
-import {Provider } from 'react-redux';
+import {Provider, connect } from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
-import CollectivePageContainer from "./containers/CollectivePageContainer";
-//import history from './history';
+import DashboardContainer from "./containers/DashboardContainer";
+import {PrivateRoute, PublicOnlyRoute} from "./components/CustomRoute";
 
 class App extends Component {
 
     render(){
         return (
         	<Provider	store={store}>
-        	<ConnectedRouter history={history}>
-        	<div>
-					<Route exact path="/" component={LoginPage}/>
-					<Route path="/PageAccueil/:id" component={BarreNav} />
-					<Route exact path="/PageAccueil" component={AccueilPageContainer} />
-					<Route exact path="/Reset" component={ResetPage} />
-					<Route exact path="/ResetPassword" component={ResetPagePassword} />
-					</div>
-			</ConnectedRouter>
+        		<ConnectedRouter history={history}>
+        			<Switch>
+						<PublicOnlyRoute exact path="/" component={LoginPage}/>
+						<PrivateRoute exact path="/Home" component={DashboardContainer} />
+						<PublicOnlyRoute exact path="/Reset" component={ResetPage} />
+						<PublicOnlyRoute exact path="/ResetPassword" component={ResetPagePassword} />
+					</Switch>
+				</ConnectedRouter>
 			</Provider>
         );
     }

@@ -10,6 +10,7 @@ import crmResetPassword from './crmResetPassword';
 import crmRechercheCollective from './crmRechercheCollective';
 import crmRechercheFournisseur from './crmRechercheFournisseur';
 import crmCreateUser from './crmCreateUser';
+import crmDashboard from "./crmDashboard";
 // TODO les autres reducers a rajouter ici 
 
 
@@ -20,7 +21,8 @@ const appReducer = combineReducers ({
 	crmRechercheCollective,
 	crmRechercheFournisseur,
 	crmCreateUser,
-	crmResetPassword
+	crmResetPassword,
+	crmDashboard
 })
 
 

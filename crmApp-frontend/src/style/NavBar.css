@@ -13,12 +13,12 @@
     text-decoration: none;
 }
 
-#navBar li.active {
+.link.active {
     background-color: #008CBA;
     color: white;
 }
 
-#navBar li:hover:not(.active) {
+.link:hover:not(.active) {
     background-color: darkcyan;
     color: white;
 }
@@ -42,8 +42,14 @@
     text-align: center;
 }
 
-#navBar {
+.navBar {
     position: fixed;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    left: 0;
+    top: 0;
 }
 
 #main {
@@ -53,4 +59,13 @@
 
 .container {
     margin: 0 auto;
+}
+
+.link {
+    color: #000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
 }

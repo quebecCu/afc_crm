@@ -4,7 +4,6 @@ import { connect  } from 'react-redux';
 import PageAccueil from '../components/PageAccueil';
 
 import '../style/Login.css';
-/// TODO 
 import {loginRequest, changeForm} from '../actions/crmLogin'
 
 class AccueilPageContainer extends Component   {
