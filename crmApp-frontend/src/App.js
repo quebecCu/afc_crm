@@ -7,7 +7,6 @@ import {
 import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
 import ResetPagePassword from "./containers/ResetPagePasswordContainer";
-import AccueilPageContainer from "./containers/AccueilPageContainer";
 import {store} from './store.js';
 import {history} from './store.js';
 import {Provider, connect } from 'react-redux';
