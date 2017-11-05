@@ -12,23 +12,24 @@ class DashboardContainer extends Component {
     render() {
         let {view} = this.props.crmDashboard;
         return (
-            <div id="Dashboard">
-                <NavBar view={view}/>
-                <div className="view">
-                    {
-                        view === "Home" && <AccueilPageContainer />
-                    }
-                    {
-                        view === "collIns" && <CollectivePageContainer />
-                    }
-                    {
-                        view === "suppliers" && <PageFournisseurs />
-                    }
-                    {
-                        view === "usersManagement" && <GestionUser />
-                    }
+            <div id="Dashboard" className="container-fluid">
+                <div className="row">
+                    <NavBar view={view} className=" col"/>
+                    <div className="view col">
+                        {
+                            view === "Home" && <AccueilPageContainer />
+                        }
+                        {
+                            view === "collIns" && <CollectivePageContainer />
+                        }
+                        {
+                            view === "suppliers" && <PageFournisseurs />
+                        }
+                        {
+                            view === "usersManagement" && <GestionUser />
+                        }
+                    </div>
                 </div>
-
             </div>
         );
     }

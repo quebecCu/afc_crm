@@ -12,16 +12,11 @@ class ResetPage extends Component   {
 	render() {
 		let { formState , isLoading, error } = this.props.crmReset;
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
 		<Reset 		onSubmit = {this.props.resetRequest}
 					formState = {formState}
 					isLoading = {isLoading}
 					error = {error}
 					changeForm = {this.props.changeForm} />
-		</div>
-		</div>
-		
 		)
 	}
 }

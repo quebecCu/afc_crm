@@ -16,7 +16,7 @@ class PageCollectivesClients extends Component {
 		let { formState, changeForm } = this.props.crmRechercheCollective;
 
         return(
-                <div>
+                <div className="container-fluid text-center">
                     <h1>Assurances collectives</h1>
                     <h2>Clients</h2>
                     <HistoriqueContainer page="PageCollectivesClients" history={this.props.history} />
@@ -24,7 +24,7 @@ class PageCollectivesClients extends Component {
                     onSubmit = {this.props.searchRequestColl}
                 	formState = {formState}
                     changeFormColl = {this.props.changeFormColl}   />
-                    <button>Créer une fiche client</button>
+                    <button onClick={this.props.handleClick} className="newCustomer">Créer une fiche client</button>
 				</div>
         );
     }

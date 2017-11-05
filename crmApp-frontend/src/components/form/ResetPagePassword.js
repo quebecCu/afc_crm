@@ -40,28 +40,28 @@ class ResetPagePassword extends Component   {
 	render() {
 		return ( 
 
-				<div className ="reset">
-				<div className="elelment">
-					<h2> </h2>
-					<div className="element-main">
-						<h1>Mot de passe oublié</h1>
-						<p> Entrez votre nouveau mot de passe</p>
-						<form method="POST" onSubmit = {this._submit}>
-	
-						<input  pattern=".{5,10}" type="password" placeholder="Votre nouveau mot de passe"  onChange={this._changeNewPassword} value={this.props.formState.newPassword} required/>
-						<p> Confirmation du mot de passe </p>
-						<input  type="password" pattern=".{5,10}" placeholder="Confirmation du mot de passe"  onChange={this._changeConfirmPassword} value={this.props.formState.confirmPassword} required/>
+				<div className ="reset container-fluid">
+					<div className="elelment row">
+						<h2> </h2>
+						<div className="element-main">
+							<h1>Mot de passe oublié</h1>
+							<p> Entrez votre nouveau mot de passe</p>
+							<form method="POST" onSubmit = {this._submit}>
 
-						<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Changer</button></div>
-							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Quitter</button>
-							</div>
-						</form>
-						
+							<input  pattern=".{5,10}" type="password" placeholder="Votre nouveau mot de passe"  onChange={this._changeNewPassword} value={this.props.formState.newPassword} required/>
+							<p> Confirmation du mot de passe </p>
+							<input  type="password" pattern=".{5,10}" placeholder="Confirmation du mot de passe"  onChange={this._changeConfirmPassword} value={this.props.formState.confirmPassword} required/>
+
+							<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Changer</button></div>
+								<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Quitter</button>
+								</div>
+							</form>
+
+						</div>
 					</div>
-				</div>
-				<div className="copy-right">
-							<p>© 2017 CRM Application UDES. All rights reserved </p>
-				</div>
+					<div className="copy-right row">
+								<p className="col text-center">© 2017 CRM Application UDES. All rights reserved </p>
+					</div>
 				</div>
 		);
 	}

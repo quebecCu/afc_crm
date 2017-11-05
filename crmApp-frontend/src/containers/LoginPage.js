@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect  } from 'react-redux';
 import Login from '../components/form/Login';
 
-import '../style/Login.css';
+//import '../style/Login.css';
 /// TODO 
 import {loginRequest, changeForm} from '../actions/crmLogin'
 
@@ -14,16 +14,12 @@ class LoginPage extends Component   {
 		//gestion derreur sur la div login
 		
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
-		<Login 		onSubmit = {this.props.loginRequest}
-					formState = {formState}
-					isLoading = {isLoading}
-					error = {error}
-					changeForm = {this.props.changeForm} />
-		</div>
-		</div>
-		
+
+                <Login onSubmit = {this.props.loginRequest}
+                       formState = {formState}
+                       isLoading = {isLoading}
+                       error = {error}
+                       changeForm = {this.props.changeForm} />
 		)
 	}
 }

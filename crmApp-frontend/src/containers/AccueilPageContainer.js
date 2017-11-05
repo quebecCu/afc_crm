@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect  } from 'react-redux';
 import PageAccueil from '../components/PageAccueil';
 
-import '../style/Login.css';
 import {loginRequest, changeForm} from '../actions/crmLogin'
 
 class AccueilPageContainer extends Component   {
@@ -13,13 +12,9 @@ class AccueilPageContainer extends Component   {
 		//gestion derreur sur la div login
 		
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
 		<PageAccueil 		
 					formState = {formState}
 					 />
-		</div>
-		</div>
 		
 		)
 	}

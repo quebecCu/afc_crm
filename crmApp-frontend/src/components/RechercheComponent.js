@@ -94,7 +94,7 @@ class RechercheComponent extends Component {
 	render() {
 
 		return(
-				<form action="" id="recherche" style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left'}}>
+				<form action="" id="recherche" className="container-fluid">
 				<input type="text" id ="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
 				<input type="text" id ="nomEmploye" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={this.props.formState.nomEmploye} />
 				<input type="text" id ="numeroPolice" placeholder="N° police" onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>

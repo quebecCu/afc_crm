@@ -11,7 +11,7 @@ class PageFournisseurs extends Component {
     render() {
         let { formState, dossiersState, searchList } = this.props.crmRechercheFournisseur;
         return(
-            <div>
+            <div className="container-fluid text-center">
                 <h1>Fournisseurs</h1>
                 <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}/>
                 <SearchCompSuppliers

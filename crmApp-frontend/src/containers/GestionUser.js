@@ -48,7 +48,7 @@ class GestionUser extends React.Component{
     render() {
         let {view} = this.props.crmUserManagement;
         return <div id="UserManagement">
-            <div className="view">
+            <div className="view text-center">
                 {
                     view === "" && <ListUsers handleClick={this.props.changeViewUserManagement}/>
                 }
