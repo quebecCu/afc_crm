@@ -12,10 +12,10 @@ class DashboardContainer extends Component {
     render() {
         let {view} = this.props.crmDashboard;
         return (
-            <div id="Dashboard" className="container-fluid">
-                <div className="row">
-                    <NavBar view={view} className=" col"/>
-                    <div className="view col">
+            <div id="Dashboard">
+
+                    <NavBar view={view}/>
+                    <div className="view container" id="main">
                         {
                             view === "Home" && <AccueilPageContainer />
                         }
@@ -29,7 +29,7 @@ class DashboardContainer extends Component {
                             view === "usersManagement" && <GestionUser />
                         }
                     </div>
-                </div>
+
             </div>
         );
     }

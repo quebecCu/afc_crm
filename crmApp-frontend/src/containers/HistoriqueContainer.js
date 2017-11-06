@@ -6,13 +6,6 @@ class HistoriqueContainer extends Component {
     constructor(props) {
         super(props);
         this.state = { historique: [{date: "20/09/2017", nom: "Kim", type: "Individuelle"},{date: "18/09/2017", nom: "Co", type: "Collective"}],
-                dossiers: [
-                    {nom: 'Eagle', employe: 'Bob lee', police: '76A34F', mois: 'Juin', assureur: 'Enterprise', statut: 'actif', prospect : 'oui'},
-                    {nom: 'Hut', employe: 'Marine Hu', police: '76B74C', mois: 'Octobre', assureur: 'Enterprise', statut: 'annulé', prospect : 'oui'},
-                    {nom: 'Goal', employe: 'Fry Rob', police: '43H98O', mois: 'Septembre', assureur: 'Pomm', statut: 'annulé', prospect : 'non'},
-                    {nom: 'GRILL', employe: 'Some Guy', police: 'FFFFFF', mois: 'Decembre', assureur: 'Med', statut: 'actif', prospect : 'non'},
-                    {nom: 'Fukiko Corp.', employe: 'Fukiko Garbe', police: '123432', mois: 'Decembre', assureur: 'Gilles Garbe', statut: 'actif', prospect : 'oui'}
-                ]
             };
         }
 
@@ -48,7 +41,7 @@ class HistoriqueContainer extends Component {
                             <th>Prospect</th>
                         </tr>
                         </thead>
-                        <DossiersComponent dossiers={this.state.dossiers} history={this.props.history}/>
+                        <DossiersComponent collective={this.props.dossiersState} history={this.props.history}/>
                     </table>
                         </div>
                 );

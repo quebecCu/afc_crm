@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {CreationClient} from "./CreationClient";
+import {sendingRequestColl} from "../actions/crmRechercheCollective";
 
 
 class CollectivePageContainer extends Component   {
@@ -10,6 +11,8 @@ class CollectivePageContainer extends Component   {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
 	}
+
+
 
 	handleClick(event) {
 		event.preventDefault();

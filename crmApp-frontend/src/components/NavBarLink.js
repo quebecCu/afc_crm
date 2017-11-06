@@ -17,12 +17,12 @@ class NavBarLink extends Component {
         let link;
         if(this.props.view === this.props.id) {
             link = (<div onClick={this._handleClick} className="link active">
-                            {this.props.name}
+                             {"  " + this.props.name}
                         </div>)
         }
         else {
             link = (<div onClick={this._handleClick} className="link">
-                {this.props.name}
+                 {"  " + this.props.name}
             </div>)
         }
         return (

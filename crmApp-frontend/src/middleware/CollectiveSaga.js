@@ -19,7 +19,6 @@ export function * searchFlow (){
 //			statutProspect} = search.data;
 //		 
 //		yield put ({ type: SENDING_REQUEST_COLL, sending:true})
-		
 		//communication avec server
 		var server = "http://localhost:3002/assurancesCollectives";
 		//changer la location de la variable server pour plus de securite 

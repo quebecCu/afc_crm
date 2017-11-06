@@ -24,18 +24,18 @@ class DossiersComponent extends Component {
                 </tbody>
             );
         }
-        else if (this.props.dossiers){
+        else if (this.props.collective){
             this.rows = (
                 <tbody>
-                {this.props.dossiers.map(element => {
+                {this.props.collective.map(element => {
                     return (
                         <tr onClick={this.handleClick.bind(this)}>
-                            <td>{element.nom}</td>
-                            <td>{element.employe}</td>
-                            <td>{element.police}</td>
-                            <td>{element.mois}</td>
-                            <td>{element.assureur}</td>
-                            <td>{element.statut}</td>
+                            <td>{element.nom_entreprise}</td>
+                            <td>{element.nom_employe}</td>
+                            <td>{element.no_police}</td>
+                            <td>{element.mois_renouvellement}</td>
+                            <td>{element.nom_assureur}</td>
+                            <td>{element.status}</td>
                             <td>{element.prospect}</td>
                         </tr>
                     );
