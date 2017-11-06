@@ -21,15 +21,15 @@ class App extends Component {
     render(){
         return (
         	<Provider	store={store}>
-        	<ConnectedRouter history={history}>
-        	<div>
-					<Route exact path="/" component={LoginPage}/>
-					<Route path="/PageAccueil/:id" component={BarreNav} />
-					<Route exact path="/PageAccueil" component={AccueilPageContainer} />
-					<Route exact path="/Reset" component={ResetPage} />
-					<Route exact path="/ResetPassword" component={ResetPagePassword} />
+				<ConnectedRouter history={history}>
+					<div>
+						<Route exact path="/" component={LoginPage}/>
+						<Route path="/PageAccueil/:id" component={BarreNav} />
+						<Route exact path="/PageAccueil" component={AccueilPageContainer} />
+						<Route exact path="/Reset" component={ResetPage} />
+						<Route exact path="/ResetPassword" component={ResetPagePassword} />
 					</div>
-			</ConnectedRouter>
+				</ConnectedRouter>
 			</Provider>
         );
     }

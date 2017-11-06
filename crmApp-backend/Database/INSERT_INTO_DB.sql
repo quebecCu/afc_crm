@@ -18,7 +18,7 @@ SELECT setval('users."CHAMP_idchamp_seq"', 1, FALSE);
 INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
 INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur');
 INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
-INSERT INTO users."ROLEADM"(description) VALUES ('employe');
+INSERT INTO users."ROLEADM"(description) VALUES ('Employe');
 
 ---OPERATION---
 INSERT INTO users."OPERATION"(description) VALUES ('CREATE');

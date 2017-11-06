@@ -7,23 +7,22 @@ import '../style/Login.css';
 /// TODO 
 import {loginRequest, changeForm} from '../actions/crmLogin'
 
-class LoginPage extends Component   {
+class LoginPage extends Component {
 	
 	render() {
 		let { formState , isLoading, error } = this.props.crmLogin;
 		//gestion derreur sur la div login
 		
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
-		<Login 		onSubmit = {this.props.loginRequest}
-					formState = {formState}
-					isLoading = {isLoading}
-					error = {error}
-					changeForm = {this.props.changeForm} />
-		</div>
-		</div>
-		
+			<div className = "row">
+				<div className = "col-md-4 col-md-offset-4">
+					<Login 		onSubmit = {this.props.loginRequest}
+								  formState = {formState}
+								  isLoading = {isLoading}
+								  error = {error}
+								  changeForm = {this.props.changeForm} />
+				</div>
+			</div>
 		)
 	}
 }

@@ -32,7 +32,7 @@ export class BarreNav extends Component {
             {path: '/', nom: 'Déconnexion'},
             {path: '/', nom: 'Retour'}];
 
-        switch (this.props.location.pathname){
+        switch (this.props.location.pathname) {
             case "/PageAccueil/assu-ind":
                 liens[1].active = true;
                 break;
@@ -63,14 +63,11 @@ export class BarreNav extends Component {
                                     return (
                                         <Link to={element.path} style={{textDecoration: 'none'}} ><li className='active'>{element.nom}</li></Link>
                                     );
-                                }
-
-                                else if (element.nom === 'Retour') {
+                                } else if (element.nom === 'Retour') {
                                     return (
                                         <Link to={this.state.prevPath} style={{textDecoration: 'none'}}><li>{element.nom}</li></Link>
                                     );
-                                }
-                                else {
+                                } else {
                                     return (
                                         <Link to={element.path} style={{textDecoration: 'none'}}><li>{element.nom}</li></Link>
                                     );
