@@ -11,18 +11,20 @@ import {searchRequestColl, changeFormColl, sendingRequestColl} from '../actions/
 class PageCollectivesClients extends Component {
 	constructor(props) {
 		super(props);
-        sendingRequestColl();
-
 	}
-	
+	componentWillMount() {
+        this.props.sendingRequestColl();
+    }
+
+
     render() {
-		let { formState, changeForm } = this.props.crmRechercheCollective;
+		let { formState, changeForm, dossiersState } = this.props.crmRechercheCollective;
 
         return(
                 <div>
                     <h1>Assurances collectives</h1>
                     <h2>Clients</h2>
-                    <HistoriqueContainer page="PageCollectivesClients" history={this.props.history} />
+                    <HistoriqueContainer page="PageCollectivesClients" history={this.props.history} dossiersState={dossiersState}/>
                     <RechercheComponent 
                     onSubmit = {this.props.searchRequestColl}
                 	formState = {formState}
