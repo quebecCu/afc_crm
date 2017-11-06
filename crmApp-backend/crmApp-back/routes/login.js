@@ -27,12 +27,13 @@ router.post('/login', function(req, res) {
 		.then(function (user) {
 			if(user[0] !== undefined) {
 				var loginRetrieved = user[0].login;
+				var iduser = user[0].iduser;
 				var mdpRetrieved = user[0].password;
 				var idroleRetrieved = user[0].idrole;
 					bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
 						// ress === true
 						if(!!ress) {
-							var token = jwt.sign({ login: loginRetrieved, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h'});
+							var token = jwt.sign({ iduser: iduser, idrole: idroleRetrieved}, 'aplsszjknbndsj', { expiresIn: '24h'});
 							res.cookie('token', token, { maxAge: 900000, httpOnly: true });
 							res.send({ 
 								status : 'success',
