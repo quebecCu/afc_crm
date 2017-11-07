@@ -4,6 +4,7 @@ import {SUBMIT_USER, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser} f
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
+import CryptoJS from 'crypto-js';
 
 export function * createUser (){
 
@@ -20,6 +21,8 @@ export function * createUser (){
         } = user.newUser;
 
         console.log(role + nom + login + mdpProv + mail + permissionsUser[0] + permissionsUser[1]);
+        
+        let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
 
         //communication avec server
         var server = "http://localhost:3002/createUser";
@@ -28,7 +31,7 @@ export function * createUser (){
             role: role,
             nom: nom,
             login: login,
-            mdpProv: mdpProv,
+            mdpProv: mdpProvEncoded,
             mail: mail,
             permissionsUser: permissionsUser
 
