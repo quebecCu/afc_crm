@@ -1,41 +1,41 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var db = require('../models');
-var crypto = require('crypto');
-var {hashSync , genSaltSync} = require ('bcryptjs');
-var db = require('../models');
-var CryptoJS = require("crypto-js");
-var jwt = require('jsonwebtoken');
-var bcrypt = require ('bcryptjs');
-var security = require ('../security/security');
+'use strict';
+
+const express = require('express');
+const router = express.Router();
+const CryptoJS = require("crypto-js");
 
 /* GET Email reset logic && send email. */
+router.post('/ResetPassword', function (req, res) {
 
+    let newPasswordReceived = req.body.newPassword;
+    let confirmPasswordReceived = req.body.confirmPassword;
 
+    let decryptedPass = CryptoJS.AES.decrypt(newPasswordReceived, 'secretKey24680');
+    let decryptedConf = CryptoJS.AES.decrypt(confirmPasswordReceived, 'secretKey24680');
 
-router.post('/ResetPassword', function(req, res) {
+    let mdpText = decryptedPass.toString(CryptoJS.enc.Utf8);
+    let mdpTextConf = decryptedConf.toString(CryptoJS.enc.Utf8);
 
-	var newPasswordReceived = req.body.newPassword;
-	var confirmPasswordReceived = req.body.confirmPassword;
+    if (mdpText === mdpTextConf && mdpText.length === mdpTextConf.length) {
 
-	var decryptedPass=  CryptoJS.AES.decrypt(newPasswordReceived, 'secretKey24680');
-	var decryptedConf=  CryptoJS.AES.decrypt(confirmPasswordReceived, 'secretKey24680');
+        console.log("mdpText :", mdpText);
+        console.log("mdpTextConf : ", mdpTextConf);
 
-	var mdpText = decryptedPass.toString(CryptoJS.enc.Utf8);
-	var mdpTextConf = decryptedConf.toString(CryptoJS.enc.Utf8);
+        res.send({
+            status : 'fail',
+            message : "DEBUG|resetPassword"
+        });
 
-if(mdpText === mdpTextConf && mdpText.length === mdpTextConf.length ) {
-	
-	console.log("mdpText :" ,mdpText)
+    } else {
+        console.log("Les deux mots de passe saisis ne se correspondent pas");
 
-	console.log("mdpTextConf : " ,mdpTextConf)
-	
-} else {
-	console.log("Les deux mots de passe saisis ne se correspondent pas")
+        res.send({
+            status : 'fail',
+            message : "DEBUG|resetPassword"
+        });
 
-//	gestion derreurs
-}
+        //	gestion derreurs
+    }
 
 });
 

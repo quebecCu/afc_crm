@@ -1,50 +1,50 @@
-import React, { Component } from 'react';
-//import Login from './Login';
-import { connect  } from 'react-redux';
+/** Imports **/
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {changeForm, resetRequest} from '../actions/crmResetPassword'
 import ResetPagePassword from '../components/form/ResetPagePassword';
 
+/** Styles **/
 import '../style/Reset.css';
-/// TODO 
-import {resetRequest, changeForm} from '../actions/crmResetPassword'
 
-class ResetPagePasswordContainer extends Component   {
-	
+/** Container Reset Password **/
+class ResetPagePasswordContainer extends Component {
 	render() {
-		let { formState , isLoading, error } = this.props.crmResetPassword;
-		//commentaire
-		return( 
+		let {formState, isLoading, error} = this.props.crmResetPassword;
 
-		<ResetPagePassword 		onSubmit = {this.props.resetRequest}
-					formState = {formState}
-					isLoading = {isLoading}
-					error = {error}
-					changeForm = {this.props.changeForm} />
+		// Get the Token from the URL
+		let token = this.props.match.params.token;
 
-		
+		return (
+			<ResetPagePassword
+				changeForm={this.props.changeForm}
+				error={error}
+				formState={formState}
+				isLoading={!!isLoading}
+				onSubmit={this.props.resetRequest}
+				token={token}
+			/>
 		)
 	}
 }
 
-// les fonctions redux
-//valeurs
-function mapStateToProps (state) {
-	
-	return{
+/** Redux **/
+function mapStateToProps(state) {
+	return {
 		crmResetPassword: state.crmResetPassword
 	}
 }
 
-//fonctions
-const  mapDispatchToProps = (dispatch) => {
-	
-	return{
-		resetRequest: (formData) => {
-			dispatch(resetRequest(formData))
-		},
-		changeForm : (newFormState) => {
+const mapDispatchToProps = (dispatch) => {
+	return {
+		changeForm: (newFormState) => {
 			dispatch(changeForm(newFormState))
-		}		
+		},
+		resetRequest: (formData, token) => {
+			dispatch(resetRequest(formData, token))
+		}
 	}
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps) (ResetPagePasswordContainer)
+/** Export **/
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPagePasswordContainer)

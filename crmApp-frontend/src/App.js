@@ -24,7 +24,7 @@ class App extends Component {
 						<PublicOnlyRoute exact path="/" component={LoginPage}/>
 						<PrivateRoute exact path="/Home" component={DashboardContainer} />
 						<PublicOnlyRoute exact path="/Reset" component={ResetPage} />
-						<PublicOnlyRoute exact path="/ResetPassword" component={ResetPagePassword} />
+						<PublicOnlyRoute exact path="/ResetPassword/:token" component={ResetPagePassword} />
 					</Switch>
 				</ConnectedRouter>
 			</Provider>

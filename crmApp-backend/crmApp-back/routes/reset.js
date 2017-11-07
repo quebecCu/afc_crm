@@ -31,7 +31,7 @@ router.post('/reset', function(req, res) {
 			from: 'crm.udes@gmail.com',
 			to: emailReceived,
 			subject: 'Récuperation de mot de passe oublié',
-			text: 'Voici votre mot de passe oublié:\n\n  http://localhost:3000/Reset/' + _token + '\n\nÉquipe CRM',
+			text: 'Voici votre mot de passe oublié:\n\n  http://localhost:3000/ResetPassword/' + _token + '\n\nÉquipe CRM',
 	};
 	db.query(
 			squel.select()
