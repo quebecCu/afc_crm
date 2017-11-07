@@ -43,10 +43,6 @@ const rootReducer = (state, action) => {
 		const {routerReducer, crmRechercheCollective} = state;
 		state =  {routerReducer, crmRechercheCollective};
 	}
-	case SENDING_REQUEST_COLL: {
-		const {routerReducer, crmRechercheCollective} = state;
-		state = {routerReducer, crmRechercheCollective};
-	}
 	case RESET_PASSWORD_REQUEST: {
 		 const {routerReducer, crmResetPassword} = state;
             state = {routerReducer, crmResetPassword};
