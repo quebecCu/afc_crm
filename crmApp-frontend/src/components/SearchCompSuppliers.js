@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../style/RechercheComponent.css';
+import '../style/RechercheFournisseur.css';
 
 class SearchCompSuppliers extends Component {
 
