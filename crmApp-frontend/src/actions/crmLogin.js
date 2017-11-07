@@ -5,6 +5,7 @@ export const CLEAR_SESSION = 'CLEAR_SESSION';
 export const SENDING_REQUEST = 'SENDING_REQUEST';
 export const LOGOUT = 'LOGOUT';
 export const SET_AUTH = 'SET_AUTH';
+export const LOGIN = 'LOGIN';
 
 
 export function changeForm (newFormState){
@@ -21,6 +22,10 @@ export function sendingRequest (sending){
 
 export function setAuthState (newAuthState){
 	return {type: SET_AUTH, newAuthState}
+}
+
+export function login () {
+	return {type: LOGIN}
 }
 
 export function logout (){

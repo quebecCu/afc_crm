@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import HistoriqueContainer from "../containers/HistoriqueContainer";
+import HistoriqueContainer from "./HistoriqueContainer";
 import { connect  } from 'react-redux';
 import {changeFormFour, sendingRequestFour, searchFour} from '../actions/crmRechercheFournisseur';
-import SearchCompSuppliers from "./SearchCompSuppliers";
+import SearchCompSuppliers from "../components/SearchCompSuppliers";
 
 class PageFournisseurs extends Component {
     componentWillMount() {
@@ -11,7 +11,7 @@ class PageFournisseurs extends Component {
     render() {
         let { formState, dossiersState, searchList } = this.props.crmRechercheFournisseur;
         return(
-            <div>
+            <div className="container-fluid text-center">
                 <h1>Fournisseurs</h1>
                 <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}/>
                 <SearchCompSuppliers

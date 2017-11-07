@@ -3,10 +3,9 @@
 	/*#0086E5*/
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
 	box-sizing: border-box;
-	width: 100%;
-	text-align: left;
-	font: bold 16px sans-serif;
 
+	font: bold 16px sans-serif;
+	color: white;
 	padding: 44px 50px;
 	margin-top: 80px;
 	height: auto;
@@ -36,7 +35,6 @@
 	border-radius: 50%;
 	text-align: center;
 	line-height: 42px;
-	margin: 10px 15px;
 	vertical-align: middle;
 }
 

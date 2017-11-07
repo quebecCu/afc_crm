@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import HistoriqueContainer from "../containers/HistoriqueContainer";
 import RechercheComponent from "./RechercheComponent";
-import {ButtonsComponent} from "./ButtonsComponent";
-import PageCollectives from '../components/PageCollectives';
-import { connect  } from 'react-redux';
-import {searchRequestColl, changeFormColl, sendingRequestColl} from '../actions/crmRechercheCollective';
-
+import {connect} from 'react-redux';
+import {changeFormColl, searchRequestColl, sendingRequestColl} from '../actions/crmRechercheCollective';
 
 
 class PageCollectivesClients extends Component {
@@ -21,7 +18,7 @@ class PageCollectivesClients extends Component {
 		let { formState, changeForm, dossiersState } = this.props.crmRechercheCollective;
 
         return(
-                <div>
+                <div className="container-fluid text-center">
                     <h1>Assurances collectives</h1>
                     <h2>Clients</h2>
                     <HistoriqueContainer page="PageCollectivesClients" history={this.props.history} dossiersState={dossiersState}/>
@@ -29,9 +26,8 @@ class PageCollectivesClients extends Component {
                     onSubmit = {this.props.searchRequestColl}
                 	formState = {formState}
                     changeFormColl = {this.props.changeFormColl}   />
-                    <ButtonsComponent page="PageCollectivesClients" />
-                    	
-                    	</div>
+                    <button onClick={this.props.handleClick} className="newCustomer">Créer une fiche client</button>
+				</div>
         );
     }
 }

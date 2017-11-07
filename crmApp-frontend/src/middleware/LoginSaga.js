@@ -1,6 +1,9 @@
 import {eventChannel} from 'redux-saga';
 import {take, call, fork, put} from 'redux-saga/effects';
-import {LOGIN_REQUEST, SENDING_REQUEST, CHANGE_FORM, CLEAR_SESSION, LOGOUT, SET_AUTH} from '../actions/crmLogin';
+import {
+    LOGIN_REQUEST, SENDING_REQUEST, CHANGE_FORM, CLEAR_SESSION, LOGOUT, SET_AUTH,
+    setAuthState, login, LOGIN
+} from '../actions/crmLogin';
 import {hashSync , genSaltSync} from 'bcryptjs';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
@@ -29,8 +32,7 @@ export function * loginFlow (){
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
-
-				store.dispatch(push('/PageAccueil'));
+				store.dispatch(login());
 			}
 			else {
 				alert ("identifiant ou mot de passe incorrects");
@@ -46,20 +48,30 @@ export function * loginFlow (){
 export function * logoutFlow() {
 	while(true){
 		yield take (LOGOUT);
-		yield put({ type: SET_AUTH, newAuthState: false })
+		yield put({ type: SET_AUTH, newAuthState: false });
 		
-		yield put({ type: CLEAR_SESSION})
+		yield put({ type: CLEAR_SESSION});
 
-		yield put(push("/login"))
+		yield put(push("/"))
 
 		
 	}
 }
 
+export function * loginPush() {
+	while(true) {
+		yield take (LOGIN);
+        yield put({ type: SET_AUTH, newAuthState: true });
+        yield put(push("/Home"));
+
+	}
+}
+
 
 export function * AuthFlow () {
-	yield fork (loginFlow)
-	yield fork (logoutFlow)
+	yield fork (loginFlow);
+	yield fork (logoutFlow);
+	yield fork (loginPush);
 	//a faire
 //	yield fork (registerFlow)
 }
