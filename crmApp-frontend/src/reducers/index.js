@@ -29,7 +29,6 @@ const appReducer = combineReducers ({
 	crmUserManagement
 });
 
-
 const rootReducer = (state, action) => {
 	switch (action.type) {
 	case CLEAR_SESSION: {

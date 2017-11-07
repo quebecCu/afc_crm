@@ -39,7 +39,6 @@ class GestionUser extends React.Component{
                 }
 
             ]
-
         }
 
     }

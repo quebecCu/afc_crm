@@ -1,6 +1,6 @@
 import {eventChannel} from 'redux-saga';
 import {take, call, fork, put} from 'redux-saga/effects';
-import {SUBMIT_USER, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser} from '../actions/crmCreateUser';
+import {SUBMIT_USER, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser, GET_ROLES, UPDATE_ROLES, updateRoles} from '../actions/crmCreateUser';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
@@ -8,7 +8,6 @@ import {store} from '../store';
 export function * createUser (){
 
     while(true){
-
 
         let user = yield take(SUBMIT_USER);
         let{role,
@@ -31,7 +30,6 @@ export function * createUser (){
             mdpProv: mdpProv,
             mail: mail,
             permissionsUser: permissionsUser
-
         })
             .then(function (response) {
                 if(!!response.data.status && response.data.status === "success"){
@@ -47,6 +45,30 @@ export function * createUser (){
     }
 }
 
-export function * gestionUserFlow () {
+export function * getRoles() {
+    while(true){
+        yield take(GET_ROLES);
+
+        console.log('loading user roles from back-end');
+
+        //communication avec server
+        var server = "http://localhost:3002/getRoles";
+
+        axios.get(server)
+            .then(function (response) {
+                if(!!response.data.status && response.data.status === "success"){
+                    store.dispatch(updateRoles(response.data.roles));
+                } else {
+                    alert ('Erreur lors du chargement des roles');
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+export function * gestionUserFlow() {
     yield fork (createUser);
+    yield fork (getRoles);
 }

@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS "STATUT_CONTACT" CASCADE;
 DROP TABLE IF EXISTS "RELEVE" CASCADE;
 DROP TABLE IF EXISTS "PROVENANCE" CASCADE;
 DROP TABLE IF EXISTS "AGA" CASCADE;
-DROP TABLE IF EXISTS "CATEGORIE_ASSUREE" CASCADE;
 DROP TABLE IF EXISTS "TYPE" CASCADE;
 DROP TABLE IF EXISTS "MODALITE" CASCADE;
 DROP TABLE IF EXISTS "CONDITION" CASCADE;
@@ -24,16 +23,22 @@ DROP TABLE IF EXISTS "EMPLOYES" CASCADE;
 DROP TABLE IF EXISTS "CATEGORIE" CASCADE;
 DROP TABLE IF EXISTS "CLIENT_INDIVIDUEL" CASCADE;
 DROP TABLE IF EXISTS "ENTREPRISE" CASCADE;
+DROP TABLE IF EXISTS "ENTREPRISE_FACUL" CASCADE;
+DROP TABLE IF EXISTS "ENTREPRISE_ATTR" CASCADE;
 DROP TABLE IF EXISTS "POSTE" CASCADE;
 DROP TABLE IF EXISTS "CLIENT" CASCADE;
 DROP TABLE IF EXISTS "ETAT" CASCADE;
 DROP TABLE IF EXISTS "CONTRAT" CASCADE;
 DROP TABLE IF EXISTS "CONTRAT_COLLECTIF" CASCADE;
+DROP TABLE IF EXISTS "CONTRAT_COLLECTIF_FACUL" CASCADE;
+DROP TABLE IF EXISTS "CONTRAT_COLLECTIF_ATTR" CASCADE;
 DROP TABLE IF EXISTS "CONTRAT_INDIVIDUEL" CASCADE;
 DROP TABLE IF EXISTS "MODULE" CASCADE;
 DROP TABLE IF EXISTS "DOMAINE_ASSURANCE" CASCADE;
 DROP TABLE IF EXISTS "SOUSCRIPTIONS" CASCADE;
 DROP TABLE IF EXISTS "FOURNISSEUR" CASCADE;
+DROP TABLE IF EXISTS "FOURNISSEUR_FACUL" CASCADE;
+DROP TABLE IF EXISTS "FOURNISSEUR_ATTR" CASCADE;
 DROP TABLE IF EXISTS "BENEFICIAIRES" CASCADE;
 DROP TABLE IF EXISTS "REGLE" CASCADE;
 DROP TABLE IF EXISTS "ACTIVITE" CASCADE;
@@ -142,7 +147,6 @@ CREATE TABLE public."CLIENT" (
   idclient  serial  PRIMARY KEY,
   idetat  integer  REFERENCES "ETAT" (idetat),
   idprovenance  integer  REFERENCES "PROVENANCE" (idprovenance),
-  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   notes text
 );
 
@@ -154,7 +158,9 @@ CREATE TABLE public."DOMAINE_ASSURANCE" (
 CREATE TABLE public."MODALITE" (
   idmodalite  serial  PRIMARY KEY,
   libelleavantage  varchar(30),
-  iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass)
+  iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
+  idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
+  idtype  integer  REFERENCES "TYPE" (idtype)
 );
 
 CREATE TABLE public."EMPLOYES" (
@@ -269,8 +275,57 @@ CREATE TABLE public."ENTREPRISE" (
   rver_rmq varchar(180),
   nb_etq_a_imprimer  int2,
   nb_mois_entente  integer, -- ?
+  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idactivite  integer  REFERENCES  "ACTIVITE" (idactivite)
+);
+
+CREATE TABLE public."FOURNISSEUR_ATTR" (
+  idattrfournisseur  serial  PRIMARY KEY,
+  idtype  integer  REFERENCES "TYPE" (idtype),
+  label  varchar(20) NOT NULL,
+  description  varchar(30),
+  forme  varchar(100),
+  valeur_defaut varchar(40)
+);
+
+CREATE TABLE public."ENTREPRISE_ATTR" (
+  idattrentreprise  serial  PRIMARY KEY,
+  idtype  integer  REFERENCES "TYPE" (idtype),
+  label  varchar(20) NOT NULL,
+  description  varchar(30),
+  forme  varchar(100),
+  valeur_defaut varchar(40)
+);
+
+CREATE TABLE public."CONTRAT_COLLECTIF_ATTR" (
+  idattrcontratcoll  serial  PRIMARY KEY,
+  idtype  integer  REFERENCES "TYPE" (idtype),
+  label  varchar(20) NOT NULL,
+  description  varchar(30),
+  forme  varchar(100),
+  valeur_defaut varchar(40)
+);
+
+CREATE TABLE public."FOURNISSEUR_FACUL" (
+  idattrfournisseur  integer  REFERENCES "FOURNISSEUR_ATTR" (idattrfournisseur),
+  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
+  valeur varchar(40),
+  CONSTRAINT  pk_FOURNISSEUR_FACUL  PRIMARY KEY (idattrfournisseur, idfournisseur)
+);
+
+CREATE TABLE public."CONTRAT_COLLECTIF_FACUL" (
+  idattrcontratcoll  integer  REFERENCES "CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  idcontrat  integer  REFERENCES "CONTRAT_COLLECTIF" (idcontrat),
+  valeur varchar(40),
+  CONSTRAINT  pk_CONTRAT_COLLECTIF_FACUL  PRIMARY KEY (idattrcontratcoll, idcontrat)
+);
+
+CREATE TABLE public."ENTREPRISE_FACUL" (
+  idattrentreprise  integer  REFERENCES "ENTREPRISE_ATTR" (idattrentreprise),
+  identreprise  integer  REFERENCES "ENTREPRISE" (idclient),
+  valeur varchar(40),
+  CONSTRAINT  pk_ENTREPRISE_FACUL  PRIMARY KEY (idattrentreprise, identreprise)
 );
 
 CREATE TABLE public."CONTACT_CLIENT" (
@@ -285,13 +340,6 @@ CREATE TABLE public."CONTACT_FOURNISSEUR" (
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
   idstatutcontact  integer  REFERENCES  "STATUT_CONTACT" (idstatutcontact),
   CONSTRAINT  pk_CONTACT_FOURNISSEUR  PRIMARY KEY (idfournisseur, idpersonne, idstatutcontact)
-);
-
-CREATE TABLE public."CATEGORIE_ASSUREE" (
-  idcontrat  integer  REFERENCES "CONTRAT" (idcontrat),
-  idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
-  CONSTRAINT  pk_CATEGORIE_ASSUREE  PRIMARY KEY (idcontrat, idcategorie)
-
 );
 
 CREATE TABLE public."CONDITION" (

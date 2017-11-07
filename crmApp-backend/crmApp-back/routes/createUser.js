@@ -121,7 +121,7 @@ router.post('/createUser', function(req, res) {
     		  console.log(err);
     		});
     	} else {
-    		res.send({ 
+    		res.send({
 				status : 'fail',
 				message : 'Ce login n\'est pas disponible'
 		});
@@ -167,5 +167,26 @@ function createEmployee(userInformations, userCreated, res) {
 		 console.log('ERROR:', error); // print error;
 	});
 } 
+
+router.get('/getRoles', function(req, res) {
+	console.log('getting roles from database');
+
+	db.query(squel.select()
+		.from('users."ROLEADM"')
+		.field('description')
+		.where("description like 'Utilisateur%' OR description like 'Employe'")
+		.toString())
+		.then(roles => {
+
+            res.send({
+                status : 'success',
+                roles : roles
+            });
+        })
+        .catch(e => {
+            console.error('query error', e.message, e.stack)
+        })
+	console.log('end get /getRoles');
+});
 
 module.exports = router;

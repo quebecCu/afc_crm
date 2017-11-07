@@ -1,10 +1,9 @@
 import {
-    CHANGE_FORM_CREATEUSER,
-}  from '../actions/crmCreateUser';
+    CHANGE_FORM_CREATEUSER, UPDATE_ROLES,} from '../actions/crmCreateUser';
 
 let initialState={
     formState:{
-        role: 'employe',
+        role: 'Employe',
         nom: '',
         login: '',
         mdpProv: '',
@@ -21,20 +20,19 @@ let initialState={
                 role:'visiteurClient',
                 perm:[{idDroit: 0, droit:"lecture", table:"clientsColl"}]
             }
-
         ],
+        roles:[],
         permissionsUser:[]
-
     },
     errors:'',
-
 };
 
 export default function reducer (state = initialState, action){
     switch(action.type){
         case CHANGE_FORM_CREATEUSER:
             return {...state, formState: action.newFormState, error:''};
-
+        case UPDATE_ROLES:
+            return {...state, formState:{...state.formState, roles:action.rolesList}, error:''};
         default:
             return state;
     }
