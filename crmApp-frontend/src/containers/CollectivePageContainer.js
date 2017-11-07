@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
-//import Login from './Login';
-
-import PageCollectives from '../components/PageCollectives';
+import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
-<<<<<<< Updated upstream
-import RechercheComponent from '../components/RechercheComponent';
-import HistoriqueContainer from "../containers/HistoriqueContainer";
-=======
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {CreationClient} from "./CreationClient";
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
->>>>>>> Stashed changes
 
-import '../style/Login.css';
-/// TODO 
 
 class CollectivePageContainer extends Component   {
-<<<<<<< Updated upstream
-=======
 	constructor(props){
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
@@ -29,18 +18,46 @@ class CollectivePageContainer extends Component   {
 		event.preventDefault();
 		this.props.changeViewCollective(event.target.className);
 	}
->>>>>>> Stashed changes
 	
 	render() {
-		
+        let {view} = this.props.crmCollectiveContainer;
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
-			<HistoriqueContainer page="PageFournisseurs" history={this.props.history} />
-		</div>
+		<div className="text-center">
+			{
+				view === "" && <h1>Assurances collectives</h1>
+			}
+			{
+				view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
+			}
+			{
+				view === "" && <button onClick={this.handleClick} className="suppliers">Fournisseurs</button>
+			}
+			{
+				view === "customers" && <PageCollectivesClients handleClick={this.handleClick}/>
+			}
+			{
+				view === "newCustomer" && <CreationClient/>
+			}
 		</div>
 		
-		)
+		);
 	}
 }
-export default (CollectivePageContainer);
+
+function mapStateToProps (state) {
+
+    return{
+        crmCollectiveContainer: state.crmCollectiveContainer
+    }
+}
+
+//fonctions
+const  mapDispatchToProps = (dispatch) => {
+    return{
+        changeViewCollective : (newView) => {
+            dispatch(changeViewCollective(newView))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (CollectivePageContainer)
