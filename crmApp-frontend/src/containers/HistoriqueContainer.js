@@ -14,7 +14,7 @@ class HistoriqueContainer extends Component {
         switch (this.props.page) {
             case 'PageAccueil':
                 this.table = (
-                    <table>
+                    <table className="table">
                         <thead>
                         <tr>
                             <th>Date</th>
@@ -29,7 +29,7 @@ class HistoriqueContainer extends Component {
             case 'PageCollectivesClients':
                 this.table = (
                 		<div style={{ overflow: 'auto', height:'300px',}}>
-                    <table id="PageCollectivesClientsTable" >
+                    <table id="PageCollectivesClientsTable" className="table">
                         <thead>
                         <tr>
                             <th>Nom de l'entreprise</th>
@@ -49,7 +49,7 @@ class HistoriqueContainer extends Component {
             case 'PageFournisseurs':
                 this.table = (
                 		<div style={{ overflow: 'auto', height:'300px',}}>
-                    <table id="PageFournisseursTable" >
+                    <table id="PageFournisseursTable" className="table">
                         <thead>
                         <tr>
                             <th>Nom de l'assurance</th>

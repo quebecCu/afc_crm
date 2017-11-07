@@ -55,7 +55,7 @@ class NavBar extends Component {
 
                             </li>
                             <li>
-                                <div  id="logout" onClick={this.props.logout} className="link">Déconnexion</div>
+                                <div  id="logout" onClick={this.props.logout} className="link text-center">Déconnexion</div>
                             </li>
                             <li>
                                 <NavBarLink name="Retour" id="back" />
