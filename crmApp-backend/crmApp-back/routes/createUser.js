@@ -13,7 +13,7 @@ var security = require('../security/security');
 
 /* GET home page. */
 router.post('/createUser', function(req, res) {
-	/*security.checkRights(5, "Gestion des clients - ACollectives", 7)
+	/*security.checkRights(1, "Gestion des utilisateurs", 7)
     .then(() => {*/
 	    	var user={
 	        role: req.body.role,
@@ -72,7 +72,7 @@ router.post('/createUser', function(req, res) {
 	    			
 	    			let salt = genSaltSync (10);
 	    			let hash = hashSync(mdpText, salt);
-	    			
+	    			console.log(hash);
 	    			var addUser = squel.insert()
 	    			.into('users."UTILISATEUR"')
 	    			.set("login", user.login)
@@ -81,6 +81,9 @@ router.post('/createUser', function(req, res) {
 	    			.set("name", user.nom)
 	    			.set("idrole", idRole)
 	    			.returning('*');
+	    			
+	    			console.log(mdpText);
+	    			console.log(hash);
 	    			
 	    			db.one(addUser.toString())
 	    		    .then(userCreated => {
@@ -140,7 +143,7 @@ router.post('/createUser', function(req, res) {
 				status : 'fail',
 				message : 'Les droits accordés à l\'utilisateur ne sont pas suffisants'
 		});
-    });  */
+    });*/  
 });
 
 function createEmployee(userInformations, userCreated, res) {
