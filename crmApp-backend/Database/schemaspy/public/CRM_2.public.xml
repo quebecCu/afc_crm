@@ -75,10 +75,24 @@
             <column ascending="true" name="identreprise"/>
          </index>
       </table>
+      <table name="CAT_ACTIVITE" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idposte" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idposte" foreignKey="CAT_ACTIVITE_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="POSTE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="idcategorie" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idcategorie" foreignKey="CAT_ACTIVITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE"/>
+         </column>
+         <primaryKey column="idposte" sequenceNumberInPK="1"/>
+         <primaryKey column="idcategorie" sequenceNumberInPK="2"/>
+         <index name="pk_cat_activite" unique="true">
+            <column ascending="true" name="idposte"/>
+            <column ascending="true" name="idcategorie"/>
+         </index>
+      </table>
       <table name="CATEGORIE" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;CATEGORIE_idcategorie_seq&quot;'::regclass)" digits="0" id="0" name="idcategorie" nullable="false" remarks="" size="10" type="serial">
+            <child column="idcategorie" foreignKey="CAT_ACTIVITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CAT_ACTIVITE"/>
             <child column="idcategorie" foreignKey="MODALITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
-            <child column="idcategorie" foreignKey="POSTE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="POSTE"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="libellecategorie" nullable="true" remarks="" size="20" type="varchar"/>
          <primaryKey column="idcategorie" sequenceNumberInPK="1"/>
@@ -367,7 +381,7 @@
             <column ascending="true" name="identreprise"/>
          </index>
       </table>
-      <table name="ETAT" numRows="2" remarks="" schema="public" type="TABLE">
+      <table name="ETAT" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;ETAT_idetat_seq&quot;'::regclass)" digits="0" id="0" name="idetat" nullable="false" remarks="" size="10" type="serial">
             <child column="idetat" foreignKey="CLIENT_idetat_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT"/>
          </column>
@@ -489,7 +503,7 @@
             <column ascending="true" name="idmodule"/>
          </index>
       </table>
-      <table name="PERSONNE" numRows="3" remarks="" schema="public" type="TABLE">
+      <table name="PERSONNE" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;PERSONNE_idpersonne_seq&quot;'::regclass)" digits="0" id="0" name="idpersonne" nullable="false" remarks="" size="10" type="serial">
             <child column="idpersonne" foreignKey="BENEFICIAIRES_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="BENEFICIAIRES"/>
             <child column="idpersonne" foreignKey="CLIENT_INDIVIDUEL_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT_INDIVIDUEL"/>
@@ -518,19 +532,17 @@
       </table>
       <table name="POSTE" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;POSTE_idposte_seq&quot;'::regclass)" digits="0" id="0" name="idposte" nullable="false" remarks="" size="10" type="serial">
+            <child column="idposte" foreignKey="CAT_ACTIVITE_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="CAT_ACTIVITE"/>
             <child column="idposte" foreignKey="CONTACT_CLIENT_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_CLIENT"/>
             <child column="idposte" foreignKey="CONTACT_FOURNISSEUR_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_FOURNISSEUR"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="libelleposte" nullable="true" remarks="" size="20" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="2" name="idcategorie" nullable="true" remarks="" size="10" type="int4">
-            <parent column="idcategorie" foreignKey="POSTE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE"/>
-         </column>
          <primaryKey column="idposte" sequenceNumberInPK="1"/>
          <index name="POSTE_pkey" unique="true">
             <column ascending="true" name="idposte"/>
          </index>
       </table>
-      <table name="PROVENANCE" numRows="2" remarks="" schema="public" type="TABLE">
+      <table name="PROVENANCE" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;PROVENANCE_idprovenance_seq&quot;'::regclass)" digits="0" id="0" name="idprovenance" nullable="false" remarks="" size="10" type="serial">
             <child column="idprovenance" foreignKey="CLIENT_idprovenance_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT"/>
          </column>

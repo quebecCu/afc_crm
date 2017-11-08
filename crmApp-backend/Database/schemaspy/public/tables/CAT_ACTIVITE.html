@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CONTACT_CLIENT - CRM_2 Database</title>
+  <title>CAT_ACTIVITE - CRM_2 Database</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
@@ -75,7 +75,7 @@
   <div class="content-wrapper">
           <!-- Content Header (Page header) -->
       <section class="content-header">
-        <h1>CONTACT_CLIENT</h1></br>
+        <h1>CAT_ACTIVITE</h1></br>
 		      </section>
       <!-- Main content -->
       <section class="content">
@@ -106,56 +106,6 @@
 				</thead>
 				<tbody>
 				<tr>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idclient">idclient</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="CONTACT_CLIENT.idclient references CLIENT.idclient via CONTACT_CLIENT_idclient_fkey">
-						<a href='CLIENT.html'>CLIENT</a><span class='relatedKey'>.idclient</span>
-					</td>
-					<td class="constraint detail">
-						CONTACT_CLIENT_idclient_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idpersonne">idpersonne</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="CONTACT_CLIENT.idpersonne references PERSONNE.idpersonne via CONTACT_CLIENT_idpersonne_fkey">
-						<a href='PERSONNE.html'>PERSONNE</a><span class='relatedKey'>.idpersonne</span>
-					</td>
-					<td class="constraint detail">
-						CONTACT_CLIENT_idpersonne_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idposte">idposte</span></td>
 				 <td>int4</td>
 				 <td>10</td>
@@ -169,11 +119,36 @@
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
-					<td title="CONTACT_CLIENT.idposte references POSTE.idposte via CONTACT_CLIENT_idposte_fkey">
+					<td title="CAT_ACTIVITE.idposte references POSTE.idposte via CAT_ACTIVITE_idposte_fkey">
 						<a href='POSTE.html'>POSTE</a><span class='relatedKey'>.idposte</span>
 					</td>
 					<td class="constraint detail">
-						CONTACT_CLIENT_idposte_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+						CAT_ACTIVITE_idposte_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idcategorie">idcategorie</span></td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="CAT_ACTIVITE.idcategorie references CATEGORIE.idcategorie via CAT_ACTIVITE_idcategorie_fkey">
+						<a href='CATEGORIE.html'>CATEGORIE</a><span class='relatedKey'>.idcategorie</span>
+					</td>
+					<td class="constraint detail">
+						CAT_ACTIVITE_idcategorie_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
 					</td>
 				   </tr>
 				  </table>					 
@@ -182,7 +157,7 @@
 				</tr>
 								</tbody>
 				</table>
-				<p title='3 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
+				<p title='2 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
 			</div>
 		</div>
 		<div class="box box-primary">		
@@ -209,10 +184,10 @@
 				</thead>
 				<tbody>
 				 <tr>
-				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> pk_contact_client</td>
+				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> pk_cat_activite</td>
 				  <td>Primary key</td>
-				  <td><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
-				  <td>idclient + idpersonne + idposte</td>
+				  <td><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
+				  <td>idposte + idcategorie</td>
 				 </tr>				 
 				</tbody>
 				</table>   			  
@@ -241,34 +216,24 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="253,163,508,318">
-<area shape="rect" id="node2" href="CLIENT.html" title="CLIENT" alt="" coords="31,5,184,177">
-<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="5,195,209,337">
-<area shape="rect" id="node4" href="POSTE.html" title="POSTE" alt="" coords="39,355,176,468">
+<area shape="rect" id="node1" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="215,54,440,179">
+<area shape="rect" id="node2" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="5,136,171,249">
+<area shape="rect" id="node3" href="POSTE.html" title="POSTE" alt="" coords="19,5,157,119">
 </map>
 
-					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/CONTACT_CLIENT.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/CAT_ACTIVITE.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="515,620,705,704">
-<area shape="rect" id="node2" href="PERSONNE.html" title="PERSONNE" alt="" coords="231,419,435,561">
-<area shape="rect" id="node14" href="ADRESSE.html" title="ADRESSE" alt="" coords="22,87,170,171">
-<area shape="rect" id="node3" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="520,823,700,907">
-<area shape="rect" id="node4" href="POSTE.html" title="POSTE" alt="" coords="264,719,401,832">
-<area shape="rect" id="node5" href="CLIENT.html" title="CLIENT" alt="" coords="256,205,409,377">
-<area shape="rect" id="node6" href="ETAT.html" title="ETAT" alt="" coords="38,221,154,305">
-<area shape="rect" id="node7" href="PROVENANCE.html" title="PROVENANCE" alt="" coords="5,323,187,407">
-<area shape="rect" id="node8" href="CLIENT_INDIVIDUEL.html" title="CLIENT_INDIVIDUEL" alt="" coords="500,208,720,292">
-<area shape="rect" id="node9" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="483,411,737,566">
-<area shape="rect" id="node10" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="479,721,741,805">
-<area shape="rect" id="node11" href="CONTRAT.html" title="CONTRAT" alt="" coords="536,107,684,191">
-<area shape="rect" id="node12" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="785,327,1021,411">
-<area shape="rect" id="node13" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="524,5,696,89">
-<area shape="rect" id="node15" href="RELATION.html" title="RELATION" alt="" coords="535,309,685,393">
+<area shape="rect" id="node1" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="233,107,459,233">
+<area shape="rect" id="node2" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="5,60,171,173">
+<area shape="rect" id="node3" href="POSTE.html" title="POSTE" alt="" coords="19,248,157,361">
+<area shape="rect" id="node4" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="242,251,450,335">
+<area shape="rect" id="node5" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="215,352,477,436">
+<area shape="rect" id="node6" href="MODALITE.html" title="MODALITE" alt="" coords="269,5,423,89">
 </map>
 
-					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/CONTACT_CLIENT.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/CAT_ACTIVITE.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 			  			</div>
 			</div>

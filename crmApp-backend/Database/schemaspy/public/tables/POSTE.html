@@ -115,6 +115,14 @@
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
+					<td title="CAT_ACTIVITE.idposte references POSTE.idposte via CAT_ACTIVITE_idposte_fkey">
+						<a href='CAT_ACTIVITE.html'>CAT_ACTIVITE</a><span class='relatedKey'>.idposte</span>
+					</td>
+					<td class="constraint detail">
+						CAT_ACTIVITE_idposte_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
 					<td title="CONTACT_CLIENT.idposte references POSTE.idposte via CONTACT_CLIENT_idposte_fkey">
 						<a href='CONTACT_CLIENT.html'>CONTACT_CLIENT</a><span class='relatedKey'>.idposte</span>
 					</td>
@@ -155,34 +163,9 @@
 				 </td>
 				 <td></td>
 				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idcategorie">idcategorie</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="POSTE.idcategorie references CATEGORIE.idcategorie via POSTE_idcategorie_fkey">
-						<a href='CATEGORIE.html'>CATEGORIE</a><span class='relatedKey'>.idcategorie</span>
-					</td>
-					<td class="constraint detail">
-						POSTE_idcategorie_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
 								</tbody>
 				</table>
-				<p title='3 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
+				<p title='2 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
 			</div>
 		</div>
 		<div class="box box-primary">		
@@ -241,24 +224,24 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="510,5,718,155">
-<area shape="rect" id="node2" href="POSTE.html" title="POSTE" alt="" coords="215,145,439,300">
-<area shape="rect" id="node4" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="5,206,171,319">
-<area shape="rect" id="node3" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="483,172,745,321">
+<area shape="rect" id="node1" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="315,5,495,125">
+<area shape="rect" id="node2" href="POSTE.html" title="POSTE" alt="" coords="5,199,229,324">
+<area shape="rect" id="node3" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="301,143,509,292">
+<area shape="rect" id="node4" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="273,309,536,459">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/POSTE.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="510,75,718,225">
-<area shape="rect" id="node2" href="CLIENT.html" title="CLIENT" alt="" coords="261,5,392,89">
-<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="247,107,407,191">
-<area shape="rect" id="node4" href="POSTE.html" title="POSTE" alt="" coords="215,310,439,465">
-<area shape="rect" id="node8" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="5,288,171,401">
-<area shape="rect" id="node5" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="483,254,745,403">
-<area shape="rect" id="node6" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="234,483,419,567">
-<area shape="rect" id="node7" href="MODALITE.html" title="MODALITE" alt="" coords="250,208,403,292">
+<area shape="rect" id="node1" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="315,5,495,125">
+<area shape="rect" id="node2" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="36,19,199,103">
+<area shape="rect" id="node3" href="POSTE.html" title="POSTE" alt="" coords="5,324,229,449">
+<area shape="rect" id="node4" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="301,175,509,324">
+<area shape="rect" id="node5" href="CLIENT.html" title="CLIENT" alt="" coords="52,121,183,205">
+<area shape="rect" id="node6" href="PERSONNE.html" title="PERSONNE" alt="" coords="37,222,197,306">
+<area shape="rect" id="node7" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="273,341,536,491">
+<area shape="rect" id="node8" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="25,467,210,551">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/POSTE.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							

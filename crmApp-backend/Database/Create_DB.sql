@@ -45,6 +45,7 @@ DROP TABLE IF EXISTS "ACTIVITE" CASCADE;
 DROP TABLE IF EXISTS "CHAMBRE_COMMERCE" CASCADE;
 DROP TABLE IF EXISTS "CADEAU_ENVOYE" CASCADE;
 DROP TABLE IF EXISTS "CADEAU" CASCADE;
+DROP TABLE IF EXISTS "CAT_ACTIVITE" CASCADE;
 
 CREATE TABLE public."ADRESSE" (
   idadresse  serial PRIMARY KEY,
@@ -126,8 +127,7 @@ CREATE TABLE public."CATEGORIE"(
 
 CREATE TABLE public."POSTE" (
   idposte serial PRIMARY KEY,
-  libelleposte  varchar(20),
-  idcategorie  integer REFERENCES "CATEGORIE" (idcategorie)
+  libelleposte  varchar(20)
 );
 
 CREATE TABLE public."ETAT" (
@@ -348,4 +348,10 @@ CREATE TABLE public."CONDITION" (
   CONSTRAINT  pk_CONDITION  PRIMARY KEY (idfournisseur, idmodalite),
   idtype  integer  REFERENCES "TYPE" (idtype),
   valeur varchar(20)
+);
+
+CREATE TABLE public."CAT_ACTIVITE" (
+  idposte integer REFERENCES "POSTE" (idposte),
+  idcategorie integer REFERENCES "CATEGORIE" (idcategorie),
+  CONSTRAINT  pk_CAT_ACTIVITE  PRIMARY KEY (idposte, idcategorie)
 );
