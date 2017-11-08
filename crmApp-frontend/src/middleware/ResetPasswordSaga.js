@@ -1,9 +1,15 @@
+
 /** Imports **/
+//importer le salt pour le username et password
+//import genSalt from '../salt';
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
 import {push} from 'react-router-redux';
+
 import {fork, put, take} from 'redux-saga/effects';
 import {RESET_PASSWORD_REQUEST, SENDING_PASSWORD_REQUEST} from '../actions/crmResetPassword';
+
+import 'react-s-alert/dist/s-alert-default.css';
 import {store} from '../store';
 
 export function* resetPasswordFlow() {

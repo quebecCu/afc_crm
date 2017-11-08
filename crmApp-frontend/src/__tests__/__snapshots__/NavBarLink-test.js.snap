@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link Accueil 1`] = `
+<div
+  className="link text-center"
+  onClick={[Function]}
+>
+    Accueil
+</div>
+`;
+
+exports[`Link Assurances Collectives 1`] = `
+<div
+  className="link text-center"
+  onClick={[Function]}
+>
+    Assurances Collectives
+</div>
+`;
+
+exports[`Link Assurances Individuelles 1`] = `
+<div
+  className="link text-center"
+  onClick={[Function]}
+>
+    Assurances Individuelles
+</div>
+`;
+
+exports[`Link Fournisseurs 1`] = `
+<div
+  className="link text-center"
+  onClick={[Function]}
+>
+    Fournisseurs
+</div>
+`;
+
+exports[`Link Gestion des utilisateurs 1`] = `
+<div
+  className="link text-center"
+  onClick={[Function]}
+>
+    Gestion des utilisateurs
+</div>
+`;
+
+exports[`Link Placements 1`] = `
+<div
+  className="link text-center"
+  onClick={[Function]}
+>
+    Placements
+</div>
+`;

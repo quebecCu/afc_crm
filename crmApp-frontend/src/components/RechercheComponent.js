@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import '../style/RechercheComponent.css';
-import Request from 'superagent' ;
-import {store} from '../store';
-import {push} from 'react-router-redux';
-//import state  from '../reducer/crmRechercheCollective';
-import { connect  } from 'react-redux';
-import {searchRequestColl, changeFormColl, sendingRequestColl} from '../actions/crmRechercheCollective'
 
 class RechercheComponent extends Component {
 
@@ -55,7 +49,7 @@ class RechercheComponent extends Component {
 
 	_filtre (){
 		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
-			inputProspect,filter, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
+			inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
 		
 		inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
 		inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();

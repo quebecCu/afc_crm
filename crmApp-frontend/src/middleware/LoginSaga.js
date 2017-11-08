@@ -1,10 +1,7 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
+import {take, fork, put} from 'redux-saga/effects';
 import {
-    LOGIN_REQUEST, SENDING_REQUEST, CHANGE_FORM, CLEAR_SESSION, LOGOUT, SET_AUTH,
-    setAuthState, login, LOGIN
+    LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN
 } from '../actions/crmLogin';
-import {hashSync , genSaltSync} from 'bcryptjs';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
 import axios from 'axios';

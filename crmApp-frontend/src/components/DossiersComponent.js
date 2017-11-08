@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
 class DossiersComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
+
     handleClick() {
         this.props.history.push('/PageAccueil/assu-col/clients/client_1');
     }
@@ -14,7 +12,7 @@ class DossiersComponent extends Component {
                 <tbody>
                 {this.props.historique.map(element => {
                     return (
-                        <tr onClick={this.handleClick.bind(this)}>
+                        <tr onClick={this.handleClick.bind(this)} key={element.nom}>
                             <td>{element.date}</td>
                             <td>{element.nom}</td>
                             <td>{element.type}</td>
@@ -29,7 +27,7 @@ class DossiersComponent extends Component {
                 <tbody>
                 {this.props.collective.map(element => {
                     return (
-                        <tr onClick={this.handleClick.bind(this)}>
+                        <tr onClick={this.handleClick.bind(this)} key={element.nom_entreprise}>
                             <td>{element.nom_entreprise}</td>
                             <td>{element.nom_employe}</td>
                             <td>{element.no_police}</td>
@@ -48,7 +46,7 @@ class DossiersComponent extends Component {
                 <tbody>
                 {this.props.fournisseur.map(element => {
                     return (
-                        <tr onClick={this.handleClick.bind(this)}>
+                        <tr onClick={this.handleClick.bind(this)} key={element.nom}>
                             <td>{element.nom}</td>
                             <td>{element.employes}</td>
                             <td>{element.contact}</td>

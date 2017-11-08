@@ -6,16 +6,13 @@ import {changeFormColl, searchRequestColl, sendingRequestColl} from '../actions/
 
 
 class PageCollectivesClients extends Component {
-	constructor(props) {
-		super(props);
-	}
 	componentWillMount() {
         this.props.sendingRequestColl();
     }
 
 
     render() {
-		let { formState, changeForm, dossiersState } = this.props.crmRechercheCollective;
+		let { formState, dossiersState } = this.props.crmRechercheCollective;
 
         return(
                 <div className="container-fluid text-center">

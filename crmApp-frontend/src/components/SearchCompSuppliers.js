@@ -29,7 +29,7 @@ class SearchCompSuppliers extends Component {
     }
 
     _filtre (){
-        var inputAssuranceName,inputEmployesNumber,inputContactName,inputCode, filter, table, tr, td0, td1, td2, td3, i;
+        var inputAssuranceName,inputEmployesNumber,inputContactName,inputCode, table, tr, td0, td1, td2, td3, i;
 
         inputAssuranceName = document.getElementById("AssuranceName").value.toUpperCase();
         inputEmployesNumber = document.getElementById("EmployesNumber").value.toUpperCase();

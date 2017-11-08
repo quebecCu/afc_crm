@@ -6,13 +6,6 @@ import {changeFormCreateUser, submitUser} from "../actions/crmCreateUser";
 
 class CreateUser extends React.Component{
 
-    constructor(props){
-        super(props);
-
-    }
-
-
-
     render(){
         let {formState} = this.props.crmCreateUser;
         return <div><h1>Créer utilisateur</h1>

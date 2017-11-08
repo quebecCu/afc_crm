@@ -3,10 +3,6 @@ import '../style/App.css';
 import HistoriqueContainer from "../containers/HistoriqueContainer";
 
 class PageAccueil extends Component {
-	
-	constructor(props) {
-		super(props);
-	}
 
 	
     render() {

@@ -49,7 +49,6 @@ function mapStateToProps (state) {
 
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
-
     return{
     }
 };
