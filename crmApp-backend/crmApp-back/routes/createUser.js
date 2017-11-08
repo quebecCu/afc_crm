@@ -85,46 +85,52 @@ router.post('/createUser', function(req, res) {
 	    			console.log(mdpText);
 	    			console.log(hash);
 	    			
-	    			db.one(addUser.toString())
-	    		    .then(userCreated => {
-	    		    		
-	    		    		user.permissionsUser.forEach(function(element) {
-	    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
-	    			    		if(element.level >= 1){
-	    			    			right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
-	    			    			newRights.push(right);
-	    			    			if(element.level >= 3){
-	    			    				right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
-	    			    				newRights.push(right);
-	    			    				if(element.level === 7){
-	    			    					right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: updateObject.idoperation };
-	    			    					newRights.push(right);
-	    			    				}
-	    			    			}
-	    			    		}
-	    			    	});
-	    			    	var addRights = squel.insert()
-	    			    	.into('users."PERMISSIONUTIL_GLOB"')
-	    			    	.setFieldsRows(newRights)
-	    			    	.returning('*')
-							.toParam();
-	
-	    			    	db.any(addRights.toString())
-	    			        .then(data => {
-	    			        		createEmployee (user, userCreated, res);
-	    			        })
-	    			        .catch(error => {
-	    			            console.log('ERROR:', error); // print error;
-	    			        });
-	    		    })
-	    		    .catch(error => {
-	    		        console.log('ERROR:', error); // print error;
-	    		    });
-	    				
+	    			db.tx(function (t) {
+	    				return t.one(addUser.toString())
+						.then(userCreated => {	    		    		
+			    		    		user.permissionsUser.forEach(function(element) {
+			    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
+			    			    		if(element.level >= 1){
+			    			    			right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
+			    			    			newRights.push(right);
+			    			    			if(element.level >= 3){
+			    			    				right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
+			    			    				newRights.push(right);
+			    			    				if(element.level === 7){
+			    			    					right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: updateObject.idoperation };
+			    			    					newRights.push(right);
+			    			    				}
+			    			    			}
+			    			    		}
+			    			    	});
+			    			    	var addRights = squel.insert()
+			    			    	.into('users."PERMISSIONUTIL_GLOB"')
+			    			    	.setFieldsRows(newRights)
+			    			    	.returning('*')
+							.toParam();		
+			    			    return t.any(addRights)
+			    			        .then(data => {
+			    			        		return createEmployee (user, userCreated, t, res);
+			    			        })
+			    		    })
+		    		})
+		    		.then(data => {
+	    				res.send({ 
+			    			status : 'success',
+			    			message : null
+			    		}); 
+	    	        })
+	    	        .catch(error => {
+	    	        		res.send({ 
+			    			status : 'fail',
+			    			message : error.toString()
+			    		}); 
+	    	        });
 	    		})
 	    		.catch(function (err) {
-	    		  console.log(err);
-	    		});
+		    		  console.log(err);
+		    	});
+ 
 	    	} else {
 	    		res.send({ 
 					status : 'fail',
@@ -146,7 +152,7 @@ router.post('/createUser', function(req, res) {
     });*/  
 });
 
-function createEmployee(userInformations, userCreated, res) {
+function createEmployee(userInformations, userCreated, t, res) {
 	 var addPersonne = squel.insert()
 		.into('public."PERSONNE"')
 		.set("nom", userInformations.nom.split(" ")[1])
@@ -154,30 +160,18 @@ function createEmployee(userInformations, userCreated, res) {
 		.set("titre", "Mr")
 		.returning('*');	
 		
-	db.one(addPersonne.toString())
-    .then( personCreated => {
-    	
+	return t.one(addPersonne.toString())
+    .then(personCreated => {
     		var addEmployee = squel.insert()
 		.into('users."EMPLOYE_INT"')
 		.set("iduser", userCreated.iduser)
 		.set("idpersonne", personCreated.idpersonne)
 		.returning('*');
     		
-    		db.one(addEmployee.toString())
+    		return t.one(addEmployee.toString())
     	    .then(employeeCreated => {
-	    	    	res.send({ 
-		    			status : 'success',
-		    			message : null
-		    		});; 
 	    })
- 		.catch(error => {
- 			 console.log('ERROR:', error); // print error;
- 		});
-    		
 	})
-	.catch(error => {
-		 console.log('ERROR:', error); // print error;
-	});
 } 
 
 module.exports = router;
