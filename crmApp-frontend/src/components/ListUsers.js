@@ -1,6 +1,4 @@
 import React from 'react';
-import {store} from '../store';
-import {push} from 'react-router-redux';
 
 
 class ListUsers extends React.Component{

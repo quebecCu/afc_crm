@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {CreationClient} from "./CreationClient";
-import {sendingRequestColl} from "../actions/crmRechercheCollective";
-
 
 class CollectivePageContainer extends Component   {
 	constructor(props){

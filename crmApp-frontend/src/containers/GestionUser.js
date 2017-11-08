@@ -4,8 +4,6 @@ import {connect} from "react-redux";
 import ListUsers from '../components/ListUsers.js';
 import CreateUser from './CreateUser';
 import {changeViewUserManagement} from "../actions/crmUserManagement";
-import {store} from '../store';
-import {push} from 'react-router-redux';
 
 class GestionUser extends React.Component{
 

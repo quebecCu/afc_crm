@@ -1,9 +1,6 @@
 import {combineReducers} from 'redux';
 import { routerReducer} from 'react-router-redux';
 import {CLEAR_SESSION} from '../actions/crmLogin';
-import {RESET_REQUEST} from '../actions/crmReset';
-import {RESET_PASSWORD_REQUEST} from '../actions/crmResetPassword';
-import {SEARCH_REQUEST_COLL,  SENDING_REQUEST_COLL} from '../actions/crmRechercheCollective';
 import crmLogin from './crmLogin';
 import crmReset from './crmReset';
 import crmResetPassword from './crmResetPassword';
@@ -32,24 +29,14 @@ const appReducer = combineReducers ({
 
 const rootReducer = (state, action) => {
 	switch (action.type) {
-	case CLEAR_SESSION: {
-		const {routerReducer, crmLogin} = state;
-		state =  {routerReducer, crmLogin};
-	}
-	case RESET_REQUEST: {
-		const {routerReducer, crmReset} = state;
-		state =  {routerReducer, crmReset};
-	}
-	case SEARCH_REQUEST_COLL: {
-		const {routerReducer, crmRechercheCollective} = state;
-		state =  {routerReducer, crmRechercheCollective};
-	}
-	case RESET_PASSWORD_REQUEST: {
-		 const {routerReducer, crmResetPassword} = state;
-            state = {routerReducer, crmResetPassword};
-			}
+		case CLEAR_SESSION:
+			const {routerReducer, crmLogin} = state;
+			state =  {routerReducer, crmLogin};
+			break;
+		default:
+			break;
 	}
 	return appReducer(state, action);
-}
+};
 
 export default rootReducer;

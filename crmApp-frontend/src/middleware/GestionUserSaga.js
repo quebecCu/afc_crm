@@ -1,6 +1,5 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
-import {SUBMIT_USER, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser} from '../actions/crmCreateUser';
+import {take, fork} from 'redux-saga/effects';
+import {SUBMIT_USER} from '../actions/crmCreateUser';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';

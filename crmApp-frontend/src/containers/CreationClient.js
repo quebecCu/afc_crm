@@ -93,7 +93,7 @@ export class CreationClient extends Component {
         stateCopy.grid.push({key: key, label: document.getElementById('champId').value, nom: document.getElementById('champNom').value});
 
         this.setState(stateCopy);
-        this.setState({nbChamp: parseInt(key)});
+        this.setState({nbChamp: parseInt(key, 10)});
         console.log(this.state);
     }
 
