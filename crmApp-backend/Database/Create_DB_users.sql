@@ -125,12 +125,12 @@ CREATE TABLE users."INVITE" (
 );
 
 CREATE TABLE users."CONTRAT_COLLECTIF_AFFICHAGE" (
-  idattrcontratcoll  integer REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  idattrcontratcoll  integer PRIMARY KEY REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
   affichage  boolean
 );
 
 CREATE TABLE users."FOURNISSEUR_AFFICHAGE" (
-  idattrfournisseur  integer REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
+  idattrfournisseur  integer PRIMARY KEY REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
   affichage  boolean
 );
 
