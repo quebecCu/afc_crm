@@ -19,8 +19,16 @@ class RechercheComponent extends Component {
 		this._filtre ();
 	}
 
-	_reset(e) {
-		e.preventDefault();
+	_reset() {
+		let newFormState={
+					nomEntreprise:'',
+					nomEmploye: '',
+					numeroPolice:'',
+					nomAssureur:'',
+					moisRenouvellement:'',
+					clientActif: 'actif',
+					statutProspect: 'false'
+		};
 		document.getElementById("nomEmploye").value = "";
 		document.getElementById("nomAssureur").value = "";
 		document.getElementById("moisRenouvellement").value = "";
@@ -28,8 +36,13 @@ class RechercheComponent extends Component {
 		document.getElementById("nomEntreprise").value = "";
 		document.getElementById("selectedStatut").value = "";
 		document.getElementById("prospects").value = "";
+		this.props.changeFormColl(newFormState);
 		this._filtre ();
 	}
+	
+	 componentDidMount() {
+		 this._reset();
+	    }
 	_changeNomEmploye (event){
 		this._emitChange({...this.props.formState , nomEmploye: event.target.value});
 		this._filtre ();
