@@ -95,14 +95,14 @@ class RechercheComponent extends Component {
 				<input type="text" id ="moisRenouvellement" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
 				<input type="text" id ="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
 
-				<select id = "selectedStatut" onChange={this._filtre} > 
-				<option value="" >Choisir le statut</option>
+				<select  required id = "selectedStatut" onChange={this._filtre} > 
+				<option value=""  selected="selected">-- Choisir le statut --</option>
 				<option value="actif">Actif</option>
 				<option value="annulé">Annulé</option>
 				</select>
 				
-				<select name="prospects" id = "prospects" onChange={this._filtre} > 
-				<option value="" >Choisir l'état du prospect</option>
+				<select  required name="prospects" id = "prospects" onChange={this._filtre} > 
+				<option value=""  selected="selected">-- Type prospect --</option>
 				<option value="oui">Prospect</option>
 				<option value="non"> Non prospect </option>
 				</select>
