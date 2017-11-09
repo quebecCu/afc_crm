@@ -1,16 +1,37 @@
 var express = require('express');
 var router = express.Router();
 var app = express();
+var squelb = require('squel');
+var squel = squelb.useFlavour('postgres');
+var db = require('../models/index');
 
-/* GET users listing. */
-router.get('/test', function(req, res) {
-	console.log("Test backend2");
+let getUserByLogin = (login) => {
+    squel.select()
+        .from('users."UTILISATEUR"')
+        .where('login like ?', login)
+        .toString()
+};
 
-	res.send('Une div que lon peut inserer dynamiquement ');
-	res.status(200);
+const getAllUsers = () =>
+    squel.select()
+        .from('users."UTILISATEUR"')
+        .toString();
 
-	console.log("end get /test");
+
+router.get('/listUsers', function (req, res) {
+    console.log('route GET /listUsers');
+
+    db.query(getAllUsers())
+        .then(allUsers => {
+
+            res.send({
+                users : allUsers
+            });
+            res.status(200);
+        })
+        .catch(error => {
+            console.log('ERROR:', error);
+        })
 });
 
 module.exports = router;
- 

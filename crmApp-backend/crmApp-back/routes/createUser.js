@@ -156,7 +156,7 @@ function createEmployee(userInformations, userCreated, res) {
 	    	    	res.send({ 
 		    			status : 'success',
 		    			message : null
-		    		});; 
+		    		});
 	    })
  		.catch(error => {
  			 console.log('ERROR:', error); // print error;
