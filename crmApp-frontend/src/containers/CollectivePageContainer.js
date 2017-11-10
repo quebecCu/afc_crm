@@ -3,18 +3,23 @@ import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {CreationClient} from "./CreationClient";
+import {changeViewDashboard} from "../actions/crmDashboard";
 
 class CollectivePageContainer extends Component   {
 	constructor(props){
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
+		this.handleClick2 = this.handleClick2.bind(this);
 	}
-
-
 
 	handleClick(event) {
 		event.preventDefault();
 		this.props.changeViewCollective(event.target.className);
+	}
+	
+	handleClick2(event) {
+		event.preventDefault();
+		this.props.changeViewDashboard(event.target.className);
 	}
 
 	render() {
@@ -28,7 +33,7 @@ class CollectivePageContainer extends Component   {
 				view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
 			}
 			{
-				view === "" && <button onClick={this.handleClick} className="suppliers">Fournisseurs</button>
+				view === "" && <button onClick={this.handleClick2} className="suppliers">Fournisseurs</button>
 			}
 			{
 				view === "customers" && <PageCollectivesClients handleClick={this.handleClick}/>
@@ -52,9 +57,12 @@ function mapStateToProps (state) {
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
     return{
-        changeViewCollective : (newView) => {
-            dispatch(changeViewCollective(newView))
-        }
+    	  changeViewCollective : (newView) => {
+              dispatch(changeViewCollective(newView))
+          },
+          changeViewDashboard : (newView) => {
+              dispatch(changeViewDashboard(newView))
+          }
     }
 };
 
