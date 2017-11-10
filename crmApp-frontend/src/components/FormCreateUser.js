@@ -49,7 +49,6 @@ export class FormCreateUser extends React.Component{
     */
        let buttonId=event.target.id;
        if(event.target.checked){
-           console.log("alllllllo?");
            this.props.formState.permissionsUser.push(this.props.formState.permissionsDefault[0].perm[buttonId]);
             console.log(this.props.formState.permissionsUser);
            this.props.changeForm({...this.props.formState, permissionsUser: this.props.formState.permissionsUser});
@@ -70,14 +69,9 @@ export class FormCreateUser extends React.Component{
 
     }
 
-
-
-
-
-
     whatToRender(){
 
-        if(this.props.formState.role === "employe"){
+        if(this.props.formState.role === "Employe"){
           return <div>
               <span className="titre">Nom, prénom :</span> <input type="textField" onChange={this.onChangeNom} value={this.props.formState.nom}/><br />
               <span className="titre">Login :</span> <input type="textField" onChange={this.onChangeLogin} value={this.props.formState.login}/><br />
@@ -101,9 +95,12 @@ export class FormCreateUser extends React.Component{
     render(){
         let test = this.whatToRender();
         return  <div><form><span className="titre">Rôle :</span> <select name="role" onChange={this.onChangeRole}>
-            <option value="employe">Employé</option>
-            <option value="visiteurClient">Visiteur client</option>
-        </select>
+			{this.props.formState.roles.map(element => {
+				return(
+					<option key={element.description} value={element.description}>{element.description}</option>
+				);
+			})}
+		</select>
             {test}
         </form>
             <button onClick={this.handleClick}>Créer l'utilisateur</button></div>;

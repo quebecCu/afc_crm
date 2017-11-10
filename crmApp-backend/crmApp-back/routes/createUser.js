@@ -21,7 +21,7 @@ router.post('/createUser', function(req, res) {
 	        login: req.body.login,
 	        mdpProv: req.body.mdpProv,
 	        mail: req.body.mail,
-	        permissionsUser: req.body.permissionsUser,
+	        permissionsUser: req.body.userPerms,
 	    };
 	    
 	    console.log(user);
@@ -182,6 +182,28 @@ router.get('/getDefaultPerms', function(req,res){
     });
 });
 
+router.get('/getRoles', function(req, res) {
+    console.log('getting roles from database');
+
+    db.query(squel.select()
+        .from('users."ROLEADM"')
+        .field('description')
+        .where("description like 'Utilisateur%' OR description like 'Employe'")
+        .toString())
+        .then(roles => {
+
+            res.send({
+                status : 'success',
+                roles : roles
+            });
+        })
+        .catch(e => {
+            console.error('query error', e.message, e.stack)
+        })
+    console.log('end get /getRoles');
+});
+
+
 function createEmployee(userInformations, userCreated, t, res) {
 	 var addPersonne = squel.insert()
 		.into('public."PERSONNE"')
@@ -206,6 +228,6 @@ function createEmployee(userInformations, userCreated, t, res) {
 		    		});
 	    })
 	})
-} 
+}
 
 module.exports = router;
