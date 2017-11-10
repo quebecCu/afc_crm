@@ -100,13 +100,11 @@ class CreateUserPermissions extends React.Component{
 
     render(){
         let permDefEmploye=[];
-        console.log("lestatebordel:"+this.props.formState.defaultPerms);
         for(let i=0; i < this.props.formState.defaultPerms.length; i++) {
-            if (this.props.formState.defaultPerms[i].role === "Utilisateur_All")
-                permDefEmploye = this.props.formState.defaultPerms[i].droits
+            if (this.props.formState.defaultPerms[i].role === this.props.formState.role)
+                permDefEmploye = this.props.formState.defaultPerms[i].droits;
 
         }
-
         //On itère dans chaque permission par défaut et on crée une div d'affichage d'une perm
         console.log("permdefemploye"+permDefEmploye);
         this.toReturn = permDefEmploye.map(element => {
