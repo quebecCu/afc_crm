@@ -7,7 +7,7 @@ import PageCollectivesClients from "./PageCollectivesClients";
 import {
     Route
 } from 'react-router-dom';
-import { page1 } from "../containers/page1";
+import { page1 } from "../containers/Page";
 import {CreationClient} from "../containers/CreationClient";
 import {gestionUser} from "../containers/gestionUser";
 import createUser from "../containers/createUser";

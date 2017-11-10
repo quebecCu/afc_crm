@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class DossiersComponent extends Component {
 
     handleClick() {
-        this.props.history.push('/PageAccueil/assu-col/clients/client_1');
+        this.props.handleClick('customer');
     }
 
     render() {
@@ -42,9 +42,12 @@ class DossiersComponent extends Component {
             );
         }
         else {
+			let fournisseur = this.props.fournisseur;
             this.rows = (
                 <tbody>
-                {this.props.fournisseur.map(element => {
+                {
+
+                	fournisseur.map(element => {
                     return (
                         <tr onClick={this.handleClick.bind(this)} key={element.nom}>
                             <td>{element.nom}</td>

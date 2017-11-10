@@ -16,7 +16,7 @@ class CollectivePageContainer extends Component   {
 		event.preventDefault();
 		this.props.changeViewCollective(event.target.className);
 	}
-	
+
 	render() {
         let {view} = this.props.crmCollectiveContainer;
 		return(
@@ -37,7 +37,7 @@ class CollectivePageContainer extends Component   {
 				view === "newCustomer" && <CreationClient/>
 			}
 		</div>
-		
+
 		);
 	}
 }

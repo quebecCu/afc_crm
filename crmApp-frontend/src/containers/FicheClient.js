@@ -1,6 +1,6 @@
 import React from 'react';
 import {TitreValeur} from '../components/TitreValeur.js';
-import '../style/FicheClient.css';
+//import '../style/FicheClient.css';
 import update from 'react-addons-update';
 
 
@@ -82,7 +82,7 @@ export class FicheClient extends React.Component{
                 {
                     client.contacts.map(element => {
                         var position = this.getPosition(element.id);
-                        return(<div>
+                        return(<div key={element.id}>
                             <div className="contactClicable" onClick={()=>this.showContact(position)}>
                                 <TitreValeur titre="Nom" valeur={element.nom} />
                                 <TitreValeur titre="Prénom" valeur={element.prenom} />

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {FicheClient} from './FicheClient.js';
 
-export class page1 extends React.Component{
+class Page1 extends Component{
     constructor(props){
         console.log("WTTTTf");
         super(props);
@@ -99,6 +99,10 @@ export class page1 extends React.Component{
     }
 
     render(){
+    	console.log('hey');
         return <FicheClient client={this.state.clients[0]}/>;
     }
+
 }
+
+export default (Page1);
