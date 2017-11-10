@@ -1,9 +1,6 @@
-
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
-import {SEARCH_REQUEST_COLL, SENDING_REQUEST_COLL, CHANGE_FORM_COLL, getRequestClientColl} from '../actions/crmRechercheCollective';
+import {take, fork} from 'redux-saga/effects';
+import {SENDING_REQUEST_COLL, getRequestClientColl} from '../actions/crmRechercheCollective';
 import axios from 'axios';
-import {push} from 'react-router-redux';
 import {store} from '../store';
 
 export function * searchFlow (){

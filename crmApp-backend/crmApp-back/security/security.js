@@ -1,35 +1,51 @@
-var db = require('../models');
+var db = require('../models/index');
+var squelb = require('squel');
+var squel = squelb.useFlavour('postgres');
 
 var security = {};
-security.checkRights = function (login, idrole, menu, operation, callback) {
-	var rightValidated = false;
-	db.PermissionUtil.findOne({ 
-		where: { login : login, 'MENU.description' : menu, 'OPERATION.description' : operation}, 
-				include: [db.User, db.Operation, db.Menu]})
-	.then(function (permission) {
-		if(permission !== null) {
-			rightValidated = true;
-			callback(rightValidated);
-		}
-	});
-}
-
-security.addDefaultRights = function (login, idrole, callback) {
-	db.PermissionRole.findAll({ 
-		where: { login : login, idrole : idrole }, 
-				include: [db.User]})
-	.then(function (permissions) {
-		if(permissions !== null) {
-			var bulk = [];
-			permissions.forEach(function(permission) {
-				var raw = {iduser: permission.iduser, idoperation: permission.idoperation, idmenu: permission.idmenu}
-				bulk.add(raw);
-			});
-			PermissionUtil.bulkCreate(bulk).then(() => { // Notice: There are no arguments here, as of right now you'll have to...
-				  console.log("ouuuaaaiiiii !!!!");
-				  callback();
-			})
-		}
+security.checkRights = function (iduser, entity, levelRequired) {
+	return new Promise((resolve, reject) => {
+		var getRights = squel.select()
+	    .from('users."PERMISSIONUTIL_GLOB"', "perm")
+	    .left_join('users."UTILISATEUR"', "util", "perm.iduser = util.iduser")
+	    .left_join('users."OPERATION"', "op", "perm.idoperation = op.idoperation")
+	    .left_join('users."ENTITE"', "ent", "perm.identite = ent.identite")
+	    .field("op.description")
+	    .where(squel.expr()
+	            .and("util.iduser = " + iduser)
+	            .and("ent.description = '" + entity + "'")
+	          );
+		console.log(getRights.toString());
+		
+		db.any(getRights.toString())
+	    .then(rights => {
+    			var level = 0;
+	    		rights.forEach(function(right) {
+		    		switch(right.description) {
+		    		case "READ" :
+		    			level += 1;
+		    			break;
+		    		case "UPDATE" :
+		    			level += 2;
+		    			break;
+		    		case "CREATE" :
+		    			level += 4;
+		    			break;
+		    		default :
+		    			break;
+		    		}
+		    	});
+	    		console.log(level);
+	    		if(level >= levelRequired) {
+	    			resolve();
+	    		} else {
+	    			reject("L'utilisateur ne possède pas les droits suffisants");
+	    		}
+	    		console.log(rights);
+	    })
+	    .catch(error => {
+	        reject(error); // print error;
+	    });	
 	});
 }
 

@@ -6,10 +6,9 @@ import {
 	UPDATE_ROLES
 }  from '../actions/crmCreateUser';
 
-
 let initialState={
     formState:{
-        role: 'Employe',
+        role: 'employe',
         nom: '',
         login: '',
         mdpProv: '',
@@ -19,6 +18,7 @@ let initialState={
         roles:[],
     },
     errors:'',
+
 };
 
 export default function reducer (state = initialState, action){

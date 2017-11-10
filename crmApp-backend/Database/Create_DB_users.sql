@@ -42,7 +42,7 @@ CREATE TABLE users."UTILISATEUR" (
   name  varchar(20),
   idrole  integer REFERENCES users."ROLEADM" (idrole),
   resetPasswordToken varchar(200),
-  resetPasswordExpires bigint
+  resetPasswordExpires bigint 
 );
 
 CREATE TABLE users."ENTITE" (
@@ -121,16 +121,16 @@ CREATE TABLE users."INVITE" (
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
   idclient  integer REFERENCES public."CLIENT" (idclient),
   idpersonne  integer REFERENCES public."PERSONNE" (idpersonne),
-  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient, idpersonne)
+  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient, idpersonne) 
 );
 
 CREATE TABLE users."CONTRAT_COLLECTIF_AFFICHAGE" (
-  idattrcontratcoll  integer REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  idattrcontratcoll  integer PRIMARY KEY REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
   affichage  boolean
 );
 
 CREATE TABLE users."FOURNISSEUR_AFFICHAGE" (
-  idattrfournisseur  integer REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
+  idattrfournisseur  integer PRIMARY KEY REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
   affichage  boolean
 );
 
@@ -143,7 +143,7 @@ CREATE TABLE users."MODIFICATION_CLIENT" (
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
   idclient  integer REFERENCES public."CLIENT" (idclient),
   derniere_modification date,
-  CONSTRAINT  pk_MODIFICATION_CLIENT  PRIMARY KEY (iduser, idclient)
+  CONSTRAINT  pk_MODIFICATION_CLIENT  PRIMARY KEY (iduser, idclient) 
 );
 
 CREATE TABLE users."EMPLOYE_INT" (
@@ -156,5 +156,5 @@ CREATE TABLE users."RELATION_FOURNISSEUR" (
   idemploye  integer REFERENCES users."EMPLOYE_INT" (idemploye),
   idfournisseur  integer REFERENCES public."FOURNISSEUR" (idfournisseur),
   code_fournisseur varchar(100),
-  CONSTRAINT  pk_RELATION_FOURNISSEUR  PRIMARY KEY (idemploye, idfournisseur)
+  CONSTRAINT  pk_RELATION_FOURNISSEUR  PRIMARY KEY (idemploye, idfournisseur) 
 );

@@ -43,6 +43,9 @@ DROP TABLE IF EXISTS "BENEFICIAIRES" CASCADE;
 DROP TABLE IF EXISTS "REGLE" CASCADE;
 DROP TABLE IF EXISTS "ACTIVITE" CASCADE;
 DROP TABLE IF EXISTS "CHAMBRE_COMMERCE" CASCADE;
+DROP TABLE IF EXISTS "CADEAU_ENVOYE" CASCADE;
+DROP TABLE IF EXISTS "CADEAU" CASCADE;
+DROP TABLE IF EXISTS "CAT_ACTIVITE" CASCADE;
 
 CREATE TABLE public."ADRESSE" (
   idadresse  serial PRIMARY KEY,
@@ -50,11 +53,6 @@ CREATE TABLE public."ADRESSE" (
   ville  varchar(20),
   province  varchar(10),
   codepostal  char(7)
-);
-
-CREATE TABLE public."STATUT_CONTACT" (
-  idstatutcontact  serial  PRIMARY KEY,
-  libellestatut  varchar(30)
 );
 
 CREATE TABLE public."RELEVE" (
@@ -129,8 +127,7 @@ CREATE TABLE public."CATEGORIE"(
 
 CREATE TABLE public."POSTE" (
   idposte serial PRIMARY KEY,
-  libelleposte  varchar(20),
-  idcategorie  integer REFERENCES "CATEGORIE" (idcategorie)
+  libelleposte  varchar(20)
 );
 
 CREATE TABLE public."ETAT" (
@@ -147,6 +144,7 @@ CREATE TABLE public."CLIENT" (
   idclient  serial  PRIMARY KEY,
   idetat  integer  REFERENCES "ETAT" (idetat),
   idprovenance  integer  REFERENCES "PROVENANCE" (idprovenance),
+  prospect boolean,
   notes text
 );
 
@@ -163,16 +161,6 @@ CREATE TABLE public."MODALITE" (
   idtype  integer  REFERENCES "TYPE" (idtype)
 );
 
-CREATE TABLE public."EMPLOYES" (
-  idclient  integer  REFERENCES  "CLIENT" (idclient),
-  idposte  integer  REFERENCES  "POSTE" (idposte),
-  idpersonne  integer  REFERENCES  "PERSONNE" (idpersonne),
-  date_emploi  date,
-  salaire_annuel  decimal(10,2),
-  statut_civil  varchar(20),
-  CONSTRAINT  pk_EMPLOYES  PRIMARY KEY (idclient, idposte, idpersonne)
-);
-
 CREATE TABLE public."RELATION" (
   idclient  integer  REFERENCES "CLIENT" (idclient),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
@@ -185,13 +173,20 @@ CREATE TABLE public."REGLE" (
   libelleregle  varchar(20)
 );
 
+CREATE TABLE public."CADEAU" (
+  idcadeau  serial  PRIMARY KEY,
+  libellecadeau  varchar(20)
+);
+
 CREATE TABLE public."CONTRAT" (
   idcontrat  serial  PRIMARY KEY,
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idclient  integer REFERENCES  "CLIENT" (idclient),
   idregle  integer REFERENCES  "REGLE" (idregle),
   idaga  integer REFERENCES  "AGA" (idaga),
+  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   date_signature  date,
+  mois_renouvellement  integer,
   police integer,
   notes text
 );
@@ -265,7 +260,7 @@ CREATE TABLE public."ENTREPRISE" (
   fax  char(10),
   sous_groupe varchar(20),
   mail  varchar(30),
-  poste varchar(10),
+  idcadeau integer  REFERENCES "CADEAU" (idcadeau),
   date_creation  date  DEFAULT  current_date,
   mois_admissible integer,
   bc varchar(20),
@@ -275,7 +270,6 @@ CREATE TABLE public."ENTREPRISE" (
   rver_rmq varchar(180),
   nb_etq_a_imprimer  int2,
   nb_mois_entente  integer, -- ?
-  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idactivite  integer  REFERENCES  "ACTIVITE" (idactivite)
 );
@@ -331,15 +325,21 @@ CREATE TABLE public."ENTREPRISE_FACUL" (
 CREATE TABLE public."CONTACT_CLIENT" (
   idclient  integer  REFERENCES "CLIENT" (idclient),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
-  idstatutcontact  integer  REFERENCES  "STATUT_CONTACT" (idstatutcontact),
-  CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne, idstatutcontact)
+  idposte  integer  REFERENCES  "POSTE" (idposte),
+  CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne, idposte)
 );
 
 CREATE TABLE public."CONTACT_FOURNISSEUR" (
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
-  idstatutcontact  integer  REFERENCES  "STATUT_CONTACT" (idstatutcontact),
-  CONSTRAINT  pk_CONTACT_FOURNISSEUR  PRIMARY KEY (idfournisseur, idpersonne, idstatutcontact)
+  idposte  integer  REFERENCES  "POSTE" (idposte),
+  CONSTRAINT  pk_CONTACT_FOURNISSEUR  PRIMARY KEY (idfournisseur, idpersonne, idposte)
+);
+
+CREATE TABLE public."CADEAU_ENVOYE" (
+  idcadeau integer REFERENCES "CADEAU" (idcadeau),
+  identreprise integer REFERENCES "ENTREPRISE" (idclient),
+  CONSTRAINT  pk_CADEAU_ENVOYE  PRIMARY KEY (idcadeau, identreprise)
 );
 
 CREATE TABLE public."CONDITION" (
@@ -348,4 +348,10 @@ CREATE TABLE public."CONDITION" (
   CONSTRAINT  pk_CONDITION  PRIMARY KEY (idfournisseur, idmodalite),
   idtype  integer  REFERENCES "TYPE" (idtype),
   valeur varchar(20)
+);
+
+CREATE TABLE public."CAT_ACTIVITE" (
+  idposte integer REFERENCES "POSTE" (idposte),
+  idcategorie integer REFERENCES "CATEGORIE" (idcategorie),
+  CONSTRAINT  pk_CAT_ACTIVITE  PRIMARY KEY (idposte, idcategorie)
 );

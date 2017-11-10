@@ -11,6 +11,7 @@ export class FormCreateUser extends React.Component{
         this.onChangeMdp =this.onChangeMdp.bind(this);
         this.onChangeMail=this.onChangeMail.bind(this);
         this.handleClick=this.handleClick.bind(this);
+
     }
 
     handleClick(event){
@@ -36,9 +37,47 @@ export class FormCreateUser extends React.Component{
         this.props.changeForm({...this.props.formState, mail: event.target.value});
     }
 
-    whatToRender() {
+    onChangePermissionsUser(event){
+       /* event.preventDefault();
+        let buttonId=event.target.id;
+        event.target.setAttribute("disabled", "");
+        console.log(buttonId);
+        this.props.formState.permissionsUser.push(this.props.formState.permissionsDefault[0].perm[buttonId]);
 
-        if(this.props.formState.role === "Employe") {
+        this.props.changeForm({...this.props.formState, permissionsUser: this.props.formState.permissionsUser});
+
+    */
+       let buttonId=event.target.id;
+       if(event.target.checked){
+           console.log("alllllllo?");
+           this.props.formState.permissionsUser.push(this.props.formState.permissionsDefault[0].perm[buttonId]);
+            console.log(this.props.formState.permissionsUser);
+           this.props.changeForm({...this.props.formState, permissionsUser: this.props.formState.permissionsUser});
+
+       }
+       else {
+           // check la position de l'élément idDroit dans permissionsUser
+           let idToRemove;
+           for(let i = 0; i < this.props.formState.permissionsUser.length ; i++){
+               if(this.props.formState.permissionsDefault[0].perm[buttonId] === this.props.formState.permissionsUser[i])
+                idToRemove=i;
+           }
+           this.props.formState.permissionsUser.splice(idToRemove, 1);
+           this.props.changeForm({...this.props.formState, permissionsUser: this.props.formState.permissionsUser});
+
+       }
+
+
+    }
+
+
+
+
+
+
+    whatToRender(){
+
+        if(this.props.formState.role === "employe"){
           return <div>
               <span className="titre">Nom, prénom :</span> <input type="textField" onChange={this.onChangeNom} value={this.props.formState.nom}/><br />
               <span className="titre">Login :</span> <input type="textField" onChange={this.onChangeLogin} value={this.props.formState.login}/><br />
@@ -48,7 +87,7 @@ export class FormCreateUser extends React.Component{
         }
         //Si c'est un visiteur il va falloir rechercher dans les fournisseurs // les clients l'entreprise
         //à laquelle associer l'utilisateur
-        else if(this.props.formState.role ==="Visiteur Client" || this.props.formState.role ==="Visiteur Fournisseur") {
+        else if(this.props.formState.role ==="visiteurClient" || this.props.formState.role ==="visiteurFournisseur"){
             return <div>
                 <span className="titre">Nom compagnie :</span> <input type="textField" onChange={this.onChangeNom} value={this.props.formState.nom}/><br />
                 <span className="titre">Login :</span> <input type="textField" onChange={this.onChangeLogin} value={this.props.formState.login}/><br />
@@ -59,14 +98,11 @@ export class FormCreateUser extends React.Component{
         }
     }
 
-    render() {
+    render(){
         let test = this.whatToRender();
         return  <div><form><span className="titre">Rôle :</span> <select name="role" onChange={this.onChangeRole}>
-            {this.props.formState.roles.map(element => {
-                return(
-                    <option key={element.description} value={element.description}>{element.description}</option>
-                );
-            })}
+            <option value="employe">Employé</option>
+            <option value="visiteurClient">Visiteur client</option>
         </select>
             {test}
         </form>

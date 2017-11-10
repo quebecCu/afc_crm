@@ -37,7 +37,9 @@ function mapStateToProps (state) {
 
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
+
     return{
+
         changeForm : (newFormState) => {
             dispatch(changeFormCreateUser(newFormState))
         },

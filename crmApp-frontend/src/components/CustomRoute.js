@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {store} from "../store";
 import {Redirect, Route} from "react-router-dom";
 
@@ -19,7 +19,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
             <Redirect to="/"/>
         )
     )}/>
-)
+);
 
 
 /*Only not logged in user can acess this route, or they are redirected to '/' */
@@ -31,4 +31,4 @@ export const PublicOnlyRoute = ({ component: Component, ...rest }) => (
             <Redirect to="/"/>
         )
     )}/>
-)
+);

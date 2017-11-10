@@ -2,7 +2,6 @@ import {
 	CHANGE_FORM_COLL,
 	SEARCH_REQUEST_COLL,
     GET_REQUEST_CLIENT_COLL,
-    SENDING_REQUEST_COLL,
 }  from '../actions/crmRechercheCollective';
 
 //ajouter le reste dans l'import 

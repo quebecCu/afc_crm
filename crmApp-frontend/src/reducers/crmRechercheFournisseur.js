@@ -28,7 +28,7 @@ export default function reducer (state = initialState, action ){
     switch (action.type){
 
         case CHANGE_FORM_FOUR:
-            return {...state , formState: action.newFormState , error:''};
+            return {...state ,formState: action.newFormState , error:''};
         case GET_REQUEST_FOUR:
             return {...state, dossiersState: action.newDossiersState, error:''};
         case SEARCH_FOUR:

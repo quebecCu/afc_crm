@@ -1,7 +1,6 @@
 //import MyInput from './../components/Input';
 import React, { Component } from 'react';
 import '../../style/Reset.css';
-import Request from 'superagent' ;
 import {store} from '../../store';
 import {push} from 'react-router-redux';
 

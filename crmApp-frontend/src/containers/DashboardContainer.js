@@ -3,31 +3,42 @@ import {connect} from "react-redux";
 import AccueilPageContainer from "./AccueilPageContainer";
 import NavBar from "./NavBar";
 import PageFournisseurs from "./PageFournisseurs";
+import ErrorPage from "../components/ErrorPage";
 import GestionUser from './GestionUser';
 import '../style/Dashboard.css'
 import CollectivePageContainer from "./CollectivePageContainer";
+import Page1 from './Page';
 
 class DashboardContainer extends Component {
 
     render() {
         let {view} = this.props.crmDashboard;
+        if(this.props.crmDashboard.view === "customer") {
+        	console.log("YO MAN");
+		}
         return (
             <div id="Dashboard">
 
                     <NavBar view={view}/>
                     <div className="view container" id="main">
                         {
-                            view === "Home" && <AccueilPageContainer />
+							this.props.crmDashboard.view === "Home" && <AccueilPageContainer />
                         }
                         {
-                            view === "collIns" && <CollectivePageContainer />
+							this.props.crmDashboard.view === "collIns" && <CollectivePageContainer />
                         }
                         {
-                            view === "suppliers" && <PageFournisseurs />
+							this.props.crmDashboard.view === "suppliers" && <PageFournisseurs />
                         }
                         {
-                            view === "usersManagement" && <GestionUser />
+							this.props.crmDashboard.view === "usersManagement" && <GestionUser />
                         }
+                        {
+							this.props.crmDashboard.view === "customer" && <Page1 />
+						}
+                        {
+							this.props.crmDashboard.view === "ErrorPage" && <ErrorPage />
+						}
                     </div>
 
             </div>
@@ -49,7 +60,6 @@ function mapStateToProps (state) {
 
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
-
     return{
     }
 };

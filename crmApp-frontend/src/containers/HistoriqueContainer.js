@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import DossiersComponent from "../components/DossiersComponent";
 import '../style/PageAccueil.css';
+import {changeViewDashboard} from "../actions/crmDashboard";
+import {connect} from "react-redux";
 
 class HistoriqueContainer extends Component {
     constructor(props) {
@@ -14,7 +16,7 @@ class HistoriqueContainer extends Component {
         switch (this.props.page) {
             case 'PageAccueil':
                 this.table = (
-                    <table>
+                    <table className="table">
                         <thead>
                         <tr>
                             <th>Date</th>
@@ -22,14 +24,14 @@ class HistoriqueContainer extends Component {
                             <th>Type</th>
                         </tr>
                         </thead>
-                        <DossiersComponent historique={this.state.historique} history={this.props.history}/>
+                        <DossiersComponent historique={this.state.historique} history={this.props.history} handleClick={this.props.changeViewDashboard}/>
                     </table>
                 );
                 break;
             case 'PageCollectivesClients':
                 this.table = (
                 		<div style={{ overflow: 'auto', height:'300px',}}>
-                    <table id="PageCollectivesClientsTable" >
+                    <table id="PageCollectivesClientsTable" className="table">
                         <thead>
                         <tr>
                             <th>Nom de l'entreprise</th>
@@ -41,7 +43,7 @@ class HistoriqueContainer extends Component {
                             <th>Prospect</th>
                         </tr>
                         </thead>
-                        <DossiersComponent collective={this.props.dossiersState} history={this.props.history}/>
+                        <DossiersComponent collective={this.props.dossiersState} history={this.props.history} handleClick={this.props.changeViewDashboard}/>
                     </table>
                         </div>
                 );
@@ -49,7 +51,7 @@ class HistoriqueContainer extends Component {
             case 'PageFournisseurs':
                 this.table = (
                 		<div style={{ overflow: 'auto', height:'300px',}}>
-                    <table id="PageFournisseursTable" >
+                    <table id="PageFournisseursTable" className="table">
                         <thead>
                         <tr>
                             <th>Nom de l'assurance</th>
@@ -58,7 +60,7 @@ class HistoriqueContainer extends Component {
                             <th>Code</th>
                         </tr>
                         </thead>
-                        <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}/>
+                        <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history} handleClick={this.props.changeViewDashboard}/>
                     </table>
                         </div>
 
@@ -72,4 +74,20 @@ class HistoriqueContainer extends Component {
     }
 }
 
-export default (HistoriqueContainer);
+function mapStateToProps (state) {
+
+	return{
+		crmDashboard: state.crmDashboard
+	}
+}
+
+//fonctions
+const  mapDispatchToProps = (dispatch) => {
+	return{
+		changeViewDashboard: (newView) => {
+			dispatch(changeViewDashboard(newView));
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (HistoriqueContainer)

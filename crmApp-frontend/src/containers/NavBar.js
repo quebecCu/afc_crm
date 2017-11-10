@@ -13,19 +13,9 @@ class NavBar extends Component {
     render() {
         return (
             <div>
-                {/*<div className="navBar">
-                    <NavBarLink name="Accueil" id="Home" handleClick={this.props.changeViewDashboard} view={this.props.view} />
-                    <NavBarLink name="Assurances Individuelles" id="indIns" handleClick={this.props.changeViewDashboard} view={this.props.view} />
-                    <NavBarLink name="Assurances Collectives" id="collIns" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewCollective}/>
-                    <NavBarLink name="Placements" id="placements" handleClick={this.props.changeViewDashboard} view={this.props.view} />
-                    <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} />
-                    <NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement}/>
-                    <div  id="logout" onClick={this.props.logout} className="link">Déconnexion</div>
-                    <NavBarLink name="Retour" id="back" />
-                </div>*/}
                 <div className="nav-side-menu">
                     <div className="brand">AFC inc.</div>
-                    <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+                    <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content" />
                     <div className="menu-list">
                         <ul id="menu-content" className="menu-content collapse out">
                             <li>
@@ -55,7 +45,7 @@ class NavBar extends Component {
 
                             </li>
                             <li>
-                                <div  id="logout" onClick={this.props.logout} className="link">Déconnexion</div>
+                                <div  id="logout" onClick={this.props.logout} className="link text-center">Déconnexion</div>
                             </li>
                             <li>
                                 <NavBarLink name="Retour" id="back" />

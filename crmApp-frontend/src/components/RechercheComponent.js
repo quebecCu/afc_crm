@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import '../style/RechercheComponent.css';
-import Request from 'superagent' ;
-import {store} from '../store';
-import {push} from 'react-router-redux';
-//import state  from '../reducer/crmRechercheCollective';
-import { connect  } from 'react-redux';
-import {searchRequestColl, changeFormColl, sendingRequestColl} from '../actions/crmRechercheCollective'
 
 class RechercheComponent extends Component {
 
@@ -25,8 +19,16 @@ class RechercheComponent extends Component {
 		this._filtre ();
 	}
 
-	_reset(e) {
-		e.preventDefault();
+	_reset() {
+		let newFormState={
+					nomEntreprise:'',
+					nomEmploye: '',
+					numeroPolice:'',
+					nomAssureur:'',
+					moisRenouvellement:'',
+					clientActif: 'actif',
+					statutProspect: 'false'
+		};
 		document.getElementById("nomEmploye").value = "";
 		document.getElementById("nomAssureur").value = "";
 		document.getElementById("moisRenouvellement").value = "";
@@ -34,8 +36,13 @@ class RechercheComponent extends Component {
 		document.getElementById("nomEntreprise").value = "";
 		document.getElementById("selectedStatut").value = "";
 		document.getElementById("prospects").value = "";
+		this.props.changeFormColl(newFormState);
 		this._filtre ();
 	}
+	
+	 componentDidMount() {
+		 this._reset();
+	    }
 	_changeNomEmploye (event){
 		this._emitChange({...this.props.formState , nomEmploye: event.target.value});
 		this._filtre ();
@@ -55,7 +62,7 @@ class RechercheComponent extends Component {
 
 	_filtre (){
 		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
-			inputProspect,filter, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
+			inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
 		
 		inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
 		inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
@@ -101,18 +108,18 @@ class RechercheComponent extends Component {
 				<input type="text" id ="moisRenouvellement" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
 				<input type="text" id ="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
 
-				<select id = "selectedStatut" onChange={this._filtre} > 
-				<option value="" >Choisir le statut</option>
+				<select  required id = "selectedStatut" onChange={this._filtre} > 
+				<option value=""  selected="selected">-- Choisir le statut --</option>
 				<option value="actif">Actif</option>
 				<option value="annulé">Annulé</option>
 				</select>
 				
-				<select name="prospects" id = "prospects" onChange={this._filtre} > 
-				<option value="" >Choisir l'état du prospect</option>
+				<select  required name="prospects" id = "prospects" onChange={this._filtre} > 
+				<option value=""  selected="selected">-- Type prospect --</option>
 				<option value="oui">Prospect</option>
 				<option value="non"> Non prospect </option>
 				</select>
-					<input type="reset" value="Reset"  onClick= {this._reset}/>
+					<input type="reset" value="Reset" id="reset"  onClick= {this._reset}/>
 					</form>
 		);
 	}
