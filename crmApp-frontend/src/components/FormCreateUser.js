@@ -1,5 +1,4 @@
 import React from 'react';
-import {CreateUserPermissions} from './CreateUserPermissions';
 
 export class FormCreateUser extends React.Component{
 
@@ -11,7 +10,6 @@ export class FormCreateUser extends React.Component{
         this.onChangeLogin = this.onChangeLogin.bind(this);
         this.onChangeMdp =this.onChangeMdp.bind(this);
         this.onChangeMail=this.onChangeMail.bind(this);
-        this.onChangePermissionsUser =this.onChangePermissionsUser.bind(this);
         this.handleClick=this.handleClick.bind(this);
 
     }
@@ -85,8 +83,6 @@ export class FormCreateUser extends React.Component{
               <span className="titre">Login :</span> <input type="textField" onChange={this.onChangeLogin} value={this.props.formState.login}/><br />
               <span className="titre">Mot de passe provisoire :</span> <input type="textField" onChange={this.onChangeMdp} value={this.props.formState.mdpProv}/><br />
               <span className="titre">Mail :</span><input type="textField" onChange={this.onChangeMail} value={this.props.formState.mail} /><br />
-              <span className="titre">Permissions :</span><br />
-              <CreateUserPermissions role={this.props.formState.role} formState={this.props.formState} onChangePermissionsUser={this.onChangePermissionsUser}/>
           </div> ;
         }
         //Si c'est un visiteur il va falloir rechercher dans les fournisseurs // les clients l'entreprise
@@ -97,8 +93,7 @@ export class FormCreateUser extends React.Component{
                 <span className="titre">Login :</span> <input type="textField" onChange={this.onChangeLogin} value={this.props.formState.login}/><br />
                 <span className="titre">Mot de passe provisoire :</span> <input type="textField" onChange={this.onChangeMdp} value={this.props.formState.mdpProv}/><br />
                 <span className="titre">Mail :</span><input type="textField" onChange={this.onChangeMail} value={this.props.formState.mail} /><br />
-                <span className="titre">Permissions :</span><br />
-                <CreateUserPermissions role={this.props.formState.role} formState={this.props.formState} onChangePermissionsUser={this.onChangePermissionsUser}/>
+
             </div>;
         }
     }

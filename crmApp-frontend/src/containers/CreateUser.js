@@ -2,17 +2,29 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {FormCreateUser} from '../components/FormCreateUser.js';
 import '../style/CreationUser.css';
-import {changeFormCreateUser, submitUser} from "../actions/crmCreateUser";
+
+import {changeFormCreateUser, submitUser, getRoles, getOperations, getDefaultPerms, updateUserPerms} from "../actions/crmCreateUser";
+import CreateUserPermissions from './CreateUserPermissions';
+
 
 class CreateUser extends React.Component{
 
-    render(){
+    constructor(props){
+        super(props);
+        this.props.getOperations();
+        this.props.getDefaultPerms();
+        this.props.getRoles();
+    }
+
+    render() {
         let {formState} = this.props.crmCreateUser;
         return <div><h1>Créer utilisateur</h1>
             <FormCreateUser formState={formState}
                             changeForm={this.props.changeForm}
                             submitUser={this.props.submitUser}/>
-
+            <CreateUserPermissions formState={formState}
+                                   changeForm={this.props.changeForm}
+                                    updateUserPerms={this.props.updateUserPerms}/>
         </div>;
     }
 }
@@ -33,6 +45,18 @@ const  mapDispatchToProps = (dispatch) => {
         },
         submitUser : (formData) => {
             dispatch(submitUser(formData))
+        },
+        getOperations: () =>{
+            dispatch(getOperations())
+        },
+        getDefaultPerms: () => {
+            dispatch(getDefaultPerms())
+        },
+        updateUserPerms: (position, newValue) =>{
+            dispatch(updateUserPerms(position, newValue))
+        },
+        getRoles : () => {
+            dispatch(getRoles())
         }
     }
 }

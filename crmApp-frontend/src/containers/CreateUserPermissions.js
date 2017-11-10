@@ -1,8 +1,17 @@
 import React from 'react';
+import {DisplayOnePermission} from '../components/DisplayOnePermission';
 
-export class CreateUserPermissions extends React.Component{
+class CreateUserPermissions extends React.Component{
+
 
     constructor(props){
+        super(props);
+        //this.showPermissions=this.showPermissions.bind(this);
+        this.toReturn = '';
+    }
+
+
+    /*constructor(props){
         super(props);
         this.showPermissions=this.showPermissions.bind(this);
         this.handleClickOKButton = this.handleClickOKButton.bind(this);
@@ -67,5 +76,48 @@ export class CreateUserPermissions extends React.Component{
 
     render(){
         return <div>{this.showPermissions(this.props.role)}</div>;
+    }*/
+
+
+
+    /*componentDidMount() {
+        //Ici il faudrait aller chercher les permissions par défaut pour le rôle donné
+        //On se concentre sur juste un employé pr l'instant
+        let permDefEmploye;
+        console.log("lestatebordel:"+this.props.formState.defaultPerms);
+        for(let i=0; i < this.props.formState.defaultPerms.length; i++) {
+            if (this.props.formState.defaultPerms[i].role === "Utilisateur_All")
+                permDefEmploye = this.props.formState.defaultPerms[i].droits
+        }
+        //On itère dans chaque permission par défaut et on crée une div d'affichage d'une perm
+        console.log(typeof permDefEmploye);
+        this.toReturn = permDefEmploye.map(element => {
+            return(
+                <DisplayOnePermission key={element.id} id={element.id} entite={element.entite} level={element.level} formState={this.props.formState} changeForm={this.props.changeForm}/>
+            )});
+        return this.toReturn;
+    }*/
+
+    render(){
+        let permDefEmploye=[];
+        console.log("lestatebordel:"+this.props.formState.defaultPerms);
+        for(let i=0; i < this.props.formState.defaultPerms.length; i++) {
+            if (this.props.formState.defaultPerms[i].role === "Utilisateur_All")
+                permDefEmploye = this.props.formState.defaultPerms[i].droits
+
+        }
+
+        //On itère dans chaque permission par défaut et on crée une div d'affichage d'une perm
+        console.log("permdefemploye"+permDefEmploye);
+        this.toReturn = permDefEmploye.map(element => {
+            return(
+                <DisplayOnePermission key={element.id} id={element.id} entite={element.entite} level={element.level} formState={this.props.formState} changeForm={this.props.changeForm} updateUserPerms={this.props.updateUserPerms}/>
+            )});
+        return (<div><span className="titre">Permissions :</span><br />
+           {
+               this.toReturn
+           }</div>) ;
     }
 }
+
+export default CreateUserPermissions;
