@@ -16,9 +16,11 @@ SELECT setval('users."CHAMP_idchamp_seq"', 1, FALSE);
 
 ---ROLEADM---
 INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
-INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur');
-INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
-INSERT INTO users."ROLEADM"(description) VALUES ('employe');
+INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_All'); --Associé ?
+INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_Limited'); --Consultant ?
+INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur Client');
+INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur Fournisseur');
+INSERT INTO users."ROLEADM"(description) VALUES ('Employe');
 
 ---OPERATION---
 INSERT INTO users."OPERATION"(description) VALUES ('CREATE');

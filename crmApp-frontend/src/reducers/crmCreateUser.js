@@ -2,23 +2,23 @@ import {
     CHANGE_FORM_CREATEUSER,
     UPDATE_OPERATIONS,
     UPDATE_DEFAULTPERMS,
-    CHANGE_USERPERMS
+    CHANGE_USERPERMS,
+	UPDATE_ROLES
 }  from '../actions/crmCreateUser';
-var update = require ('react-addons-update');
+
 
 let initialState={
     formState:{
-        operations: [],
-        role: 'employe',
+        role: 'Employe',
         nom: '',
         login: '',
         mdpProv: '',
         mail:'',
         defaultPerms:[],
-        userPerms:[]
+        userPerms:[],
+        roles:[],
     },
     errors:'',
-
 };
 
 export default function reducer (state = initialState, action){
@@ -34,7 +34,8 @@ export default function reducer (state = initialState, action){
             let newUserPerms = [...state.formState.userPerms];
             newUserPerms[action.position].level = action.newValue;
             return {...state, formState:{...state.formState, userPerms: newUserPerms}, error:''};
-
+        case UPDATE_ROLES:
+            return {...state, formState:{...state.formState, roles:action.rolesList}, error:''};
         default:
             return state;
     }

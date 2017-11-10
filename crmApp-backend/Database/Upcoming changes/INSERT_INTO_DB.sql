@@ -16,6 +16,7 @@ INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
 INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_All');
 INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_Limited');
 INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
+INSERT INTO users."ROLEADM"(description) VALUES ('Employe');
 
 ---OPERATION---
 INSERT INTO users."OPERATION"(description) VALUES ('CREATE');
