@@ -1,6 +1,6 @@
 import {eventChannel} from 'redux-saga';
 import {take, call, fork, put} from 'redux-saga/effects';
-import {SUBMIT_USER, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser} from '../actions/crmCreateUser';
+import {SUBMIT_USER, GET_OPERATIONS, GET_DEFAULTPERMS, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser, updateOperations, updateDefaultPerms} from '../actions/crmCreateUser';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
@@ -16,10 +16,9 @@ export function * createUser (){
             login,
             mdpProv,
             mail,
-            permissionsUser
+            userPerms
         } = user.newUser;
 
-        console.log(role + nom + login + mdpProv + mail + permissionsUser[0] + permissionsUser[1]);
 
         //communication avec server
         var server = "http://localhost:3002/createUser";
@@ -30,7 +29,7 @@ export function * createUser (){
             login: login,
             mdpProv: mdpProv,
             mail: mail,
-            permissionsUser: permissionsUser
+            userPerms: userPerms
 
         })
             .then(function (response) {
@@ -47,6 +46,54 @@ export function * createUser (){
     }
 }
 
+export function * getOperations(){
+    while(true){
+        console.log("on passe par getOperations");
+        yield take(GET_OPERATIONS);
+
+
+        var server = "http://localhost:3002/getOperations";
+
+        axios.get(server)
+            .then(function(response){
+                if(!!response.data.status && response.data.status === "success"){
+                    store.dispatch(updateOperations(response.data.operations));
+                } else {
+                    alert("Erreur lors du chargement des operations");
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+    }
+}
+
+export function * getDefaultPerms(){
+    while(true){
+
+        yield take(GET_DEFAULTPERMS);
+        console.log("on passe par getDefaultPerms middleware");
+
+        var server = "http://localhost:3002/getDefaultPerms";
+
+        axios.get(server)
+            .then(function(response){
+                console.log(response.data);
+                if(!!response.data.status && response.data.status === "success"){
+                    console.log(response.data.defaultPerms);
+                    store.dispatch(updateDefaultPerms(response.data.defaultPerms));
+                } else {
+                    alert("Erreur lors du chargement des operations");
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+    }
+}
+
 export function * gestionUserFlow () {
     yield fork (createUser);
+    yield fork (getOperations);
+    yield fork (getDefaultPerms);
 }

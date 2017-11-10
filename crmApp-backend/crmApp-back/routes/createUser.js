@@ -134,6 +134,36 @@ router.post('/createUser', function(req, res) {
     console.log("end post /createUser");
 });
 
+router.get('/getOperations', function(req,res){
+	console.log("On passe dans /getOperations - le backend");
+
+    res.send({
+        status : 'success',
+		operations: [{id:0, label:"read", value:1},{id:1, label:"read + write",value:3}, {id:2, label:"read + write + create", value:7}]
+    });
+});
+
+router.get('/getDefaultPerms', function(req,res){
+    console.log("On passe dans /getDefaultPerms - le backend");
+
+    res.send({
+        status : 'success',
+        defaultPerms: [
+            {role:"Utilisateur_All",
+                droits: [{id: 0, entite: "Gestion des contrats - ACollectives", level:3},
+                    {id:1, entite: "Gestion des fournisseurs", level:7},
+                    {id:2, entite: "Gestion des clients - ACollectives", level:7}]
+            },
+            {
+                role:"Utilisateur_Limited",
+                droits: [{id:0, entite: "Gestion des contrats - ACollectives", level:7},
+                    {id: 1, entite: "Gestion des fournisseurs", level:7},
+                    {id: 2, entite: "Gestion des clients - ACollectives", level:7}]
+            }
+        ]
+    });
+});
+
 function createEmployee(userInformations, userCreated, res) {
 	 var addPersonne = squel.insert()
 		.into('public."PERSONNE"')

@@ -2,15 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {FormCreateUser} from '../components/FormCreateUser.js';
 import '../style/CreationUser.css';
-import {changeFormCreateUser, submitUser} from "../actions/crmCreateUser";
+import {changeFormCreateUser, submitUser, getOperations, getDefaultPerms, updateUserPerms} from "../actions/crmCreateUser";
+import CreateUserPermissions from './CreateUserPermissions';
+
 
 class CreateUser extends React.Component{
 
     constructor(props){
         super(props);
+        this.props.getOperations();
+        this.props.getDefaultPerms();
+
 
     }
-
 
 
     render(){
@@ -19,6 +23,10 @@ class CreateUser extends React.Component{
             <FormCreateUser formState={formState}
                             changeForm={this.props.changeForm}
                             submitUser={this.props.submitUser}/>
+            <CreateUserPermissions formState={formState}
+                                   changeForm={this.props.changeForm}
+                                    updateUserPerms={this.props.updateUserPerms}/>
+
 
         </div>;
     }
@@ -40,6 +48,15 @@ const  mapDispatchToProps = (dispatch) => {
         },
         submitUser : (formData) => {
             dispatch(submitUser(formData))
+        },
+        getOperations: () =>{
+            dispatch(getOperations())
+        },
+        getDefaultPerms: () => {
+            dispatch(getDefaultPerms())
+        },
+        updateUserPerms: (position, newValue) =>{
+            dispatch(updateUserPerms(position, newValue))
         }
     }
 }
