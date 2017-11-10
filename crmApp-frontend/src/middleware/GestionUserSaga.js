@@ -22,8 +22,6 @@ export function * createUser (){
             userPerms
         } = user.newUser;
 
-        console.log(role + nom + login + mdpProv + mail + permissionsUser[0] + permissionsUser[1]);
-        
         let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
 
         //communication avec server
