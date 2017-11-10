@@ -119,7 +119,7 @@ class RechercheComponent extends Component {
 				<option value="oui">Prospect</option>
 				<option value="non"> Non prospect </option>
 				</select>
-					<input type="reset" value="Reset"  onClick= {this._reset}/>
+					<input type="reset" value="Reset" id="reset"  onClick= {this._reset}/>
 					</form>
 		);
 	}
