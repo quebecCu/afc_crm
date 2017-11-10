@@ -18,13 +18,10 @@ class SearchCompSuppliers extends Component {
 	_reset() {
 //		e.preventDefault();
 		let newFormState={
-				nomEntreprise:'',
-				nomEmploye: '',
-				numeroPolice:'',
-				nomAssureur:'',
-				moisRenouvellement:'',
-				clientActif: 'actif',
-				statutProspect: 'false'
+				 nomEntreprise:'',
+			        nombreEmployes: '',
+			        nomContact: '',
+			        code: ''
 		};
 		let form = document.getElementById("formFournisseurs").elements;
 		this.props.changeForm(newFormState);
