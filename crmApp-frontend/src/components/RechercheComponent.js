@@ -13,6 +13,8 @@ class RechercheComponent extends Component {
 		this._reset = this._reset.bind(this);
 		this._changeMoisRenouvellement = this._changeMoisRenouvellement.bind(this);
 		this._filtre = this._filtre.bind(this);
+		this._sortTable = this._sortTable.bind(this);
+		
 	}
 	_changeNomEntreprise (event){
 		this._emitChange({...this.props.formState , nomEntreprise: event.target.value});
@@ -37,6 +39,7 @@ class RechercheComponent extends Component {
 		document.getElementById("selectedStatut").value = "";
 		document.getElementById("prospects").value = "";
 		this.props.changeFormColl(newFormState);
+		this._sortTable()
 		this._filtre ();
 	}
 	
@@ -93,13 +96,35 @@ class RechercheComponent extends Component {
 			} 
 		}
 	}
-
+	
+	_sortTable() {
+		  var table, rows, switching, i, x, y, shouldSwitch;
+		  table = document.getElementById("PageCollectivesClientsTable");
+		  switching = true;
+		  while (switching) {
+		    switching = false;
+		    rows = table.getElementsByTagName("TR");
+		    for (i = 1; i < (rows.length - 1); i++) {
+		      shouldSwitch = false;
+		      x = rows[i].getElementsByTagName("TD")[5];
+		      y = rows[i + 1].getElementsByTagName("TD")[5];
+		      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+		        shouldSwitch= true;
+		        break;
+		      }
+		    }
+		    if (shouldSwitch) {
+		      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		      switching = true;
+		    }
+		  }
+		}
 	_emitChange (newFormState){
 		this.props.changeFormColl(newFormState);
 	}
 
 	render() {
-
+				
 		return(
 				<form action="" id="recherche" className="container-fluid">
 				<input type="text" id ="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
