@@ -12,12 +12,14 @@ export class FormCreateUser extends React.Component {
 		this.onChangeMail = this.onChangeMail.bind(this);
 	}
 
+
+
+
 	onChangeRole(event) {
 		let role = event.target.value;
 		//quand on change le rôle, les permissions par défaut du rôle sélectionné s'attribuent aux userPerms
 		let idRole;//id du role sélectionné dans la table des permissions par défaut
 		for (let i = 0; i < this.props.formState.defaultPerms.length; i++) {
-			console.log("les default perms? " + this.props.formState.defaultPerms[i].role)
 			if (role === this.props.formState.defaultPerms[i].role) {
 				idRole = i;
 			}

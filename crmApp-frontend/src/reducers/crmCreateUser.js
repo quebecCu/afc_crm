@@ -8,13 +8,16 @@ import {
 
 let initialState={
     formState:{
+    	operations:[],
         role: 'Utilisateur_All',
         nom: '',
         login: '',
         mdpProv: '',
         mail:'',
         defaultPerms:[],
-        userPerms:[],
+        userPerms:[{id: 0, entite: "Gestion des contrats - ACollectives", level:3},
+			{id:1, entite: "Gestion des fournisseurs", level:7},
+			{id:2, entite: "Gestion des clients - ACollectives", level:7}],
         roles:[],
     },
     errors:'',
@@ -32,11 +35,8 @@ export default function reducer (state = initialState, action){
                 defaultPerms: action.defaultPerms}, error: ''};
         case CHANGE_USER_PERMS:
             let newUserPerms = [...state.formState.userPerms];
-			console.log("0", state.formState);
             newUserPerms[action.position].level = action.newValue;
-			console.log("1", state.formState);
 			let test = {...state, formState:{...state.formState, userPerms: newUserPerms}, error:''};
-			console.log("2", state.formState);
             return test;
         case UPDATE_ROLES:
             return {...state, formState:{...state.formState, roles:action.rolesList}, error:''};

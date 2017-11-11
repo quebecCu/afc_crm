@@ -8,13 +8,13 @@ export class DisplayOnePermission extends React.Component{
     }
 
 
-   /* componentDidMount(){
+    componentDidUpdate(){
         this.props.formState.operations.map(element =>{
             if(this.props.level === element.value){
                 document.getElementById(element.label + this.props.id).checked = true;
             }
         })
-    }*/
+    }
 
 
 
@@ -34,7 +34,11 @@ export class DisplayOnePermission extends React.Component{
             <div>Droit de
                 <form>
                 {this.props.formState.operations.map(element => {
-                    return (<div key={element.label + element.id}><input type="radio" name="droit" value={element.value} id={element.label + this.props.id} onClick={this._handleClick}/> {element.label}<br /></div>);
+                    return (
+                    	<div key={element.label + element.id}>
+							<input type="radio" name="droit" value={element.value} id={element.label + this.props.id} onClick={this._handleClick}/> {element.label}
+							<br />
+						</div>);
                 })
                 }
                 </form>
