@@ -2,7 +2,7 @@ import {
     CHANGE_FORM_CREATEUSER,
     UPDATE_OPERATIONS,
     UPDATE_DEFAULTPERMS,
-    CHANGE_USERPERMS,
+	CHANGE_USER_PERMS,
 	UPDATE_ROLES
 }  from '../actions/crmCreateUser';
 
@@ -30,10 +30,14 @@ export default function reducer (state = initialState, action){
         case UPDATE_DEFAULTPERMS:
             return {...state, formState:{...state.formState,
                 defaultPerms: action.defaultPerms}, error: ''};
-        case CHANGE_USERPERMS:
+        case CHANGE_USER_PERMS:
             let newUserPerms = [...state.formState.userPerms];
+			console.log("0", state.formState);
             newUserPerms[action.position].level = action.newValue;
-            return {...state, formState:{...state.formState, userPerms: newUserPerms}, error:''};
+			console.log("1", state.formState);
+			let test = {...state, formState:{...state.formState, userPerms: newUserPerms}, error:''};
+			console.log("2", state.formState);
+            return test;
         case UPDATE_ROLES:
             return {...state, formState:{...state.formState, roles:action.rolesList}, error:''};
         default:
