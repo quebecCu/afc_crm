@@ -66,7 +66,7 @@ router.post('/ResetPassword', function (req, res) {
  * @param resetToken
  * @returns {boolean}
  */
-async function isTokenValid(resetToken) {
+/*async function isTokenValid(resetToken) {
 	// True code
 	// TODO: Make a request for the database
 	// return someting;
@@ -75,7 +75,7 @@ async function isTokenValid(resetToken) {
 	// This is a STUB, remove when the request is working. This STUB always return true
 	console.log("DEBUG|resetPassword|isTokenValid|STUB");
 	return true;
-}
+}*/
 
 /**
  * Send a response to the POST

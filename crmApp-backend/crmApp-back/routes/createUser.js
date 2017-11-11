@@ -11,7 +11,6 @@ var {hashSync , genSaltSync} = require ('bcryptjs');
 var bcrypt = require ('bcryptjs');
 var security = require('../security/security');
 
-/* GET home page. */
 router.post('/createUser', function(req, res) {
 	/*security.checkRights(1, "Gestion des utilisateurs", 7)
     .then(() => {*/
@@ -152,6 +151,127 @@ router.post('/createUser', function(req, res) {
     });*/  
 });
 
+
+router.post('/updateUser', function(req, res) {
+	/*security.checkRights(1, "Gestion des utilisateurs", 3)
+    .then(() => {*/
+	    	var user={
+	    		id: req.body.id,
+	        role: req.body.role,
+	        nom: req.body.nom,
+	        mail: req.body.mail,
+	        permissionsUser: req.body.userPerms,
+	    };
+	    
+	    console.log(user);
+	
+	    var getIdRole = squel.select()
+	    .from('users."ROLEADM"')
+	    .where("description ='" + user.role + "'");
+	
+	    var getOp = squel.select()
+	    .from('users."OPERATION"');
+	
+	    var getEntities = squel.select()
+	    .from('users."ENTITE"');
+	
+	    function findUpdate(op) {
+	    	  return op.description === 'UPDATE';
+	    }
+	
+	    function findCreate(op) {
+	    	  return op.description === 'CREATE';
+	    }
+	
+	    function findRead(op) {
+	    	  return op.description === 'READ';
+	    }
+	
+	    function findEnt(desc, ent) {
+	    	  return ent.description === desc;
+	    }
+	    
+    		db.multi(getIdRole.toString() + ";" + getOp.toString() + ";" + getEntities.toString())
+    		.then(data => {
+    			var idRole = data[0][0].idrole;
+    			let updateObject = data[1].find(findUpdate);
+    			let readObject = data[1].find(findRead);
+    			let createObject = data[1].find(findCreate);
+    			var newRights = [];
+    			var right;
+    			
+    			var updateUser = squel.update()
+    			.table('users."UTILISATEUR"')
+    			.set("mail", user.mail)
+    			.set("name", user.nom)
+    			.set("idrole", idRole)
+    			.where("iduser = " + user.id)
+    			.returning('*');
+    			
+    			db.tx(function (t) {
+    				return t.one(updateUser.toString())
+					.then(userUpdated => {	    	
+		    		    		user.permissionsUser.forEach(function(element) {
+		    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
+		    			    		if(element.level >= 1){
+		    			    			right = { iduser: userUpdated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
+		    			    			newRights.push(right);
+		    			    			if(element.level >= 3){
+		    			    				right = { iduser: userUpdated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
+		    			    				newRights.push(right);
+		    			    				if(element.level === 7){
+		    			    					right = { iduser: userUpdated.iduser, identite: entityObject.identite, idoperation: updateObject.idoperation };
+		    			    					newRights.push(right);
+		    			    				}
+		    			    			}
+		    			    		}
+		    			    	});
+		    		    		var deleteRights = squel.delete()
+		    			    	.from('users."PERMISSIONUTIL_GLOB"')
+		    			    	.where("iduser = " + user.id);
+		    		    		
+		    			    	var addRights = squel.insert()
+		    			    	.into('users."PERMISSIONUTIL_GLOB"')
+		    			    	.setFieldsRows(newRights)
+		    			    	.returning('*')
+		    			    	.toParam();
+		    			    	console.log(deleteRights.toString())
+		    			    return t.none(deleteRights.toString())
+		    			        .then(() => {
+		    			        		return t.any(addRights)
+				    			        .then(data => {
+				    			        		return updateEmployee (user, t, res);
+				    			        });
+		    			        });
+		    		    })
+	    		})
+	    		.then(data => {
+    				res.send({ 
+		    			status : 'success',
+		    			message : null
+		    		}); 
+    	        })
+    	        .catch(error => {
+    	        		res.send({ 
+		    			status : 'fail',
+		    			message : error.toString()
+		    		}); 
+    	        });
+    		})
+    		.catch(function (err) {
+	    		  console.log(err);
+	    	});
+	   
+	    	console.log("end post /createUser");
+   /* })
+    .catch(error => {
+	    	res.send({ 
+				status : 'fail',
+				message : 'Les droits accordés à l\'utilisateur ne sont pas suffisants'
+		});
+    });*/  
+});
+
 router.get('/getOperations', function(req,res){
 	console.log("On passe dans /getOperations - le backend");
 
@@ -223,12 +343,31 @@ function createEmployee(userInformations, userCreated, t, res) {
     		
     		return t.one(addEmployee.toString())
     	    .then(employeeCreated => {
-	    	    	res.send({ 
-		    			status : 'success',
-		    			message : null
-		    		});
 	    })
 	})
+}
+
+function updateEmployee(userInformations, t, res) {
+	var getPersonne = squel.select()
+	.from('public."PERSONNE"', "pers")
+	.join('users."EMPLOYE_INT"', "emp", "pers.idpersonne = emp.idpersonne")
+	.join('users."UTILISATEUR"', "util", "util.iduser = emp.iduser")
+	.where("util.iduser = " + userInformations.id);	
+	 
+	return t.one	(getPersonne.toString()) 
+	.then(personExisting => {
+		 var updatePersonne = squel.update()
+			.table('public."PERSONNE"')
+			.set("nom", userInformations.nom.split(" ")[1])
+			.set("prenom", userInformations.nom.split(" ")[0])
+			.set("titre", "Mr")
+			.where("idpersonne = " + personExisting.idpersonne)
+			.returning('*');	
+		return t.one(updatePersonne.toString())
+		   .then(personUpdated => {
+			})	
+	})
+	
 }
 
 module.exports = router;
