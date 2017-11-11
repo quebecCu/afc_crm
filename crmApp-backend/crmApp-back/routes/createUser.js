@@ -314,6 +314,7 @@ router.get('/getDefaultPerms', function(req,res){
 });
 
 router.get('/getRoles', function(req, res) {
+
     console.log('getting roles from database');
 
     db.query(squel.select()

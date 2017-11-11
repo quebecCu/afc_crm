@@ -81,9 +81,7 @@ export function * getDefaultPerms(){
 
         axios.get(server)
             .then(function(response){
-                console.log(response.data);
                 if(!!response.data.status && response.data.status === "success"){
-                    console.log(response.data.defaultPerms);
                     store.dispatch(updateDefaultPerms(response.data.defaultPerms));
                 } else {
                     alert("Erreur lors du chargement des operations");
