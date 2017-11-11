@@ -90,14 +90,14 @@ router.post('/createUser', function(req, res) {
 			    		    		user.permissionsUser.forEach(function(element) {
 			    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
 			    			    		if(element.level >= 1){
-			    			    			right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
+			    			    			right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
 			    			    			newRights.push(right);
 			    			    			if(element.level >= 3){
-			    			    				right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
+			    			    				right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: updateObject.idoperation };	
 			    			    				newRights.push(right);
 			    			    				if(element.level === 7){
-			    			    					right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: updateObject.idoperation };
-			    			    					newRights.push(right);
+			    			    					right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
+					    			    			newRights.push(right);
 			    			    				}
 			    			    			}
 			    			    		}
@@ -114,6 +114,7 @@ router.post('/createUser', function(req, res) {
 			    		    })
 		    		})
 		    		.then(data => {
+		    			res.status(200);
 	    				res.send({ 
 			    			status : 'success',
 			    			message : null
@@ -246,6 +247,7 @@ router.post('/updateUser', function(req, res) {
 		    		    })
 	    		})
 	    		.then(data => {
+	    			res.status(200);
     				res.send({ 
 		    			status : 'success',
 		    			message : null
