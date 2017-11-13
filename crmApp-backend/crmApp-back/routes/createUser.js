@@ -17,6 +17,7 @@ router.post('/createUser', function(req, res) {
 	    	var user={
 	        role: req.body.role,
 	        nom: req.body.nom,
+	        prenom: req.body.prenom,
 	        login: req.body.login,
 	        mdpProv: req.body.mdpProv,
 	        mail: req.body.mail,
@@ -60,6 +61,7 @@ router.post('/createUser', function(req, res) {
 	    	if(existUser.length === 0) {
 	    		db.multi(getIdRole.toString() + ";" + getOp.toString() + ";" + getEntities.toString())
 	    		.then(data => {
+	    			console.log(data);
 	    			var idRole = data[0][0].idrole;
 	    			let updateObject = data[1].find(findUpdate);
 	    			let readObject = data[1].find(findRead);
@@ -77,7 +79,6 @@ router.post('/createUser', function(req, res) {
 	    			.set("login", user.login)
 	    			.set("password", hash)
 	    			.set("mail", user.mail)
-	    			.set("name", user.nom)
 	    			.set("idrole", idRole)
 	    			.returning('*');
 
@@ -160,6 +161,7 @@ router.post('/updateUser', function(req, res) {
 	    		id: req.body.id,
 	        role: req.body.role,
 	        nom: req.body.nom,
+	        prenom: req.body.prenom,
 	        mail: req.body.mail,
 	        permissionsUser: req.body.userPerms,
 	    };
@@ -204,7 +206,6 @@ router.post('/updateUser', function(req, res) {
     			var updateUser = squel.update()
     			.table('users."UTILISATEUR"')
     			.set("mail", user.mail)
-    			.set("name", user.nom)
     			.set("idrole", idRole)
     			.where("iduser = " + user.id)
     			.returning('*');
@@ -330,8 +331,8 @@ router.get('/getRoles', function(req, res) {
 function createEmployee(userInformations, userCreated, t, res) {
 	 var addPersonne = squel.insert()
 		.into('public."PERSONNE"')
-		.set("nom", userInformations.nom.split(" ")[1])
-		.set("prenom", userInformations.nom.split(" ")[0])
+		.set("nom", userInformations.nom)
+		.set("prenom", userInformations.prenom)
 		.set("titre", "Mr")
 		.returning('*');
 
@@ -360,8 +361,8 @@ function updateEmployee(userInformations, t, res) {
 	.then(personExisting => {
 		 var updatePersonne = squel.update()
 			.table('public."PERSONNE"')
-			.set("nom", userInformations.nom.split(" ")[1])
-			.set("prenom", userInformations.nom.split(" ")[0])
+			.set("nom", userInformations.nom)
+			.set("prenom", userInformations.prenom)
 			.set("titre", "Mr")
 			.where("idpersonne = " + personExisting.idpersonne)
 			.returning('*');

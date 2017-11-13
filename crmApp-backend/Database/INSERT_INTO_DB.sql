@@ -17,8 +17,9 @@ SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
 INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
 INSERT INTO users."ROLEADM"(description) VALUES ('Associé');
 INSERT INTO users."ROLEADM"(description) VALUES ('Consultant');
+INSERT INTO users."ROLEADM"(description) VALUES ('Employé');
 INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
-INSERT INTO users."ROLEADM"(description) VALUES ('Employe');
+
 
 ---OPERATION---
 INSERT INTO users."OPERATION"(description) VALUES ('CREATE');
@@ -94,10 +95,10 @@ INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4
 
 
 --BEGINDATATEST
-INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('alain', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 'Ia Matest', 1);
-INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('azizou', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'azizou@gmail.com', 'Aziz Oukil', 2);
-INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('maxime', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 'Maxime Atito',  3);
-INSERT INTO users."UTILISATEUR"(login, password, mail, name, idrole) VALUES ('jean_neymar', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 'iamatest',  4);
+INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('alain', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 1);
+INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('azizou', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'azizou@gmail.com', 2);
+INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('maxime', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 3);
+INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('jean_neymar', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 4);
 
 --ADMIN RIGHTS-- (alain)
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 1);
@@ -157,6 +158,18 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3
 
 INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Atito', 'Maxime', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (3, 3);
+--ENDDATATEST
+
+--Employé-- (jean)
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 1, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 4, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 5, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 6, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 7, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 8, 1);
+
+INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Neymar', 'Jean', 'Mr');
+INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 --ENDDATATEST
 
 -----end user schema -----

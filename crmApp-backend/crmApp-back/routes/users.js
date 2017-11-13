@@ -17,14 +17,19 @@ let getUserById = (id) => {
         .from('users."UTILISATEUR"', "util")
         .field('util.iduser')
         .field('util.mail')
-        .field('util.name')
+        .field('util.login')
+        .field('pers.nom')
+        .field('pers.prenom')
         .field('op.description',"opdesc")
+        .field('ent.identite',"entid")
         .field('ent.description',"entdesc")
         .field('role.description',"roledesc")
         	.join('users."PERMISSIONUTIL_GLOB"', "perm", "perm.iduser = util.iduser")
         	.join('users."OPERATION"', "op", "op.idoperation = perm.idoperation")
         	.join('users."ROLEADM"', "role", "util.idrole = role.idrole")
         	.join('users."ENTITE"', "ent", "ent.identite = perm.identite")
+        	.join('users."EMPLOYE_INT"', "emp", "emp.iduser = util.iduser")
+        	.join('public."PERSONNE"', "pers", "pers.idpersonne = emp.idpersonne")
         	.where("util.iduser = " + id)
         .toString();
 };
@@ -82,9 +87,11 @@ function buildPermissions (user) {
 	}
 	var permissions = [];
 	var level;
+	var entid;
 	console.log(groups);
 	for (var groupName in groups) {
 		level = 0;
+		entid = groups[groupName][0].entid;
 		groups[groupName].forEach(function(op) {
 	    		switch(op.opdesc) {
 		    		case "READ" :
@@ -100,13 +107,15 @@ function buildPermissions (user) {
 		    			break;
 	    		}
 		});
-		permissions.push({group: groupName, right: level});
+		permissions.push({id : entid, group: groupName, level: level});
 	}
 
 	return {
 		id : user[0].iduser,
+		login : user[0].login,
 		mail : user[0].mail,
-		name : user[0].name,
+		name : user[0].nom,
+		lastname : user[0].prenom,
 		role : user[0].roledesc,
 		userPerms : permissions
 		}
