@@ -1,5 +1,4 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
+import {take, fork} from 'redux-saga/effects';
 
 import {
 	CHANGE_FORM_CREATEUSER, GET_DEFAULTPERMS, GET_OPERATIONS, SUBMIT_USER, GET_ROLES,

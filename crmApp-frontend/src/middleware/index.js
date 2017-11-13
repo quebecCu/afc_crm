@@ -5,9 +5,10 @@ import {SearchCollectiveFlow} from './CollectiveSaga';
 import {all} from 'redux-saga/effects';
 import {FournisseursFlow} from "./FournisseurSaga";
 import{gestionUserFlow} from "./GestionUserSaga";
+import {GridFlow} from './GridLayoutSaga'
 
 
 export default function * root(){
-	
-	yield all ([AuthFlow(), ResetEmailFlow(), SearchCollectiveFlow(), FournisseursFlow(), ResetPasswordFlow(), gestionUserFlow()])
+
+	yield all ([AuthFlow(), ResetEmailFlow(), SearchCollectiveFlow(), FournisseursFlow(), ResetPasswordFlow(), gestionUserFlow(), GridFlow()])
 }
