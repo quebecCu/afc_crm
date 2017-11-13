@@ -1,9 +1,9 @@
 'use strict';
 
-const express = require('express');
-const router = express.Router();
 const CryptoJS = require("crypto-js");
 const db = require('../models');
+const express = require('express');
+const router = express.Router();
 
 /**
  * Route serving password reset
@@ -13,23 +13,21 @@ const db = require('../models');
  * @SuccessResponse { status: 'success', message: [string]}
  * @ErrorResponse { status: 'fail', message: [string] }
  * **/
-router.post('/ResetPassword', function (req, res) {
+router.post('/ResetPassword', async function (req, res) {
 
 	const newPwd = req.body.newPassword;
 	const newPwdConf = req.body.confirmPassword;
 	const resetToken = req.body.resetToken;
 
-	// Make a few check before working on the request
-
 	// Check all the params are NOT undefined
 	if (!(!!newPwd && !!newPwdConf && !!resetToken)) {
-		sendResponse(res, "fail", "DEBUG|resetPassword|atLeastOneParamIsUndefined");
+		sendResponse("DEBUG|resetPassword|atLeastOneParamIsUndefined", res, "fail");
 		return;
 	}
 
 	// Check if the token is NOT valid
-	if (!isTokenValid(req.body.resetToken)) {
-		sendResponse(res, "fail", "DEBUG|resetPassword|theTokenIsNotValid");
+	if (await !isTokenValid(req.body.resetToken)) {
+		sendResponse("DEBUG|resetPassword|theTokenIsNotValid", res, "fail");
 		return;
 	}
 
@@ -43,7 +41,7 @@ router.post('/ResetPassword', function (req, res) {
 
 	// Check if the password match
 	if (pwdText !== pwdTextConf) {
-		sendResponse(res, "fail", "DEBUG|resetPassword|passwordDoesn'tMatches");
+		sendResponse("DEBUG|resetPassword|passwordDoesn'tMatches", res, "fail");
 		return;
 	}
 
@@ -58,7 +56,7 @@ router.post('/ResetPassword', function (req, res) {
 	// This is a STUB, remove when the request is working
 	console.log('DEBUG|resetPassword|passwordMatch|STUB');
 
-	sendResponse(res, 'success', 'DEBUG|resetPassword|passwordReset|STUB');
+	sendResponse('DEBUG|resetPassword|passwordReset|STUB', res, 'success');
 });
 
 /**
@@ -66,24 +64,24 @@ router.post('/ResetPassword', function (req, res) {
  * @param resetToken
  * @returns {boolean}
  */
-/*async function isTokenValid(resetToken) {
+async function isTokenValid(resetToken) {
 	// True code
 	// TODO: Make a request for the database
-	// return someting;
+	// return aPromise;
 
 	// STUB
 	// This is a STUB, remove when the request is working. This STUB always return true
 	console.log("DEBUG|resetPassword|isTokenValid|STUB");
 	return true;
-}*/
+}
 
 /**
  * Send a response to the POST
+ * @param message
  * @param response
  * @param status
- * @param message
  */
-function sendResponse(response, status, message) {
+function sendResponse(message, response, status) {
 	response.send({
 		status: status,
 		message: message
