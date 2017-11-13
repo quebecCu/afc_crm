@@ -22,9 +22,9 @@ INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
 
 
 ---OPERATION---
-INSERT INTO users."OPERATION"(description) VALUES ('CREATE');
 INSERT INTO users."OPERATION"(description) VALUES ('READ');
 INSERT INTO users."OPERATION"(description) VALUES ('UPDATE');
+INSERT INTO users."OPERATION"(description) VALUES ('CREATE');
 INSERT INTO users."OPERATION"(description) VALUES ('DELETE');
 
 ---MENU---
@@ -138,35 +138,32 @@ INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Matest', 'Ia', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (1, 1);
 
 --User_All-- (azizou)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 1, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 5, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 4, 2);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 4, 3);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 6, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 6, 2);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 6, 3);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 8, 1);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 2);
+INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 3);
 
 INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Oukil', 'Aziz', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (2, 2);
 
 --User_limited-- (maxime)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 1, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 5, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 7, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 8, 1);
 
 INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Atito', 'Maxime', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (3, 3);
 --ENDDATATEST
 
 --Employé-- (jean)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 1, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 5, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 7, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 8, 1);
 
 INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Neymar', 'Jean', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);

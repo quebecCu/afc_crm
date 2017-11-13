@@ -66,7 +66,7 @@ router.get('/list', function (req, res) {
 	console.log('end GET /listUsers');
 });
 
-router.get('/:id', function (req, res) {
+router.get('/user/:id', function (req, res) {
     console.log('route GET /userById');
     let id = req.params.id;
     db.any(getUserById(id))
@@ -429,7 +429,7 @@ router.get('/getRoles', function(req, res) {
     db.query(squel.select()
         .from('users."ROLEADM"')
         .field('description')
-        .where("description like 'Utilisateur%' OR description like 'Employe'")
+        .where("description <> 'Administrateur'")
         .toString())
         .then(roles => {
 
