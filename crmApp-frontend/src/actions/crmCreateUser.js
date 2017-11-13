@@ -4,7 +4,7 @@ export const GET_OPERATIONS = 'GET_OPERATIONS';
 export const UPDATE_OPERATIONS = 'UPDATE_OPERATIONS';
 export const GET_DEFAULTPERMS = 'GET_DEFAULTPERMS';
 export const UPDATE_DEFAULTPERMS = 'UPDATE_DEFAULTPERMS';
-export const CHANGE_USERPERMS = 'CHANGE_USER_PERMS';
+export const CHANGE_USER_PERMS = 'CHANGE_USER_PERMS';
 export const GET_ROLES = 'GET_ROLES';
 export const UPDATE_ROLES = 'UPDATE_ROLES';
 
@@ -33,7 +33,7 @@ export function updateDefaultPerms(defaultPerms){
 }
 
 export function updateUserPerms(position, newValue){
-    return {type: CHANGE_USERPERMS, position, newValue}
+    return {type: CHANGE_USER_PERMS, position, newValue}
 }
 
 export function getRoles() {

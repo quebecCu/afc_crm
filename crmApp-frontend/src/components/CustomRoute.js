@@ -5,7 +5,7 @@ import {Redirect, Route} from "react-router-dom";
 
 function checkAuthRouter() {
     let { loggedIn } = store.getState().crmLogin;
-    //loggedIn =  true;
+  //  loggedIn =  true;
     return loggedIn
 }
 

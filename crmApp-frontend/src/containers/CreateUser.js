@@ -14,7 +14,12 @@ class CreateUser extends React.Component{
         this.props.getOperations();
         this.props.getDefaultPerms();
         this.props.getRoles();
+        this.handleClick = this.handleClick.bind(this);
     }
+
+	handleClick(event){
+		this.props.submitUser(this.props.formState);
+	}
 
     render() {
         let {formState} = this.props.crmCreateUser;
@@ -25,6 +30,7 @@ class CreateUser extends React.Component{
             <CreateUserPermissions formState={formState}
                                    changeForm={this.props.changeForm}
                                     updateUserPerms={this.props.updateUserPerms}/>
+			<button onClick={this.handleClick}>Créer l'utilisateur</button>
         </div>;
     }
 }

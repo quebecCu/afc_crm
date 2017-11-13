@@ -4,7 +4,7 @@ import {
     Switch
 } from 'react-router-dom'
 import LoginPage from "./containers/LoginPage";
-//import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./components/ErrorPage";
 import ResetPage from "./containers/ResetPage";
 import ResetPagePassword from "./containers/ResetPagePasswordContainer";
 import {store} from './store.js';
@@ -25,7 +25,7 @@ class App extends Component {
 						<PrivateRoute exact path="/Home" component={DashboardContainer} />
 						<PublicOnlyRoute exact path="/Reset" component={ResetPage} />
 						<PublicOnlyRoute exact path="/ResetPassword/:token" component={ResetPagePassword} />
-
+						<PublicOnlyRoute exact path="/404" component={ErrorPage} />
 
 					</Switch>
 				</ConnectedRouter>
@@ -33,7 +33,6 @@ class App extends Component {
         );
     }
 
-	/*<PublicOnlyRoute exact path="/404" component={ErrorPage} />*/
 }
 
 export default App;

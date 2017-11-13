@@ -35,7 +35,6 @@ class ListUsers extends React.Component{
             </thead>
 		</table>
 			<button onClick={this._handleClick}>Créer utilisateur</button>
-
         </div>;
     }
 }
