@@ -7,7 +7,6 @@ export class DisplayOnePermission extends React.Component{
         this._handleClick=this._handleClick.bind(this);
     }
 
-
     componentDidUpdate(){
         this.props.formState.operations.map(element =>{
             if(this.props.level === element.value){
@@ -15,8 +14,6 @@ export class DisplayOnePermission extends React.Component{
             }
         })
     }
-
-
 
     _handleClick(event){
         let position;
@@ -29,7 +26,6 @@ export class DisplayOnePermission extends React.Component{
     }
 
     render(){
-
         return (
             <div>Droit de
                 <form>
@@ -42,9 +38,8 @@ export class DisplayOnePermission extends React.Component{
                 })
                 }
                 </form>
-                sur la table {this.props.entite}
+                sur le module {this.props.entite}
 				</div>
-
         )
     }
 }
