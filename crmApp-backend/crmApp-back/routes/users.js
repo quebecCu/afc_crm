@@ -25,7 +25,7 @@ let getUserById = (id) => {
         	.join('users."OPERATION"', "op", "op.idoperation = perm.idoperation")
         	.join('users."ROLEADM"', "role", "util.idrole = role.idrole")
         	.join('users."ENTITE"', "ent", "ent.identite = perm.identite")
-        	.where("util.iduser = " + id)	
+        	.where("util.iduser = " + id)
         .toString();
 };
 
@@ -33,8 +33,8 @@ const getAllUsers = () =>
     squel.select()
         .from('users."UTILISATEUR"', 'u')
         .left_join('users."ROLEADM"', 'r', 'u.idrole = r.idrole')
+		.order('iduser')
         .toString();
-
 
 router.get('/listUsers', function (req, res) {
     console.log('route GET /listUsers');
@@ -43,13 +43,15 @@ router.get('/listUsers', function (req, res) {
         .then(allUsers => {
 
             res.send({
+				status: 'success',
                 users : allUsers
             });
-            res.status(200);
         })
         .catch(error => {
             console.log('ERROR:', error);
         })
+
+	console.log('end GET /listUsers');
 });
 
 router.get('/id', function (req, res) {
@@ -62,7 +64,7 @@ router.get('/id', function (req, res) {
             res.send({
             	   status : 'success',
                message : resp
-            }); 
+            });
         })
         .catch(error => {
             console.log('ERROR:', error);
@@ -100,7 +102,7 @@ function buildPermissions (user) {
 		});
 		permissions.push({group: groupName, right: level});
 	}
-	
+
 	return {
 		id : user[0].iduser,
 		mail : user[0].mail,

@@ -1,17 +1,23 @@
 import {eventChannel} from 'redux-saga';
 import {take, call, fork, put} from 'redux-saga/effects';
 
-import {SUBMIT_USER, GET_OPERATIONS, GET_DEFAULTPERMS, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser, updateOperations, updateDefaultPerms, GET_ROLES, UPDATE_ROLES, updateRoles} from '../actions/crmCreateUser';
+import {
+	CHANGE_FORM_CREATEUSER, GET_DEFAULTPERMS, GET_OPERATIONS, SUBMIT_USER, GET_ROLES,
+	changeFormCreateUser, submitUser, updateDefaultPerms, updateOperations, updateRoles
+} from '../actions/crmCreateUser';
+
+import {
+	GET_LIST_USERS, updateUsers
+} from '../actions/crmUserManagement';
 
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
 import CryptoJS from 'crypto-js';
 
-export function * createUser (){
+export function * createUser () {
 
     while(true){
-
 
         let user = yield take(SUBMIT_USER);
         let{role,
@@ -49,11 +55,11 @@ export function * createUser (){
     }
 }
 
-export function * getOperations(){
+export function * getOperations() {
     while(true){
-        console.log("on passe par getOperations");
         yield take(GET_OPERATIONS);
 
+		console.log('loading operations from back-end');
 
         var server = "http://localhost:3002/getOperations";
 
@@ -71,7 +77,7 @@ export function * getOperations(){
     }
 }
 
-export function * getDefaultPerms(){
+export function * getDefaultPerms() {
     while(true){
 
         yield take(GET_DEFAULTPERMS);
@@ -116,9 +122,33 @@ export function * getRoles() {
     }
 }
 
+export function * getListUser() {
+	while(true) {
+		yield take(GET_LIST_USERS);
+
+		console.log('loading users from back-end');
+
+		var server = "http://localhost:3002/users/listUsers";
+
+		axios.get(server)
+			.then(function (response) {
+				if(!!response.data.status && response.data.status === "success") {
+					console.log('users list' + response.data.users);
+					store.dispatch(updateUsers(response.data.users));
+				} else {
+					alert ('Erreur lors du chargement des utilisateurs');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 export function * gestionUserFlow() {
     yield fork (createUser);
 	yield fork (getOperations);
 	yield fork (getDefaultPerms);
 	yield fork (getRoles);
+	yield fork (getListUser);
 }
