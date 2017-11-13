@@ -27,19 +27,26 @@ export class DisplayOnePermission extends React.Component{
 
     render(){
         return (
-            <div>Droit de
+        	<fieldset className=" container">
+				<div className="form-group row"><span className="col-2">Droit de</span>
                 <form>
                 {this.props.formState.operations.map(element => {
                     return (
-                    	<div key={element.label + element.id}>
-							<input type="radio" name="droit" value={element.value} id={element.label + this.props.id} onClick={this._handleClick}/> {element.label}
+                    	<div className="form-check text-left" key={element.label + element.id}>
+							<input className="form-check-input"
+								   type="radio"
+								   name="droit"
+								   value={element.value}
+								   id={element.label + this.props.id}
+								   onClick={this._handleClick}/> {element.label}
 							<br />
 						</div>);
                 })
                 }
                 </form>
-                sur le module {this.props.entite}
+					<span className="">sur le module {this.props.entite}</span>
 				</div>
+			</fieldset>
         )
     }
 }

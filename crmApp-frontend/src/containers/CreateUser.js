@@ -23,13 +23,13 @@ class CreateUser extends React.Component{
 
     render() {
         let {formState} = this.props.crmCreateUser;
-        return <div><h1>Créer utilisateur</h1>
+        return <div><div className="page-header" style={{paddingBottom:20}}><h1>Création d'un utilisateur</h1></div>
             <FormCreateUser formState={formState}
                             changeForm={this.props.changeForm}
                             submitUser={this.props.submitUser}/>
             <CreateUserPermissions formState={formState}
                                    changeForm={this.props.changeForm}
-                                    updateUserPerms={this.props.updateUserPerms}/>
+								   updateUserPerms={this.props.updateUserPerms}/>
 			<button onClick={this.handleClick}>Créer l'utilisateur</button>
         </div>;
     }

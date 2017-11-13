@@ -17,10 +17,16 @@ class CreateUserPermissions extends React.Component{
 									  formState={this.props.formState} changeForm={this.props.changeForm}
 									  updateUserPerms={this.props.updateUserPerms}/>
             )});
-        return (<div><span className="titre">Permissions :</span><br />
-           {
-               this.toReturn
-           }</div>) ;
+        return (<div className="container-fluid">
+			<div className="form-group row">
+				<label className="col-sm-3 col-form-label" >Permissions :</label><br />
+				<div className="col-9 text-center">
+					{
+					   this.toReturn
+				   }
+				</div>
+			</div>
+		</div>) ;
     }
 }
 

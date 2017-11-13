@@ -44,29 +44,59 @@ export class FormCreateUser extends React.Component {
 	whatToRender() {
 
 		return <div>
-			<span className="titre">Nom, prénom :</span>
-			<input
-				type="textField"
-				onChange={this.onChangeNom}
-				value={this.props.formState.nom}/>
+			<div className="form-group row"><label className="col-sm-3 col-form-label">Nom : </label>
+				<div className="col-sm-3"><input
+					type="textField"
+					className="form-control"
+					placeholder="Nom"
+					onChange={this.onChangeNom}
+					value={this.props.formState.nom}/>
+				</div>
+				<label className="col-sm-2 col-form-label">Prénom : </label>
+				<div className="col-sm-4"><input
+					type="textField"
+					className="form-control"
+					placeholder="Prénom"
+					onChange={this.onChangeNom}
+					value={this.props.formState.nom}/>
+				</div>
+			</div>
 			<br/>
-			<span className="titre">Login :</span>
-			<input
-				type="textField"
-				onChange={this.onChangeLogin}
-				value={this.props.formState.login}/>
+			<div className="form-group row">
+				<label className="col-sm-3 col-form-label">Login : </label>
+				<div className="col-sm-9">
+					<input
+						type="textField"
+						className="form-control"
+						placeholder="Login"
+						onChange={this.onChangeLogin}
+						value={this.props.formState.login}/>
+				</div>
+			</div>
 			<br/>
-			<span className="titre">Mot de passe provisoire :</span>
-			<input
-				type="textField"
-				onChange={this.onChangeMdp}
-				value={this.props.formState.mdpProv}/>
+			<div className="form-group row">
+				<label className="col-sm-3 col-form-label">Mot de passe provisoire : </label>
+				<div className="col-sm-9">
+				<input
+						type="textField"
+						className="form-control"
+						placeholder="Mot de passe provisoire que l'utilisateur changera"
+						onChange={this.onChangeMdp}
+						value={this.props.formState.mdpProv}/>
+				</div>
+			</div>
 			<br/>
-			<span className="titre">Mail :</span>
-			<input
-				type="textField"
-				onChange={this.onChangeMail}
-				value={this.props.formState.mail}/>
+			<div className="form-group row">
+				<label className="col-sm-3 col-form-label">Adresse e-mail : </label>
+				<div className="col-sm-9">
+					<input
+						type="textField"
+						className="form-control"
+						placeholder="adressemail@email.ca"
+						onChange={this.onChangeMail}
+						value={this.props.formState.mail}/>
+				</div>
+			</div>
 			<br/>
 		</div>;
 	}
@@ -74,24 +104,29 @@ export class FormCreateUser extends React.Component {
 	render() {
 		let fields = this.whatToRender();
 		return <div>
-			<form>
-				<span className="titre">Rôle :</span>
-				<select
-					name="role"
-					onChange={this.onChangeRole}>
-					{
-						this.props.formState.roles.map((element) => {
-							return (
-								<option
-									key={element.description}
-									value={element.description}>
-									{
-										element.description
-									}
-								</option>
-							);
-						})}
-				</select>
+			<form className="container">
+				<div className="form-group row">
+					<label className="col-sm-3 col-form-label">Rôle :</label>
+					<div className="col-sm-9">
+						<select
+							name="role"
+							className="form-control"
+							onChange={this.onChangeRole}>
+							{
+								this.props.formState.roles.map((element) => {
+									return (
+										<option
+											key={element.description}
+											value={element.description}>
+											{
+												element.description
+											}
+										</option>
+									);
+								})}
+						</select>
+					</div>
+				</div>
 				{fields}
 			</form>
 		</div>;
