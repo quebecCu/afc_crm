@@ -8,10 +8,9 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
-var resetPassword = require('./routes/ResetPassword');
+//var resetPassword = require('./routes/ResetPassword');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
-var createUser = require('./routes/createUser');
 var createCustomer = require ('./routes/createCustomer');
 var app = express();
 
@@ -40,8 +39,7 @@ app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
 app.use('/', fournisseurs);
-app.use('/', resetPassword);
-app.use('/', createUser);
+//app.use('/', resetPassword);
 app.use('/', createCustomer);
 
 //catch 404 and forward to error handler
