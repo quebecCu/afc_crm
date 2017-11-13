@@ -11,7 +11,6 @@ export class FormCreateUser extends React.Component{
         this.onChangeMdp =this.onChangeMdp.bind(this);
         this.onChangeMail=this.onChangeMail.bind(this);
         this.handleClick=this.handleClick.bind(this);
-
     }
 
     handleClick(event){

@@ -5,77 +5,25 @@ import ListUsers from '../components/ListUsers.js';
 import CreateUser from './CreateUser';
 import {changeViewUserManagement} from "../actions/crmUserManagement";
 
-class GestionUser extends React.Component{
+class GestionUser extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            users:[
-                {
-                    id: 0,
-                    login: "AProulx",
-                    nom:"Proulx",
-                    prenom:"Alain",
-                    role:"admin",
-                    droits:["lecture","ecriture"]
-                },
-                {
-                    id: 1,
-                    login: "MChantal",
-                    nom:"Mercier",
-                    prenom:"Chantal",
-                    role:"stagiaire",
-                    droits:["lecture"]
-                },
-                {
-                    id: 2,
-                    login: "PVlad",
-                    nom:"Poutine",
-                    prenom:"Vladimir",
-                    role:"admin",
-                    droits:["lecture","ecriture"]
-                }
+	constructor(props) {
+		super(props);
+	}
 
-            ]
-
-        }
-
-    }
-
-
-    render() {
-        let {view} = this.props.crmUserManagement;
-        return <div id="UserManagement">
-            <div className="view text-center">
-                {
-                    view === "" && <ListUsers handleClick={this.props.changeViewUserManagement}/>
-                }
-                {
-                    view === "CreateUser" && <CreateUser />
-                }
-            </div>
-        </div>
-
-    }
-    /*(<div><table className="user">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Nom prénom</th>
-                    <th>Rôle</th>
-                </tr>
-            </thead>
-            <ListUsers users={this.state.users}/>
-
-        </table>
-
-
-
-        <button onClick={(e) => store.dispatch(push("/PageAccueil/admin/createUser"))}>Créer utilisateur</button>
-
-        </div>);
-
-    }*/
+	render() {
+		let {view, formState} = this.props.crmUserManagement;
+		return <div id="UserManagement">
+			<div className="view text-center">
+				{
+					view === "" && <ListUsers formState={formState} handleClick={this.props.changeViewUserManagement}/>
+				}
+				{
+					view === "CreateUser" && <CreateUser/>
+				}
+			</div>
+		</div>
+	}
 }
 
 function mapStateToProps (state) {

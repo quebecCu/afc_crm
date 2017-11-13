@@ -5,7 +5,6 @@ class ListUsers extends React.Component{
     constructor(props){
         super(props);
         this._handleClick = this._handleClick.bind(this);
-
     }
 
    /* handleClick(element){
@@ -13,24 +12,6 @@ class ListUsers extends React.Component{
         store.dispatch(push('/PageAccueil/admin/'+element.id));
         console.log(element.id);
 
-
-    }*/
-//DOIT avoir lesinfos du backend pour l'affichage
-   /* componentWillMount(){
-        this.rows = (
-          <tbody>
-          {this.props.users.map(element => {
-              return(
-                  <tr key={element.id} onClick={()=>this.handleClick(element)}>
-                      <td>{element.login}</td>
-                      <td>{element.nom} {element.prenom}</td>
-                      <td>{element.role}</td>
-                  </tr>
-              );
-          })}
-          </tbody>
-
-        );
 
     }*/
 
@@ -41,19 +22,19 @@ class ListUsers extends React.Component{
 
     render(){
         return <div><table className="user">
-            <thead>
-            <tr>
-                <th>Username</th>
-                <th>Nom prénom</th>
-                <th>Rôle</th>
-            </tr>
+			<thead>
+			{this.props.formState.users.map(element => {
+				return(
+					<tr key={element.id} onClick={()=>this.handleClick(element)}>
+						<td>{element.login}</td>
+						<td>{element.nom} {element.prenom}</td>
+						<td>{element.role}</td>
+					</tr>
+				);
+			})}
             </thead>
-
-        </table>
-
-
-
-            <button onClick={this._handleClick}>Créer utilisateur</button>
+		</table>
+			<button onClick={this._handleClick}>Créer utilisateur</button>
 
         </div>;
     }

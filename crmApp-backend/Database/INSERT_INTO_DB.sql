@@ -15,9 +15,10 @@ SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
 
 ---ROLEADM---
 INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
-INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_All');
-INSERT INTO users."ROLEADM"(description) VALUES ('Utilisateur_Limited');
+INSERT INTO users."ROLEADM"(description) VALUES ('Associé');
+INSERT INTO users."ROLEADM"(description) VALUES ('Consultant');
 INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
+INSERT INTO users."ROLEADM"(description) VALUES ('Employe');
 
 ---OPERATION---
 INSERT INTO users."OPERATION"(description) VALUES ('CREATE');
@@ -70,7 +71,7 @@ INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 3);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 4);
 
---User_All--
+--Associé--
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 1, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 4, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 5, 1);
@@ -78,7 +79,7 @@ INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 7, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 8, 1);
 
---User_Limited--
+--Consultant--
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 1, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 4, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 5, 1);

@@ -14,7 +14,8 @@ let getUserByLogin = (login) => {
 
 const getAllUsers = () =>
     squel.select()
-        .from('users."UTILISATEUR"')
+        .from('users."UTILISATEUR"', 'u')
+        .left_join('users."ROLEADM"', 'r', 'u.idrole = r.idrole')
         .toString();
 
 

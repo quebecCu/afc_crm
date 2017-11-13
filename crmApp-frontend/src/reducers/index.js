@@ -10,7 +10,7 @@ import crmCreateUser from './crmCreateUser';
 import crmDashboard from "./crmDashboard";
 import crmCollectiveContainer from './crmCollectiveContainer';
 import crmUserManagement from './crmUserManagement';
-// TODO les autres reducers a rajouter ici 
+// TODO les autres reducers a rajouter ici
 
 
 const appReducer = combineReducers ({
@@ -25,7 +25,6 @@ const appReducer = combineReducers ({
 	crmCollectiveContainer,
 	crmUserManagement
 });
-
 
 const rootReducer = (state, action) => {
 	switch (action.type) {

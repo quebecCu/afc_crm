@@ -39,7 +39,8 @@ CREATE TABLE users."UTILISATEUR" (
   login  varchar(20),
   password  varchar(200),
   mail  varchar(40),
-  name  varchar(20),
+  name  varchar(30),
+  firstname varchar(30),
   idrole  integer REFERENCES users."ROLEADM" (idrole),
   resetPasswordToken varchar(200),
   resetPasswordExpires bigint 

@@ -8,7 +8,7 @@ import {
 
 let initialState={
     formState:{
-        role: 'employe',
+        role: 'Employe',
         nom: '',
         login: '',
         mdpProv: '',
@@ -18,7 +18,6 @@ let initialState={
         roles:[],
     },
     errors:'',
-
 };
 
 export default function reducer (state = initialState, action){
