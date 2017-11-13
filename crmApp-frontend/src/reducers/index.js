@@ -10,6 +10,7 @@ import crmCreateUser from './crmCreateUser';
 import crmDashboard from "./crmDashboard";
 import crmCollectiveContainer from './crmCollectiveContainer';
 import crmUserManagement from './crmUserManagement';
+import crmGridLayout from './crmGridLayout';
 // TODO les autres reducers a rajouter ici
 
 
@@ -23,7 +24,8 @@ const appReducer = combineReducers ({
 	crmResetPassword,
 	crmDashboard,
 	crmCollectiveContainer,
-	crmUserManagement
+	crmUserManagement,
+	crmGridLayout
 });
 
 const rootReducer = (state, action) => {

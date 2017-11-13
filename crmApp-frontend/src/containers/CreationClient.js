@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {GridCreationClient} from "../components/form/GridCreationClient";
+import {connect} from "react-redux";
+import {changeGrid, changeLayout, createCustomerFile, requestGrid} from "../actions/crmGridLayout";
 
-export class CreationClient extends Component {
+class CreationClient extends Component {
     constructor(props) {
         super(props);
         this.handleStatic = this.handleStatic.bind(this);
@@ -9,99 +11,108 @@ export class CreationClient extends Component {
         this.handleSubmitChamp = this.handleSubmitChamp.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
         this.handleNonStatic = this.handleNonStatic.bind(this);
-        this.state = {
-            nbChamp: 14,
-            grid: [
-                {key: '1', label: 'nomEntreprise', nom: "Nom de l'entreprise "},
-                {key: '2', label: 'date', nom: "Date "},
-                {key: '3', label: 'nombreEmployes', nom: "Nombre d'employés "},
-                {key: '4', label: 'rue', nom: "Rue "},
-                {key: '5', label: 'ville', nom: "Ville "},
-                {key: '6', label: 'province', nom: "Province "},
-                {key: '7', label: 'codePostal', nom: "Code postal "},
-                {key: '8', label: 'tel', nom: "Numéro de téléphone "},
-                {key: '9', label: 'extension', nom: "Extension "},
-                {key: '10', label: 'secteur', nom: "Secteur d'activité "},
-                {key: '11', label: 'division', nom: "Division (sous-groupe) "},
-                {key: '12', label: 'chambre', nom: "Chambre de commerce "},
-                {key: '13', label: 'aga', nom: "AGA "},
-                {key: '14', label: 'rver', nom: "RVER "},
-            ]
-        }
+        this.handleChangeInput = this.handleChangeInput.bind(this);
+
+		this.props.requestGrid();
     }
 
-    componentWillMount() {
-        let layout = [];
-        let y = 0;
-        for (let i=0 ; i < 14 ; i++){
-            let key = (i+1).toString();
-            let x = (i % 4)*3;
-            if(i % 4 === 0 && i !== 0) {
-                y++;
-            }
-            layout.push({i: key, x: x, y: y, w: 3, h: 1, minW: 3})
-        }
-        this.setState({layout: layout});
-    }
 
     handleStatic() {
-        let stateCopy = Object.assign({}, this.state);
-        stateCopy.layout = stateCopy.layout.slice();
-
-        for (let champ = 0; champ < this.state.layout.length ; champ++) {
-            stateCopy.layout[champ] = Object.assign({}, stateCopy.layout[champ]);
-            stateCopy.layout[champ].static = true;
-            this.setState(stateCopy);
+		let {layouts} = this.props.crmGridLayout;
+		let layout = [];
+        for (let champ = 0; champ < layouts.lg.length ; champ++) {
+			layout.push({i: layouts.lg[champ].i, x: layouts.lg[champ].x, y: layouts.lg[champ].y,
+				w: layouts.lg[champ].w, h: layouts.lg[champ].h, minW: layouts.lg[champ].minW, static: true});
         }
+		this.props.changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
     }
 
     handleDrag(newItem) {
-        this.setState({ layout: newItem });
+		this.props.changeLayout({lg: newItem, md: newItem, sm: newItem, xs: newItem, xxs: newItem});
     }
 
     handleNonStatic() {
-        let stateCopy = Object.assign({}, this.state);
-        stateCopy.layout = stateCopy.layout.slice();
-
-        for (let champ = 0; champ < this.state.layout.length ; champ++) {
-            stateCopy.layout[champ] = Object.assign({}, stateCopy.layout[champ]);
-            stateCopy.layout[champ].static = false;
-            this.setState(stateCopy);
-        }
+		let {layouts} = this.props.crmGridLayout;
+		let layout = [];
+		for (let champ = 0; champ < layouts.lg.length ; champ++) {
+			layout.push({i: layouts.lg[champ].i, x: layouts.lg[champ].x, y: layouts.lg[champ].y,
+				w: layouts.lg[champ].w, h: layouts.lg[champ].h, minW: layouts.lg[champ].minW, static: false});
+		}
+		this.props.changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
     }
 
     handleSubmit(event) {
        event.preventDefault();
+       let {layouts, grid} = this.props.crmGridLayout;
+       this.props.createCustomerFile({layouts, grid});
     }
+
+    handleChangeInput(event) {
+    	let {grid} = this.props.crmGridLayout;
+    	for (let champ = 0 ; champ < grid.length ; champ++) {
+    		if(event.target.id === grid[champ].label) {
+    			grid[champ].value = event.target.value;
+			}
+		}
+		this.props.changeGrid(grid);
+	}
 
     handleSubmitChamp(event) {
         event.preventDefault();
-        let stateCopy = this.state;
-        stateCopy.layout = stateCopy.layout.slice();
-        console.log(this.state.nbChamp);
-        let key = (this.state.nbChamp+1).toString();
-        console.log(key);
-        let x = (this.state.nbChamp % 4)*3;
-        let y=3;
-        if(this.state.nbChamp % 4 === 0 && this.state.nbChamp !== 0) {
+		let {layouts, grid} = this.props.crmGridLayout;
+        let key = (grid.length+1).toString();
+        let x = (grid.length % 4)*3;
+        let y = 3;
+        if(grid.length % 4 === 0 && grid.length !== 0) {
             y++;
         }
-        stateCopy.layout.push({i: key, x: x, y: y, w: 3, h: 1, minW: 3});
+        layouts.lg.push({w: 3, h: 1, x: x, y: y, i: key, minW: 3, moved: false, static:false});
 
 
-        stateCopy.grid = stateCopy.grid.slice();
-        stateCopy.grid.push({key: key, label: document.getElementById('champId').value, nom: document.getElementById('champNom').value});
+        grid.push({key: key, label: document.getElementById('champId').value, nom: document.getElementById('champNom').value});
+		document.getElementById('champNom').value = '';
+		document.getElementById('champId').value = '';
 
-        this.setState(stateCopy);
-        this.setState({nbChamp: parseInt(key, 10)});
-        console.log(this.state);
+		this.props.changeGrid(grid);
+		this.props.changeLayout({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
+        //dispatch le nbChamp
+		this.handleNonStatic();
     }
 
     render() {
+		let {grid, layouts} = this.props.crmGridLayout;
         return (
-            <GridCreationClient handleStatic={this.handleStatic} handleSubmit={this.handleSubmit} layout={this.state.layout}
+            <GridCreationClient handleStatic={this.handleStatic} handleSubmit={this.handleSubmit} layouts={layouts}
                                 handleDrag={this.handleDrag} handleNonStatic={this.handleNonStatic}
-                                handleSubmitChamp={this.handleSubmitChamp} grid={this.state.grid}/>
+                                handleSubmitChamp={this.handleSubmitChamp} grid={grid}
+								handleChangeInput={this.handleChangeInput}/>
         )
     }
 }
+
+function mapStateToProps (state) {
+
+	return{
+		crmGridLayout: state.crmGridLayout
+	}
+}
+
+//fonctions
+const  mapDispatchToProps = (dispatch) => {
+	return{
+		changeLayout: (newLayout) => {
+			dispatch(changeLayout(newLayout));
+		},
+		changeGrid: (newGrid) => {
+			dispatch(changeGrid(newGrid));
+		},
+		requestGrid: () => {
+			dispatch(requestGrid());
+		},
+		createCustomerFile: (file) => {
+			dispatch(createCustomerFile(file));
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (CreationClient)

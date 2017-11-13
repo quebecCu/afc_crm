@@ -12,9 +12,10 @@ var resetPassword = require('./routes/ResetPassword');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
 var createUser = require('./routes/createUser');
+var createCustomer = require ('./routes/createCustomer');
 var app = express();
 
-//view engine setup 
+//view engine setup
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
 
@@ -41,6 +42,7 @@ app.use('/', assurancesCollectives);
 app.use('/', fournisseurs);
 app.use('/', resetPassword);
 app.use('/', createUser);
+app.use('/', createCustomer);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -7,10 +7,6 @@ import {changeViewUserManagement} from "../actions/crmUserManagement";
 
 class GestionUser extends React.Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		let {view, formState} = this.props.crmUserManagement;
 		return <div id="UserManagement">

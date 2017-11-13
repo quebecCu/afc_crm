@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
-import {CreationClient} from "./CreationClient";
+import CreationClient from "./CreationClient";
 import {changeViewDashboard} from "../actions/crmDashboard";
 
 class CollectivePageContainer extends Component   {
@@ -16,7 +16,7 @@ class CollectivePageContainer extends Component   {
 		event.preventDefault();
 		this.props.changeViewCollective(event.target.className);
 	}
-	
+
 	handleClick2(event) {
 		event.preventDefault();
 		this.props.changeViewDashboard(event.target.className);

@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import  logo from '../style/images/logo.png';
 import  signalImage from '../style/images/signal.png';
 import  '../style/css/style.css';
-import {store} from '../store';
-import {push} from 'react-router-redux';
+//import {store} from '../store';
+//import {push} from 'react-router-redux';
 
 class ErrorPage extends Component   {
-	constructor(props) {
+	/*constructor(props) {
 		super(props);
 
 
-	}
+	}*/
 
 	render() {
 
@@ -20,8 +20,10 @@ class ErrorPage extends Component   {
 				<div className="wrap" >
 				<div className="content">
 				<div className="logo">
-				<h1><a href="#"><img src={logo}/></a></h1>
-				<span><img src={signalImage}/>Oops! la page demandée est en construction</span>
+				<h1><a><img src={logo} alt="404"/></a></h1>
+				<span><img src={signalImage} alt="Oops! la page demandée est en construction"/>
+					Oops! la page demandée est en construction
+				</span>
 				</div>
 				<h2><u> RETOUR </u></h2>
 				</div>

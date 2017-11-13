@@ -9,7 +9,7 @@ export class DisplayOnePermission extends React.Component{
 
 
     componentDidUpdate(){
-        this.props.formState.operations.map(element =>{
+        this.props.formState.operations.forEach(element => {
             if(this.props.level === element.value){
                 document.getElementById(element.label + this.props.id).checked = true;
             }
@@ -25,7 +25,7 @@ export class DisplayOnePermission extends React.Component{
                 position = i;
             }
         }
-        this.props.updateUserPerms(position,  parseInt(event.target.value));
+        this.props.updateUserPerms(position,  parseInt(event.target.value, 10));
     }
 
     render(){

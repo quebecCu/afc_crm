@@ -32,7 +32,7 @@ class SearchCompSuppliers extends Component {
 		}
 		this._filtre();
 	}
-	
+
 	 componentDidMount() {
 		 this._reset();
 	    }
@@ -41,7 +41,10 @@ class SearchCompSuppliers extends Component {
 		var inputAssuranceName,inputEmployesNumber,inputContactName,inputCode, table, tr, td0, td1, td2, td3, i;
 
 		inputAssuranceName = document.getElementById("AssuranceName").value.toUpperCase();
-		inputEmployesNumber = document.getElementById("EmployesNumber").value.toUpperCase();
+		inputEmployesNumber = parseInt(document.getElementById("EmployesNumber").value, 10);
+		if(!inputEmployesNumber){
+			inputEmployesNumber = 0;
+		}
 		inputContactName = document.getElementById("ContactName").value.toUpperCase();
 		inputCode = document.getElementById("Code").value.toUpperCase();
 
@@ -55,7 +58,7 @@ class SearchCompSuppliers extends Component {
 			td3 = tr[i].getElementsByTagName("td")[3];
 			if (td0 || td1 || td2 || td3) {
 				if (td3.innerHTML.toUpperCase().indexOf(inputCode) > -1 && td0.innerHTML.toUpperCase().indexOf(inputAssuranceName) > -1
-						&& td2.innerHTML.toUpperCase().indexOf(inputContactName) > -1 && td1.innerHTML.toUpperCase().indexOf(inputEmployesNumber) > -1) {
+					&& td2.innerHTML.toUpperCase().indexOf(inputContactName) > -1 && parseInt(td1.innerHTML, 10) >= inputEmployesNumber) {
 					tr[i].style.display = "";
 				} else {
 					tr[i].style.display = "none";

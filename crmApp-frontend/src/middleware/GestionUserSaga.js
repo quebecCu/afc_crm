@@ -1,7 +1,6 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
+import {take, fork} from 'redux-saga/effects';
 
-import {SUBMIT_USER, GET_OPERATIONS, GET_DEFAULTPERMS, submitUser, CHANGE_FORM_CREATEUSER, changeFormCreateUser, updateOperations, updateDefaultPerms, GET_ROLES, UPDATE_ROLES, updateRoles} from '../actions/crmCreateUser';
+import {SUBMIT_USER, GET_OPERATIONS, GET_DEFAULTPERMS, updateOperations, updateDefaultPerms, GET_ROLES, updateRoles} from '../actions/crmCreateUser';
 
 import axios from 'axios';
 import {push} from 'react-router-redux';
@@ -51,7 +50,6 @@ export function * createUser (){
 
 export function * getOperations(){
     while(true){
-        console.log("on passe par getOperations");
         yield take(GET_OPERATIONS);
 
 
