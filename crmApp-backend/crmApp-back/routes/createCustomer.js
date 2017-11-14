@@ -50,4 +50,24 @@ router.post('/createCustomer', function(req, res) {
 	console.log("end post /createCustomer");
 });
 
+router.post('/updateCustomer', function(req, res) {
+
+	var customerFile={
+		grid: req.body.grid,
+		layout: req.body.layout
+
+	};
+	console.log(customerFile);
+
+	res.status(200);
+	res.send({
+		status : 'success',
+		message : null
+	});
+	//var query= '';
+
+
+	console.log("end post /updateCustomer");
+});
+
 module.exports = router;

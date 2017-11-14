@@ -25,7 +25,7 @@ const appReducer = combineReducers ({
 	crmDashboard,
 	crmCollectiveContainer,
 	crmUserManagement,
-	crmGridLayout
+	crmGridLayout,
 });
 
 const rootReducer = (state, action) => {

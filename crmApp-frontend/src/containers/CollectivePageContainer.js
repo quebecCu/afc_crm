@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
-import CreationClient from "./CreationClient";
+import CreationClient from "./GridContainer";
 import {changeViewDashboard} from "../actions/crmDashboard";
 
 class CollectivePageContainer extends Component   {
@@ -39,7 +39,10 @@ class CollectivePageContainer extends Component   {
 				view === "customers" && <PageCollectivesClients handleClick={this.handleClick}/>
 			}
 			{
-				view === "newCustomer" && <CreationClient/>
+				view === "newCustomer" && <CreationClient view="newCustomer"/>
+			}
+			{
+				view === "customerFile" && <CreationClient view="customerFile"/>
 			}
 		</div>
 

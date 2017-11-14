@@ -1,7 +1,11 @@
 import {take, fork} from 'redux-saga/effects';
-import {REQUEST_GRID, changeGrid, changeLayout, CREATE_CUSTOMER_FILE} from '../actions/crmGridLayout';
+import {
+	REQUEST_GRID, changeGrid, changeLayout, CREATE_CUSTOMER_FILE, changeViewGrid,
+	UPDATE_CUSTOMER_FILE
+} from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
+import {changeViewCollective} from "../actions/crmCollectiveContainer";
 
 export function * getGridLayout (){
 	while(true){
@@ -36,34 +40,69 @@ export function * getGridLayout (){
 }
 
 export function * sendFile() {
-	let file = yield take(CREATE_CUSTOMER_FILE);
-	let {
-		grid,
-		layouts
-	} = file.file;
+	while(true) {
+		let file = yield take(CREATE_CUSTOMER_FILE);
+		let {
+			grid,
+			layouts
+		} = file.file;
+		console.log("send file");
+		let layout = layouts.lg;
 
-	let layout = layouts.lg;
+		let server = "http://localhost:3002/createCustomer";
 
-	let server = "http://localhost:3002/createCustomer";
-
-	axios.post(server, {
-		grid: grid,
-		layout: layout,
-	})
-		.then(function (response) {
-			if(!!response.data.status && response.data.status === "success"){
-				alert ('La fiche client a été créée avec succès');
-				//store.dispatch(push("/PageAccueil/admin"));
-			} else {
-				alert ('Erreur lors de la création de la fiche client');
-			}
+		axios.post(server, {
+			grid: grid,
+			layout: layout,
 		})
-		.catch(function (error) {
-			console.log(error);
-		});
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					alert('La fiche client a été créée avec succès');
+					store.dispatch(changeViewCollective('customerFile'));
+					store.dispatch(changeViewGrid('read'))
+				} else {
+					alert('Erreur lors de la création de la fiche client');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function * updateFile() {
+	while(true) {
+		let file = yield take(UPDATE_CUSTOMER_FILE);
+		let {
+			grid,
+			layouts
+		} = file.file;
+		console.log("update file");
+		let layout = layouts.lg;
+
+		let server = "http://localhost:3002/updateCustomer";
+
+		axios.post(server, {
+			grid: grid,
+			layout: layout,
+		})
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					alert('La fiche client a été modifiée avec succès');
+					store.dispatch(changeViewCollective('customerFile'));
+					store.dispatch(changeViewGrid('read'));
+				} else {
+					alert('Erreur lors de la modification de la fiche client');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
 }
 
 export function * GridFlow () {
 	yield fork (getGridLayout);
 	yield fork (sendFile);
+	yield fork (updateFile);
 }
