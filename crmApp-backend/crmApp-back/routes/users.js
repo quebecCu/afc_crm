@@ -19,6 +19,7 @@ let getUserByLogin = (login) => {
         .toString()
 };
 
+let ignoredRole = ["Visiteur", "Administrateur"];
 let getUserById = (id) => {
     return squel.select()
         .from('users."UTILISATEUR"', "util")
@@ -28,7 +29,7 @@ let getUserById = (id) => {
         .field('pers.nom')
         .field('pers.prenom')
         .field('op.description',"opdesc")
-        .field('ent.identite',"entid")
+        .field('ent.identite',"ident")
         .field('ent.description',"entdesc")
         .field('role.description',"roledesc")
         	.join('users."PERMISSIONUTIL_GLOB"', "perm", "perm.iduser = util.iduser")
@@ -38,6 +39,20 @@ let getUserById = (id) => {
         	.join('users."EMPLOYE_INT"', "emp", "emp.iduser = util.iduser")
         	.join('public."PERSONNE"', "pers", "pers.idpersonne = emp.idpersonne")
         	.where("util.iduser = " + id)
+        .toString();
+};
+
+let getDefaultPermissions = (whereClause) => {
+    return squel.select()
+        .from('users."PERMISSIONROLE_GLOB"', "perm")
+        .field('op.description',"opdesc")
+        .field('ent.identite',"ident")
+        .field('ent.description',"entdesc")
+        .field('role.description',"roledesc")
+        	.join('users."OPERATION"', "op", "op.idoperation = perm.idoperation")
+        	.join('users."ROLEADM"', "role", "perm.idrole = role.idrole")
+        	.join('users."ENTITE"', "ent", "ent.identite = perm.identite")
+        	.where(whereClause)
         .toString();
 };
 
@@ -72,7 +87,17 @@ router.get('/user/:id', function (req, res) {
     db.any(getUserById(id))
         .then(userRetrieved => {
             res.status(200);
-            var resp = buildPermissions (userRetrieved);
+            var permissions = buildPermissions (userRetrieved);
+            var resp = {
+        		id : userRetrieved[0].iduser,
+        		login : userRetrieved[0].login,
+        		mail : userRetrieved[0].mail,
+        		name : userRetrieved[0].nom,
+        		lastname : userRetrieved[0].prenom,
+        		role : userRetrieved[0].roledesc,
+        		userPerms : permissions
+        		};
+            
             res.send({
             	   status : 'success',
                message : resp
@@ -83,22 +108,22 @@ router.get('/user/:id', function (req, res) {
         })
 });
 
-function buildPermissions (user) {
+function buildPermissions (entity) {
 	var groups = {};
-	for (var i = 0; i < user.length; i++) {
-	  var groupName = user[i].entdesc;
+	for (var i = 0; i < entity.length; i++) {
+	  var groupName = entity[i].entdesc;
 	  if (!groups[groupName]) {
 	    groups[groupName] = [];
 	  }
-	  groups[groupName].push(user[i]);
+	  groups[groupName].push(entity[i]);
 	}
 	var permissions = [];
 	var level;
-	var entid;
+	var ident;
 	console.log(groups);
 	for (var groupName in groups) {
 		level = 0;
-		entid = groups[groupName][0].entid;
+		ident = groups[groupName][0].ident;
 		groups[groupName].forEach(function(op) {
 	    		switch(op.opdesc) {
 		    		case "READ" :
@@ -114,18 +139,10 @@ function buildPermissions (user) {
 		    			break;
 	    		}
 		});
-		permissions.push({id : entid, group: groupName, level: level});
+		permissions.push({id : ident, group: groupName, level: level});
 	}
 
-	return {
-		id : user[0].iduser,
-		login : user[0].login,
-		mail : user[0].mail,
-		name : user[0].nom,
-		lastname : user[0].prenom,
-		role : user[0].roledesc,
-		userPerms : permissions
-		}
+	return permissions;
 }
 
 router.post('/create', function(req, res) {
@@ -397,39 +414,61 @@ router.get('/getOperations', function(req,res){
 
     res.send({
         status : 'success',
-		operations: [{id:0, label:"read", value:1},{id:1, label:"read + write",value:3}, {id:2, label:"read + write + create", value:7}]
+		operations: [{id:0, label:"Read", value:1},{id:1, label:"Read + Write",value:3}, {id:2, label:"Read + Write + Create", value:7}]
     });
 });
 
-router.get('/getDefaultPerms', function(req,res){
+router.get('/defaultPerms', function(req,res){	
     console.log("GET /getDefaultPerms");
-
-    res.send({
-        status : 'success',
-        defaultPerms: [
-            {role:"Utilisateur_All",
-                droits: [{id: 0, entite: "Gestion des contrats - ACollectives", level:3},
-                    {id:1, entite: "Gestion des fournisseurs", level:7},
-                    {id:2, entite: "Gestion des clients - ACollectives", level:7}]
-            },
-            {
-                role:"Utilisateur_Limited",
-                droits: [{id:0, entite: "Gestion des contrats - ACollectives", level:7},
-                    {id: 1, entite: "Gestion des fournisseurs", level:7},
-                    {id: 2, entite: "Gestion des clients - ACollectives", level:7}]
-            }
-        ]
+    
+    let whereClauses = [];
+    ignoredRole.forEach(function(element) {
+    		whereClauses.push("role.description <> \'" + element + "\'");
     });
+    
+    let whereClause = whereClauses.join(" AND ");
+    console.log(getDefaultPermissions(whereClause));
+    db.any(getDefaultPermissions(whereClause))
+    .then(roleRetrieved => {
+    	
+    	var roles = {};
+    	for (var i = 0; i < roleRetrieved.length; i++) {
+    	  var roleName = roleRetrieved[i].roledesc;
+    	  if (!roles[roleName]) {
+    		  roles[roleName] = [];
+    	  }
+    	  roles[roleName].push(roleRetrieved[i]);
+    	}
+    	var defaultPermissions = [];
+    	let permissions = {};
+    	for (var roleName in roles) {
+    		permissions = buildPermissions(roles[roleName]);
+    		defaultPermissions.push({role : roleName, droits: permissions});
+    	}
+    	
+    res.status(200);
+        res.send({
+        	   status : 'success',
+           message : defaultPermissions
+        });
+    })
+    .catch(error => {
+        console.log('ERROR:', error);
+    })
 });
 
 router.get('/getRoles', function(req, res) {
 
-    console.log('getting roles from database');
-
+    console.log('Getting roles from database');
+    let whereClauses = [];
+    ignoredRole.forEach(function(element) {
+    		whereClauses.push("description <> " + element);
+    });
+    let whereClause = whereClauses.join(" AND ");
     db.query(squel.select()
         .from('users."ROLEADM"')
         .field('description')
-        .where("description <> 'Administrateur'")
+        .where(clauseWhere)
         .toString())
         .then(roles => {
 
