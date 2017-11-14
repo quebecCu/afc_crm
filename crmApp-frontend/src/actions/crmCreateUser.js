@@ -7,6 +7,7 @@ export const SUBMIT_USER = 'SUBMIT_USER';
 export const UPDATE_DEFAULTPERMS = 'UPDATE_DEFAULTPERMS';
 export const UPDATE_OPERATIONS = 'UPDATE_OPERATIONS';
 export const UPDATE_ROLES = 'UPDATE_ROLES';
+export const UPDATE_USER = 'UPDATE_USER';
 
 export function changeFormCreateUser (newFormState) {
     return {type: CHANGE_FORM_CREATEUSER, newFormState}
@@ -42,4 +43,8 @@ export function updateRoles(rolesList) {
 
 export function updateUserPerms(position, newValue){
 	return {type: CHANGE_USER_PERMS, position, newValue}
+}
+
+export function updateUser(updatedUser){
+	return{type: UPDATE_USER, updatedUser}
 }

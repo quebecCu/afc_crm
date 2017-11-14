@@ -97,7 +97,7 @@ router.get('/user/:id', function (req, res) {
         		role : userRetrieved[0].roledesc,
         		userPerms : permissions
         		};
-            
+
             res.send({
             	   status : 'success',
                message : resp
@@ -223,7 +223,7 @@ router.post('/create', function(req, res) {
 	    				return t.one(addUser.toString())
 						.then(userCreated => {
 			    		    		user.permissionsUser.forEach(function(element) {
-			    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
+			    			    		var entityObject = data[2].find(findEnt.bind(null, element.group));
 			    			    		if(element.level >= 1){
 			    			    			right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
 			    			    			newRights.push(right);
@@ -348,7 +348,7 @@ router.post('/update', function(req, res) {
     				return t.one(updateUser.toString())
 					.then(userUpdated => {
 		    		    		user.permissionsUser.forEach(function(element) {
-		    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
+		    			    		var entityObject = data[2].find(findEnt.bind(null, element.group));
 		    			    		if(element.level >= 1){
 		    			    			right = { iduser: userUpdated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
 		    			    			newRights.push(right);
@@ -411,12 +411,12 @@ router.post('/update', function(req, res) {
 
 router.get('/operations', function(req,res){
 	console.log("GET /getOperation");
-	
+
 	let operationRequest = squel.select()
     .from('users."OPERATION"')
     .order("level")
     .toString();
-	
+
 	let defaultOperations = [{id : 0, label : "Aucun droit n'est accordé", value : 0}];
 	let id = 0;
 	let label = [];
@@ -446,19 +446,19 @@ router.get('/operations', function(req,res){
     });*/
 });
 
-router.get('/defaultPerms', function(req,res){	
+router.get('/defaultPerms', function(req,res){
     console.log("GET /getDefaultPerms");
-    
+
     let whereClauses = [];
     ignoredRole.forEach(function(element) {
     		whereClauses.push("role.description <> \'" + element + "\'");
     });
-    
+
     let whereClause = whereClauses.join(" AND ");
     console.log(getDefaultPermissions(whereClause));
     db.any(getDefaultPermissions(whereClause))
     .then(roleRetrieved => {
-    	
+
     	var roles = {};
     	for (var i = 0; i < roleRetrieved.length; i++) {
     	  var roleName = roleRetrieved[i].roledesc;
@@ -473,7 +473,7 @@ router.get('/defaultPerms', function(req,res){
     		permissions = buildPermissions(roles[roleName]);
     		defaultPermissions.push({role : roleName, droits: permissions});
     	}
-    	
+
     res.status(200);
         res.send({
         	   status : 'success',
@@ -485,19 +485,19 @@ router.get('/defaultPerms', function(req,res){
     })
 });
 
-/*router.get('/delete', function(req,res){	
+/*router.get('/delete', function(req,res){
     console.log("GET /getDefaultPerms");
-    
+
     let whereClauses = [];
     ignoredRole.forEach(function(element) {
     		whereClauses.push("role.description <> \'" + element + "\'");
     });
-    
+
     let whereClause = whereClauses.join(" AND ");
     console.log(getDefaultPermissions(whereClause));
     db.any(getDefaultPermissions(whereClause))
     .then(roleRetrieved => {
-    	
+
     	var roles = {};
     	for (var i = 0; i < roleRetrieved.length; i++) {
     	  var roleName = roleRetrieved[i].roledesc;
@@ -512,7 +512,7 @@ router.get('/defaultPerms', function(req,res){
     		permissions = buildPermissions(roles[roleName]);
     		defaultPermissions.push({role : roleName, droits: permissions});
     	}
-    	
+
     res.status(200);
         res.send({
         	   status : 'success',
