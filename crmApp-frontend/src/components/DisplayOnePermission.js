@@ -18,7 +18,7 @@ export class DisplayOnePermission extends React.Component{
     _handleClick(event){
         let position;
         for(let i = 0; i < this.props.formState.userPerms.length; i++){
-            if(this.props.formState.userPerms[i].entite === this.props.entite) {
+            if(this.props.formState.userPerms[i].group === this.props.group) {
                 position = i;
             }
         }
@@ -44,7 +44,7 @@ export class DisplayOnePermission extends React.Component{
                 })
                 }
                 </form>
-					<span className="">sur le module {this.props.entite}</span>
+					<span className="">sur le module {this.props.group}</span>
 				</div>
 			</fieldset>
         )

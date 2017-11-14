@@ -7,11 +7,10 @@ export class FormCreateUser extends React.Component {
 		this.whatToRender = this.whatToRender.bind(this);
 		this.onChangeRole = this.onChangeRole.bind(this);
 		this.onChangeNom = this.onChangeNom.bind(this);
-		this.onChangePrenom=this.onChangePrenom.bind(this);
+		this.onChangePrenom = this.onChangePrenom.bind(this);
 		this.onChangeLogin = this.onChangeLogin.bind(this);
 		this.onChangeMdp = this.onChangeMdp.bind(this);
 		this.onChangeMail = this.onChangeMail.bind(this);
-
 	}
 
 	onChangeRole(event) {
@@ -123,18 +122,31 @@ export class FormCreateUser extends React.Component {
 							name="role"
 							className="form-control"
 							onChange={this.onChangeRole}>
-							{console.log(this.props.formState.roles)}
+							<option disabled selected value> -- select an option -- </option>
 							{
 								this.props.formState.roles.map((element) => {
-									return (
-										<option
-											key={element.description}
-											value={element.description}>
-											{
-												element.description
-											}
-										</option>
-									);
+										if(this.props.formState.role === element.description){
+											return (<option
+												key={element.description}
+												value={element.description}
+												selected>
+												{
+													element.description
+												}
+											</option>);
+										}
+										else
+									{
+										return (
+											<option
+												key={element.description}
+												value={element.description}>
+												{
+													element.description
+												}
+											</option>
+										);
+									}
 								})}
 						</select>
 					</div>

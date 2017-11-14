@@ -84,12 +84,12 @@ export function * getDefaultPerms() {
         yield take(GET_DEFAULTPERMS);
         console.log("on passe par getDefaultPerms middleware");
 
-        var server = "http://localhost:3002/users/getDefaultPerms";
+        var server = "http://localhost:3002/users/defaultPerms";
 
         axios.get(server)
             .then(function(response){
                 if(!!response.data.status && response.data.status === "success"){
-                    store.dispatch(updateDefaultPerms(response.data.defaultPerms));
+                    store.dispatch(updateDefaultPerms(response.data.message));
                 } else {
                     alert("Erreur lors du chargement des operations");
                 }
