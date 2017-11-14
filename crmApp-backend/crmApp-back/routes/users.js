@@ -409,13 +409,41 @@ router.post('/update', function(req, res) {
     });*/
 });
 
-router.get('/getOperations', function(req,res){
+router.get('/operations', function(req,res){
 	console.log("GET /getOperation");
-
-    res.send({
+	
+	let operationRequest = squel.select()
+    .from('users."OPERATION"')
+    .order("level")
+    .toString();
+	
+	let defaultOperations = [{id : 0, label : "Aucun droit n'est accordé", value : 0}];
+	let id = 0;
+	let label = [];
+	let labelString;
+	let value = 0;
+	db.any(operationRequest)
+    .then(operations => {
+	    	operations.forEach(function(element) {
+	    		id++;
+	    		value += element.level;
+	    		label.push(element.description);
+	    		labelString = label.join(" + ");
+	    		defaultOperations.push({id : id, label : labelString, value : value});
+	    	});
+	    res.status(200);
+	    res.send({
+	    	   status : 'success',
+	       message : defaultOperations
+	    });
+    })
+    .catch(error => {
+        console.log('ERROR:', error);
+    })
+    /*res.send({
         status : 'success',
 		operations: [{id:0, label:"Read", value:1},{id:1, label:"Read + Write",value:3}, {id:2, label:"Read + Write + Create", value:7}]
-    });
+    });*/
 });
 
 router.get('/defaultPerms', function(req,res){	

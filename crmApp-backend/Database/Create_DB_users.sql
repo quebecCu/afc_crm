@@ -57,7 +57,8 @@ CREATE TABLE users."POSITION" (
 
 CREATE TABLE users."OPERATION" (
   idoperation serial PRIMARY KEY,
-  description  varchar(30)
+  description  varchar(30),
+  level integer
 );
 
 CREATE TABLE users."PERMISSIONROLE_GLOB" (
