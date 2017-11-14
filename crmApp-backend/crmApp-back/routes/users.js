@@ -457,18 +457,57 @@ router.get('/defaultPerms', function(req,res){
     })
 });
 
+/*router.get('/delete', function(req,res){	
+    console.log("GET /getDefaultPerms");
+    
+    let whereClauses = [];
+    ignoredRole.forEach(function(element) {
+    		whereClauses.push("role.description <> \'" + element + "\'");
+    });
+    
+    let whereClause = whereClauses.join(" AND ");
+    console.log(getDefaultPermissions(whereClause));
+    db.any(getDefaultPermissions(whereClause))
+    .then(roleRetrieved => {
+    	
+    	var roles = {};
+    	for (var i = 0; i < roleRetrieved.length; i++) {
+    	  var roleName = roleRetrieved[i].roledesc;
+    	  if (!roles[roleName]) {
+    		  roles[roleName] = [];
+    	  }
+    	  roles[roleName].push(roleRetrieved[i]);
+    	}
+    	var defaultPermissions = [];
+    	let permissions = {};
+    	for (var roleName in roles) {
+    		permissions = buildPermissions(roles[roleName]);
+    		defaultPermissions.push({role : roleName, droits: permissions});
+    	}
+    	
+    res.status(200);
+        res.send({
+        	   status : 'success',
+           message : defaultPermissions
+        });
+    })
+    .catch(error => {
+        console.log('ERROR:', error);
+    })
+});*/
+
 router.get('/getRoles', function(req, res) {
 
     console.log('Getting roles from database');
     let whereClauses = [];
     ignoredRole.forEach(function(element) {
-    		whereClauses.push("description <> " + element);
+    		whereClauses.push("description <> \'" + element + "\'");
     });
     let whereClause = whereClauses.join(" AND ");
     db.query(squel.select()
         .from('users."ROLEADM"')
         .field('description')
-        .where(clauseWhere)
+        .where(whereClause)
         .toString())
         .then(roles => {
 
