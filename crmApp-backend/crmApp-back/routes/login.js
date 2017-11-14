@@ -37,7 +37,8 @@ router.post('/login', function(req, res) {
 							res.cookie('token', token, { maxAge: 900000, httpOnly: true });
 							res.send({ 
 								status : 'success',
-								message : null
+								message : null,
+								cookie: token
 							});
 						} else {
 							console.log("Mot de passe saisi incorrect");

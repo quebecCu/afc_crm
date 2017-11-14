@@ -29,6 +29,7 @@ export function * loginFlow (){
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
+				localStorage.setItem("cookie de session" ,response.data.cookie);
 				store.dispatch(login());
 			}
 			else {
