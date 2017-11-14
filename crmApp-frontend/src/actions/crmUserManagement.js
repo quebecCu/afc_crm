@@ -3,6 +3,7 @@ export const GET_LIST_USERS = 'GET_LIST_USERS';
 export const UPDATE_USERS = 'UPDATE_USERS';
 export const REQUEST_USER_BY_ID = 'REQUEST_USER_BY_ID';
 export const UPDATE_USER_TO_DISPLAY = 'UPDATE_USER_TO_DISPLAY';
+export const DELETE_USER = 'DELETE_USER';
 
 
 export function changeViewUserManagement (newView){
@@ -23,4 +24,8 @@ export function requestUserById(id){
 
 export function updateUserToDisplay(user){
 	return {type: UPDATE_USER_TO_DISPLAY, user}
+}
+
+export function deleteUser(id){
+	return {type: DELETE_USER, id}
 }

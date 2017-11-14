@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import ListUsers from '../components/ListUsers.js';
 import CreateUser from './CreateUser';
 import DisplayUser from './DisplayUser';
-import {changeViewUserManagement, getListUser, requestUserById} from "../actions/crmUserManagement";
+import {changeViewUserManagement, getListUser, requestUserById, deleteUser} from "../actions/crmUserManagement";
 import {getOperations} from "../actions/crmCreateUser";
 
 class GestionUser extends React.Component {
@@ -13,6 +13,7 @@ class GestionUser extends React.Component {
 		super(props);
 		this.props.getListUser();
 	}
+
 
 	render() {
 		let {view, formState} = this.props.crmUserManagement;
@@ -30,8 +31,9 @@ class GestionUser extends React.Component {
 				}
 				{
 					view === "DisplayUser"  && <DisplayUser formState={formState} user={formState.userToDisplay}
-															handleClick={this.props.changeViewUserManagement}
-															getOperations={this.props.getOperations}/>
+															changeView={this.props.changeViewUserManagement}
+															getOperations={this.props.getOperations}
+															deleteUser={this.props.deleteUser}/>
 				}
 				{
 					view === "UpdateUser" && <CreateUser changeView={this.props.changeViewUserManagement}
@@ -69,6 +71,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		getOperations: () => {
         	dispatch(getOperations());
+		},
+		deleteUser: (id) =>{
+        	dispatch(deleteUser(id));
 		}
     }
 };

@@ -6,7 +6,7 @@ import {
 } from '../actions/crmCreateUser';
 
 import {
-	GET_LIST_USERS, REQUEST_USER_BY_ID, updateUsers, updateUserToDisplay
+	GET_LIST_USERS, REQUEST_USER_BY_ID, DELETE_USER, updateUsers, updateUserToDisplay, getListUser
 } from '../actions/crmUserManagement';
 
 import axios from 'axios';
@@ -46,6 +46,7 @@ export function * createUser () {
             .then(function (response) {
                 if(!!response.data.status && response.data.status === "success"){
                     alert ('L\'utilisateur a été créé avec succès');
+                    store.dispatch(getListUser());
                 } else {
                     alert ('Erreur lors de la création de l\'utilisateur');
                 }
@@ -85,8 +86,35 @@ export function * updateUser(){
 			.then(function (response) {
 				if(!!response.data.status && response.data.status === "success"){
 					alert ('L\'utilisateur a été modifié avec succès');
+					store.dispatch(getListUser());
 				} else {
 					alert ('Erreur lors de la modification de l\'utilisateur');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function * deleteUser(){
+	while(true){
+
+		let id = yield take(DELETE_USER);
+		console.log("middlewaare"+id);
+
+		//communication avec server
+		var server = "http://localhost:3002/users/user/"+id.id;
+
+		axios.delete(server, {
+
+		})
+			.then(function (response) {
+				if(!!response.data.status && response.data.status === "success"){
+					alert ('L\'utilisateur a été supprimé avec succès');
+					store.dispatch(getListUser());
+				} else {
+					alert ('Erreur lors de la suppression de l\'utilisateur');
 				}
 			})
 			.catch(function (error) {
@@ -161,7 +189,7 @@ export function * getRoles() {
     }
 }
 
-export function * getListUser() {
+export function * getListUsers() {
 	while(true) {
 		yield take(GET_LIST_USERS);
 
@@ -216,7 +244,8 @@ export function * gestionUserFlow() {
 	yield fork (getOperations);
 	yield fork (getDefaultPerms);
 	yield fork (getRoles);
-	yield fork (getListUser);
+	yield fork (getListUsers);
 	yield fork (requestUserToDisplay);
 	yield fork (updateUser);
+	yield fork (deleteUser);
 }

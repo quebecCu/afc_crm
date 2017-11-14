@@ -6,6 +6,7 @@ class DisplayUser extends React.Component{
 		super(props);
 		this.props.getOperations();
 		this._getPermission=this._getPermission.bind(this);
+		this._handleClickDelete=this._handleClickDelete.bind(this);
 	}
 
 	_getPermission(level){
@@ -16,6 +17,11 @@ class DisplayUser extends React.Component{
 			}
 		});
 		return label;
+	}
+
+	_handleClickDelete(){
+		this.props.deleteUser(this.props.user.id);
+		this.props.changeView("");
 	}
 
 	render(){
@@ -35,8 +41,8 @@ class DisplayUser extends React.Component{
 
 			})}
 
-			<button onClick={()=>this.props.handleClick("UpdateUser")}>Modifier </button>
-			<button>Supprimer</button>
+			<button onClick={()=>this.props.changeView("UpdateUser")}>Modifier </button>
+			<button onClick={this._handleClickDelete}>Supprimer</button>
 
 		</div>
 		);
