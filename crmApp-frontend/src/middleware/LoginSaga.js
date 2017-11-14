@@ -29,7 +29,7 @@ export function * loginFlow (){
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
-				localStorage.setItem("cookie de session" ,response.data.cookie);
+				localStorage.setItem("cookieSession" ,response.data.cookie);
 				store.dispatch(login());
 			}
 			else {
@@ -49,7 +49,9 @@ export function * logoutFlow() {
 		yield put({ type: SET_AUTH, newAuthState: false });
 		
 		yield put({ type: CLEAR_SESSION});
-
+		
+		localStorage.removeItem("cookieSession");
+		
 		yield put(push("/"))
 
 		
