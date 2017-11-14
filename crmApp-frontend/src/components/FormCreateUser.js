@@ -7,11 +7,16 @@ export class FormCreateUser extends React.Component {
 		this.whatToRender = this.whatToRender.bind(this);
 		this.onChangeRole = this.onChangeRole.bind(this);
 		this.onChangeNom = this.onChangeNom.bind(this);
-		this.onChangePrenom=this.onChangePrenom.bind(this);
+		this.onChangePrenom = this.onChangePrenom.bind(this);
 		this.onChangeLogin = this.onChangeLogin.bind(this);
 		this.onChangeMdp = this.onChangeMdp.bind(this);
 		this.onChangeMail = this.onChangeMail.bind(this);
+	}
 
+	componentDidMount(){
+		if(this.props.view==="UpdateUser"){
+			document.getElementById("login").disabled = true;
+		}
 	}
 
 	onChangeRole(event) {
@@ -19,6 +24,7 @@ export class FormCreateUser extends React.Component {
 		//quand on change le rôle, les permissions par défaut du rôle sélectionné s'attribuent aux userPerms
 		let idRole;//id du role sélectionné dans la table des permissions par défaut
 		for (let i = 0; i < this.props.formState.defaultPerms.length; i++) {
+			console.log("defperm"+this.props.formState.defaultPerms[i]);
 			if (role === this.props.formState.defaultPerms[i].role) {
 				idRole = i;
 			}
@@ -49,6 +55,7 @@ export class FormCreateUser extends React.Component {
 
 	whatToRender() {
 		let mdp;
+
 		if(this.props.view === "CreateUser"){
 			mdp=(<div className="form-group row">
 				<label className="col-sm-3 col-form-label">Mot de passe provisoire : </label>
@@ -88,13 +95,13 @@ export class FormCreateUser extends React.Component {
 						type="textField"
 						className="form-control"
 						placeholder="Login"
+						id="login"
 						onChange={this.onChangeLogin}
 						value={this.props.formState.login}/>
 				</div>
 			</div>
-			<br/>
 			{
-				mdp
+				this.props.view === "CreateUser" && mdp
 			}
 			<br/>
 			<div className="form-group row">
@@ -122,19 +129,20 @@ export class FormCreateUser extends React.Component {
 						<select
 							name="role"
 							className="form-control"
-							onChange={this.onChangeRole}>
-							{console.log(this.props.formState.roles)}
+							onChange={this.onChangeRole}
+							value={this.props.formState.role}>
+							<option disabled value=""> -- select an option -- </option>
 							{
 								this.props.formState.roles.map((element) => {
-									return (
-										<option
+										return (<option
 											key={element.description}
-											value={element.description}>
+											value={element.description}
+											>
 											{
 												element.description
 											}
-										</option>
-									);
+										</option>);
+
 								})}
 						</select>
 					</div>

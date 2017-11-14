@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {FormCreateUser} from '../components/FormCreateUser.js';
 import '../style/CreationUser.css';
 
-import {changeFormCreateUser, submitUser, getRoles, getOperations, getDefaultPerms, updateUserPerms} from "../actions/crmCreateUser";
+import {changeFormCreateUser, submitUser, getRoles, getOperations, getDefaultPerms, updateUserPerms, updateUser} from "../actions/crmCreateUser";
 import CreateUserPermissions from './CreateUserPermissions';
 
 
@@ -15,16 +15,16 @@ class CreateUser extends React.Component{
         this.props.getDefaultPerms();
         this.props.getRoles();
         this.handleClick = this.handleClick.bind(this);
-        console.log("view?"+this.props.view);
 		if(this.props.view === "UpdateUser"){
-			console.log("role ta race"+this.props.user.role);
 			let newRole = JSON.parse(JSON.stringify(this.props.user.role));
 			let newName = JSON.parse(JSON.stringify(this.props.user.lastname));
 			let newLastName = JSON.parse(JSON.stringify(this.props.user.name));
 			let newLogin = JSON.parse(JSON.stringify(this.props.user.login));
 			let newMail = JSON.parse(JSON.stringify(this.props.user.mail));
 			let newUserPerms = JSON.parse(JSON.stringify(this.props.user.userPerms));
-			this.props.changeForm({...this.props.formState,
+			let userID=JSON.parse(JSON.stringify(this.props.user.id));
+			this.props.changeForm({
+				id:userID,
 				role: newRole,
 				nom: newName,
 				prenom:newLastName,
@@ -33,8 +33,21 @@ class CreateUser extends React.Component{
 				userPerms: newUserPerms,
 				roles:[],
 				operations:[],
+				mdpProv:''
 			});
-			console.log(this.props.formState);
+		}
+		else{
+			this.props.changeForm({...this.props.formState,
+				role: '',
+				nom: '',
+				prenom:'',
+				login: '',
+				mail: '',
+				mdpProv: '',
+				userPerms: [],
+				roles:[],
+				operations:[],
+			});
 		}
 
     }
@@ -42,8 +55,17 @@ class CreateUser extends React.Component{
 
 
 	handleClick(event){
-		this.props.submitUser(this.props.formState);
+		let {formState} = this.props.crmCreateUser;
+		if(this.props.view === "CreateUser"){
+			console.log('formstate'+formState);
+			this.props.submitUser(formState);
+		}
+		else{//Cas où on est en modification de l'utilisateur
+    		this.props.updateUser(formState);
+		}
 		this.props.changeView("");
+
+
 	}
 
     render() {
@@ -59,7 +81,7 @@ class CreateUser extends React.Component{
 								   user={this.props.user}
                                    changeForm={this.props.changeForm}
 								   updateUserPerms={this.props.updateUserPerms}/>
-			<button onClick={this.handleClick}>Créer l'utilisateur</button>
+			<button onClick={this.handleClick}>{this.props.button}</button>
         </div>;
     }
 }
@@ -92,7 +114,10 @@ const  mapDispatchToProps = (dispatch) => {
         },
         getRoles : () => {
             dispatch(getRoles())
-        }
+        },
+		updateUser: (updatedUser) =>{
+			dispatch(updateUser(updatedUser));
+		}
     }
 }
 

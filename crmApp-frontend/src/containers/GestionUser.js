@@ -5,6 +5,7 @@ import ListUsers from '../components/ListUsers.js';
 import CreateUser from './CreateUser';
 import DisplayUser from './DisplayUser';
 import {changeViewUserManagement, getListUser, requestUserById} from "../actions/crmUserManagement";
+import {getOperations} from "../actions/crmCreateUser";
 
 class GestionUser extends React.Component {
 
@@ -24,17 +25,22 @@ class GestionUser extends React.Component {
 				{
 					view === "CreateUser" && <CreateUser changeView={this.props.changeViewUserManagement}
 														view={view}
-														  title="Création d'un utilisateur"/>
+														  title="Création d'un utilisateur"
+														button="Créer l'utilisateur"/>
 				}
 				{
 					view === "DisplayUser"  && <DisplayUser formState={formState} user={formState.userToDisplay}
-															handleClick={this.props.changeViewUserManagement}/>
+															handleClick={this.props.changeViewUserManagement}
+															getOperations={this.props.getOperations}/>
 				}
 				{
 					view === "UpdateUser" && <CreateUser changeView={this.props.changeViewUserManagement}
+														 updateUser={this.props.updateUser}
 														 user={formState.userToDisplay}
+														 formState={formState}
 														 view={view}
-															title="Modification d'un utilisateur"/>
+															title="Modification d'un utilisateur"
+															button="Modifier l'utilisateur"/>
 				}
 			</div>
 		</div>
@@ -59,8 +65,10 @@ const  mapDispatchToProps = (dispatch) => {
         	dispatch(getListUser());
 		},
 		requestUserById: (id) => {
-        	console.log("request"+id);
         	dispatch(requestUserById(id));
+		},
+		getOperations: () => {
+        	dispatch(getOperations());
 		}
     }
 };

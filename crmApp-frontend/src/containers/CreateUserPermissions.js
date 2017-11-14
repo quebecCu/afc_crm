@@ -13,7 +13,7 @@ class CreateUserPermissions extends React.Component{
         let permUser = JSON.parse(JSON.stringify(this.props.formState.userPerms));
         this.toReturn = permUser.map(element => {
             return(
-                <DisplayOnePermission key={element.id} id={element.id} entite={element.entite} level={element.level}
+                <DisplayOnePermission key={element.id} id={element.id} group={element.group} level={element.level}
 									  formState={this.props.formState} changeForm={this.props.changeForm}
 									  updateUserPerms={this.props.updateUserPerms}/>
             )});

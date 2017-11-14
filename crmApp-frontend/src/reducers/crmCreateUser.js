@@ -8,7 +8,7 @@ import {
 
 let initialState={
     formState:{
-        role: 'Employe',
+        role: '',
     	operations:[],
         nom: '',
 		prenom:'',
@@ -16,9 +16,7 @@ let initialState={
         mdpProv: '',
         mail:'',
         defaultPerms:[],
-        userPerms:[{id: 0, entite: "Gestion des contrats - ACollectives", level:3},
-			{id:1, entite: "Gestion des fournisseurs", level:7},
-			{id:2, entite: "Gestion des clients - ACollectives", level:7}],
+        userPerms:[],
         roles:[],
     },
     errors:'',
