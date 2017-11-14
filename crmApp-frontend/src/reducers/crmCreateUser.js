@@ -3,7 +3,7 @@ import {
     UPDATE_OPERATIONS,
     UPDATE_DEFAULTPERMS,
 	CHANGE_USER_PERMS,
-	UPDATE_ROLES
+	UPDATE_ROLES,
 }  from '../actions/crmCreateUser';
 
 let initialState={
@@ -11,6 +11,7 @@ let initialState={
         role: 'Employe',
     	operations:[],
         nom: '',
+		prenom:'',
         login: '',
         mdpProv: '',
         mail:'',

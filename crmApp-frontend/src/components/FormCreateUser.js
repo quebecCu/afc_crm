@@ -7,9 +7,11 @@ export class FormCreateUser extends React.Component {
 		this.whatToRender = this.whatToRender.bind(this);
 		this.onChangeRole = this.onChangeRole.bind(this);
 		this.onChangeNom = this.onChangeNom.bind(this);
+		this.onChangePrenom=this.onChangePrenom.bind(this);
 		this.onChangeLogin = this.onChangeLogin.bind(this);
 		this.onChangeMdp = this.onChangeMdp.bind(this);
 		this.onChangeMail = this.onChangeMail.bind(this);
+
 	}
 
 	onChangeRole(event) {
@@ -29,6 +31,10 @@ export class FormCreateUser extends React.Component {
 		this.props.changeForm({...this.props.formState, nom: event.target.value});
 	}
 
+	onChangePrenom(event) {
+		this.props.changeForm({...this.props.formState, prenom: event.target.value});
+	}
+
 	onChangeLogin(event) {
 		this.props.changeForm({...this.props.formState, login: event.target.value});
 	}
@@ -42,7 +48,20 @@ export class FormCreateUser extends React.Component {
 	}
 
 	whatToRender() {
-
+		let mdp;
+		if(this.props.view === "CreateUser"){
+			mdp=(<div className="form-group row">
+				<label className="col-sm-3 col-form-label">Mot de passe provisoire : </label>
+				<div className="col-sm-9">
+					<input
+						type="textField"
+						className="form-control"
+						placeholder="Mot de passe provisoire que l'utilisateur changera"
+						onChange={this.onChangeMdp}
+						value={this.props.formState.mdpProv}/>
+				</div>
+			</div>)
+		}
 		return <div>
 			<div className="form-group row"><label className="col-sm-3 col-form-label">Nom : </label>
 				<div className="col-sm-3"><input
@@ -57,8 +76,8 @@ export class FormCreateUser extends React.Component {
 					type="textField"
 					className="form-control"
 					placeholder="Prénom"
-					onChange={this.onChangeNom}
-					value={this.props.formState.nom}/>
+					onChange={this.onChangePrenom}
+					value={this.props.formState.prenom}/>
 				</div>
 			</div>
 			<br/>
@@ -74,17 +93,9 @@ export class FormCreateUser extends React.Component {
 				</div>
 			</div>
 			<br/>
-			<div className="form-group row">
-				<label className="col-sm-3 col-form-label">Mot de passe provisoire : </label>
-				<div className="col-sm-9">
-				<input
-						type="textField"
-						className="form-control"
-						placeholder="Mot de passe provisoire que l'utilisateur changera"
-						onChange={this.onChangeMdp}
-						value={this.props.formState.mdpProv}/>
-				</div>
-			</div>
+			{
+				mdp
+			}
 			<br/>
 			<div className="form-group row">
 				<label className="col-sm-3 col-form-label">Adresse e-mail : </label>
@@ -112,6 +123,7 @@ export class FormCreateUser extends React.Component {
 							name="role"
 							className="form-control"
 							onChange={this.onChangeRole}>
+							{console.log(this.props.formState.roles)}
 							{
 								this.props.formState.roles.map((element) => {
 									return (

@@ -5,18 +5,20 @@ class ListUsers extends React.Component{
     constructor(props){
         super(props);
         this._handleClick = this._handleClick.bind(this);
+		this._handleClickOnUser = this._handleClickOnUser.bind(this);
 
-    }
 
-   /* handleClick(element){
-        //Ducoup quand on clique ça affiche la page de l'utilisateur, changer le path? Faire un linkto ?
-        store.dispatch(push('/PageAccueil/admin/'+element.id));
-        console.log(element.id);
-    }*/
+	}
+
 
    _handleClick(event){
        event.preventDefault();
        this.props.handleClick("CreateUser");
+   }
+
+   _handleClickOnUser(id){
+		this.props.displayUser(id);
+		this.props.handleClick("DisplayUser");
    }
 
     render(){
@@ -24,7 +26,7 @@ class ListUsers extends React.Component{
 			<thead>
 			{this.props.formState.users.map(element => {
 				return(
-					<tr key={element.id} onClick={()=>alert('Implemente-moi...')}>
+					<tr key={element.iduser} onClick={()=>this._handleClickOnUser(element.iduser)}>
 						<td>{element.login}</td>
 						<td>{element.name} {element.prenom}</td>
 						<td>{element.description}</td>

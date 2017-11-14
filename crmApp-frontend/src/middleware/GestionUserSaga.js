@@ -6,7 +6,7 @@ import {
 } from '../actions/crmCreateUser';
 
 import {
-	GET_LIST_USERS, updateUsers
+	GET_LIST_USERS, REQUEST_USER_BY_ID, updateUsers, updateUserToDisplay
 } from '../actions/crmUserManagement';
 
 import axios from 'axios';
@@ -21,6 +21,7 @@ export function * createUser () {
         let user = yield take(SUBMIT_USER);
         let{role,
             nom,
+			prenom,
             login,
             mdpProv,
             mail,
@@ -30,11 +31,12 @@ export function * createUser () {
         let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
 
         //communication avec server
-        var server = "http://localhost:3002/createUser";
+        var server = "http://localhost:3002/users/create";
 
         axios.post(server, {
             role: role,
             nom: nom,
+			prenom: prenom,
             login: login,
             mdpProv: mdpProvEncoded,
             mail: mail,
@@ -60,7 +62,7 @@ export function * getOperations() {
 
 		console.log('loading operations from back-end');
 
-        var server = "http://localhost:3002/getOperations";
+        var server = "http://localhost:3002/users/getOperations";
 
         axios.get(server)
             .then(function(response){
@@ -82,7 +84,7 @@ export function * getDefaultPerms() {
         yield take(GET_DEFAULTPERMS);
         console.log("on passe par getDefaultPerms middleware");
 
-        var server = "http://localhost:3002/getDefaultPerms";
+        var server = "http://localhost:3002/users/getDefaultPerms";
 
         axios.get(server)
             .then(function(response){
@@ -102,10 +104,10 @@ export function * getRoles() {
     while(true){
         yield take(GET_ROLES);
 
-        console.log('loading user roles from back-end');
+        console.log('loading user roles from middleware');
 
         //communication avec server
-        var server = "http://localhost:3002/getRoles";
+        var server = "http://localhost:3002/users/getRoles";
 
         axios.get(server)
             .then(function (response) {
@@ -127,7 +129,7 @@ export function * getListUser() {
 
 		console.log('loading users from back-end');
 
-		var server = "http://localhost:3002/users/listUsers";
+		var server = "http://localhost:3002/users/list";
 
 		axios.get(server)
 			.then(function (response) {
@@ -144,10 +146,38 @@ export function * getListUser() {
 	}
 }
 
+export function * requestUserToDisplay(){
+	while(true) {
+		let user = yield take(REQUEST_USER_BY_ID);
+		console.log(user);
+		let{id} = user.id;
+
+		console.log('loading user to display from back-end' + user.id);
+
+		var server = "http://localhost:3002/users/user/"+user.id;
+
+		axios.get(server)
+			.then(function (response) {
+				if(!!response.data.status && response.data.status === "success") {
+					console.log('user' + response.data.message);
+
+					store.dispatch(updateUserToDisplay(response.data.message));
+				} else {
+					alert ('Erreur lors du chargement des utilisateurs');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+
 export function * gestionUserFlow() {
     yield fork (createUser);
 	yield fork (getOperations);
 	yield fork (getDefaultPerms);
 	yield fork (getRoles);
 	yield fork (getListUser);
+	yield fork (requestUserToDisplay)
 }
