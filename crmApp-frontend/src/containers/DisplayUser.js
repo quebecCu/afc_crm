@@ -1,4 +1,5 @@
 import React from 'react';
+import '../style/CreationUser.css';
 
 class DisplayUser extends React.Component{
 
@@ -30,19 +31,47 @@ class DisplayUser extends React.Component{
 		<div className="container">
 			<div className="page-header" style={{paddingBottom:20}}>
 				<h1>Consultation de l'utilisateur {this.props.user.name} {this.props.user.lastname}</h1></div>
-			Rôle : {this.props.user.role}<br />
-			Nom : {this.props.user.lastname}<br />
-			Prénom : {this.props.user.name}<br />
-			Login: {this.props.user.login}<br />
-			Adresse e-mail: {this.props.user.mail}<br />
-			Permissions : {
-				this.props.user.userPerms.map(element=>{
-			return(<div>Droit de {this._getPermission(element.level)} sur la table {element.group}</div>);
+						<div className="row" style={{textAlign:"left", paddingBottom:10}}>
+							<div className="col-sm">
+								<span className="titre">Nom :</span>
+								<span className="valeur"> {this.props.user.lastname}</span>
+							</div>
+							<div className="col-sm">
+								<span className="titre">Prénom :</span>
+								<span className="valeur"> {this.props.user.name}</span>
+							</div>
+						</div>
+						<div className="row" style={{textAlign:"left", paddingBottom:10}}>
+							<div className="col-sm">
+								<span className="titre">Rôle :</span>
+								<span className="valeur">{this.props.user.role}</span>
+							</div>
+							<div className="col-sm">
+								<span className="titre">Login:</span>
+								<span className="valeur">{this.props.user.login}</span>
+							</div>
+						</div>
+						<div className="row" style={{textAlign:"left", paddingBottom:10}}>
+							<div className="col-sm">
+								<span className="titre">Adresse e-mail:</span>
+								<span className="valeur">{this.props.user.mail}</span>
+							</div>
+						</div>
+						<div className="row" style={{textAlign:"left", paddingBottom:10}}>
+							<div className="col-sm"><span className="titre">Permissions :</span></div>
+						</div>
+						<ul>
+						 {
 
-			})}
+							this.props.user.userPerms.map(element=>{
+								return(<div className="row col-sm " style={{textAlign:"left"}}><li><span className="valeur">Droit de {this._getPermission(element.level)} sur la partie {element.group}</span></li></div>);
 
-			<button onClick={()=>this.props.changeView("UpdateUser")}>Modifier </button>
-			<button onClick={this._handleClickDelete}>Supprimer</button>
+						})}
+						</ul>
+			<div className="row">
+				<div className="col-sm" style={{textAlign:"left"}}><button onClick={()=>this.props.changeView("UpdateUser")}>Modifier </button></div>
+				<div className="col-sm" style={{textAlign:"left"}}><button className="delete" onClick={this._handleClickDelete}>Supprimer</button></div>
+			</div>
 
 		</div>
 		);
