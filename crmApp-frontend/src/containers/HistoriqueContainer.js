@@ -5,10 +5,15 @@ import {changeViewDashboard} from "../actions/crmDashboard";
 import {connect} from "react-redux";
 
 class HistoriqueContainer extends Component {
+	
     constructor(props) {
         super(props);
         this.state = { historique: [{date: "20/09/2017", nom: "Kim", type: "Individuelle"},{date: "18/09/2017", nom: "Co", type: "Collective"}],
             };
+        this.handleClickF0 = this.handleClickF0.bind(this);
+        this.handleClickF1 = this.handleClickF1.bind(this);
+        this.handleClickF2 = this.handleClickF2.bind(this);
+        this.handleClickF3 = this.handleClickF3.bind(this);
         this.handleClick0 = this.handleClick0.bind(this);
         this.handleClick1 = this.handleClick1.bind(this);
         this.handleClick2 = this.handleClick2.bind(this);
@@ -18,30 +23,55 @@ class HistoriqueContainer extends Component {
         this.handleClick6 = this.handleClick6.bind(this);
         }
     
+  handleClickF0() {
+    	
+    	var table = document.getElementById("PageFournisseursTable");
+    	this.handleClick(0,table);
+    }
+    handleClickF1() {
+    	var table = document.getElementById("PageFournisseursTable");
+    	this.handleClick(1,table);
+    }
+    handleClickF2() {
+    	var table = document.getElementById("PageFournisseursTable");
+    	this.handleClick(2,table);
+    }
+    handleClickF3() {
+    	var table = document.getElementById("PageFournisseursTable");
+    	this.handleClick(3,table);
+    }
     handleClick0() {
-    	this.handleClick(0);
+    	
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(0,table);
     }
     handleClick1() {
-    	this.handleClick(1);
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(1,table);
     }
     handleClick2() {
-    	this.handleClick(2);
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(2,table);
     }
     handleClick3() {
-    	this.handleClick(3);
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(3,table);
     }
     handleClick4() {
-    	this.handleClick(4);
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(4,table);
     }
     handleClick5() {
-    	this.handleClick(5);
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(5,table);
     }
     handleClick6() {
-    	this.handleClick(6);
+    	var table = document.getElementById("PageCollectivesClientsTable");
+    	this.handleClick(6,table);
     }
-    handleClick(n) {
-    	  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    	  table = document.getElementById("PageCollectivesClientsTable");
+    handleClick(n ,table) {
+    	  var /*table, */rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+//    	  table = document.getElementById("PageCollectivesClientsTable");
     	  switching = true;
     	  dir = "asc"; 
     	  while (switching) {
@@ -117,10 +147,10 @@ class HistoriqueContainer extends Component {
                     <table id="PageFournisseursTable" className="table">
                         <thead>
                         <tr>
-                            <th>Nom de l'assurance</th>
-                            <th>Nombre d'employés</th>
-                            <th>Nom contact</th>
-                            <th>Code</th>
+                            <th onClick={this.handleClickF0}>Nom de l'assurance</th>
+                            <th onClick={this.handleClickF1}>Nombre d'employés</th>
+                            <th onClick={this.handleClickF2}>Nom contact</th>
+                            <th onClick={this.handleClickF3}>Code</th>
                         </tr>
                         </thead>
                         <DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history} handleClick={this.props.changeViewDashboard}/>
