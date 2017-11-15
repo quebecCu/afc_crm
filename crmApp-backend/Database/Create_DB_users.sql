@@ -37,7 +37,7 @@ CREATE TABLE users."ROLEADM" (
 
 CREATE TABLE users."UTILISATEUR" (
   iduser serial PRIMARY KEY,
-  login  varchar(20),
+  login  varchar(20) UNIQUE,
   password  varchar(200),
   mail  varchar(40),
   idrole  integer REFERENCES users."ROLEADM" (idrole),
