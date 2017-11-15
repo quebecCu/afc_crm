@@ -26,6 +26,7 @@ export function setAuthState (newAuthState){
 
 export function login (isAdminState) {
 	return {type: LOGIN , isAdminState}
+	
 }
 
 export function logout (){

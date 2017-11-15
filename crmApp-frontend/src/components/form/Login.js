@@ -1,7 +1,7 @@
 //import MyInput from './../components/Input';
 import React, { Component } from 'react';
 import '../../style/Login.css';
-import  logoCo from '../../style/images/logoCompany.jpg';
+import  logoCo from '../../style/images/logoCompany.png';
 //import  '../../style/logoCo.css';
 import  '../../style/footer.css';
 //import { connect  } from 'react-redux';
