@@ -13,13 +13,13 @@ let initialState = {
 			username:'',
 			password: '',
 			email:''
-//			isAdmin: true
 		},
 		errors: '',
 		sending:'',
 		isLoading: false,
 		loggedIn: false,
-		isAdmin: false
+		isAdmin: false,
+		cookie:''
 };
 
 export default function reducer (state = initialState, action ){
@@ -30,11 +30,8 @@ export default function reducer (state = initialState, action ){
 		return {...state ,formState: action.newFormState , error:''};
 	
 	case LOGIN:
-		return {...state , isAdmin: action.isAdminState , error:''};
+		return {...state , isAdmin: action.isAdminState._auth.isAdmin ,cookie: action.isAdminState._auth.cookie, error:''};
 		
-//	case LOGIN:
-//		return {...state , formState: action.formState , error:''};
-
 	case SET_AUTH:
 		return {...state, loggedIn: action.newAuthState, error:''};
 	case SENDING_REQUEST:

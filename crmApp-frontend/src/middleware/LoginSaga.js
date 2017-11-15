@@ -1,6 +1,6 @@
 import {take, fork, put} from 'redux-saga/effects';
 import {
-    LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, isAdmin
+	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, isAdmin
 } from '../actions/crmLogin';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
@@ -13,41 +13,34 @@ export function * loginFlow (){
 	while(true){
 		let request = yield take(LOGIN_REQUEST);
 		let {username, password} = request.data;
-		
-//		let adminrequest = yield take(LOGIN);
-//		let {isAdmin} = adminrequest.data;
-		
 		yield put ({ type: SENDING_REQUEST, sending:true});
-				
+
 
 		var encrypted = CryptoJS.AES.encrypt(password, "secretKey13579").toString();
-		var tokenToSend= localStorage.getItem("cookieSession");
-		
-		if(tokenToSend == undefined)
-			tokenToSend="";
-		
+//		var tokenToSend= localStorage.getItem("cookieSession");
+//
+//		if(tokenToSend == undefined)
+//			tokenToSend="";
+
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
-		
+
 		axios.post(server, {
 			username: username,
-			password: encrypted,
-			token: tokenToSend
+			password: encrypted
+//			token: tokenToSend
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
 				var _isAdmin =response.data.message.isAdmin;
-//				let formState = {
-//					username:'',
-//					password: '',
-//					email:'',
-//					isAdmin: _isAdmin
-//				}
-				localStorage.setItem("cookieSession" ,response.data.cookie);
-				store.dispatch(login(_isAdmin));
-//				store.dispatch(login(formState));
-				
+				var _cookie = response.data.message.cookie;
+				let formStateAdm ={_auth:{
+					cookie:_cookie,
+					isAdmin: _isAdmin
+				}}
+				localStorage.setItem("cookieSession" ,_cookie);
+				store.dispatch(login(formStateAdm));
 			}
 			else {
 				alert ("identifiant ou mot de passe incorrects");
@@ -56,7 +49,7 @@ export function * loginFlow (){
 		.catch(function (error) {
 			console.log(error);
 		});
-		
+
 	}
 }  
 
@@ -65,21 +58,21 @@ export function * logoutFlow() {
 		yield take (LOGOUT);
 		yield put({ type: SET_AUTH, newAuthState: false });
 		yield put({ type: CLEAR_SESSION});
-		
+
 		localStorage.removeItem("cookieSession");
-		
+
 		yield put(push("/"))
 
-		
+
 	}
 }
 
 export function * loginPush() {
 	while(true) {
 		yield take (LOGIN);
-        yield put({ type: SET_AUTH, newAuthState: true });
-        
-        yield put(push("/Home"));
+		yield put({ type: SET_AUTH, newAuthState: true });
+
+		yield put(push("/Home"));
 
 	}
 }
