@@ -205,7 +205,7 @@ router.post('/create', function(req, res) {
 				    			    		rights.forEach(function(right) {
 				    			    			if(element.level >= right.level){
 				    			    				newRight = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: right.idoperation };
-					    			    			newRights.push(right);
+					    			    			newRights.push(newRight);
 				    			    			}
 				    			    		})
 				    			    	});
@@ -318,7 +318,7 @@ router.post('/update', function(req, res) {
 			    			    		rights.forEach(function(right) {
 			    			    			if(element.level >= right.level){
 			    			    				newRight = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: right.idoperation };
-				    			    			newRights.push(right);
+				    			    			newRights.push(newRight);
 			    			    			}
 			    			    		})
 			    			    	});
