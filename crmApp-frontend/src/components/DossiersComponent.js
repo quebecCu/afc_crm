@@ -6,6 +6,39 @@ class DossiersComponent extends Component {
         this.props.handleClick('customer');
     }
 
+    
+    componentDidUpdate() {
+		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
+		inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
+	
+	inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
+	inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
+	inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
+	inputNomEntreprise = document.getElementById("nomEntreprise").value.toUpperCase();
+	inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
+	inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
+	inputProspect = document.getElementById("prospects").value.toUpperCase();
+	
+	table = document.getElementById("PageCollectivesClientsTable");
+	tr = table.getElementsByTagName("tr");
+	// Loop through all table rows, and hide those who don't match the search query
+	for (i = 0; i < tr.length; i++) {
+		td0 = tr[i].getElementsByTagName("td")[0];
+		td1 = tr[i].getElementsByTagName("td")[1];
+		td2 = tr[i].getElementsByTagName("td")[2];
+		td3 = tr[i].getElementsByTagName("td")[3];
+		td4 = tr[i].getElementsByTagName("td")[4];
+		td5 = tr[i].getElementsByTagName("td")[5];
+		td6 = tr[i].getElementsByTagName("td")[6];
+		if (td0 || td1 || td2 || td3 ||td4 ||td5 ||td6) {
+			if ( td5.innerHTML.toUpperCase().indexOf("ACTIF") > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		} 
+	}
+    }
     render() {
         if (this.props.historique) {
             this.rows = (
