@@ -317,7 +317,7 @@ router.post('/update', function(req, res) {
 			    		    			var entityObject = data[2].find(findEnt.bind(null, element.group));
 			    			    		rights.forEach(function(right) {
 			    			    			if(element.level >= right.level){
-			    			    				newRight = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: right.idoperation };
+			    			    				newRight = { iduser: userUpdated.iduser, identite: entityObject.identite, idoperation: right.idoperation };
 				    			    			newRights.push(newRight);
 			    			    			}
 			    			    		})
