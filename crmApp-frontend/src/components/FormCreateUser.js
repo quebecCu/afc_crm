@@ -13,11 +13,18 @@ export class FormCreateUser extends React.Component {
 		this.onChangeMail = this.onChangeMail.bind(this);
 	}
 
+	componentDidMount(){
+		if(this.props.view==="UpdateUser"){
+			document.getElementById("login").disabled = true;
+		}
+	}
+
 	onChangeRole(event) {
 		let role = event.target.value;
 		//quand on change le rôle, les permissions par défaut du rôle sélectionné s'attribuent aux userPerms
 		let idRole;//id du role sélectionné dans la table des permissions par défaut
 		for (let i = 0; i < this.props.formState.defaultPerms.length; i++) {
+			console.log("defperm"+this.props.formState.defaultPerms[i]);
 			if (role === this.props.formState.defaultPerms[i].role) {
 				idRole = i;
 			}
@@ -48,6 +55,7 @@ export class FormCreateUser extends React.Component {
 
 	whatToRender() {
 		let mdp;
+
 		if(this.props.view === "CreateUser"){
 			mdp=(<div className="form-group row">
 				<label className="col-sm-3 col-form-label">Mot de passe provisoire : </label>
@@ -87,13 +95,13 @@ export class FormCreateUser extends React.Component {
 						type="textField"
 						className="form-control"
 						placeholder="Login"
+						id="login"
 						onChange={this.onChangeLogin}
 						value={this.props.formState.login}/>
 				</div>
 			</div>
-			<br/>
 			{
-				mdp
+				this.props.view === "CreateUser" && mdp
 			}
 			<br/>
 			<div className="form-group row">
@@ -121,32 +129,20 @@ export class FormCreateUser extends React.Component {
 						<select
 							name="role"
 							className="form-control"
-							onChange={this.onChangeRole}>
-							<option disabled selected value> -- select an option -- </option>
+							onChange={this.onChangeRole}
+							value={this.props.formState.role}>
+							<option disabled value=""> -- select an option -- </option>
 							{
 								this.props.formState.roles.map((element) => {
-										if(this.props.formState.role === element.description){
-											return (<option
-												key={element.description}
-												value={element.description}
-												selected>
-												{
-													element.description
-												}
-											</option>);
-										}
-										else
-									{
-										return (
-											<option
-												key={element.description}
-												value={element.description}>
-												{
-													element.description
-												}
-											</option>
-										);
-									}
+										return (<option
+											key={element.description}
+											value={element.description}
+											>
+											{
+												element.description
+											}
+										</option>);
+
 								})}
 						</select>
 					</div>

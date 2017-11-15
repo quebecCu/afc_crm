@@ -97,7 +97,7 @@ router.get('/user/:id', function (req, res) {
         		role : userRetrieved[0].roledesc,
         		userPerms : permissions
         		};
-            
+
             res.send({
             	   status : 'success',
                message : resp
@@ -223,7 +223,7 @@ router.post('/create', function(req, res) {
 	    				return t.one(addUser.toString())
 						.then(userCreated => {
 			    		    		user.permissionsUser.forEach(function(element) {
-			    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
+			    			    		var entityObject = data[2].find(findEnt.bind(null, element.group));
 			    			    		if(element.level >= 1){
 			    			    			right = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: readObject.idoperation };
 			    			    			newRights.push(right);
@@ -348,7 +348,7 @@ router.post('/update', function(req, res) {
     				return t.one(updateUser.toString())
 					.then(userUpdated => {
 		    		    		user.permissionsUser.forEach(function(element) {
-		    			    		var entityObject = data[2].find(findEnt.bind(null, element.entite));
+		    			    		var entityObject = data[2].find(findEnt.bind(null, element.group));
 		    			    		if(element.level >= 1){
 		    			    			right = { iduser: userUpdated.iduser, identite: entityObject.identite, idoperation: createObject.idoperation };
 		    			    			newRights.push(right);
@@ -411,12 +411,12 @@ router.post('/update', function(req, res) {
 
 router.get('/operations', function(req,res){
 	console.log("GET /getOperation");
-	
+
 	let operationRequest = squel.select()
     .from('users."OPERATION"')
     .order("level")
     .toString();
-	
+
 	let defaultOperations = [{id : 0, label : "Aucun droit n'est accordé", value : 0}];
 	let id = 0;
 	let label = [];
@@ -440,25 +440,21 @@ router.get('/operations', function(req,res){
     .catch(error => {
         console.log('ERROR:', error);
     })
-    /*res.send({
-        status : 'success',
-		operations: [{id:0, label:"Read", value:1},{id:1, label:"Read + Write",value:3}, {id:2, label:"Read + Write + Create", value:7}]
-    });*/
 });
 
-router.get('/defaultPerms', function(req,res){	
+router.get('/defaultPerms', function(req,res){
     console.log("GET /getDefaultPerms");
-    
+
     let whereClauses = [];
     ignoredRole.forEach(function(element) {
     		whereClauses.push("role.description <> \'" + element + "\'");
     });
-    
+
     let whereClause = whereClauses.join(" AND ");
     console.log(getDefaultPermissions(whereClause));
     db.any(getDefaultPermissions(whereClause))
     .then(roleRetrieved => {
-    	
+
     	var roles = {};
     	for (var i = 0; i < roleRetrieved.length; i++) {
     	  var roleName = roleRetrieved[i].roledesc;
@@ -473,7 +469,7 @@ router.get('/defaultPerms', function(req,res){
     		permissions = buildPermissions(roles[roleName]);
     		defaultPermissions.push({role : roleName, droits: permissions});
     	}
-    	
+
     res.status(200);
         res.send({
         	   status : 'success',
@@ -485,44 +481,62 @@ router.get('/defaultPerms', function(req,res){
     })
 });
 
-/*router.get('/delete', function(req,res){	
-    console.log("GET /getDefaultPerms");
+router.delete('/user/:id', function(req,res){	
+    console.log("DELETE /user/:id");
+    let id = req.params.id;
     
-    let whereClauses = [];
-    ignoredRole.forEach(function(element) {
-    		whereClauses.push("role.description <> \'" + element + "\'");
-    });
+    var deleteRights = squel.delete()
+	.from('users."PERMISSIONUTIL_GLOB"')
+	.where("iduser = " + id);
     
-    let whereClause = whereClauses.join(" AND ");
-    console.log(getDefaultPermissions(whereClause));
-    db.any(getDefaultPermissions(whereClause))
-    .then(roleRetrieved => {
-    	
-    	var roles = {};
-    	for (var i = 0; i < roleRetrieved.length; i++) {
-    	  var roleName = roleRetrieved[i].roledesc;
-    	  if (!roles[roleName]) {
-    		  roles[roleName] = [];
-    	  }
-    	  roles[roleName].push(roleRetrieved[i]);
-    	}
-    	var defaultPermissions = [];
-    	let permissions = {};
-    	for (var roleName in roles) {
-    		permissions = buildPermissions(roles[roleName]);
-    		defaultPermissions.push({role : roleName, droits: permissions});
-    	}
-    	
-    res.status(200);
-        res.send({
-        	   status : 'success',
-           message : defaultPermissions
-        });
-    })
-    .catch(error => {
-        console.log('ERROR:', error);
-    })
-});*/
+    var getUser = squel.select()
+	.from('users."UTILISATEUR"')
+	.where("iduser = " + id);
+    
+    var deleteUser = squel.delete()
+	.from('users."UTILISATEUR"')
+	.where("iduser = " + id);
+    
+    var updatePersonne = squel.update()
+	.table('users."EMPLOYE_INT"')
+	.set("iduser", null)
+	.where("iduser = " + id);
+    
+    db.any(getUser.toString())
+	.then(userRetrieved=> {
+			if(userRetrieved.length === 0) {
+				res.send({
+					status : 'fail',
+					message : "L'utilisateur que vous voulez supprimer n'est pas enregistré"
+				});
+			} else {			
+			    db.tx(function (t1) {			    	
+				    	return this.batch([
+				    		t1.none(updatePersonne.toString()),
+				    		t1.none(deleteRights.toString()),
+				            t1.tx(t2 => {
+					            	return t2.none(deleteUser.toString())
+			    			        .then(() => {			    			        		
+			    			        });
+				            })
+				        ]);		     
+				})
+				.then(data => {
+					res.status(200);
+					res.send({
+						status : 'success',
+						message : null
+					});
+			    })
+			    .catch(error => {
+			    		res.send({
+						status : 'fail',
+						message : error.toString()
+					});
+			    }); 
+			}
+	});
+});
 
 router.get('/getRoles', function(req, res) {
 

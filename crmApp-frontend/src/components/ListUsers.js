@@ -7,7 +7,6 @@ class ListUsers extends React.Component{
         this._handleClick = this._handleClick.bind(this);
 		this._handleClickOnUser = this._handleClickOnUser.bind(this);
 
-
 	}
 
 

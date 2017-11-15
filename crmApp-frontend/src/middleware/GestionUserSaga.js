@@ -1,16 +1,15 @@
 import {take, fork} from 'redux-saga/effects';
 
 import {
-	CHANGE_FORM_CREATEUSER, GET_DEFAULTPERMS, GET_OPERATIONS, SUBMIT_USER, GET_ROLES,
-	changeFormCreateUser, submitUser, updateDefaultPerms, updateOperations, updateRoles
+	GET_DEFAULTPERMS, GET_OPERATIONS, SUBMIT_USER, GET_ROLES, UPDATE_USER,
+	updateDefaultPerms, updateOperations, updateRoles,
 } from '../actions/crmCreateUser';
 
 import {
-	GET_LIST_USERS, REQUEST_USER_BY_ID, updateUsers, updateUserToDisplay
+	GET_LIST_USERS, REQUEST_USER_BY_ID, DELETE_USER, updateUsers, updateUserToDisplay, getListUser
 } from '../actions/crmUserManagement';
 
 import axios from 'axios';
-import {push} from 'react-router-redux';
 import {store} from '../store';
 import CryptoJS from 'crypto-js';
 
@@ -19,7 +18,9 @@ export function * createUser () {
     while(true){
 
         let user = yield take(SUBMIT_USER);
-        let{role,
+		console.log(user);
+
+		let{role,
             nom,
 			prenom,
             login,
@@ -45,7 +46,7 @@ export function * createUser () {
             .then(function (response) {
                 if(!!response.data.status && response.data.status === "success"){
                     alert ('L\'utilisateur a été créé avec succès');
-                    store.dispatch(push("/PageAccueil/admin"));
+                    store.dispatch(getListUser());
                 } else {
                     alert ('Erreur lors de la création de l\'utilisateur');
                 }
@@ -56,18 +57,83 @@ export function * createUser () {
     }
 }
 
+export function * updateUser(){
+	while(true){
+
+		let user = yield take(UPDATE_USER);
+		let{id,
+			role,
+			nom,
+			prenom,
+			login,
+			mail,
+			userPerms
+		} = user.updatedUser;
+
+
+		//communication avec server
+		var server = "http://localhost:3002/users/update";
+
+		axios.post(server, {
+			id:id,
+			role: role,
+			nom: nom,
+			prenom: prenom,
+			login: login,
+			mail: mail,
+			userPerms: userPerms
+		})
+			.then(function (response) {
+				if(!!response.data.status && response.data.status === "success"){
+					alert ('L\'utilisateur a été modifié avec succès');
+					store.dispatch(getListUser());
+				} else {
+					alert ('Erreur lors de la modification de l\'utilisateur');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function * deleteUser(){
+	while(true){
+
+		let id = yield take(DELETE_USER);
+		console.log("middlewaare"+id);
+
+		//communication avec server
+		var server = "http://localhost:3002/users/user/"+id.id;
+
+		axios.delete(server, {
+
+		})
+			.then(function (response) {
+				if(!!response.data.status && response.data.status === "success"){
+					alert ('L\'utilisateur a été supprimé avec succès');
+					store.dispatch(getListUser());
+				} else {
+					alert ('Erreur lors de la suppression de l\'utilisateur');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 export function * getOperations() {
     while(true){
         yield take(GET_OPERATIONS);
 
-		console.log('loading operations from back-end');
 
-        var server = "http://localhost:3002/users/getOperations";
+        var server = "http://localhost:3002/users/operations";
 
         axios.get(server)
             .then(function(response){
                 if(!!response.data.status && response.data.status === "success"){
-                    store.dispatch(updateOperations(response.data.operations));
+                    store.dispatch(updateOperations(response.data.message));
                 } else {
                     alert("Erreur lors du chargement des operations");
                 }
@@ -123,7 +189,7 @@ export function * getRoles() {
     }
 }
 
-export function * getListUser() {
+export function * getListUsers() {
 	while(true) {
 		yield take(GET_LIST_USERS);
 
@@ -178,6 +244,8 @@ export function * gestionUserFlow() {
 	yield fork (getOperations);
 	yield fork (getDefaultPerms);
 	yield fork (getRoles);
-	yield fork (getListUser);
-	yield fork (requestUserToDisplay)
+	yield fork (getListUsers);
+	yield fork (requestUserToDisplay);
+	yield fork (updateUser);
+	yield fork (deleteUser);
 }
