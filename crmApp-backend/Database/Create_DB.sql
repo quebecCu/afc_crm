@@ -7,6 +7,7 @@
 
 DROP TABLE IF EXISTS "ADRESSE" CASCADE;
 DROP TABLE IF EXISTS "AVANTAGES" CASCADE;
+DROP TABLE IF EXISTS "TITRE" CASCADE;
 DROP TABLE IF EXISTS "CONTACT_CLIENT" CASCADE;
 DROP TABLE IF EXISTS "CONTACT_FOURNISSEUR" CASCADE;
 DROP TABLE IF EXISTS "STATUT_CONTACT" CASCADE;
@@ -57,7 +58,7 @@ CREATE TABLE public."ADRESSE" (
 
 CREATE TABLE public."RELEVE" (
   idreleve  serial  PRIMARY KEY,
-  libellereleve  varchar(20)
+  modeenvoiereleve  varchar(50)
 );
 
 CREATE TABLE public."PROVENANCE" (
@@ -75,11 +76,16 @@ CREATE TABLE public."TYPE" (
   libelletype  varchar(10)
 );
 
+CREATE TABLE public."TITRE" (
+  idtitre serial PRIMARY KEY,
+  libelleTitre varchar(3)
+);
+
 CREATE TABLE public."PERSONNE" (
   idpersonne  serial PRIMARY KEY,
   nom  varchar(20) NOT NULL,
   prenom  varchar(30) NOT NULL,
-  titre varchar(3) NOT NULL,
+  idtitre integer REFERENCES "TITRE" (idtitre) NOT NULL,
   date_naiss date,
   idadresse integer  REFERENCES  "ADRESSE" (idadresse),
   num_tel_principal  varchar(10),
@@ -88,6 +94,7 @@ CREATE TABLE public."PERSONNE" (
   ext_tel_secondaire varchar(3),
   mail  varchar(30)
 );
+
 
 CREATE TABLE public."FOURNISSEUR" (
   idfournisseur  serial  PRIMARY KEY,
@@ -127,7 +134,8 @@ CREATE TABLE public."CATEGORIE"(
 
 CREATE TABLE public."POSTE" (
   idposte serial PRIMARY KEY,
-  libelleposte  varchar(20)
+  libelleposte  varchar(40),
+  isDecideur boolean
 );
 
 CREATE TABLE public."ETAT" (
@@ -175,7 +183,7 @@ CREATE TABLE public."REGLE" (
 
 CREATE TABLE public."CADEAU" (
   idcadeau  serial  PRIMARY KEY,
-  libellecadeau  varchar(20)
+  libellecadeau  varchar(30)
 );
 
 CREATE TABLE public."CONTRAT" (
@@ -240,12 +248,12 @@ CREATE TABLE public."CLIENT_INDIVIDUEL" (
 
 CREATE TABLE public."ACTIVITE" (
   idactivite  serial  PRIMARY KEY,
-  libelleactivite  varchar(30)
+  libelleactivite  varchar(80)
 );
 
 CREATE TABLE public."CHAMBRE_COMMERCE" (
   idchambrecommerce  serial  PRIMARY KEY,
-  libellechambrecommerce  varchar(60)
+  libellechambrecommerce  varchar(80)
 );
 
 CREATE TABLE public."ENTREPRISE" (
@@ -260,9 +268,9 @@ CREATE TABLE public."ENTREPRISE" (
   fax  char(10),
   sous_groupe varchar(20),
   mail  varchar(30),
-  idcadeau integer  REFERENCES "CADEAU" (idcadeau),
   date_creation  date  DEFAULT  current_date,
   mois_admissible integer,
+  nb_employes integer NOT NULL,
   bc varchar(20),
   incomplet boolean,
   admin boolean,
@@ -339,6 +347,7 @@ CREATE TABLE public."CONTACT_FOURNISSEUR" (
 CREATE TABLE public."CADEAU_ENVOYE" (
   idcadeau integer REFERENCES "CADEAU" (idcadeau),
   identreprise integer REFERENCES "ENTREPRISE" (idclient),
+  description varchar (50),
   CONSTRAINT  pk_CADEAU_ENVOYE  PRIMARY KEY (idcadeau, identreprise)
 );
 

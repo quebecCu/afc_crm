@@ -4,6 +4,15 @@ var app = express();
 //Load the bcrypt module
 var bcrypt = require('bcrypt');
 var db = require('../models');
+var squelb = require('squel');
+var squel = squelb.useFlavour('postgres');
+
+let listAllClients = () => {
+	squel.select()
+		.from('users."UTILISATEUR"')
+		.where('login like ?', login)
+		.toString()
+}
 
 /* GET home page. */
 router.post('/clients', function(req, res) {
@@ -15,7 +24,6 @@ router.post('/clients', function(req, res) {
         {nom_entreprise: 'LEXUS', nom_employe: 'plus', no_police:'4522285', mois_renouvellement:'Juillet', nom_assureur:'Croix - verte'},
         {nom_entreprise: 'BMW', nom_employe: 'zero', no_police:'7774533', mois_renouvellement:'Janvier', nom_assureur:'Fifo'}
     ]});
-
 
     console.log("end post /clients");
 });

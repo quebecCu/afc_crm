@@ -20,6 +20,7 @@ let getUserByLogin = (login) => {
 };
 
 let ignoredRole = ["Visiteur", "Administrateur"];
+
 let getUserById = (id) => {
     return squel.select()
         .from('users."UTILISATEUR"', "util")
@@ -182,7 +183,7 @@ router.post('/create', function(req, res) {
 		    			var newRight;
 		    			var decrypted=  CryptoJS.AES.decrypt(user.mdpProv, 'secretKey13579');
 		    			var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
-		
+
 		    			let salt = genSaltSync (10);
 		    			let hash = hashSync(mdpText, salt);
 		    			console.log(hash);
@@ -193,15 +194,15 @@ router.post('/create', function(req, res) {
 		    			.set("mail", user.mail)
 		    			.set("idrole", idRole)
 		    			.returning('*');
-		
+
 		    			console.log(mdpText);
 		    			console.log(hash);
-		
+
 		    			db.tx(function (t) {
 		    				return t.one(addUser.toString())
 							.then(userCreated => {
 				    		    		user.permissionsUser.forEach(function(element) {
-				    			    		var entityObject = data[2].find(findEnt.bind(null, element.group));  		
+				    			    		var entityObject = data[2].find(findEnt.bind(null, element.group));
 				    			    		rights.forEach(function(right) {
 				    			    			if(element.level >= right.level){
 				    			    				newRight = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: right.idoperation };
@@ -238,7 +239,7 @@ router.post('/create', function(req, res) {
 	    					status : 'fail',
 	    					message : 'Il n\'est pas possible de créer un administrateur'
 	    				});
-	    			}	
+	    			}
 		    	})
 	    		.catch(function (err) {
 		    		  console.log(err);
@@ -264,7 +265,6 @@ router.post('/create', function(req, res) {
 		});
     });*/
 });
-
 
 router.post('/update', function(req, res) {
 	/*security.checkRights(1, "Gestion des utilisateurs", 3)
@@ -302,19 +302,19 @@ router.post('/update', function(req, res) {
 	    			let rights = data[1];
 	    			var newRights = [];
 	    			var newRight;
-	
+
 	    			var updateUser = squel.update()
 	    			.table('users."UTILISATEUR"')
 	    			.set("mail", user.mail)
 	    			.set("idrole", idRole)
 	    			.where("iduser = " + user.id)
 	    			.returning('*');
-	
+
 	    			db.tx(function (t) {
 	    				return t.one(updateUser.toString())
 						.then(userUpdated => {
 			    		    		user.permissionsUser.forEach(function(element) {
-			    		    			var entityObject = data[2].find(findEnt.bind(null, element.group));  		
+			    		    			var entityObject = data[2].find(findEnt.bind(null, element.group));
 			    			    		rights.forEach(function(right) {
 			    			    			if(element.level >= right.level){
 			    			    				newRight = { iduser: userCreated.iduser, identite: entityObject.identite, idoperation: right.idoperation };
@@ -325,7 +325,7 @@ router.post('/update', function(req, res) {
 			    		    		var deleteRights = squel.delete()
 			    			    	.from('users."PERMISSIONUTIL_GLOB"')
 			    			    	.where("iduser = " + user.id);
-	
+
 			    			    	var addRights = squel.insert()
 			    			    	.into('users."PERMISSIONUTIL_GLOB"')
 			    			    	.setFieldsRows(newRights)
@@ -359,7 +359,7 @@ router.post('/update', function(req, res) {
     					status : 'fail',
     					message : 'Il n\'est pas possible de définir un nouvel administrateur'
     				});
-    			}	
+    			}
     		})
     		.catch(function (err) {
 	    		  console.log(err);
@@ -447,28 +447,28 @@ router.get('/defaultPerms', function(req,res){
     })
 });
 
-router.delete('/user/:id', function(req,res){	
+router.delete('/user/:id', function(req,res){
     console.log("DELETE /user/:id");
     let id = req.params.id;
-    
+
     var deleteRights = squel.delete()
 	.from('users."PERMISSIONUTIL_GLOB"')
 	.where("iduser = " + id);
-    
+
     var getUser = squel.select()
 	.from('users."UTILISATEUR"', "util")
 	.join('users."ROLEADM"', "adm", "util.idrole = adm.idrole")
 	.where("iduser = " + id);
-    
+
     var deleteUser = squel.delete()
 	.from('users."UTILISATEUR"')
 	.where("iduser = " + id);
-    
+
     var updatePersonne = squel.update()
 	.table('users."EMPLOYE_INT"')
 	.set("iduser", null)
 	.where("iduser = " + id);
-    
+
     db.any(getUser.toString())
 	.then(userRetrieved=> {
 			if(userRetrieved.length === 0) {
@@ -482,16 +482,16 @@ router.delete('/user/:id', function(req,res){
 					message : "Vous ne pouvez pas supprimer un administrateur"
 				});
 			} else {
-			    db.tx(function (t1) {			    	
+			    db.tx(function (t1) {
 				    	return this.batch([
 				    		t1.none(updatePersonne.toString()),
 				    		t1.none(deleteRights.toString()),
 				            t1.tx(t2 => {
 					            	return t2.none(deleteUser.toString())
-			    			        .then(() => {			    			        		
+			    			        .then(() => {
 			    			        });
 				            })
-				        ]);		     
+				        ]);
 				})
 				.then(data => {
 					res.status(200);
@@ -505,7 +505,7 @@ router.delete('/user/:id', function(req,res){
 						status : 'fail',
 						message : error.toString()
 					});
-			    }); 
+			    });
 			}
 	});
 });
@@ -535,7 +535,6 @@ router.get('/getRoles', function(req, res) {
         })
     console.log('end get /getRoles');
 });
-
 
 function createEmployee(userInformations, userCreated, t, res) {
 	 var addPersonne = squel.insert()
@@ -581,6 +580,5 @@ function updateEmployee(userInformations, t, res) {
 	})
 
 }
-
 
 module.exports = router;
