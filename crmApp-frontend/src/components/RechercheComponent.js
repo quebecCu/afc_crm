@@ -13,8 +13,7 @@ class RechercheComponent extends Component {
 		this._reset = this._reset.bind(this);
 		this._changeMoisRenouvellement = this._changeMoisRenouvellement.bind(this);
 		this._filtre = this._filtre.bind(this);
-		this._sortTable = this._sortTable.bind(this);
-		
+		this._hardReset = this._hardReset.bind(this);
 	}
 	_changeNomEntreprise (event){
 		this._emitChange({...this.props.formState , nomEntreprise: event.target.value});
@@ -36,10 +35,29 @@ class RechercheComponent extends Component {
 		document.getElementById("moisRenouvellement").value = "";
 		document.getElementById("numeroPolice").value = "";
 		document.getElementById("nomEntreprise").value = "";
+		document.getElementById("prospects").value = "";
+		this.props.changeFormColl(newFormState);
+		this._filtre ();
+	}
+	
+	_hardReset() {
+		let newFormState={
+					nomEntreprise:'',
+					nomEmploye: '',
+					numeroPolice:'',
+					nomAssureur:'',
+					moisRenouvellement:'',
+					clientActif: 'actif',
+					statutProspect: 'false'
+		};
+		document.getElementById("nomEmploye").value = "";
+		document.getElementById("nomAssureur").value = "";
+		document.getElementById("moisRenouvellement").value = "";
+		document.getElementById("numeroPolice").value = "";
+		document.getElementById("nomEntreprise").value = "";
 		document.getElementById("selectedStatut").value = "";
 		document.getElementById("prospects").value = "";
 		this.props.changeFormColl(newFormState);
-		this._sortTable()
 		this._filtre ();
 	}
 	
@@ -97,28 +115,6 @@ class RechercheComponent extends Component {
 		}
 	}
 	
-	_sortTable() {
-		  var table, rows, switching, i, x, y, shouldSwitch;
-		  table = document.getElementById("PageCollectivesClientsTable");
-		  switching = true;
-		  while (switching) {
-		    switching = false;
-		    rows = table.getElementsByTagName("TR");
-		    for (i = 1; i < (rows.length - 1); i++) {
-		      shouldSwitch = false;
-		      x = rows[i].getElementsByTagName("TD")[5];
-		      y = rows[i + 1].getElementsByTagName("TD")[5];
-		      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-		        shouldSwitch= true;
-		        break;
-		      }
-		    }
-		    if (shouldSwitch) {
-		      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-		      switching = true;
-		    }
-		  }
-		}
 	_emitChange (newFormState){
 		this.props.changeFormColl(newFormState);
 	}
@@ -134,8 +130,8 @@ class RechercheComponent extends Component {
 				<input type="text" id ="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
 
 				<select  required id = "selectedStatut" onChange={this._filtre} > 
-				<option value=""  selected="selected">-- Choisir le statut --</option>
-				<option value="actif">Actif</option>
+				<option value=""  >-- Choisir le statut --</option>
+				<option value="actif" selected="selected" >Actif</option>
 				<option value="annulé">Annulé</option>
 				</select>
 				
@@ -144,7 +140,7 @@ class RechercheComponent extends Component {
 				<option value="oui">Prospect</option>
 				<option value="non"> Non prospect </option>
 				</select>
-					<input type="reset" value="Reset" id="reset"  onClick= {this._reset}/>
+					<input type="reset" value="Reset" id="reset"  onClick= {this._hardReset}/>
 					</form>
 		);
 	}
