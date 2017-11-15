@@ -91,7 +91,11 @@ export function * updateUser(){
 				if(!!response.data.status && response.data.status === "success"){
 					alert ('L\'utilisateur a été modifié avec succès');
 					store.dispatch(getListUser());
-				} else {
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
 					alert ('Erreur lors de la modification de l\'utilisateur');
 				}
 			})
