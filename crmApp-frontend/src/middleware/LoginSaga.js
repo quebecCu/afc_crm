@@ -1,6 +1,6 @@
 import {take, fork, put} from 'redux-saga/effects';
 import {
-    LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN
+    LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, isAdmin
 } from '../actions/crmLogin';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
@@ -12,7 +12,11 @@ import CryptoJS from 'crypto-js';
 export function * loginFlow (){
 	while(true){
 		let request = yield take(LOGIN_REQUEST);
-		let {username, password, isAdmin} = request.data;
+		let {username, password} = request.data;
+		
+//		let adminrequest = yield take(LOGIN);
+//		let {isAdmin} = adminrequest.data;
+		
 		yield put ({ type: SENDING_REQUEST, sending:true});
 				
 
@@ -34,9 +38,16 @@ export function * loginFlow (){
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
 				var _isAdmin =response.data.message.isAdmin;
-				
+//				let formState = {
+//					username:'',
+//					password: '',
+//					email:'',
+//					isAdmin: _isAdmin
+//				}
 				localStorage.setItem("cookieSession" ,response.data.cookie);
-				store.dispatch(login());
+				store.dispatch(login(_isAdmin));
+//				store.dispatch(login(formState));
+				
 			}
 			else {
 				alert ("identifiant ou mot de passe incorrects");
