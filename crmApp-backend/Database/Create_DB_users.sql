@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS users."POSITION" CASCADE;
 
 CREATE TABLE users."ROLEADM" (
   idrole serial PRIMARY KEY,
+  isAdmin boolean,
   description  varchar(30)
 );
 

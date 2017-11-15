@@ -12,23 +12,29 @@ import CryptoJS from 'crypto-js';
 export function * loginFlow (){
 	while(true){
 		let request = yield take(LOGIN_REQUEST);
-		let {username, password} = request.data;
-		 
+		let {username, password, isAdmin} = request.data;
 		yield put ({ type: SENDING_REQUEST, sending:true});
 				
 
 		var encrypted = CryptoJS.AES.encrypt(password, "secretKey13579").toString();
-	
+		var tokenToSend= localStorage.getItem("cookieSession");
+		
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
 		
 		axios.post(server, {
 			username: username,
-			password: encrypted
+			password: encrypted,
+			token: tokenToSend
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
+				var _isAdmin =response.data.message.isAdmin;
+				
 				localStorage.setItem("cookieSession" ,response.data.cookie);
 				store.dispatch(login());
 			}
@@ -47,7 +53,6 @@ export function * logoutFlow() {
 	while(true){
 		yield take (LOGOUT);
 		yield put({ type: SET_AUTH, newAuthState: false });
-		
 		yield put({ type: CLEAR_SESSION});
 		
 		localStorage.removeItem("cookieSession");
@@ -62,6 +67,7 @@ export function * loginPush() {
 	while(true) {
 		yield take (LOGIN);
         yield put({ type: SET_AUTH, newAuthState: true });
+        
         yield put(push("/Home"));
 
 	}

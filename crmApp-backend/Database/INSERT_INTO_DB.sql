@@ -14,11 +14,11 @@ SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
 SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
 
 ---ROLEADM---
-INSERT INTO users."ROLEADM"(description) VALUES ('Administrateur');
-INSERT INTO users."ROLEADM"(description) VALUES ('Associé');
-INSERT INTO users."ROLEADM"(description) VALUES ('Consultant');
-INSERT INTO users."ROLEADM"(description) VALUES ('Employé');
-INSERT INTO users."ROLEADM"(description) VALUES ('Visiteur');
+INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Administrateur', TRUE);
+INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Associé', FALSE);
+INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Consultant', FALSE);
+INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Employé', FALSE);
+INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Visiteur', FALSE);
 
 
 ---OPERATION---
