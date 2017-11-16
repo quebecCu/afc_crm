@@ -40,9 +40,10 @@ class NavBar extends Component {
                             <li>
                                 <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} />
                             </li>
-                            <li>
-                                <NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement}/>
-
+                            <li >
+                            {
+    							this.props.crmLogin.isAdmin === true && <NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement}/>
+                            } 
                             </li>
                             <li>
                                 <div  id="logout" onClick={this.props.logout} className="link text-center">Déconnexion</div>
@@ -61,7 +62,7 @@ class NavBar extends Component {
 function mapStateToProps (state) {
 
     return{
-
+    		crmLogin: state.crmLogin
     }
 }
 

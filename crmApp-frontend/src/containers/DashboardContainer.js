@@ -13,6 +13,8 @@ class DashboardContainer extends Component {
 
     render() {
         let {view} = this.props.crmDashboard;
+        let {isAdmin} = this.props.crmLogin;
+
         if(this.props.crmDashboard.view === "customer") {
         	console.log("YO MAN");
 		}
@@ -31,7 +33,7 @@ class DashboardContainer extends Component {
 							this.props.crmDashboard.view === "suppliers" && <PageFournisseurs />
                         }
                         {
-							this.props.crmDashboard.view === "usersManagement" && <GestionUser />
+							this.props.crmDashboard.view === "usersManagement" && this.props.crmLogin.isAdmin === true && <GestionUser />
                         }
                         {
 							this.props.crmDashboard.view === "customer" && <Page1 />
@@ -56,7 +58,8 @@ class DashboardContainer extends Component {
 function mapStateToProps (state) {
 
     return{
-        crmDashboard: state.crmDashboard
+        crmDashboard: state.crmDashboard,
+        crmLogin: state.crmLogin
     }
 }
 
