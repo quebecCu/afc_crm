@@ -10,7 +10,6 @@ export function * searchFlow (){
 
 
 		var tokenToSend= localStorage.getItem("cookieSession");
-
 		if(tokenToSend == undefined)
 			tokenToSend="";
 		
