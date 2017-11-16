@@ -20,6 +20,7 @@ let getUserByLogin = (login) => {
 };
 
 let ignoredRole = ["Visiteur", "Administrateur"];
+
 let getUserById = (id) => {
     return squel.select()
         .from('users."UTILISATEUR"', "util")
@@ -264,7 +265,6 @@ router.post('/create', function(req, res) {
 		});
     });*/
 });
-
 
 router.post('/update', function(req, res) {
 	/*security.checkRights(1, "Gestion des utilisateurs", 3)
@@ -536,7 +536,6 @@ router.get('/getRoles', function(req, res) {
     console.log('end get /getRoles');
 });
 
-
 function createEmployee(userInformations, userCreated, t, res) {
 	 var addPersonne = squel.insert()
 		.into('public."PERSONNE"')
@@ -581,6 +580,5 @@ function updateEmployee(userInformations, t, res) {
 	})
 
 }
-
 
 module.exports = router;
