@@ -14,8 +14,13 @@ export function * getGridLayout (){
 
 		//communication avec server
 		let server = "http://localhost:3002/getCustomerGrid";
-
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		
 		axios.post(server, {
+			tokenToSend:tokenToSend
 		})
 			.then(function (response) {
 				if(!!response.data.grid ){

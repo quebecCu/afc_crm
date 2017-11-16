@@ -9,7 +9,7 @@ var expressJwtIp = require('express-jwt-ip');
 
 
 /* GET home page. */
-router.post('/fournisseurs',  expressJwtIp.ip(),function(req, res) {
+router.post('/fournisseurs',  expressJwtIp.ip(), function(req, res) {
 
 	var tokenReceived = req.body.tokenToSend;
 	var secret = 'aplsszjknbndsj';
