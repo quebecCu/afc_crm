@@ -11,7 +11,7 @@ var expressJwtIp = require('express-jwt-ip');
 /* GET home page. */
 router.post('/fournisseurs',  expressJwtIp.ip(), function(req, res) {
 
-	var tokenReceived = req.body.tokenToSend;
+	var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode 
 	var decoded = jwt.decode(tokenReceived, secret);

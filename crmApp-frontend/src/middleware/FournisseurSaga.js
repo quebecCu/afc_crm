@@ -11,12 +11,17 @@ export function * getListFournisseurs (){
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
 		//communication avec server
 		var server = "http://localhost:3002/fournisseurs";
 
 		axios.post(server, {
-			tokenToSend:tokenToSend
-		})
+		}, config)
 		.then(function (response) {
 			if(!!response.data.fournisseur ){
 				store.dispatch(getRequestFour(response.data.fournisseur));

@@ -141,7 +141,7 @@ function buildPermissions (entity) {
 
 router.post('/create', expressJwtIp.ip(), function(req, res) {
 
-	var tokenReceived = req.body.tokenToSend;
+	var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode 
 	var decoded = jwt.decode(tokenReceived, secret);
@@ -281,7 +281,7 @@ router.post('/create', expressJwtIp.ip(), function(req, res) {
 	else {
 		res.send({
 			status : 'fail',
-			message : error.toString()
+			message : 'Il n\'est pas possible de créer cet utilisateur'
 		});
 	}	
 });
@@ -289,16 +289,13 @@ router.post('/create', expressJwtIp.ip(), function(req, res) {
 router.post('/update', expressJwtIp.ip(),function(req, res) {
 	
 	
-	var tokenReceived = req.body.tokenToSend;
+	var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode 
 	var decoded = jwt.decode(tokenReceived, secret);
 	var _ipReceived = decoded.ip;
 	var _ip = res.locals.ip;
 	console.log("tokenReceived   " + tokenReceived);
-	console.log("_ip   " + _ip);
-	console.log("_ip   " + _ip);
-	console.log("_ip   " + _ip);
 	if(!!decoded && (_ip === _ipReceived)){
 		/*security.checkRights(1, "Gestion des utilisateurs", 3)
     .then(() => {*/
@@ -407,9 +404,13 @@ router.post('/update', expressJwtIp.ip(),function(req, res) {
 		});
     });*/
 	}
-//	else{
-//
-//	}
+	else{
+		res.send({
+			status : 'fail',
+			message : 'Il n\'est pas possible de modifier cet utilisateur'
+		});
+
+	}
 });
 
 router.get('/operations', function(req,res){
@@ -484,9 +485,26 @@ router.get('/defaultPerms', function(req,res){
 	})
 });
 
-router.delete('/user/:id', function(req,res){
+router.delete('/user/:id', expressJwtIp.ip(),function(req,res){
+	
+
+	var tokenReceived = req.get("authorization");
+	
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	console.log("tokenReceived   " + tokenReceived);
+	
+	
+	if(!!decoded && (_ip === _ipReceived)){
+		
+		console.log("OKKKKKKKKKK");
+
 	console.log("DELETE /user/:id");
 	let id = req.params.id;
+	console.log('id: ', id);
 
 	var deleteRights = squel.delete()
 	.from('users."PERMISSIONUTIL_GLOB"')
@@ -545,7 +563,13 @@ router.delete('/user/:id', function(req,res){
 			});
 		}
 	});
-});
+	}
+	else{
+		res.send({
+			status : 'fail',
+			message : 'Il n\'est pas possible de supprimer cet utilisateur'
+		});
+	}});
 
 router.get('/getRoles', function(req, res) {
 

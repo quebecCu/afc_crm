@@ -13,60 +13,62 @@ import axios from 'axios';
 import {store} from '../store';
 import CryptoJS from 'crypto-js';
 
-var tokenToSend= localStorage.getItem("cookieSession");
-if(tokenToSend == undefined)
-	tokenToSend="";
 
 export function * createUser () {
 
-    while(true){
+	while(true){
 
-        let user = yield take(SUBMIT_USER);
+		let user = yield take(SUBMIT_USER);
 		console.log(user);
-		
-		
+
+
 		let{role,
-            nom,
+			nom,
 			prenom,
-            login,
-            mdpProv,
-            mail,
-            userPerms
-        } = user.newUser;
+			login,
+			mdpProv,
+			mail,
+			userPerms
+		} = user.newUser;
 
-        let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
-        var tokenToSend= localStorage.getItem("cookieSession");
-        if(tokenToSend == undefined)
-        	tokenToSend="";
-        //communication avec server
-        var server = "http://localhost:3002/users/create";
+		let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
 
-        axios.post(server, {
-            role: role,
-            nom: nom,
+		//communication avec server
+		var server = "http://localhost:3002/users/create";
+
+		axios.post(server, {
+			role: role,
+			nom: nom,
 			prenom: prenom,
-            login: login,
-            mdpProv: mdpProvEncoded,
-            mail: mail,
-            userPerms: userPerms,
-            tokenToSend:tokenToSend
-        })
-            .then(function (response) {
-                if(!!response.data.status && response.data.status === "success"){
-                    alert ('L\'utilisateur a été créé avec succès');
-                    store.dispatch(getListUser());
-                }
-                else if(response.data.status === "fail") {
-                	alert(response.data.message);
-				}
-                else {
-                    alert ('Erreur lors de la création de l\'utilisateur');
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+			login: login,
+			mdpProv: mdpProvEncoded,
+			mail: mail,
+			userPerms: userPerms,
+		}, config)
+		.then(function (response) {
+			if(!!response.data.status && response.data.status === "success"){
+				alert ('L\'utilisateur a été créé avec succès');
+				store.dispatch(getListUser());
+			}
+			else if(response.data.status === "fail") {
+				alert(response.data.message);
+			}
+			else {
+				alert ('Erreur lors de la création de l\'utilisateur');
+			}
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
 }
 
 
@@ -82,12 +84,17 @@ export function * updateUser(){
 			mail,
 			userPerms
 		} = user.updatedUser;
+
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
 		//communication avec server
-		var server = "http://localhost:3002/users/update";
+		var server = "http://localhost:3002/users/update/";
 
 		axios.post(server, {
 			id:id,
@@ -97,116 +104,123 @@ export function * updateUser(){
 			login: login,
 			mail: mail,
 			userPerms: userPerms,
-			tokenToSend:tokenToSend
+		}, config)
+		.then(function (response) {
+			if(!!response.data.status && response.data.status === "success"){
+				alert ('L\'utilisateur a été modifié avec succès');
+				store.dispatch(getListUser());
+			}
+			else if(response.data.status === "fail") {
+				alert(response.data.message);
+			}
+			else {
+				alert ('Erreur lors de la modification de l\'utilisateur');
+			}
 		})
-			.then(function (response) {
-				if(!!response.data.status && response.data.status === "success"){
-					alert ('L\'utilisateur a été modifié avec succès');
-					store.dispatch(getListUser());
-				}
-				else if(response.data.status === "fail") {
-					alert(response.data.message);
-				}
-				else {
-					alert ('Erreur lors de la modification de l\'utilisateur');
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+		.catch(function (error) {
+			console.log(error);
+		});
 	}
 }
 
 export function * deleteUser(){
 	while(true){
 
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
+
 		let id = yield take(DELETE_USER);
 		console.log("middlewaare"+id);
 
 		//communication avec server
-		var server = "http://localhost:3002/users/user/"+id.id;
+		var server = "http://localhost:3002/users/user/"+id.id ;
 
-		axios.delete(server, {
-			tokenToSend:tokenToSend
+		axios.delete(server, config)
+		.then(function (response) {
+			if(!!response.data.status && response.data.status === "success"){
+				alert ('L\'utilisateur a été supprimé avec succès');
+				store.dispatch(getListUser());
+			} else {
+				alert ('Erreur lors de la suppression de l\'utilisateur');
+			}
 		})
-			.then(function (response) {
-				if(!!response.data.status && response.data.status === "success"){
-					alert ('L\'utilisateur a été supprimé avec succès');
-					store.dispatch(getListUser());
-				} else {
-					alert ('Erreur lors de la suppression de l\'utilisateur');
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+		.catch(function (error) {
+			console.log(error);
+		});
 	}
 }
 
 export function * getOperations() {
-    while(true){
-        yield take(GET_OPERATIONS);
+	while(true){
+		yield take(GET_OPERATIONS);
 
 
-        var server = "http://localhost:3002/users/operations";
+		var server = "http://localhost:3002/users/operations";
 
-        axios.get(server)
-            .then(function(response){
-                if(!!response.data.status && response.data.status === "success"){
-                    store.dispatch(updateOperations(response.data.message));
-                } else {
-                    alert("Erreur lors du chargement des operations");
-                }
-            })
-            .catch(function(error){
-                console.log(error);
-            })
-    }
+		axios.get(server)
+		.then(function(response){
+			if(!!response.data.status && response.data.status === "success"){
+				store.dispatch(updateOperations(response.data.message));
+			} else {
+				alert("Erreur lors du chargement des operations");
+			}
+		})
+		.catch(function(error){
+			console.log(error);
+		})
+	}
 }
 
 export function * getDefaultPerms() {
-    while(true){
+	while(true){
 
-        yield take(GET_DEFAULTPERMS);
-        console.log("on passe par getDefaultPerms middleware");
+		yield take(GET_DEFAULTPERMS);
+		console.log("on passe par getDefaultPerms middleware");
 
-        var server = "http://localhost:3002/users/defaultPerms";
+		var server = "http://localhost:3002/users/defaultPerms";
 
-        axios.get(server)
-            .then(function(response){
-                if(!!response.data.status && response.data.status === "success"){
-                    store.dispatch(updateDefaultPerms(response.data.message));
-                } else {
-                    alert("Erreur lors du chargement des operations");
-                }
-            })
-            .catch(function(error){
-                console.log(error);
-            })
-    }
+		axios.get(server)
+		.then(function(response){
+			if(!!response.data.status && response.data.status === "success"){
+				store.dispatch(updateDefaultPerms(response.data.message));
+			} else {
+				alert("Erreur lors du chargement des operations");
+			}
+		})
+		.catch(function(error){
+			console.log(error);
+		})
+	}
 }
 
 export function * getRoles() {
-    while(true){
-        yield take(GET_ROLES);
+	while(true){
+		yield take(GET_ROLES);
 
-        console.log('loading user roles from middleware');
+		console.log('loading user roles from middleware');
 
-        //communication avec server
-        var server = "http://localhost:3002/users/getRoles";
+		//communication avec server
+		var server = "http://localhost:3002/users/getRoles";
 
-        axios.get(server)
-            .then(function (response) {
-                if(!!response.data.status && response.data.status === "success"){
-                    store.dispatch(updateRoles(response.data.roles));
-                } else {
-                    alert ('Erreur lors du chargement des roles');
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+		axios.get(server)
+		.then(function (response) {
+			if(!!response.data.status && response.data.status === "success"){
+				store.dispatch(updateRoles(response.data.roles));
+			} else {
+				alert ('Erreur lors du chargement des roles');
+			}
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
 }
 
 export function * getListUsers() {
@@ -218,17 +232,17 @@ export function * getListUsers() {
 		var server = "http://localhost:3002/users/list";
 
 		axios.get(server)
-			.then(function (response) {
-				if(!!response.data.status && response.data.status === "success") {
-					console.log('users list' + response.data.users);
-					store.dispatch(updateUsers(response.data.users));
-				} else {
-					alert ('Erreur lors du chargement des utilisateurs');
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+		.then(function (response) {
+			if(!!response.data.status && response.data.status === "success") {
+				console.log('users list' + response.data.users);
+				store.dispatch(updateUsers(response.data.users));
+			} else {
+				alert ('Erreur lors du chargement des utilisateurs');
+			}
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 	}
 }
 
@@ -243,24 +257,24 @@ export function * requestUserToDisplay(){
 		var server = "http://localhost:3002/users/user/"+user.id;
 
 		axios.get(server)
-			.then(function (response) {
-				if(!!response.data.status && response.data.status === "success") {
-					console.log('user' + response.data.message);
+		.then(function (response) {
+			if(!!response.data.status && response.data.status === "success") {
+				console.log('user' + response.data.message);
 
-					store.dispatch(updateUserToDisplay(response.data.message));
-				} else {
-					alert ('Erreur lors du chargement des utilisateurs');
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+				store.dispatch(updateUserToDisplay(response.data.message));
+			} else {
+				alert ('Erreur lors du chargement des utilisateurs');
+			}
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 	}
 }
 
 
 export function * gestionUserFlow() {
-    yield fork (createUser);
+	yield fork (createUser);
 	yield fork (getOperations);
 	yield fork (getDefaultPerms);
 	yield fork (getRoles);
