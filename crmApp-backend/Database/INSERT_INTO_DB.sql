@@ -12,6 +12,7 @@ SELECT setval('users."ENTITE_identite_seq"', 1, FALSE);
 SELECT setval('users."OPERATION_idoperation_seq"', 1, FALSE);
 SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
 SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
+SELECT setval('public."TITRE_idtitre_seq"', 1, FALSE);
 
 ---ROLEADM---
 INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Administrateur', TRUE);
@@ -105,6 +106,10 @@ INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('azizou',
 INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('maxime', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 3);
 INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('jean_neymar', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 4);
 
+--TITRE--
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
+
 --ADMIN RIGHTS-- (alain)
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 2);
@@ -131,7 +136,7 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 2);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 3);
 
-
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Rey', 'Alain', 1);
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (1, 1);
 
 --Associé-- (azizou)
@@ -145,6 +150,7 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 2);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 3);
 
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Oukilou', 'Aziz', 1);
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (2, 2);
 
 --Consultant-- (maxime)
@@ -152,7 +158,7 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 7, 1);
 
-INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Atito', 'Maxime', 'Mr');
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Atito', 'Maxime', 1);
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (3, 3);
 --ENDDATATEST
 
@@ -161,6 +167,7 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 7, 1);
 
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Neymarito', 'Jean', 1);
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 --ENDDATATEST
 
@@ -170,13 +177,11 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 -----public schema-----
 SELECT setval('public."PROVENANCE_idprovenance_seq"', 1, FALSE);
 SELECT setval('public."CLIENT_idclient_seq"', 1, FALSE);
-SELECT setval('public."TITRE_idtitre_seq"', 1, FALSE);
 SELECT setval('public."ADRESSE_idadresse_seq"', 1, FALSE);
 SELECT setval('public."ETAT_idetat_seq"', 1, FALSE);
 SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
 SELECT setval('public."AGA_idaga_seq"', 1, FALSE);
 SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
-SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
 SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
 SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
 SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
@@ -216,10 +221,6 @@ INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Ferme/Forest');
 INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Manufacture');
 INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Organisme à but non-lucratif');
 
---TITRE--
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
-
 --ADRESSE--
 INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Boul. université', 'Sherbrooke', 'Quebec', 'J1K2N4');
 INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugarbaby', 'Sherbrooke', 'Quebec', 'J1K2R1');
@@ -254,6 +255,7 @@ INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Neymar', 'Jean', 1)
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Ana', 'Pasfaitlescourses', 2);
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Adam', 'Troisjour', 1);
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Philippe', 'Opotamsituveux', 1);
+
 -----end public schema -----
 
 
