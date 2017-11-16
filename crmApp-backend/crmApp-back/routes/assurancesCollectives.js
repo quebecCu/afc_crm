@@ -7,7 +7,10 @@ var expressJwtIp = require('express-jwt-ip');
 /* GET home page. */
 router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 	//var query= '';
-	var tokenReceived = req.body.tokenToSend;
+	
+	var tokenReceived = req.get("authorization");
+	console.log("tokenReceived  " + tokenReceived)
+
 	var secret = 'aplsszjknbndsj';
 	// decode 
 	var decoded = jwt.decode(tokenReceived, secret);
