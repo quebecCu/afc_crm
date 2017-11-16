@@ -13,13 +13,18 @@ import axios from 'axios';
 import {store} from '../store';
 import CryptoJS from 'crypto-js';
 
+var tokenToSend= localStorage.getItem("cookieSession");
+if(tokenToSend == undefined)
+	tokenToSend="";
+
 export function * createUser () {
 
     while(true){
 
         let user = yield take(SUBMIT_USER);
 		console.log(user);
-
+		
+		
 		let{role,
             nom,
 			prenom,
@@ -30,7 +35,9 @@ export function * createUser () {
         } = user.newUser;
 
         let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
-
+        var tokenToSend= localStorage.getItem("cookieSession");
+        if(tokenToSend == undefined)
+        	tokenToSend="";
         //communication avec server
         var server = "http://localhost:3002/users/create";
 
@@ -41,7 +48,8 @@ export function * createUser () {
             login: login,
             mdpProv: mdpProvEncoded,
             mail: mail,
-            userPerms: userPerms
+            userPerms: userPerms,
+            tokenToSend:tokenToSend
         })
             .then(function (response) {
                 if(!!response.data.status && response.data.status === "success"){
@@ -61,6 +69,7 @@ export function * createUser () {
     }
 }
 
+
 export function * updateUser(){
 	while(true){
 
@@ -73,7 +82,9 @@ export function * updateUser(){
 			mail,
 			userPerms
 		} = user.updatedUser;
-
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
 
 		//communication avec server
 		var server = "http://localhost:3002/users/update";
@@ -85,7 +96,8 @@ export function * updateUser(){
 			prenom: prenom,
 			login: login,
 			mail: mail,
-			userPerms: userPerms
+			userPerms: userPerms,
+			tokenToSend:tokenToSend
 		})
 			.then(function (response) {
 				if(!!response.data.status && response.data.status === "success"){
@@ -115,7 +127,7 @@ export function * deleteUser(){
 		var server = "http://localhost:3002/users/user/"+id.id;
 
 		axios.delete(server, {
-
+			tokenToSend:tokenToSend
 		})
 			.then(function (response) {
 				if(!!response.data.status && response.data.status === "success"){
