@@ -69,50 +69,79 @@ squel.select()
 .order('iduser')
 .toString();
 
-router.get('/list', function (req, res) {
+router.get('/list', expressJwtIp.ip(),function (req, res) {
 	console.log('route GET /listUsers');
 
-	db.query(getAllUsers())
-	.then(allUsers => {
+	var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	console.log("tokenReceived   " + tokenReceived);
+	if(!!decoded && (_ip === _ipReceived)){
+		db.query(getAllUsers())
+		.then(allUsers => {
 
+			res.send({
+				status: 'success',
+				users : allUsers
+			});
+		})
+		.catch(error => {
+			console.log('ERROR:', error);
+		})
+
+		console.log('end GET /listUsers');
+	}
+	else{
 		res.send({
-			status: 'success',
-			users : allUsers
+			status : 'fail',
+			message : 'Erreur'
 		});
-	})
-	.catch(error => {
-		console.log('ERROR:', error);
-	})
+	}});
 
-	console.log('end GET /listUsers');
-});
-
-router.get('/user/:id', function (req, res) {
+router.get('/user/:id', expressJwtIp.ip(),function (req, res) {
 	console.log('route GET /userById');
-	let id = req.params.id;
-	db.any(getUserById(id))
-	.then(userRetrieved => {
-		res.status(200);
-		var permissions = buildPermissions (userRetrieved);
-		var resp = {
-				id : userRetrieved[0].iduser,
-				login : userRetrieved[0].login,
-				mail : userRetrieved[0].mail,
-				name : userRetrieved[0].nom,
-				lastname : userRetrieved[0].prenom,
-				role : userRetrieved[0].roledesc,
-				userPerms : permissions
-		};
+	var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	console.log("tokenReceived   " + tokenReceived);
+	if(!!decoded && (_ip === _ipReceived)){
+		let id = req.params.id;
+		db.any(getUserById(id))
+		.then(userRetrieved => {
+			res.status(200);
+			var permissions = buildPermissions (userRetrieved);
+			var resp = {
+					id : userRetrieved[0].iduser,
+					login : userRetrieved[0].login,
+					mail : userRetrieved[0].mail,
+					name : userRetrieved[0].nom,
+					lastname : userRetrieved[0].prenom,
+					role : userRetrieved[0].roledesc,
+					userPerms : permissions
+			};
 
+			res.send({
+				status : 'success',
+				message : resp
+			});
+		})
+		.catch(error => {
+			console.log('ERROR:', error);
+		})
+	}
+	else{
 		res.send({
-			status : 'success',
-			message : resp
+			status : 'fail',
+			message : 'Erreur'
 		});
-	})
-	.catch(error => {
-		console.log('ERROR:', error);
-	})
-});
+
+	}});
 
 function buildPermissions (entity) {
 	var groups = {};
@@ -287,8 +316,8 @@ router.post('/create', expressJwtIp.ip(), function(req, res) {
 });
 
 router.post('/update', expressJwtIp.ip(),function(req, res) {
-	
-	
+
+
 	var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode 
@@ -413,156 +442,188 @@ router.post('/update', expressJwtIp.ip(),function(req, res) {
 	}
 });
 
-router.get('/operations', function(req,res){
+router.get('/operations', expressJwtIp.ip(),function(req,res){
 	console.log("GET /getOperation");
 
-	let operationRequest = squel.select()
-	.from('users."OPERATION"')
-	.order("level")
-	.toString();
+	var tokenReceived = req.get("authorization");
+	console.log("tokenReceived  " + tokenReceived)
 
-	let defaultOperations = [{id : 0, label : "Aucun droit n'est accordé", value : 0}];
-	let id = 0;
-	let label = [];
-	let labelString;
-	let value = 0;
-	db.any(operationRequest)
-	.then(operations => {
-		operations.forEach(function(element) {
-			id++;
-			value += element.level;
-			label.push(element.description);
-			labelString = label.join(" + ");
-			defaultOperations.push({id : id, label : labelString, value : value});
-		});
-		res.status(200);
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+
+	if(!!decoded && (_ip === _ipReceived)){
+		let operationRequest = squel.select()
+		.from('users."OPERATION"')
+		.order("level")
+		.toString();
+
+		let defaultOperations = [{id : 0, label : "Aucun droit n'est accordé", value : 0}];
+		let id = 0;
+		let label = [];
+		let labelString;
+		let value = 0;
+		db.any(operationRequest)
+		.then(operations => {
+			operations.forEach(function(element) {
+				id++;
+				value += element.level;
+				label.push(element.description);
+				labelString = label.join(" + ");
+				defaultOperations.push({id : id, label : labelString, value : value});
+			});
+			res.status(200);
+			res.send({
+				status : 'success',
+				message : defaultOperations
+			});
+		})
+		.catch(error => {
+			console.log('ERROR:', error);
+		})
+	}
+	else{
 		res.send({
-			status : 'success',
-			message : defaultOperations
+			status : 'fail',
+			message : 'Erreur'
 		});
-	})
-	.catch(error => {
-		console.log('ERROR:', error);
-	})
-});
 
-router.get('/defaultPerms', function(req,res){
+	}});
+
+router.get('/defaultPerms', expressJwtIp.ip(),function(req,res){
 	console.log("GET /getDefaultPerms");
+	var tokenReceived = req.get("authorization");
+	console.log("tokenReceived  " + tokenReceived)
 
-	let whereClauses = [];
-	ignoredRole.forEach(function(element) {
-		whereClauses.push("role.description <> \'" + element + "\'");
-	});
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
 
-	let whereClause = whereClauses.join(" AND ");
-	console.log(getDefaultPermissions(whereClause));
-	db.any(getDefaultPermissions(whereClause))
-	.then(roleRetrieved => {
-
-		var roles = {};
-		for (var i = 0; i < roleRetrieved.length; i++) {
-			var roleName = roleRetrieved[i].roledesc;
-			if (!roles[roleName]) {
-				roles[roleName] = [];
-			}
-			roles[roleName].push(roleRetrieved[i]);
-		}
-		var defaultPermissions = [];
-		let permissions = {};
-		for (var roleName in roles) {
-			permissions = buildPermissions(roles[roleName]);
-			defaultPermissions.push({role : roleName, droits: permissions});
-		}
-
-		res.status(200);
-		res.send({
-			status : 'success',
-			message : defaultPermissions
+	if(!!decoded && (_ip === _ipReceived)){
+		let whereClauses = [];
+		ignoredRole.forEach(function(element) {
+			whereClauses.push("role.description <> \'" + element + "\'");
 		});
-	})
-	.catch(error => {
-		console.log('ERROR:', error);
-	})
-});
+
+		let whereClause = whereClauses.join(" AND ");
+		console.log(getDefaultPermissions(whereClause));
+		db.any(getDefaultPermissions(whereClause))
+		.then(roleRetrieved => {
+
+			var roles = {};
+			for (var i = 0; i < roleRetrieved.length; i++) {
+				var roleName = roleRetrieved[i].roledesc;
+				if (!roles[roleName]) {
+					roles[roleName] = [];
+				}
+				roles[roleName].push(roleRetrieved[i]);
+			}
+			var defaultPermissions = [];
+			let permissions = {};
+			for (var roleName in roles) {
+				permissions = buildPermissions(roles[roleName]);
+				defaultPermissions.push({role : roleName, droits: permissions});
+			}
+
+			res.status(200);
+			res.send({
+				status : 'success',
+				message : defaultPermissions
+			});
+		})
+		.catch(error => {
+			console.log('ERROR:', error);
+		})
+	}
+	else{
+		res.send({
+			status : 'fail',
+			message : 'Erreur'
+		});
+	}});
 
 router.delete('/user/:id', expressJwtIp.ip(),function(req,res){
-	
+
 
 	var tokenReceived = req.get("authorization");
-	
+
 	var secret = 'aplsszjknbndsj';
 	// decode 
 	var decoded = jwt.decode(tokenReceived, secret);
 	var _ipReceived = decoded.ip;
 	var _ip = res.locals.ip;
 	console.log("tokenReceived   " + tokenReceived);
-	
-	
+
+
 	if(!!decoded && (_ip === _ipReceived)){
-		
+
 		console.log("OKKKKKKKKKK");
 
-	console.log("DELETE /user/:id");
-	let id = req.params.id;
-	console.log('id: ', id);
+		console.log("DELETE /user/:id");
+		let id = req.params.id;
+		console.log('id: ', id);
 
-	var deleteRights = squel.delete()
-	.from('users."PERMISSIONUTIL_GLOB"')
-	.where("iduser = " + id);
+		var deleteRights = squel.delete()
+		.from('users."PERMISSIONUTIL_GLOB"')
+		.where("iduser = " + id);
 
-	var getUser = squel.select()
-	.from('users."UTILISATEUR"', "util")
-	.join('users."ROLEADM"', "adm", "util.idrole = adm.idrole")
-	.where("iduser = " + id);
+		var getUser = squel.select()
+		.from('users."UTILISATEUR"', "util")
+		.join('users."ROLEADM"', "adm", "util.idrole = adm.idrole")
+		.where("iduser = " + id);
 
-	var deleteUser = squel.delete()
-	.from('users."UTILISATEUR"')
-	.where("iduser = " + id);
+		var deleteUser = squel.delete()
+		.from('users."UTILISATEUR"')
+		.where("iduser = " + id);
 
-	var updatePersonne = squel.update()
-	.table('users."EMPLOYE_INT"')
-	.set("iduser", null)
-	.where("iduser = " + id);
+		var updatePersonne = squel.update()
+		.table('users."EMPLOYE_INT"')
+		.set("iduser", null)
+		.where("iduser = " + id);
 
-	db.any(getUser.toString())
-	.then(userRetrieved=> {
-		if(userRetrieved.length === 0) {
-			res.send({
-				status : 'fail',
-				message : "L'utilisateur que vous voulez supprimer n'est pas enregistré"
-			});
-		} else if (userRetrieved[0].isadmin === true){
-			res.send({
-				status : 'fail',
-				message : "Vous ne pouvez pas supprimer un administrateur"
-			});
-		} else {
-			db.tx(function (t1) {
-				return this.batch([
-					t1.none(updatePersonne.toString()),
-					t1.none(deleteRights.toString()),
-					t1.tx(t2 => {
-						return t2.none(deleteUser.toString())
-						.then(() => {
-						});
-					})
-					]);
-			})
-			.then(data => {
-				res.status(200);
-				res.send({
-					status : 'success',
-					message : null
-				});
-			})
-			.catch(error => {
+		db.any(getUser.toString())
+		.then(userRetrieved=> {
+			if(userRetrieved.length === 0) {
 				res.send({
 					status : 'fail',
-					message : error.toString()
+					message : "L'utilisateur que vous voulez supprimer n'est pas enregistré"
 				});
-			});
-		}
-	});
+			} else if (userRetrieved[0].isadmin === true){
+				res.send({
+					status : 'fail',
+					message : "Vous ne pouvez pas supprimer un administrateur"
+				});
+			} else {
+				db.tx(function (t1) {
+					return this.batch([
+						t1.none(updatePersonne.toString()),
+						t1.none(deleteRights.toString()),
+						t1.tx(t2 => {
+							return t2.none(deleteUser.toString())
+							.then(() => {
+							});
+						})
+						]);
+				})
+				.then(data => {
+					res.status(200);
+					res.send({
+						status : 'success',
+						message : null
+					});
+				})
+				.catch(error => {
+					res.send({
+						status : 'fail',
+						message : error.toString()
+					});
+				});
+			}
+		});
 	}
 	else{
 		res.send({
@@ -571,31 +632,46 @@ router.delete('/user/:id', expressJwtIp.ip(),function(req,res){
 		});
 	}});
 
-router.get('/getRoles', function(req, res) {
+router.get('/getRoles', expressJwtIp.ip(),function(req, res) {
 
 	console.log('Getting roles from database');
-	let whereClauses = [];
-	ignoredRole.forEach(function(element) {
-		whereClauses.push("description <> \'" + element + "\'");
-	});
-	let whereClause = whereClauses.join(" AND ");
-	db.query(squel.select()
-			.from('users."ROLEADM"')
-			.field('description')
-			.where(whereClause)
-			.toString())
-			.then(roles => {
+	var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	console.log("tokenReceived   " + tokenReceived);
+	if(!!decoded && (_ip === _ipReceived)){
+		let whereClauses = [];
+		ignoredRole.forEach(function(element) {
+			whereClauses.push("description <> \'" + element + "\'");
+		});
+		let whereClause = whereClauses.join(" AND ");
+		db.query(squel.select()
+				.from('users."ROLEADM"')
+				.field('description')
+				.where(whereClause)
+				.toString())
+				.then(roles => {
 
-				res.send({
-					status : 'success',
-					roles : roles
-				});
-			})
-			.catch(e => {
-				console.error('query error', e.message, e.stack)
-			})
-	console.log('end get /getRoles');
-});
+					res.send({
+						status : 'success',
+						roles : roles
+					});
+				})
+				.catch(e => {
+					console.error('query error', e.message, e.stack)
+				})
+		console.log('end get /getRoles');
+	}
+	else{
+		res.send({
+			status : 'fail',
+			message : 'Erreur'
+		});
+
+	}});
 
 function createEmployee(userInformations, userCreated, t, res) {
 	var addPersonne = squel.insert()

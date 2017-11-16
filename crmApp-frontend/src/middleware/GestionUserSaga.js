@@ -160,11 +160,18 @@ export function * deleteUser(){
 export function * getOperations() {
 	while(true){
 		yield take(GET_OPERATIONS);
-
-
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
 		var server = "http://localhost:3002/users/operations";
 
-		axios.get(server)
+		axios.get(server, config)
 		.then(function(response){
 			if(!!response.data.status && response.data.status === "success"){
 				store.dispatch(updateOperations(response.data.message));
@@ -183,10 +190,18 @@ export function * getDefaultPerms() {
 
 		yield take(GET_DEFAULTPERMS);
 		console.log("on passe par getDefaultPerms middleware");
-
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
 		var server = "http://localhost:3002/users/defaultPerms";
 
-		axios.get(server)
+		axios.get(server,config)
 		.then(function(response){
 			if(!!response.data.status && response.data.status === "success"){
 				store.dispatch(updateDefaultPerms(response.data.message));
@@ -208,8 +223,16 @@ export function * getRoles() {
 
 		//communication avec server
 		var server = "http://localhost:3002/users/getRoles";
-
-		axios.get(server)
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
+		axios.get(server,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success"){
 				store.dispatch(updateRoles(response.data.roles));
@@ -230,8 +253,16 @@ export function * getListUsers() {
 		console.log('loading users from back-end');
 
 		var server = "http://localhost:3002/users/list";
-
-		axios.get(server)
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
+		axios.get(server,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success") {
 				console.log('users list' + response.data.users);
@@ -253,10 +284,19 @@ export function * requestUserToDisplay(){
 		let{id} = user.id;
 
 		console.log('loading user to display from back-end' + user.id);
-
+		var server = "http://localhost:3002/users/list";
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		
+		var config ={
+				headers: {
+					"Authorization": tokenToSend 
+				} 
+		}
 		var server = "http://localhost:3002/users/user/"+user.id;
 
-		axios.get(server)
+		axios.get(server,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success") {
 				console.log('user' + response.data.message);

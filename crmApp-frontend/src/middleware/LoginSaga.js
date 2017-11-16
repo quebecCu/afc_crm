@@ -17,10 +17,6 @@ export function * loginFlow (){
 
 
 		var encrypted = CryptoJS.AES.encrypt(password, "secretKey13579").toString();
-//		var tokenToSend= localStorage.getItem("cookieSession");
-//
-//		if(tokenToSend == undefined)
-//			tokenToSend="";
 
 		//communication avec server
 		var server = "http://localhost:3002/login";
@@ -29,7 +25,6 @@ export function * loginFlow (){
 		axios.post(server, {
 			username: username,
 			password: encrypted
-//			token: tokenToSend
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){

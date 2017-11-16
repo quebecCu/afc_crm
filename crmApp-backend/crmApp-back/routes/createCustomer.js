@@ -12,7 +12,7 @@ var expressJwtIp = require('express-jwt-ip');
 router.post('/getCustomerGrid', expressJwtIp.ip(), function(req, res) {
 
 	
-	var tokenReceived = req.body.tokenToSend;
+	var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode 
 	var decoded = jwt.decode(tokenReceived, secret);
@@ -20,7 +20,7 @@ router.post('/getCustomerGrid', expressJwtIp.ip(), function(req, res) {
 	var _ip = res.locals.ip;
 	
 	//var query= '';
-	if(!!decoded && (_ip === _ipReceived))
+	if(!!decoded && (_ip === _ipReceived)){
 		res.send({grid: [
 		{key: '1', label: 'nomEntreprise', nom: "Nom de l'entreprise ", value: ''},
 		{key: '2', label: 'date', nom: "Date ", value: ''},
@@ -40,10 +40,27 @@ router.post('/getCustomerGrid', expressJwtIp.ip(), function(req, res) {
 
 
 	console.log("end post /getCustomerGrid");
+	}
+	else {
+
+		res.send({
+			status : 'fail',
+			message : 'Erreur'
+		});
+	}	
 });
 
-router.post('/createCustomer', function(req, res) {
+router.post('/createCustomer', expressJwtIp.ip(), function(req, res) {
 
+	var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	
+	//var query= '';
+	if(!!decoded && (_ip === _ipReceived)){
 	var customerFile={
 		grid: req.body.grid,
 		layout: req.body.layout
@@ -60,10 +77,27 @@ router.post('/createCustomer', function(req, res) {
 
 
 	console.log("end post /createCustomer");
+}
+else {
+	res.send({
+		status : 'fail',
+		message : 'Erreur'
+	});
+		
+	}	
 });
 
-router.post('/updateCustomer', function(req, res) {
+router.post('/updateCustomer', expressJwtIp.ip(), function(req, res) {
 
+	var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	
+	//var query= '';
+	if(!!decoded && (_ip === _ipReceived)){
 	var customerFile={
 		grid: req.body.grid,
 		layout: req.body.layout
@@ -80,6 +114,14 @@ router.post('/updateCustomer', function(req, res) {
 
 
 	console.log("end post /updateCustomer");
+	}
+else {
+	res.send({
+		status : 'fail',
+		message : 'Erreur'
+	});
+		
+	}	
 });
 
 module.exports = router;

@@ -23,7 +23,6 @@ export function * resetFlow (){
 			email: email,
 		})
 		.then(function (response) {
-//			console.log(response.data.emailSent);
 			if(!!response.data && response.data.status === "success"){
 				alert("Veuillez consulter vos courriels svp");
 				store.dispatch(push('/'));
@@ -32,7 +31,6 @@ export function * resetFlow (){
 				// rajouter une alert 
 				alert("Ce courriel n'est pas present dans nos dossiers ");
 			}
-//			callbackResponse: {response.data.res}
 		})
 		.catch(function (error) {
 			console.log(error);

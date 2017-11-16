@@ -39,7 +39,6 @@ export function* resetPasswordFlow() {
 				// rajouter une alert
 				alert('Mot de passe non changé\n\n' + response.data.message);
 			}
-//			callbackResponse: {response.data.res}
 		})
 			.catch((error) => {
 				console.log(error);

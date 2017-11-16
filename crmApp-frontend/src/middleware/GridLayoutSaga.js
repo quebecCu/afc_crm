@@ -7,6 +7,16 @@ import axios from 'axios';
 import {store} from '../store';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 
+
+var tokenToSend= localStorage.getItem("cookieSession");
+if(tokenToSend == undefined)
+	tokenToSend="";
+
+var config ={
+		headers: {
+			"Authorization": tokenToSend 
+		} 
+}
 export function * getGridLayout (){
 	while(true){
 
@@ -14,14 +24,9 @@ export function * getGridLayout (){
 
 		//communication avec server
 		let server = "http://localhost:3002/getCustomerGrid";
-		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
-			tokenToSend="";
-		
-		
+	
 		axios.post(server, {
-			tokenToSend:tokenToSend
-		})
+		},config)
 			.then(function (response) {
 				if(!!response.data.grid ){
 					store.dispatch(changeGrid(response.data.grid));
@@ -59,7 +64,7 @@ export function * sendFile() {
 		axios.post(server, {
 			grid: grid,
 			layout: layout,
-		})
+		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été créée avec succès');
@@ -90,7 +95,7 @@ export function * updateFile() {
 		axios.post(server, {
 			grid: grid,
 			layout: layout,
-		})
+		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');

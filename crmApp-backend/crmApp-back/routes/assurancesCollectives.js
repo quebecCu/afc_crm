@@ -17,7 +17,7 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 	var _ipReceived = decoded.ip;
 	var _ip = res.locals.ip;
 
-	if(!!decoded && (_ip === _ipReceived))
+	if(!!decoded && (_ip === _ipReceived)){
 		res.send({
 			clients: [
 				{nom_entreprise: 'ALFA ROMEO', nom_employe: 'TOTO', no_police:'123789', mois_renouvellement:'Octobre', nom_assureur:'Croix - bleue', status: 'actif', prospect: 'Oui'},
@@ -36,6 +36,15 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 		});
 
 	console.log("end post /assurancesCollectives");
+	}
+	else {
+
+        res.send({
+            status : 'fail',
+            message : 'Erreur'
+        });
+
+	}
 });
 
 module.exports = router;
