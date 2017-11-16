@@ -4,27 +4,30 @@ import axios from 'axios';
 import {store} from '../store';
 
 export function * getListFournisseurs (){
-    while(true){
+	while(true){
 
-        yield take(SENDING_REQUEST_FOUR);
+		yield take(SENDING_REQUEST_FOUR);
 
+		var tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend == undefined)
+			tokenToSend="";
+		//communication avec server
+		var server = "http://localhost:3002/fournisseurs";
 
-        //communication avec server
-        var server = "http://localhost:3002/fournisseurs";
-
-        axios.post(server, {
-        })
-            .then(function (response) {
-                if(!!response.data.fournisseur ){
-                    store.dispatch(getRequestFour(response.data.fournisseur));
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+		axios.post(server, {
+			tokenToSend:tokenToSend
+		})
+		.then(function (response) {
+			if(!!response.data.fournisseur ){
+				store.dispatch(getRequestFour(response.data.fournisseur));
+			}
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
 }
 
 export function * FournisseursFlow () {
-    yield fork (getListFournisseurs);
+	yield fork (getListFournisseurs);
 }

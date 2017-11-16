@@ -4,12 +4,24 @@ var app = express();
 //Load the bcrypt module
 var bcrypt = require('bcrypt');
 var db = require('../models');
+var jwt = require('jsonwebtoken');
+var expressJwtIp = require('express-jwt-ip');
+
 
 /* GET home page. */
-router.post('/getCustomerGrid', function(req, res) {
+router.post('/getCustomerGrid', expressJwtIp.ip(), function(req, res) {
 
+	
+	var tokenReceived = req.body.tokenToSend;
+	var secret = 'aplsszjknbndsj';
+	// decode 
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;
+	
 	//var query= '';
-	res.send({grid: [
+	if(!!decoded && (_ip === _ipReceived))
+		res.send({grid: [
 		{key: '1', label: 'nomEntreprise', nom: "Nom de l'entreprise ", value: ''},
 		{key: '2', label: 'date', nom: "Date ", value: ''},
 		{key: '3', label: 'nombreEmployes', nom: "Nombre d'employés ", value: ''},

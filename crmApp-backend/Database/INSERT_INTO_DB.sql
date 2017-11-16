@@ -131,7 +131,7 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 2);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 3);
 
-INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Matest', 'Ia', 'Mr');
+
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (1, 1);
 
 --Associé-- (azizou)
@@ -145,7 +145,6 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 2);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 3);
 
-INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Oukil', 'Aziz', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (2, 2);
 
 --Consultant-- (maxime)
@@ -162,7 +161,6 @@ INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 7, 1);
 
-INSERT INTO public."PERSONNE"(nom, prenom, titre) VALUES ('Neymar', 'Jean', 'Mr');
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 --ENDDATATEST
 
@@ -172,14 +170,90 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 -----public schema-----
 SELECT setval('public."PROVENANCE_idprovenance_seq"', 1, FALSE);
 SELECT setval('public."CLIENT_idclient_seq"', 1, FALSE);
+SELECT setval('public."TITRE_idtitre_seq"', 1, FALSE);
+SELECT setval('public."ADRESSE_idadresse_seq"', 1, FALSE);
+SELECT setval('public."ETAT_idetat_seq"', 1, FALSE);
+SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
+SELECT setval('public."AGA_idaga_seq"', 1, FALSE);
+SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
+SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
+SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
+SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
+SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
+SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
+SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
+SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
+SELECT setval('public."REGLE_idregle_seq"', 1, FALSE);
+SELECT setval('public."CADEAU_idcadeau_seq"', 1, FALSE);
+SELECT setval('public."MODULE_idmodule_seq"', 1, FALSE);
+SELECT setval('public."ACTIVITE_idactivite_seq"', 1, FALSE);
+SELECT setval('public."CHAMBRE_COMMERCE_idchambrecommerce_seq"', 1, FALSE);
+SELECT setval('public."FOURNISSEUR_ATTR_idattrfournisseur_seq"', 1, FALSE);
+SELECT setval('public."ENTREPRISE_ATTR_idattrentreprise_seq"', 1, FALSE);
+SELECT setval('public."CONTRAT_COLLECTIF_ATTR_idattrcontratcoll_seq"', 1, FALSE);
 
+--PROVENANCE--
 INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Publicité Internet');
 INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Démarchage');
+INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Bouche à oreilles');
 
+--ETAT--
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Actif');
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Inactif');
 
-INSERT INTO public."CHAMBRE_COMMERCE"(description) VALUES ('Chambre de Sherbrooke');
+--CHAMBRE COMMERCE--
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Sherbrooke');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Drummmondville');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Magog-Orford');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Richmond');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Autres');
+
+--ACTIVITE--
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Construction');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Commerce au détail ou grossiste');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Entreprise de service');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Ferme/Forest');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Manufacture');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Organisme à but non-lucratif');
+
+--TITRE--
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
+
+--ADRESSE--
+INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Boul. université', 'Sherbrooke', 'Quebec', 'J1K2N4');
+INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugarbaby', 'Sherbrooke', 'Quebec', 'J1K2R1');
+INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugardaddy', 'Sherbrooke', 'Quebec', 'J1K2R1');
+
+--CADEAU--
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Bulletin');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Calendrier');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Carte de fête');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Carte de noel');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Autres');
+
+--RELEVE--
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Courriel');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Poste');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Telecopieur');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Non');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Autres');
+
+--CLIENT--
+INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (1, 1, false, 'Ce client veut des pigeons voyageurs à chaque 2eme mercredi du mois');
+INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3, true, 'Ce client a toujours chaud');
+
+--ENTREPRISE--
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc', 10);
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (2, 1, 2, 1, 3, 'Sugar daddy Inc', 150);
+
+--PERSONNE--
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Oukil', 'Aziz', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Matest', 'Ia', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Neymar', 'Jean', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Ana', 'Pasfaitlescourses', 2);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Adam', 'Troisjour', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Philippe', 'Opotamsituveux', 1);
 -----end public schema -----
 
 
