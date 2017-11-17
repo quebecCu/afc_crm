@@ -66,6 +66,7 @@ const getAllUsers = () =>
 squel.select()
 .from('users."UTILISATEUR"', 'u')
 .left_join('users."ROLEADM"', 'r', 'u.idrole = r.idrole')
+.where('r.isAdmin = 0')
 .order('iduser')
 .toString();
 
@@ -339,6 +340,12 @@ router.post('/update', expressJwtIp.ip(),function(req, res) {
 
 		console.log(user);
 
+		var getFirstRole = squel.select()
+		.from('users."UTILISATEUR"', 'u')
+		.left_join('users."ROLEADM"', 'r', 'u.idrole = r.idrole')
+		.where('u.iduser =' + user.id)
+		.toString();
+		
 		var getIdRole = squel.select()
 		.from('users."ROLEADM"')
 		.where("description ='" + user.role + "'");
@@ -354,9 +361,9 @@ router.post('/update', expressJwtIp.ip(),function(req, res) {
 			return ent.description === desc;
 		}
 
-		db.multi(getIdRole.toString() + ";" + getOp.toString() + ";" + getEntities.toString())
+		db.multi(getIdRole.toString() + ";" + getOp.toString() + ";" + getEntities.toString() + ";" + getFirstRole.toString())
 		.then(data => {
-			if(data[0][0].isadmin === false) {
+			if((data[0][0].isadmin === false) && (data[3][0].isadmin === false)) {
 				var idRole = data[0][0].idrole;
 				let rights = data[1];
 				var newRights = [];
