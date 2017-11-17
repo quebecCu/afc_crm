@@ -128,8 +128,8 @@ class HistoriqueContainer extends Component {
                         <thead>
                         <tr>
                             <th onClick={this.handleClick0}>Nom du groupe</th>
-                            <th onClick={this.handleClick1}>Nombre d'employés</th>
-                            <th onClick={this.handleClick2}>Activité</th>
+                            <th onClick={this.handleClick1}>Nom employé</th>
+                            <th onClick={this.handleClick2}>Numéro de police</th>
                             <th onClick={this.handleClick3}>Mois de renouvellement</th>
                             <th onClick={this.handleClick4}>Assureur</th>
                             <th onClick={this.handleClick5}>Statut</th>
