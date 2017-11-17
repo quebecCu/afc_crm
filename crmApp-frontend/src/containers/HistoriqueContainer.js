@@ -5,7 +5,7 @@ import {changeViewDashboard} from "../actions/crmDashboard";
 import {connect} from "react-redux";
 
 class HistoriqueContainer extends Component {
-	
+
     constructor(props) {
         super(props);
         this.state = { historique: [{date: "20/09/2017", nom: "Kim", type: "Individuelle"},{date: "18/09/2017", nom: "Co", type: "Collective"}],
@@ -22,9 +22,9 @@ class HistoriqueContainer extends Component {
         this.handleClick5 = this.handleClick5.bind(this);
         this.handleClick6 = this.handleClick6.bind(this);
         }
-    
+
   handleClickF0() {
-    	
+
     	var table = document.getElementById("PageFournisseursTable");
     	this.handleClick(0,table);
     }
@@ -41,7 +41,7 @@ class HistoriqueContainer extends Component {
     	this.handleClick(3,table);
     }
     handleClick0() {
-    	
+
     	var table = document.getElementById("PageCollectivesClientsTable");
     	this.handleClick(0,table);
     }
@@ -73,7 +73,7 @@ class HistoriqueContainer extends Component {
     	  var /*table, */rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 //    	  table = document.getElementById("PageCollectivesClientsTable");
     	  switching = true;
-    	  dir = "asc"; 
+    	  dir = "asc";
     	  while (switching) {
     	    switching = false;
     	    rows = table.getElementsByTagName("TR");
@@ -96,7 +96,7 @@ class HistoriqueContainer extends Component {
     	    if (shouldSwitch) {
     	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
     	      switching = true;
-    	      switchcount ++; 
+    	      switchcount ++;
     	    } else {
     	      if (switchcount == 0 && dir == "asc") {
     	        dir = "desc";
@@ -127,9 +127,9 @@ class HistoriqueContainer extends Component {
                     <table id="PageCollectivesClientsTable" className="table">
                         <thead>
                         <tr>
-                            <th onClick={this.handleClick0}>Nom de l'entreprise</th>
-                            <th onClick={this.handleClick1}>Nom employé</th>
-                            <th onClick={this.handleClick2}>N° de police</th>
+                            <th onClick={this.handleClick0}>Nom du groupe</th>
+                            <th onClick={this.handleClick1}>Nombre d'employés</th>
+                            <th onClick={this.handleClick2}>Activité</th>
                             <th onClick={this.handleClick3}>Mois de renouvellement</th>
                             <th onClick={this.handleClick4}>Assureur</th>
                             <th onClick={this.handleClick5}>Statut</th>

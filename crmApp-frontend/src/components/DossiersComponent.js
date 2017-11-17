@@ -6,7 +6,7 @@ class DossiersComponent extends Component {
         this.props.handleClick('customer');
     }
 
-    
+
     componentDidUpdate() {
 		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
 		inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
@@ -18,7 +18,7 @@ class DossiersComponent extends Component {
 	inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 	inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
 	inputProspect = document.getElementById("prospects").value.toUpperCase();
-	
+
 	table = document.getElementById("PageCollectivesClientsTable");
 	tr = table.getElementsByTagName("tr");
 	// Loop through all table rows, and hide those who don't match the search query
@@ -36,7 +36,7 @@ class DossiersComponent extends Component {
 			} else {
 				tr[i].style.display = "none";
 			}
-		} 
+		}
 	}
     } }
     render() {
@@ -54,27 +54,25 @@ class DossiersComponent extends Component {
                 })}
                 </tbody>
             );
-        }
-        else if (this.props.collective){
+        } else if (this.props.collective) {
             this.rows = (
                 <tbody>
                 {this.props.collective.map(element => {
                     return (
-                        <tr onClick={this.handleClick.bind(this)} key={element.nom_entreprise}>
-                            <td>{element.nom_entreprise}</td>
-                            <td>{element.nom_employe}</td>
-                            <td>{element.no_police}</td>
+                        <tr onClick={this.handleClick.bind(this)} key={element.nom_groupe}>
+                            <td>{element.nom_groupe}</td>
+                            <td>{element.nb_employes}</td>
+                            <td>{element.activite}</td>
                             <td>{element.mois_renouvellement}</td>
                             <td>{element.nom_assureur}</td>
-                            <td>{element.status}</td>
+                            <td>{element.etat}</td>
                             <td>{element.prospect}</td>
                         </tr>
                     );
                 })}
                 </tbody>
             );
-        }
-        else {
+        } else {
 			let fournisseur = this.props.fournisseur;
             this.rows = (
                 <tbody>
