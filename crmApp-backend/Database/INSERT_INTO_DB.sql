@@ -245,6 +245,11 @@ INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3,
 --ENTREPRISE--
 INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc', 10);
 INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc', 150);
+--CONTRAT--
+INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (1, 10, 2, 4, 10, 9632584 , 'insertion pour la mif');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc', 10);
+
+
 
 --FOURNISSEUR--
 INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');

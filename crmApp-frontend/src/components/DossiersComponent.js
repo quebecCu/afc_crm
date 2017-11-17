@@ -59,14 +59,14 @@ class DossiersComponent extends Component {
                 <tbody>
                 {this.props.collective.map(element => {
                     return (
-                        <tr onClick={this.handleClick.bind(this)} key={element.nom_groupe}>
-                            <td>{element.nom_groupe}</td>
-                            <td>{element.nb_employes}</td>
-                            <td>{element.activite}</td>
+                        <tr onClick={this.handleClick.bind(this)} key={element.nom_entreprise}>
+                            <td>{element.nom_entreprise}</td>
+                            <td>{element.nom_employe}</td>
+                            <td>{element.no_police}</td>
                             <td>{element.mois_renouvellement}</td>
                             <td>{element.nom_assureur}</td>
-                            <td>{element.etat}</td>
-                            <td>{element.prospect}</td>
+                            <td>{element.status}</td>
+                            <td>{ (element.prospect === true ?  "Oui" : "Non" )}</td>
                         </tr>
                     );
                 })}

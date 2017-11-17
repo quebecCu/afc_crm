@@ -55,7 +55,9 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 				.field('contrat.police')
 				.field('contrat.idfournisseur')
 				.field('contrat.mois_renouvellement')
+				.field('contrat.idrepresentant')
 				.join('public."ENTREPRISE"', "entreprise", "contrat.idclient = entreprise.idclient")
+				
 				.toString()	+ ";"+ squel.select()
 				.from('public."FOURNISSEUR"', "fournisseur")
 				.field('fournisseur.nom')
@@ -67,40 +69,55 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 				.field('client.idclient')
 				.field('client.prospect')
 				.join('public."ENTREPRISE"', "entreprise", "client.idclient = entreprise.idclient")
-				.toString()	)
-				.spread(function (entreprise, contrat,fournisseur,client) {
+				.toString()	
+				+ ";"+ squel.select()
+				.from('public."PERSONNE"', "personne")
+				.field('personne.idpersonne')
+				.field('personne.nom')
+				.field('personne.prenom')
+				.join('public."CONTRAT"', "contrat", "personne.idpersonne = contrat.idrepresentant")
 
-					console.log("REQUETE BD   entreprise  "+ JSON.stringify(entreprise));
-					console.log("REQUETE BD   contrat  "+ JSON.stringify(contrat));
-					console.log("REQUETE BD   fournisseur  "+ JSON.stringify(fournisseur));
-					console.log("REQUETE BD   client  "+ JSON.stringify(client));
+				.toString()	
+				
+		
+		)
+				.spread(function (entreprise, contrat,fournisseur,client,personne) {
+					
+					
+					let _entreprise = entreprise[0].nom;
+					let _nomEmploye = personne[0].nom;
+					let _prenomEmploye = personne[0].prenom;
+					let _police = contrat[0].police;
+					let _moisRenouvellement = contrat[0].mois_renouvellement;
 
+					let _nomAssureur = fournisseur[0].nom;
+					let _prospect = entreprise[0].prospect;
+					let _statut = entreprise[0].libelleetat;
+					
+					let _fullName = _nomEmploye + " " + _prenomEmploye;
+					
+					console.log("REQUETE BD   nom entreprise  "+  _entreprise);
+					console.log("REQUETE BD   _nomEmploye  "+  _nomEmploye);
+					console.log("REQUETE BD   _prenomEmploye  "+  _prenomEmploye);
+					console.log("REQUETE BD   _police  "+ _police);
+					console.log("REQUETE BD   _moisRenouvellement  "+ _moisRenouvellement);
+					console.log("REQUETE BD   _nomAssureur  "+ _nomAssureur);
+					console.log("REQUETE BD   _prospect  "+ _prospect);
+					console.log("REQUETE BD   _statut  "+ _statut);
+					console.log("REQUETE BD   _fullName   "+ _fullName);
 					/*
-					 * * mettre les valeurs de BD extraites dans des variables locales
-					 * les injecter dans le res.send
-					 * let nom_entreprise = entreprise[0].nom_entreprise;
+					 *  
 					 * rajouter boucle for pour iterer sur tous les elements retournés par la BD
 					 */
-
-					clients = buildClientsArray(entreprise);
+					
+//					clients = buildClientsArray(entreprise);
 
 					res.status(200);
 					res.send({
-						clients: clients
-						/*[
-							{nom_entreprise: 'ALFA ROMEO', nom_employe: 'TOTO', no_police:'123789', mois_renouvellement:'Octobre', nom_assureur:'Croix - bleue', status: 'actif', prospect: 'Oui'},
-							{nom_entreprise: 'MERCEDES', nom_employe: 'zero', no_police:'37838', mois_renouvellement:'Juin', nom_assureur:'Croix - Rouge', status: 'annulé', prospect: 'non'},
-							{nom_entreprise: 'LEXUS', nom_employe: 'plus', no_police:'4522285', mois_renouvellement:'Juillet', nom_assureur:'Croix - verte', status: 'actif', prospect: 'Oui'},
-							{nom_entreprise: 'BMW', nom_employe: 'zero', no_police:'7774533', mois_renouvellement:'Janvier', nom_assureur:'Fifo', status: 'annulé', prospect: 'non'},
-							{nom_entreprise: 'ALFA Blondie', nom_employe: 'TOTO', no_police:'123789', mois_renouvellement:'Octobre', nom_assureur:'Croix - bleue', status: 'actif', prospect: 'Oui'},
-							{nom_entreprise: 'Azizou', nom_employe: 'zero', no_police:'37838', mois_renouvellement:'Juin', nom_assureur:'Croix - Rouge', status: 'annulé', prospect: 'non'},
-							{nom_entreprise: 'Udes', nom_employe: 'plus', no_police:'4522285', mois_renouvellement:'Juillet', nom_assureur:'Croix - verte', status: 'actif', prospect: 'Oui'},
-							{nom_entreprise: 'Devon', nom_employe: 'zero', no_police:'7774533', mois_renouvellement:'Janvier', nom_assureur:'Fifo', status: 'annulé', prospect: 'non'},
-							{nom_entreprise: 'Vincent', nom_employe: 'TOTO', no_police:'123789', mois_renouvellement:'Octobre', nom_assureur:'Croix - bleue', status: 'actif', prospect: 'Oui'},
-							{nom_entreprise: 'JeremStar', nom_employe: 'zero', no_police:'37838', mois_renouvellement:'Juin', nom_assureur:'Croix - Rouge', status: 'annulé', prospect: 'non'},
-							{nom_entreprise: 'Mathieuwww', nom_employe: 'plus', no_police:'4522285', mois_renouvellement:'Juillet', nom_assureur:'Croix - verte', status: 'actif', prospect: 'Oui'},
-							{nom_entreprise: 'Clara Lets go', nom_employe: 'zero', no_police:'7774533', mois_renouvellement:'Janvier', nom_assureur:'Fifo', status: 'annulé', prospect: 'non'}
-							]*/
+						clients: 
+						[
+							{nom_entreprise: _entreprise, nom_employe: _fullName , no_police:_police, mois_renouvellement: _moisRenouvellement, nom_assureur: _nomAssureur, status: _statut, prospect: _prospect}
+							]
 					});
 				});
 	} else {
@@ -137,7 +154,7 @@ const buildClientsArray = (entrepriseFromDB) => {
 			nb_employes : entreprise.nb_employes,
 			activite : entreprise.libelleactivite,
 			etat : entreprise.libelleetat,
-			prospect : isProspect
+			prospect : isProspect 
 		};
 
 		clientsToSend.push(client);
