@@ -105,7 +105,7 @@ CREATE TABLE public."FOURNISSEUR" (
   --carte_noel boolean,
   --tag boolean,
   tel_principal varchar(10),
-  ext_tel_principal varchar(3),
+  ext_tel_principal varchar(3)
   --tel_secondaire varchar(10),
   --ext_tel_secondaire varchar (3),
   --fax  char(10),
@@ -261,6 +261,7 @@ CREATE TABLE public."ENTREPRISE" (
   idreleve  integer  REFERENCES "RELEVE" (idreleve),
   nom  varchar(30) NOT NULL,
   tel_principal  char(10),
+  estProspect boolean,
  -- ext_tel_principal  char(3),
  -- tel_secondaire  char(10),
  -- ext_tel_secondaire  char(3),
@@ -284,7 +285,7 @@ CREATE TABLE public."ENTREPRISE" (
 CREATE TABLE public."FOURNISSEUR_ATTR" (
   idattrfournisseur  serial  PRIMARY KEY,
   idtype  integer  REFERENCES "TYPE" (idtype),
-  label  varchar(20) NOT NULL,
+  label  varchar(40) NOT NULL,
   description  varchar(30),
   forme  varchar(100),
   valeur_defaut varchar(40),
@@ -294,7 +295,7 @@ CREATE TABLE public."FOURNISSEUR_ATTR" (
 CREATE TABLE public."ENTREPRISE_ATTR" (
   idattrentreprise  serial  PRIMARY KEY,
   idtype  integer  REFERENCES "TYPE" (idtype),
-  label  varchar(20) NOT NULL,
+  label  varchar(40) NOT NULL,
   description  varchar(30),
   forme  varchar(100),
   valeur_defaut varchar(40),

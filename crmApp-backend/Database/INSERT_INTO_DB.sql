@@ -99,6 +99,9 @@ INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (5
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (5, 4, 1);
 INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (5, 7, 1);
 
+--TITRE--
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
 
 --BEGINDATATEST
 INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('alain', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 1);
@@ -153,6 +156,7 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (2, 2);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 4, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 7, 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Isation', 'Maxime', 1);
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (3, 3);
 --ENDDATATEST
 
@@ -217,10 +221,6 @@ INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Bouche à oreilles')
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Actif');
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Inactif');
 
---TITRE--
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
-
 --CHAMBRE COMMERCE--
 INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Sherbrooke');
 INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Drummmondville');
@@ -260,8 +260,8 @@ INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (1, 1,
 INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3, true, 'Ce client a toujours chaud');
 
 --ENTREPRISE--
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc', 10);
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc', 150);
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc');
 
 --FOURNISSEUR--
 INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');
