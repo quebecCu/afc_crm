@@ -65,7 +65,7 @@ class DossiersComponent extends Component {
                             <td>{element.no_police}</td>
                             <td>{element.mois_renouvellement}</td>
                             <td>{element.nom_assureur}</td>
-                            <td>{element.status}</td>
+                            <td>{element.status === "Actif" ? "Actif" : "Annulé"}</td>
                             <td>{ (element.prospect === true ?  "Oui" : "Non" )}</td>
                         </tr>
                     );
