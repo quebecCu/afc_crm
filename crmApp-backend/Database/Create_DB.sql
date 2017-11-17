@@ -102,29 +102,29 @@ CREATE TABLE public."FOURNISSEUR" (
   nom  varchar(20) NOT NULL,
   code  varchar(20),
   date_creation date,
-  carte_noel boolean,
-  tag boolean,
+  --carte_noel boolean,
+  --tag boolean,
   tel_principal varchar(10),
   ext_tel_principal varchar(3),
-  tel_secondaire varchar(10),
-  ext_tel_secondaire varchar (3),
-  fax  char(10),
-  mail  varchar(30),
-  ligne800  varchar(10), --?
-  nb_etq_a_imprimer  int2,
-  pack1 varchar(30),
-  pack2 varchar(30),
-  min_emp1 integer,
-  min_emp2 integer,
-  div boolean,
-  pae boolean,
-  seuil decimal(10,2),
-  force varchar(180),
-  faible varchar(180),
-  groupe varchar(20),
-  sous_groupe varchar(20),
-  services varchar(180),
-  notes text
+  --tel_secondaire varchar(10),
+  --ext_tel_secondaire varchar (3),
+  --fax  char(10),
+  --mail  varchar(30),
+  --ligne800  varchar(10), --?
+  --nb_etq_a_imprimer  int2,
+  --pack1 varchar(30),
+  --pack2 varchar(30),
+  --min_emp1 integer,
+  --min_emp2 integer,
+  --div boolean,
+  --pae boolean,
+  --seuil decimal(10,2),
+  --force varchar(180),
+  --faible varchar(180),
+  --groupe varchar(20),
+  --sous_groupe varchar(20),
+  --services varchar(180),
+  --notes text
 );
 
 CREATE TABLE public."CATEGORIE"(
@@ -134,8 +134,7 @@ CREATE TABLE public."CATEGORIE"(
 
 CREATE TABLE public."POSTE" (
   idposte serial PRIMARY KEY,
-  libelleposte  varchar(40),
-  isDecideur boolean
+  libelleposte  varchar(40)
 );
 
 CREATE TABLE public."ETAT" (
@@ -262,22 +261,22 @@ CREATE TABLE public."ENTREPRISE" (
   idreleve  integer  REFERENCES "RELEVE" (idreleve),
   nom  varchar(30) NOT NULL,
   tel_principal  char(10),
-  ext_tel_principal  char(3),
-  tel_secondaire  char(10),
-  ext_tel_secondaire  char(3),
-  fax  char(10),
-  sous_groupe varchar(20),
-  mail  varchar(30),
+ -- ext_tel_principal  char(3),
+ -- tel_secondaire  char(10),
+ -- ext_tel_secondaire  char(3),
+ -- fax  char(10),
+ -- sous_groupe varchar(20),
+ -- mail  varchar(30),
   date_creation  date  DEFAULT  current_date,
-  mois_admissible integer,
-  nb_employes integer NOT NULL,
-  bc varchar(20),
-  incomplet boolean,
-  admin boolean,
-  rver boolean,
-  rver_rmq varchar(180),
-  nb_etq_a_imprimer  int2,
-  nb_mois_entente  integer, -- ?
+ -- mois_admissible integer,
+ -- nb_employes integer NOT NULL,
+ -- bc varchar(20),
+ -- incomplet boolean,
+ -- admin boolean,
+ -- rver boolean,
+ -- rver_rmq varchar(180),
+ -- nb_etq_a_imprimer  int2,
+ -- nb_mois_entente  integer, -- ?
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idactivite  integer  REFERENCES  "ACTIVITE" (idactivite)
 );
@@ -288,7 +287,8 @@ CREATE TABLE public."FOURNISSEUR_ATTR" (
   label  varchar(20) NOT NULL,
   description  varchar(30),
   forme  varchar(100),
-  valeur_defaut varchar(40)
+  valeur_defaut varchar(40),
+  ext varchar(20)
 );
 
 CREATE TABLE public."ENTREPRISE_ATTR" (
@@ -297,7 +297,8 @@ CREATE TABLE public."ENTREPRISE_ATTR" (
   label  varchar(20) NOT NULL,
   description  varchar(30),
   forme  varchar(100),
-  valeur_defaut varchar(40)
+  valeur_defaut varchar(40),
+  ext varchar(20)
 );
 
 CREATE TABLE public."CONTRAT_COLLECTIF_ATTR" (
@@ -334,6 +335,7 @@ CREATE TABLE public."CONTACT_CLIENT" (
   idclient  integer  REFERENCES "CLIENT" (idclient),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
   idposte  integer  REFERENCES  "POSTE" (idposte),
+  estDecideur  boolean,  
   CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne, idposte)
 );
 
