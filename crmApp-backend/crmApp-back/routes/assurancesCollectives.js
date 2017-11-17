@@ -11,7 +11,7 @@ var squel = squelb.useFlavour('postgres');
  * Route serving Clients module
  * @method POST
  * @URL /assurancesCollectives
- * @param expressJwtIp.ip() -- Doc à compléter par ceux qui ont le détail
+ * @param expressJwtIp.ip() -- cherche l'adresse ip du serveur
  * @DataParams {authorization} -- Doc à compléter par ceux qui ont le détail
  * @SuccessResponse { status: 200, clients: {Array} }
  * @ErrorResponse { status: 'fail', message: 'Erreur' }
@@ -76,49 +76,28 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 				.field('personne.nom')
 				.field('personne.prenom')
 				.join('public."CONTRAT"', "contrat", "personne.idpersonne = contrat.idrepresentant")
-
-				.toString()	
-				
-		
-		)
+				.toString())
 				.spread(function (entreprise, contrat,fournisseur,client,personne) {
+					var clientsToSend = [];
 					let _entreprise,_nomEmploye, _police, _moisRenouvellement, _nomAssureur, _prospect, _statut, _fullName
-					for (var i=0; i <entreprise.length; i++){
-						 _entreprise = entreprise[i].nom;
-						 _nomEmploye = personne[i].nom;
-						 _prenomEmploye = personne[i].prenom;
-						 _police = contrat[i].police;
-						 _moisRenouvellement = contrat[i].mois_renouvellement;
-						 _nomAssureur = fournisseur[i].nom;
-						 _prospect = entreprise[i].prospect;
-						 _statut = entreprise[i].libelleetat;
-						
-						 _fullName = _nomEmploye + " " + _prenomEmploye;
-						console.log("REQUETE BD   nom entreprise  "+  _entreprise);
-						console.log("REQUETE BD   _nomEmploye  "+  _nomEmploye);
-						console.log("REQUETE BD   _prenomEmploye  "+  _prenomEmploye);
-						console.log("REQUETE BD   _police  "+ _police);
-						console.log("REQUETE BD   _moisRenouvellement  "+ _moisRenouvellement);
-						console.log("REQUETE BD   _nomAssureur  "+ _nomAssureur);
-						console.log("REQUETE BD   _prospect  "+ _prospect);
-						console.log("REQUETE BD   _statut  "+ _statut);
-						console.log("REQUETE BD   _fullName   "+ _fullName);
-					}
-					
-					/*
-					 *  
-					 * rajouter boucle for pour iterer sur tous les elements retournés par la BD
-					 */
-					
-//					clients = buildClientsArray(entreprise);
+
+						for ( var i =0; i <entreprise.length; i++){
+							 _entreprise = entreprise[i].nom;
+							 _nomEmploye = personne[i].nom;
+							 _prenomEmploye = personne[i].prenom;
+							 _police = contrat[i].police;
+							 _moisRenouvellement = contrat[i].mois_renouvellement;
+							 _nomAssureur = fournisseur[i].nom;
+							 _prospect = entreprise[i].prospect;
+							 _statut = entreprise[i].libelleetat;
+							 _fullName = _nomEmploye + " " + _prenomEmploye;
+							 client = {nom_entreprise: _entreprise, nom_employe: _fullName , no_police:_police, mois_renouvellement: _moisRenouvellement, nom_assureur: _nomAssureur, status: _statut, prospect: _prospect 	}
+							 clientsToSend.push(client);
+						}
 
 					res.status(200);
 					res.send({
-						
-						clients: 
-						[
-							{nom_entreprise: _entreprise, nom_employe: _fullName , no_police:_police, mois_renouvellement: _moisRenouvellement, nom_assureur: _nomAssureur, status: _statut, prospect: _prospect}
-							]
+						clients:  clientsToSend
 					});
 				});
 	} else {
@@ -139,29 +118,5 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
  * @param entrepriseFromDB - DB response
  * @returns {Array} - Clients list (Shaped according to Front-end supported format)
  */
-const buildClientsArray = (entrepriseFromDB) => {
-	let clientsToSend = [];
-	let client;
-	let isProspect;
-
-	entrepriseFromDB.forEach((entreprise) => {
-		if(entreprise.prospect)
-			isProspect = 'Oui';
-		else
-			isProspect = 'Non';
-
-		client = {
-			nom_groupe : entreprise.nom,
-			nb_employes : entreprise.nb_employes,
-			activite : entreprise.libelleactivite,
-			etat : entreprise.libelleetat,
-			prospect : isProspect 
-		};
-
-		clientsToSend.push(client);
-	});
-
-	return clientsToSend;
-}
 
 module.exports = router;
