@@ -13,12 +13,12 @@ class GestionUser extends React.Component {
 		super(props);
 		this.props.getListUser();
 	}
-
+	
 
 	render() {
 		let {view, formState} = this.props.crmUserManagement;
-		return <div id="UserManagement">
-			<div className="view text-center">
+		return <div id="UserManagement" >
+			<div className="view text-center" style={{ overflow: 'auto'}}>
 				{
 					view === "" && <ListUsers formState={formState} handleClick={this.props.changeViewUserManagement}
 											  displayUser={this.props.requestUserById}/>
