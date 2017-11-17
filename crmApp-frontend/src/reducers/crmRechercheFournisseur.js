@@ -14,12 +14,8 @@ let initialState = {
         nomContact: '',
         code: ''
     },
-    dossiersState: [
-
-    ],
-    searchList: [
-
-    ],
+    dossiersState: [],
+    searchList: [],
     errors: '',
 };
 

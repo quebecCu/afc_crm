@@ -106,10 +106,6 @@ INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('azizou',
 INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('maxime', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 3);
 INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('jean_neymar', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 4);
 
---TITRE--
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
-
 --ADMIN RIGHTS-- (alain)
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 2);
@@ -157,8 +153,6 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (2, 2);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 4, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 6, 1);
 INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 7, 1);
-
-INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Atito', 'Maxime', 1);
 INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (3, 3);
 --ENDDATATEST
 
@@ -206,6 +200,10 @@ INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Bouche à oreilles')
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Actif');
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Inactif');
 
+--TITRE--
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
+
 --CHAMBRE COMMERCE--
 INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Sherbrooke');
 INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Drummmondville');
@@ -246,7 +244,26 @@ INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3,
 
 --ENTREPRISE--
 INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc', 10);
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (2, 1, 2, 1, 3, 'Sugar daddy Inc', 150);
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom, nb_employes) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc', 150);
+
+--FOURNISSEUR--
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Avantage Maximum');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Capitale');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Croix Bleue');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Desjardins Sécurité Financière');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Empire vie');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Financière Sun Life');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Great-West');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Humania');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Industrielle-Alliance');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Manuvie');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'PME+');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'RACCC');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'RBC Assurances');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'SSQ GROUPE FINANCIER');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'UV Mutuelle');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Autres');
 
 --PERSONNE--
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Oukil', 'Aziz', 1);
@@ -255,6 +272,7 @@ INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Neymar', 'Jean', 1)
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Ana', 'Pasfaitlescourses', 2);
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Adam', 'Troisjour', 1);
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Philippe', 'Opotamsituveux', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Atito', 'Maxime', 1);
 
 -----end public schema -----
 

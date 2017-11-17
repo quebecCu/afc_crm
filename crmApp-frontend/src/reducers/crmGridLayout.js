@@ -3,12 +3,8 @@ import {CHANGE_GRID, CHANGE_LAYOUT, CHANGE_VIEW_GRID} from '../actions/crmGridLa
 //ajouter le reste dans l'import
 
 let initialState = {
-	grid: [
-
-	],
-	layouts: {
-
-	},
+	grid: [],
+	layouts: {},
 	view:'read',
 	errors: ''
 };

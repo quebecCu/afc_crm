@@ -99,7 +99,7 @@ CREATE TABLE public."PERSONNE" (
 CREATE TABLE public."FOURNISSEUR" (
   idfournisseur  serial  PRIMARY KEY,
   idadresse integer  REFERENCES  "ADRESSE" (idadresse),
-  nom  varchar(20) NOT NULL,
+  nom  varchar(50) NOT NULL,
   code  varchar(20),
   date_creation date,
   carte_noel boolean,

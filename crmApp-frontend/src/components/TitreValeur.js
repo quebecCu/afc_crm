@@ -7,8 +7,6 @@ export class TitreValeur extends React.Component{
         this.isGonnaRender = this.isGonnaRender.bind(this);
     }
 
-
-
     isGonnaRender(){
         //let nomClasse
         if(this.props.titre == null && this.props.valeur !== null){

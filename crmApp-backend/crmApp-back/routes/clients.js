@@ -4,15 +4,6 @@ var app = express();
 //Load the bcrypt module
 var bcrypt = require('bcrypt');
 var db = require('../models');
-var squelb = require('squel');
-var squel = squelb.useFlavour('postgres');
-
-let listAllClients = () => {
-	squel.select()
-		.from('users."UTILISATEUR"')
-		.where('login like ?', login)
-		.toString()
-}
 
 /* GET home page. */
 router.post('/clients', function(req, res) {
