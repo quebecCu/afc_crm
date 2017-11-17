@@ -57,7 +57,7 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 				.field('contrat.mois_renouvellement')
 				.field('contrat.idrepresentant')
 				.join('public."ENTREPRISE"', "entreprise", "contrat.idclient = entreprise.idclient")
-				
+
 				.toString()	+ ";"+ squel.select()
 				.from('public."FOURNISSEUR"', "fournisseur")
 				.field('fournisseur.nom')
@@ -81,19 +81,30 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 					var clientsToSend = [];
 					let _entreprise,_nomEmploye, _police, _moisRenouvellement, _nomAssureur, _prospect, _statut, _fullName
 
-						for ( var i =0; i <entreprise.length; i++){
-							 _entreprise = entreprise[i].nom;
-							 _nomEmploye = personne[i].nom;
-							 _prenomEmploye = personne[i].prenom;
-							 _police = contrat[i].police;
-							 _moisRenouvellement = contrat[i].mois_renouvellement;
-							 _nomAssureur = fournisseur[i].nom;
-							 _prospect = entreprise[i].prospect;
-							 _statut = entreprise[i].libelleetat;
-							 _fullName = _nomEmploye + " " + _prenomEmploye;
-							 client = {nom_entreprise: _entreprise, nom_employe: _fullName , no_police:_police, mois_renouvellement: _moisRenouvellement, nom_assureur: _nomAssureur, status: _statut, prospect: _prospect 	}
-							 clientsToSend.push(client);
-						}
+					for ( var i =0; i <entreprise.length; i++){
+						if(!!entreprise[i].nom)
+							_entreprise = entreprise[i].nom;
+						if(!!personne[i].nom)
+							_nomEmploye = personne[i].nom;
+						if(!!personne[i].prenom)
+							_prenomEmploye = personne[i].prenom;
+						if(!!contrat[i].police)
+							_police = contrat[i].police;
+						if(!!contrat[i].mois_renouvellement)
+							_moisRenouvellement = contrat[i].mois_renouvellement;
+						if(!!fournisseur[i].nom)
+							_nomAssureur = fournisseur[i].nom;
+						if(!!entreprise[i].prospect)
+							_prospect = entreprise[i].prospect;
+						if(!!entreprise[i].libelleetat)
+							_statut = entreprise[i].libelleetat;
+
+						_fullName = _nomEmploye + " " + _prenomEmploye;
+						
+						client = {nom_entreprise: _entreprise, nom_employe: _fullName , no_police:_police, mois_renouvellement: _moisRenouvellement, nom_assureur: _nomAssureur, status: _statut, prospect: _prospect 	}
+						clientsToSend.push(client);
+
+					}
 
 					res.status(200);
 					res.send({
@@ -101,10 +112,10 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 					});
 				});
 	} else {
-        res.send({
-            status : 'fail',
-            message : 'Erreur'
-        });
+		res.send({
+			status : 'fail',
+			message : 'Erreur'
+		});
 
 	}
 
@@ -112,11 +123,5 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 
 });
 
-/**
- * Builds a Clients Array to send to Front-End
- *
- * @param entrepriseFromDB - DB response
- * @returns {Array} - Clients list (Shaped according to Front-end supported format)
- */
 
 module.exports = router;
