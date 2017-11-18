@@ -83,7 +83,7 @@ class Login extends Component   {
 							<div className="footer-center">
 								<div>
 									<i className="fa fa-phone"></i>
-									<p>+1 (819) 823-1443</p>
+									<p><a href="tel:5149691087">+1 (819) 823-1443</a></p>
 								</div>
 							</div>
 
