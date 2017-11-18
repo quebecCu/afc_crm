@@ -13,3 +13,15 @@
     padding: 10px;
 	width: 20%
 	}
+
+	
+	#PageFournisseursTable td {
+	    text-align: center;
+	}
+	#PageFournisseursTable th {
+	    text-align: center;
+	}
+	
+	#PageCollectivesClientsTable th {
+	    text-align: center;
+	}

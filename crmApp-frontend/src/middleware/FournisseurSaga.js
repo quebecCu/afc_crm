@@ -19,16 +19,19 @@ export function * getListFournisseurs (){
 		}
 		//communication avec server
 		var server = "http://localhost:3002/fournisseurs";
+		console.log("test  " )
 
-		axios.post(server, {
+		axios.post(server, {	
+			
 		}, config)
+		
 		.then(function (response) {
 			if(!!response.data.fournisseur ){
 				store.dispatch(getRequestFour(response.data.fournisseur));
 			}
 		})
 		.catch(function (error) {
-			console.log(error);
+			console.log(error); 
 		});
 	}
 }

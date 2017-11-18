@@ -25,7 +25,6 @@ class ErrorPage extends Component   {
 					Oops! la page demandée est en construction
 				</span>
 				</div>
-				<h2><u> RETOUR </u></h2>
 				</div>
 				</div>
 				</div>

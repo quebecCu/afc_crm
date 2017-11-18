@@ -72,17 +72,16 @@ class DossiersComponent extends Component {
                 })}
                 </tbody>
             );
-        } else {
-			let fournisseur = this.props.fournisseur;
+        } else if (this.props.fournisseur){
+//			let fournisseur = this.props.fournisseur;
             this.rows = (
                 <tbody>
-                {
 
-                	fournisseur.map(element => {
+                	{this.props.fournisseur.map(element => {
                     return (
                         <tr onClick={this.handleClick.bind(this)} key={element.nom}>
                             <td>{element.nom}</td>
-                            <td>{element.employes}</td>
+                            <td>{element.min_emp1}</td>
                             <td>{element.contact}</td>
                             <td>{element.code}</td>
                         </tr>
