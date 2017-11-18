@@ -1,9 +1,12 @@
 'use strict';
 
 const CryptoJS = require("crypto-js");
-const db = require('../models');
 const express = require('express');
 const router = express.Router();
+var db = require('../models');
+var squelb = require('squel');
+var squel = squelb.useFlavour('postgres');
+
 
 /**
  * Route serving password reset
@@ -27,6 +30,7 @@ router.post('/ResetPassword', async function (req, res) {
 
 	// Check if the token is NOT valid
 	if (await !isTokenValid(req.body.resetToken)) {
+		//
 		sendResponse("DEBUG|resetPassword|theTokenIsNotValid", res, "fail");
 		return;
 	}
@@ -34,11 +38,10 @@ router.post('/ResetPassword', async function (req, res) {
 	// Decrypt the password
 	const decryptedPass = CryptoJS.AES.decrypt(newPwd, 'secretKey24680');
 	const decryptedConf = CryptoJS.AES.decrypt(newPwdConf, 'secretKey24680');
-
 	// Make the password into a encoded uft8 string
 	const pwdText = decryptedPass.toString(CryptoJS.enc.Utf8);
 	const pwdTextConf = decryptedConf.toString(CryptoJS.enc.Utf8);
-
+	console.log(newPwd);
 	// Check if the password match
 	if (pwdText !== pwdTextConf) {
 		sendResponse("DEBUG|resetPassword|passwordDoesn'tMatches", res, "fail");
@@ -46,17 +49,36 @@ router.post('/ResetPassword', async function (req, res) {
 	}
 
 	// The password match, update the pwd in the database
-
-	// True code
-	// TODO: Call the database and update the password of the user
-
-	// sendResponse(res, 'success', 'DEBUG|resetPassword|passwordReset|STUB');
-
-	// STUB
-	// This is a STUB, remove when the request is working
-	console.log('DEBUG|resetPassword|passwordMatch|STUB');
+	if (await !isTokenValid(req.body.resetToken)){
+		db.multi(squel.select()
+			.from('users."UTILISATEUR"')
+			.field("resetpasswordexpires")
+			.where("resetpasswordtoken = " + "'" + resetToken + "'")
+			.toString())
+			.spread(function (user) {
+				let _userTime = user[0].resetpasswordexpires
+				console.log("_checkChrono  " + _userTime)
+				let _currentTime = Date.now();
+				
+				if( _currentTime < _userTime){
+					
+					let _updateBD = db.one(squel.update()
+							.table('users."UTILISATEUR"')
+							.set("password", newPwd)
+							.where("resetpasswordtoken = " + "'" + resetToken + "'")
+							.set("resetpasswordtoken", null)
+							.set("resetpasswordexpires", null)
+							.returning('*')
+							.toString())
+				}
+			})
 
 	sendResponse('DEBUG|resetPassword|passwordReset|STUB', res, 'success');
+	}
+	else {
+		sendResponse("DEBUG|resetPassword|theTokenIsNotValid", res, "fail");
+		return;
+	}
 });
 
 /**
@@ -65,14 +87,22 @@ router.post('/ResetPassword', async function (req, res) {
  * @returns {boolean}
  */
 async function isTokenValid(resetToken) {
-	// True code
-	// TODO: Make a request for the database
-	// return aPromise;
-
-	// STUB
-	// This is a STUB, remove when the request is working. This STUB always return true
-	console.log("DEBUG|resetPassword|isTokenValid|STUB");
-	return true;
+	console.log("test");
+	db.multi(squel.select()
+			.from('users."UTILISATEUR"')
+			.field("resetpasswordexpires")
+			.where("resetpasswordtoken = " + "'" + resetToken + "'")
+			.toString())
+			.spread(function (user) {
+				console.log("valité  " + user[0].resetpasswordexpires);
+				if(!user[0].resetpasswordexpires){
+					console.log("FALSE");
+					return false;
+				}
+				console.log("DEBUG|resetPassword|isTokenValid|STUB");
+				return true;
+			})
+	 
 }
 
 /**
