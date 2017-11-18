@@ -6,6 +6,7 @@ const router = express.Router();
 var db = require('../models');
 var squelb = require('squel');
 var squel = squelb.useFlavour('postgres');
+var {hashSync , genSaltSync} = require ('bcryptjs');
 
 
 /**
@@ -27,10 +28,8 @@ router.post('/ResetPassword', async function (req, res) {
 		sendResponse("DEBUG|resetPassword|atLeastOneParamIsUndefined", res, "fail");
 		return;
 	}
-
 	// Check if the token is NOT valid
-	if (await !isTokenValid(req.body.resetToken)) {
-		//
+	if (!(await !isTokenValid(req.body.resetToken))) {
 		sendResponse("DEBUG|resetPassword|theTokenIsNotValid", res, "fail");
 		return;
 	}
@@ -41,7 +40,9 @@ router.post('/ResetPassword', async function (req, res) {
 	// Make the password into a encoded uft8 string
 	const pwdText = decryptedPass.toString(CryptoJS.enc.Utf8);
 	const pwdTextConf = decryptedConf.toString(CryptoJS.enc.Utf8);
-	console.log(newPwd);
+	
+	let salt = genSaltSync (10);
+	let hashedPassword = hashSync(pwdText, salt);
 	// Check if the password match
 	if (pwdText !== pwdTextConf) {
 		sendResponse("DEBUG|resetPassword|passwordDoesn'tMatches", res, "fail");
@@ -49,7 +50,7 @@ router.post('/ResetPassword', async function (req, res) {
 	}
 
 	// The password match, update the pwd in the database
-	if (await !isTokenValid(req.body.resetToken)){
+	if (!(await !isTokenValid(req.body.resetToken))){
 		db.multi(squel.select()
 			.from('users."UTILISATEUR"')
 			.field("resetpasswordexpires")
@@ -59,12 +60,10 @@ router.post('/ResetPassword', async function (req, res) {
 				let _userTime = user[0].resetpasswordexpires
 				console.log("_checkChrono  " + _userTime)
 				let _currentTime = Date.now();
-				
 				if( _currentTime < _userTime){
-					
 					let _updateBD = db.one(squel.update()
 							.table('users."UTILISATEUR"')
-							.set("password", newPwd)
+							.set("password", hashedPassword)
 							.where("resetpasswordtoken = " + "'" + resetToken + "'")
 							.set("resetpasswordtoken", null)
 							.set("resetpasswordexpires", null)
@@ -94,16 +93,11 @@ async function isTokenValid(resetToken) {
 			.where("resetpasswordtoken = " + "'" + resetToken + "'")
 			.toString())
 			.spread(function (user) {
-				console.log("valité  " + user[0].resetpasswordexpires);
-				if(!user[0].resetpasswordexpires){
-					console.log("FALSE");
-					return false;
-				}
-				console.log("DEBUG|resetPassword|isTokenValid|STUB");
-				return true;
-			})
-	 
-}
+				if(user.length > 0)
+					if(!!user[0].resetpasswordexpires)
+						return true;
+			
+			})}
 
 /**
  * Send a response to the POST
