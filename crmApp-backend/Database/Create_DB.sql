@@ -260,9 +260,8 @@ CREATE TABLE public."ENTREPRISE" (
   idadresse  integer  REFERENCES "ADRESSE" (idadresse),
   idreleve  integer  REFERENCES "RELEVE" (idreleve),
   nom  varchar(30) NOT NULL,
-  tel_principal  char(10),
-  estProspect boolean,
- -- ext_tel_principal  char(3),
+  tel_principal  varchar(20),
+  ext_tel_principal  varchar(5),
  -- tel_secondaire  char(10),
  -- ext_tel_secondaire  char(3),
  -- fax  char(10),
@@ -337,7 +336,7 @@ CREATE TABLE public."CONTACT_CLIENT" (
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
   idposte  integer  REFERENCES  "POSTE" (idposte),
   estDecideur  boolean,  
-  CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne, idposte)
+  CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne)
 );
 
 CREATE TABLE public."CONTACT_FOURNISSEUR" (
