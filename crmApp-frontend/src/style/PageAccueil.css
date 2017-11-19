@@ -6,7 +6,7 @@ table {
 
 table.user{
     border-collapse: collapse;
-    margin: 0 auto;
+    margin: 100px auto;
     width: 700px;
 }
 
@@ -33,4 +33,9 @@ button {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+#PageCollectivesClientsTable td {
+    text-align: center;
+    padding: 8px;
 }

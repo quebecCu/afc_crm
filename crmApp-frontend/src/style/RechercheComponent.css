@@ -4,7 +4,7 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-
+    justify-content: center;
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
 
@@ -12,7 +12,19 @@
 }
 
 #recherche > * {
-    margin: 10px;
+    margin: 6px;
     padding: 10px;
     flex: 0.8 20%;
+}
+
+
+option[value=""][disabled] {
+  color: gray;
+}
+option {
+  color: black;
+}
+
+select:required:invalid {
+  color: gray;
 }

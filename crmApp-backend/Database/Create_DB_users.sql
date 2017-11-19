@@ -10,79 +10,152 @@ CREATE SCHEMA IF NOT EXISTS users;
 
 DROP TABLE IF EXISTS users."UTILISATEUR" CASCADE;
 DROP TABLE IF EXISTS users."ROLEADM" CASCADE;
-DROP TABLE IF EXISTS users."PERMISSIONROLE" CASCADE;
-DROP TABLE IF EXISTS users."PERMISSIONUTIL" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONROLE_GLOB" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONUTIL_GLOB" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONROLE_ENTR" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONUTIL_ENTR" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONROLE_CONTRCOLL" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONUTIL_CONTRCOLL" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONROLE_FOURN" CASCADE;
+DROP TABLE IF EXISTS users."PERMISSIONUTIL_FOURN" CASCADE;
 DROP TABLE IF EXISTS users."INVITE" CASCADE;
 DROP TABLE IF EXISTS users."OPERATION" CASCADE;
-DROP TABLE IF EXISTS users."MENU" CASCADE;
-DROP TABLE IF EXISTS users."TAB" CASCADE;
-DROP TABLE IF EXISTS users."CHAMP" CASCADE;
-DROP TABLE IF EXISTS users."TYPECHAMP" CASCADE;
+DROP TABLE IF EXISTS users."ENTITE" CASCADE;
+DROP TABLE IF EXISTS users."CONTRAT_COLLECTIF_AFFICHAGE" CASCADE;
+DROP TABLE IF EXISTS users."ENTREPRISE_AFFICHAGE" CASCADE;
+DROP TABLE IF EXISTS users."FOURNISSEUR_AFFICHAGE" CASCADE;
+DROP TABLE IF EXISTS users."MODIFICATION_CLIENT" CASCADE;
+DROP TABLE IF EXISTS users."EMPLOYE_INT" CASCADE;
+DROP TABLE IF EXISTS users."RELATION_FOURNISSEUR" CASCADE;
+DROP TABLE IF EXISTS users."POSITION" CASCADE;
 
 CREATE TABLE users."ROLEADM" (
   idrole serial PRIMARY KEY,
+  isAdmin boolean,
   description  varchar(30)
 );
 
 CREATE TABLE users."UTILISATEUR" (
   iduser serial PRIMARY KEY,
-  login  varchar(20),
+  login  varchar(20) UNIQUE,
   password  varchar(200),
   mail  varchar(40),
-  name  varchar(20),
   idrole  integer REFERENCES users."ROLEADM" (idrole),
-  resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordToken varchar(200),
+  resetPasswordExpires bigint 
 );
 
-CREATE TABLE users."MENU" (
-  idmenu serial PRIMARY KEY,
+CREATE TABLE users."ENTITE" (
+  identite serial PRIMARY KEY,
   description  varchar(60)
+);
+
+CREATE TABLE users."POSITION" (
+  idposition serial PRIMARY KEY,
+  identite  integer REFERENCES users."ENTITE" (identite),
+  position varchar(1000)
 );
 
 CREATE TABLE users."OPERATION" (
   idoperation serial PRIMARY KEY,
-  description  varchar(30)
-);
-
-CREATE TABLE users."PERMISSIONROLE" (
-  idrole  integer REFERENCES users."ROLEADM" (idrole),
-  idmenu  integer REFERENCES users."MENU" (idmenu),
-  idoperation  integer REFERENCES users."OPERATION" (idoperation),
-  CONSTRAINT  pk_PERMISSIONROLE  PRIMARY KEY (idrole, idmenu, idoperation)
-);
-
-CREATE TABLE users."PERMISSIONUTIL" (
-  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
-  idmenu  integer REFERENCES users."MENU" (idmenu),
-  idoperation  integer REFERENCES users."OPERATION" (idoperation),
-  CONSTRAINT  pk_PERMISSIONUTIL  PRIMARY KEY (iduser, idmenu, idoperation)
-);
-
-CREATE TABLE users."TAB" (
-  idtab serial PRIMARY KEY,
   description  varchar(30),
-  idmenu  integer REFERENCES users."MENU" (idmenu)
+  level integer
+);
+
+CREATE TABLE users."PERMISSIONROLE_GLOB" (
+  idrole  integer REFERENCES users."ROLEADM" (idrole),
+  identite  integer REFERENCES users."ENTITE" (identite),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONROLE_GLOB  PRIMARY KEY (idrole, identite, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONUTIL_GLOB" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  identite  integer REFERENCES users."ENTITE" (identite),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONUTIL_GLOB  PRIMARY KEY (iduser, identite, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONROLE_ENTR" (
+  idrole  integer REFERENCES users."ROLEADM" (idrole),
+  idattrentreprise  integer REFERENCES public."ENTREPRISE_ATTR" (idattrentreprise),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONROLE_ENTR  PRIMARY KEY (idrole, idattrentreprise, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONUTIL_ENTR" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idattrentreprise  integer REFERENCES public."ENTREPRISE_ATTR" (idattrentreprise),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONUTIL_ENTR  PRIMARY KEY (iduser, idattrentreprise, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONROLE_CONTRCOLL" (
+  idrole  integer REFERENCES users."ROLEADM" (idrole),
+  idattrcontratcoll  integer REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONROLE_CONTRCOLL  PRIMARY KEY (idrole, idattrcontratcoll, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONUTIL_CONTRCOLL" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idattrcontratcoll  integer REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONUTIL_CONTRCOLL  PRIMARY KEY (iduser, idattrcontratcoll, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONROLE_FOURN" (
+  idrole  integer REFERENCES users."ROLEADM" (idrole),
+  idattrfournisseur  integer REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONROLE_FOURN  PRIMARY KEY (idrole, idattrfournisseur, idoperation)
+);
+
+CREATE TABLE users."PERMISSIONUTIL_FOURN" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idattrfournisseur  integer REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
+  idoperation  integer REFERENCES users."OPERATION" (idoperation),
+  CONSTRAINT  pk_PERMISSIONUTIL_FOURN  PRIMARY KEY (iduser, idattrfournisseur, idoperation)
 );
 
 CREATE TABLE users."INVITE" (
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
   idclient  integer REFERENCES public."CLIENT" (idclient),
-  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient) 
+  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne),
+  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient, idpersonne) 
 );
 
-CREATE TABLE users."TYPECHAMP" (
-  idtype serial PRIMARY KEY,
-  description  varchar(30)
+CREATE TABLE users."CONTRAT_COLLECTIF_AFFICHAGE" (
+  idattrcontratcoll  integer PRIMARY KEY REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  affichage  boolean
 );
 
-CREATE TABLE users."CHAMP" (
-  idchamp serial PRIMARY KEY,
-  idtab  integer REFERENCES users."TAB" (idtab),
-  idtype  integer REFERENCES users."TYPECHAMP" (idtype),
-  description  varchar(30),
-  priorité  integer,
-  obligatoire  boolean,
-  tab  varchar(30),
-  nom  varchar(30)
+CREATE TABLE users."FOURNISSEUR_AFFICHAGE" (
+  idattrfournisseur  integer PRIMARY KEY REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
+  affichage  boolean
+);
+
+CREATE TABLE users."ENTREPRISE_AFFICHAGE" (
+  idattrentreprise  integer PRIMARY KEY REFERENCES public."ENTREPRISE_ATTR" (idattrentreprise),
+  affichage  boolean
+);
+
+CREATE TABLE users."MODIFICATION_CLIENT" (
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idclient  integer REFERENCES public."CLIENT" (idclient),
+  derniere_modification date,
+  CONSTRAINT  pk_MODIFICATION_CLIENT  PRIMARY KEY (iduser, idclient) 
+);
+
+CREATE TABLE users."EMPLOYE_INT" (
+  idemploye serial PRIMARY KEY,
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne)
+);
+
+CREATE TABLE users."RELATION_FOURNISSEUR" (
+  idemploye  integer REFERENCES users."EMPLOYE_INT" (idemploye),
+  idfournisseur  integer REFERENCES public."FOURNISSEUR" (idfournisseur),
+  code_fournisseur varchar(100),
+  CONSTRAINT  pk_RELATION_FOURNISSEUR  PRIMARY KEY (idemploye, idfournisseur) 
 );

@@ -1,98 +1,149 @@
 import React, { Component } from 'react';
 import '../style/RechercheComponent.css';
-import Request from 'superagent' ;
-import {store} from '../store';
-import {push} from 'react-router-redux';
-//import state  from '../reducer/crmRechercheCollective';
-import { connect  } from 'react-redux';
-import {searchRequest, changeForm} from '../actions/crmRechercheCollective'
 
 class RechercheComponent extends Component {
-	
+
 	constructor(props) {
 		super(props);
-		
 		this._changeNomEntreprise = this._changeNomEntreprise.bind(this);
 		this._changeNomAssureur = this._changeNomAssureur.bind(this);
 		this._changeNumeroPolice = this._changeNumeroPolice.bind(this);
 		this._changeNomEmploye = this._changeNomEmploye.bind(this);
 		this._emitChange = this._emitChange.bind(this);
-		this._recherche = this._recherche.bind(this);
-	}
-//	
-//	nomEmploye: '',
-//	moisRenouvellement:'',
-//	clientActif: true,
-//	statutProspect: false
-
-
-	_recherche(e) {
-		e.preventDefault();
-		this.props.onSubmit(this.props.formState);
-	}
-	_changeNomEmploye (event){
-		this._emitChange({...this.props.formState , nomEmploye: event.target.value});
-	}
-	_changeNomAssureur (event){
-		this._emitChange({...this.props.formState , nomAssureur: event.target.value});
+		this._reset = this._reset.bind(this);
+		this._changeMoisRenouvellement = this._changeMoisRenouvellement.bind(this);
+		this._filtre = this._filtre.bind(this);
+		this._hardReset = this._hardReset.bind(this);
 	}
 	_changeNomEntreprise (event){
 		this._emitChange({...this.props.formState , nomEntreprise: event.target.value});
+		this._filtre ();
+	}
+
+	_reset() {
+		let newFormState={
+					nomEntreprise:'',
+					nomEmploye: '',
+					numeroPolice:'',
+					nomAssureur:'',
+					moisRenouvellement:'',
+					clientActif: 'actif',
+					statutProspect: 'false'
+		};
+		document.getElementById("nomEmploye").value = "";
+		document.getElementById("nomAssureur").value = "";
+		document.getElementById("moisRenouvellement").value = "";
+		document.getElementById("numeroPolice").value = "";
+		document.getElementById("nomEntreprise").value = "";
+		document.getElementById("prospects").value = "";
+		this.props.changeFormColl(newFormState);
+		this._filtre ();
+	}
+	
+	_hardReset() {
+		let newFormState={
+					nomEntreprise:'',
+					nomEmploye: '',
+					numeroPolice:'',
+					nomAssureur:'',
+					moisRenouvellement:'',
+					clientActif: 'actif',
+					statutProspect: 'false'
+		};
+		document.getElementById("nomEmploye").value = "";
+		document.getElementById("nomAssureur").value = "";
+		document.getElementById("moisRenouvellement").value = "";
+		document.getElementById("numeroPolice").value = "";
+		document.getElementById("nomEntreprise").value = "";
+		document.getElementById("selectedStatut").value = "";
+		document.getElementById("prospects").value = "";
+		this.props.changeFormColl(newFormState);
+		this._filtre ();
+	}
+	
+	 componentDidMount() {
+		 this._reset();
+	    }
+	_changeNomEmploye (event){
+		this._emitChange({...this.props.formState , nomEmploye: event.target.value});
+		this._filtre ();
+	}
+	_changeMoisRenouvellement (event){
+		this._emitChange({...this.props.formState , moisRenouvellement: event.target.value});
+		this._filtre ();
+	}
+	_changeNomAssureur (event){
+		this._emitChange({...this.props.formState , nomAssureur: event.target.value});
+		this._filtre ();
 	}
 	_changeNumeroPolice(event){
 		this._emitChange({...this.props.formState , numeroPolice: event.target.value});
+		this._filtre ();
 	}
+
+	_filtre (){
+		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
+			inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
+		
+		inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
+		inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
+		inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
+		inputNomEntreprise = document.getElementById("nomEntreprise").value.toUpperCase();
+		inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
+		inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
+		inputProspect = document.getElementById("prospects").value.toUpperCase();
+		
+		table = document.getElementById("PageCollectivesClientsTable");
+		tr = table.getElementsByTagName("tr");
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td0 = tr[i].getElementsByTagName("td")[0];
+			td1 = tr[i].getElementsByTagName("td")[1];
+			td2 = tr[i].getElementsByTagName("td")[2];
+			td3 = tr[i].getElementsByTagName("td")[3];
+			td4 = tr[i].getElementsByTagName("td")[4];
+			td5 = tr[i].getElementsByTagName("td")[5];
+			td6 = tr[i].getElementsByTagName("td")[6];
+			if (td0 || td1 || td2 || td3 ||td4 ||td5 ||td6) {
+				if (td6.innerHTML.toUpperCase().indexOf(inputProspect) > -1 &&  td5.innerHTML.toUpperCase().indexOf(inputSelectedStatut) > -1 && td3.innerHTML.toUpperCase().indexOf(inputMoisRenouvellement) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNomEntreprise) > -1 && td4.innerHTML.toUpperCase().indexOf(inputNomAssureur) > -1 
+						&& td2.innerHTML.toUpperCase().indexOf(inputNumeroPolice) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomEmploye) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			} 
+		}
+	}
+	
 	_emitChange (newFormState){
-		this.props.changeForm(newFormState);
+		this.props.changeFormColl(newFormState);
 	}
-	
-//	_forgotten(e) {
-//		store.dispatch(push('/Reset'));
-//	}
-	
-    render() {
-		let { formState, changeForm } = this.props.crmRechercheCollective;
 
-        return(
-            <form action="" id="recherche" style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left'}}>
-                <input type="text" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={formState.nomEntreprise} />
-                <input type="text" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={formState.nomEmploye} />
-                <input type="text" placeholder="N° police"onChange={this._changeNumeroPolice} value={formState.numeroPolice}/>
-                <input type="text" placeholder="Mois renouvellement" value={formState.numeroPolice}/>
-                <input type="text" placeholder="Assureur" onChange={this._changeNomAssureur}  value={formState.nomAssureur}/>
-                <select>
-                    <option value="actif">Actif</option>
-                    <option value="annulé">Annulé</option>
-                </select>
-                <div>
-                    <input type="checkbox" id="prospects" name="prospects" value="prospects"/>
-                    <label for="prospects">Prospects</label>
-                </div>
-                <input type="submit" value="Rechercher" />
-            </form>
-        );
-    }
-}
+	render() {
+				
+		return(
+				<form action="" id="recherche" className="container-fluid">
+				<input type="text" id ="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
+				<input type="text" id ="nomEmploye" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={this.props.formState.nomEmploye} />
+				<input type="text" id ="numeroPolice" placeholder="N° police" onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>
+				<input type="text" id ="moisRenouvellement" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
+				<input type="text" id ="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
 
-function mapStateToProps (state) {
-	
-	return{
-		crmRechercheCollective: state.crmRechercheCollective
+				<select  required id = "selectedStatut" onChange={this._filtre} > 
+				<option value=""  >-- Choisir le statut --</option>
+				<option value="actif" selected="selected" >Actif</option>
+				<option value="annulé">Annulé</option>
+				</select>
+				
+				<select  required name="prospects" id = "prospects" onChange={this._filtre} > 
+				<option value=""  selected="selected">-- Type prospect --</option>
+				<option value="oui">Prospect</option>
+				<option value="non"> Non prospect </option>
+				</select>
+					<input type="reset" value="Reset" id="reset"  onClick= {this._hardReset}/>
+					</form>
+		);
 	}
 }
 
-//fonctions
-const  mapDispatchToProps = (dispatch) => {
-	
-	return{
-		searchRequest: (formData) => {
-			dispatch(searchRequest(formData))
-		},
-		changeForm : (newFormState) => {
-			dispatch(changeForm(newFormState))
-		}		
-	}
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps) (RechercheComponent);
+export default (RechercheComponent   )

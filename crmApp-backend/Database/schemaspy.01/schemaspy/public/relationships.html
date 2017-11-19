@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>tboluoek Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+  <!-- Fonts -->
+  <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+  <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="bower/html5shiv/html5shiv.min.js"></script>
+  <script src="bower/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../index.html" class="navbar-brand"><b>tboluoek</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>            
+			<!--<li><a href="components.html" title="List of system components">Components</a></li>-->
+			<li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>All Relationships</h1>
+      </section>
+      <!-- Main content -->
+      <section class="content">
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+              <h3 class="box-title">Diagrams</h3>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>By default only columns that are primary keys, foreign keys or indexes are shown.</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#compactDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact</a></li>			  			 
+			  			              <li class=""><a href="#largeDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="compactDegreeImg-chart" style="position: relative; overflow-x:auto;">
+																					<map id="compactRelationshipsDiagram" name="compactRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/ACTIVITE.html" title="ACTIVITE" alt="" coords="282,2226,431,2339">
+<area shape="rect" id="node2" href="tables/ADRESSE.html" title="ADRESSE" alt="" coords="23,1482,171,1595">
+<area shape="rect" id="node3" href="tables/AGA.html" title="AGA" alt="" coords="296,1260,417,1374">
+<area shape="rect" id="node4" href="tables/BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="1209,1292,1398,1412">
+<area shape="rect" id="node29" href="tables/MODULE.html" title="MODULE" alt="" coords="894,580,1050,758">
+<area shape="rect" id="node30" href="tables/PERSONNE.html" title="PERSONNE" alt="" coords="255,1415,459,1587">
+<area shape="rect" id="node5" href="tables/CADEAU.html" title="CADEAU" alt="" coords="581,2156,730,2270">
+<area shape="rect" id="node6" href="tables/CADEAU_ENVOYE.html" title="CADEAU_ENVOYE" alt="" coords="868,2018,1076,2160">
+<area shape="rect" id="node21" href="tables/ENTREPRISE.html" title="ENTREPRISE" alt="" coords="551,1908,760,2139">
+<area shape="rect" id="node7" href="tables/CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="565,782,745,902">
+<area shape="rect" id="node8" href="tables/CATEGORIE.html" title="CATEGORIE" alt="" coords="274,602,439,715">
+<area shape="rect" id="node31" href="tables/POSTE.html" title="POSTE" alt="" coords="288,978,425,1091">
+<area shape="rect" id="node9" href="tables/CHAMBRE_COMMERCE.html" title="CHAMBRE_COMMERCE" alt="" coords="233,2095,480,2208">
+<area shape="rect" id="node10" href="tables/CLIENT.html" title="CLIENT" alt="" coords="280,1604,433,1776">
+<area shape="rect" id="node24" href="tables/ETAT.html" title="ETAT" alt="" coords="36,1627,159,1740">
+<area shape="rect" id="node32" href="tables/PROVENANCE.html" title="PROVENANCE" alt="" coords="5,1758,189,1871">
+<area shape="rect" id="node11" href="tables/CLIENT_INDIVIDUEL.html" title="CLIENT_INDIVIDUEL" alt="" coords="545,1604,765,1724">
+<area shape="rect" id="node12" href="tables/CONDITION.html" title="CONDITION" alt="" coords="892,230,1052,402">
+<area shape="rect" id="node25" href="tables/FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="259,755,455,898">
+<area shape="rect" id="node28" href="tables/MODALITE.html" title="MODALITE" alt="" coords="573,60,737,262">
+<area shape="rect" id="node39" href="tables/TYPE.html" title="TYPE" alt="" coords="293,276,420,390">
+<area shape="rect" id="node13" href="tables/CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="551,1401,759,1550">
+<area shape="rect" id="node14" href="tables/CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="524,920,787,1069">
+<area shape="rect" id="node15" href="tables/CONTRAT.html" title="CONTRAT" alt="" coords="549,1087,762,1347">
+<area shape="rect" id="node33" href="tables/REGLE.html" title="REGLE" alt="" coords="291,1130,423,1243">
+<area shape="rect" id="node16" href="tables/CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="853,1142,1091,1284">
+<area shape="rect" id="node17" href="tables/CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="831,70,1113,212">
+<area shape="rect" id="node18" href="tables/CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="1157,586,1449,728">
+<area shape="rect" id="node19" href="tables/CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="853,1033,1091,1124">
+<area shape="rect" id="node20" href="tables/DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="234,459,479,572">
+<area shape="rect" id="node35" href="tables/RELEVE.html" title="RELEVE" alt="" coords="263,1964,451,2078">
+<area shape="rect" id="node22" href="tables/ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="547,622,764,764">
+<area shape="rect" id="node23" href="tables/ENTREPRISE_FACUL.html" title="ENTREPRISE_FACUL" alt="" coords="859,791,1085,934">
+<area shape="rect" id="node26" href="tables/FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="540,352,771,495">
+<area shape="rect" id="node27" href="tables/FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="852,419,1092,562">
+<area shape="rect" id="node38" href="tables/TITRE.html" title="TITRE" alt="" coords="35,1351,159,1464">
+<area shape="rect" id="node34" href="tables/RELATION.html" title="RELATION" alt="" coords="580,1741,731,1890">
+<area shape="rect" id="node36" href="tables/ROLE.html" title="ROLE" alt="" coords="295,1796,419,1910">
+<area shape="rect" id="node37" href="tables/SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="1203,272,1403,415">
+</map>
+
+					<a name='diagram'><img id='compactDegreeImg' src='diagrams/summary/relationships.real.compact.png' usemap='#compactRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="largeDegreeImg-chart" style="position: relative; overflow-x:auto;">
+																					<map id="largeRelationshipsDiagram" name="largeRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/ACTIVITE.html" title="ACTIVITE" alt="" coords="282,3088,431,3208">
+<area shape="rect" id="node2" href="tables/ADRESSE.html" title="ADRESSE" alt="" coords="23,2204,171,2412">
+<area shape="rect" id="node3" href="tables/AGA.html" title="AGA" alt="" coords="296,1491,417,1611">
+<area shape="rect" id="node4" href="tables/BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="1209,1749,1398,1869">
+<area shape="rect" id="node29" href="tables/MODULE.html" title="MODULE" alt="" coords="894,844,1050,1023">
+<area shape="rect" id="node30" href="tables/PERSONNE.html" title="PERSONNE" alt="" coords="255,2020,459,2404">
+<area shape="rect" id="node5" href="tables/CADEAU.html" title="CADEAU" alt="" coords="581,3143,730,3263">
+<area shape="rect" id="node6" href="tables/CADEAU_ENVOYE.html" title="CADEAU_ENVOYE" alt="" coords="868,2752,1076,2901">
+<area shape="rect" id="node21" href="tables/ENTREPRISE.html" title="ENTREPRISE" alt="" coords="551,2389,760,3125">
+<area shape="rect" id="node7" href="tables/CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="565,593,745,713">
+<area shape="rect" id="node8" href="tables/CATEGORIE.html" title="CATEGORIE" alt="" coords="274,179,439,299">
+<area shape="rect" id="node31" href="tables/POSTE.html" title="POSTE" alt="" coords="288,1628,425,1777">
+<area shape="rect" id="node9" href="tables/CHAMBRE_COMMERCE.html" title="CHAMBRE_COMMERCE" alt="" coords="233,2951,480,3071">
+<area shape="rect" id="node10" href="tables/CLIENT.html" title="CLIENT" alt="" coords="280,1795,433,2003">
+<area shape="rect" id="node24" href="tables/ETAT.html" title="ETAT" alt="" coords="36,1788,159,1908">
+<area shape="rect" id="node32" href="tables/PROVENANCE.html" title="PROVENANCE" alt="" coords="5,1925,189,2045">
+<area shape="rect" id="node11" href="tables/CLIENT_INDIVIDUEL.html" title="CLIENT_INDIVIDUEL" alt="" coords="545,1912,765,2032">
+<area shape="rect" id="node12" href="tables/CONDITION.html" title="CONDITION" alt="" coords="892,133,1052,312">
+<area shape="rect" id="node25" href="tables/FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="259,453,455,1336">
+<area shape="rect" id="node28" href="tables/MODALITE.html" title="MODALITE" alt="" coords="573,5,737,213">
+<area shape="rect" id="node39" href="tables/TYPE.html" title="TYPE" alt="" coords="293,316,420,436">
+<area shape="rect" id="node13" href="tables/CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="551,1745,759,1895">
+<area shape="rect" id="node14" href="tables/CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="524,1579,787,1728">
+<area shape="rect" id="node15" href="tables/CONTRAT.html" title="CONTRAT" alt="" coords="549,1207,762,1561">
+<area shape="rect" id="node33" href="tables/REGLE.html" title="REGLE" alt="" coords="291,1353,423,1473">
+<area shape="rect" id="node16" href="tables/CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="853,1315,1091,1787">
+<area shape="rect" id="node17" href="tables/CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="831,343,1113,580">
+<area shape="rect" id="node18" href="tables/CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="1157,939,1449,1088">
+<area shape="rect" id="node19" href="tables/CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="853,1207,1091,1297">
+<area shape="rect" id="node20" href="tables/DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="234,41,479,161">
+<area shape="rect" id="node35" href="tables/RELEVE.html" title="RELEVE" alt="" coords="263,2595,451,2715">
+<area shape="rect" id="node22" href="tables/ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="547,731,764,968">
+<area shape="rect" id="node23" href="tables/ENTREPRISE_FACUL.html" title="ENTREPRISE_FACUL" alt="" coords="859,1040,1085,1189">
+<area shape="rect" id="node26" href="tables/FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="540,339,771,576">
+<area shape="rect" id="node27" href="tables/FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="852,624,1092,773">
+<area shape="rect" id="node38" href="tables/TITRE.html" title="TITRE" alt="" coords="35,2067,159,2187">
+<area shape="rect" id="node34" href="tables/RELATION.html" title="RELATION" alt="" coords="580,2121,731,2271">
+<area shape="rect" id="node36" href="tables/ROLE.html" title="ROLE" alt="" coords="295,2421,419,2541">
+<area shape="rect" id="node37" href="tables/SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="1203,424,1403,573">
+</map>
+
+					<a name='diagram'><img id='largeDegreeImg' src='diagrams/summary/relationships.real.large.png' usemap='#largeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
+		</div>
+		      </section>    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0-rc2</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+<script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+<script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="bower/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="bower/anchor-js/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="bower/codemirror/codemirror.js"></script>
+<script src="bower/codemirror/sql.js"></script>
+<!-- AdminLTE App -->
+<script src="bower/admin-lte/dist/js/app.min.js"></script>
+<script src="relationships.js"></script>
+<script src="schemaSpy.js"></script>
+</body>
+</html>

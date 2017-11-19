@@ -1,45 +1,47 @@
-import React, { Component } from 'react';
-import './style/App.css';
-import {
-    Switch,
-    Route
-} from 'react-router-dom'
-import {BarreNav} from "./components/BarreNav";
+import React, {Component} from 'react';
+import {Provider} from 'react-redux';
+import {Route, Switch} from 'react-router-dom'
+import {ConnectedRouter} from 'react-router-redux';
+import {PrivateRoute, PublicRoute} from "./components/CustomRoute";
+import ErrorPage from "./components/ErrorPage";
+import DashboardContainer from "./containers/DashboardContainer";
 import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
-
 import ResetPagePassword from "./containers/ResetPagePasswordContainer";
-import AccueilPageContainer from "./containers/AccueilPageContainer";
-import CollectivePageContainer from "./containers/CollectivePageContainer";
-
-
-//import history from './history';
-import {store} from './store.js';
-
-import {history} from './store.js';
-import {Provider } from 'react-redux';
-
-import {ConnectedRouter} from 'react-router-redux';
-
+import {history, store} from './store.js';
+import './style/App.css';
 
 class App extends Component {
 
-    render(){
-        return (
-        	<Provider	store={store}>
-        	<ConnectedRouter history={history}>
-        	<div>
-					<Route exact path="/" component={LoginPage}/>
-					<Route path="/PageAccueil/:id" component={BarreNav} />
-					<Route exact path="/PageAccueil" component={AccueilPageContainer} />
-					<Route exact path="/Reset" component={ResetPage} />
-					<Route exact path="/ResetPassword" component={ResetPagePassword} />
-					</div>
-			</ConnectedRouter>
+	render() {
+		return (
+			<Provider store={store}>
+				<ConnectedRouter history={history}>
+					<Switch>
+						<PublicRoute
+							exact
+							path="/"
+							component={LoginPage}/>
+						<PrivateRoute
+							exact
+							path="/Home"
+							component={DashboardContainer}/>
+						<PublicRoute
+							exact
+							path="/Reset"
+							component={ResetPage}/>
+						<PublicRoute
+							exact
+							path="/ResetPassword/:token"
+							component={ResetPagePassword}/>
+						<Route
+							component={ErrorPage}/>
+					</Switch>
+				</ConnectedRouter>
 			</Provider>
-        );
-    }
-}
+		);
+	}
 
+}
 
 export default App;

@@ -1,13 +1,10 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
-import {RESET_REQUEST, SENDING_REQUEST, CHANGE_FORM, SET_AUTH} from '../actions/crmReset';
-import {hashSync , genSaltSync} from 'bcryptjs';
+import {take, fork, put} from 'redux-saga/effects';
+import {RESET_REQUEST, SENDING_REQUEST} from '../actions/crmReset';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
-import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 
 export function * resetFlow (){
@@ -26,7 +23,6 @@ export function * resetFlow (){
 			email: email,
 		})
 		.then(function (response) {
-//			console.log(response.data.emailSent);
 			if(!!response.data && response.data.status === "success"){
 				alert("Veuillez consulter vos courriels svp");
 				store.dispatch(push('/'));
@@ -35,7 +31,6 @@ export function * resetFlow (){
 				// rajouter une alert 
 				alert("Ce courriel n'est pas present dans nos dossiers ");
 			}
-//			callbackResponse: {response.data.res}
 		})
 		.catch(function (error) {
 			console.log(error);

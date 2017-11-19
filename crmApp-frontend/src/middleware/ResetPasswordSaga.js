@@ -1,50 +1,51 @@
-import {eventChannel} from 'redux-saga';
-import {take, call, fork, put} from 'redux-saga/effects';
-import {RESET_PASSWORD_REQUEST, SENDING_PASSWORD_REQUEST, CHANGE_FORM, SET_PASSWORD_AUTH} from '../actions/crmResetPassword';
-import {hashSync , genSaltSync} from 'bcryptjs';
-//importer le salt pour le username et password
-//import genSalt from '../salt';
+/** Imports **/
 import axios from 'axios';
+import CryptoJS from 'crypto-js';
 import {push} from 'react-router-redux';
-import {store} from '../store';
-import Alert from 'react-s-alert';
+
 import 'react-s-alert/dist/s-alert-default.css';
 
-export function * resetPasswordFlow (){
-	while(true){
-		
+import {fork, put, take} from 'redux-saga/effects';
+import {RESET_PASSWORD_REQUEST, sendingRequest} from '../actions/crmResetPassword';
+import {store} from '../store';
+
+export function* resetPasswordFlow() {
+
+	while (true) {
+
 		let reset = yield take(RESET_PASSWORD_REQUEST);
 		let {newPassword, confirmPassword} = reset.data;
-		 
-		yield put ({ type: SENDING_PASSWORD_REQUEST, sending:true})
-		
-		//communication avec server
-		var server = "http://localhost:3002/ResetPassword";
-		//changer la location de la variable server pour plus de securite 
-		
+		let resetToken = reset.token;
+
+		yield put(sendingRequest(true));
+
+		let encryptedNewPassword = CryptoJS.AES.encrypt(newPassword, "secretKey24680").toString();
+		let encryptedConfirmPassword = CryptoJS.AES.encrypt(confirmPassword, "secretKey24680").toString();
+
+		// TODO: Add a .ENV file?
+		let server = "http://localhost:3002/ResetPassword";
+		//changer la location de la variable server pour plus de securite
+
 		axios.post(server, {
-			newPassword: newPassword,
-			confirmPassword: confirmPassword 
-		})
-		.then(function (response) {
-//			console.log(response.data.emailSent);
-			if(!!response.data && response.data.status === "success"){
-				alert("votre MP a été changé");
+			confirmPassword: encryptedConfirmPassword,
+			newPassword: encryptedNewPassword,
+			resetToken: resetToken
+		}).then((response) => {
+			if (!!response.data && response.data.status === 'success') {
+				alert("Votre mot de passe a été changé");
 				store.dispatch(push('/'));
 			}
 			else {
-				// rajouter une alert 
-				alert("MP non changé il y a eu un pblm etc ");
+				// rajouter une alert
+				alert('Mot de passe non changé\n\n' + response.data.message);
 			}
-//			callbackResponse: {response.data.res}
 		})
-		.catch(function (error) {
-			console.log(error);
-		});
+			.catch((error) => {
+				console.log(error);
+			});
 	}
-}  
+}
 
-
-export function * ResetPasswordFlow () {
-	yield fork (resetPasswordFlow)
+export function* ResetPasswordFlow() {
+	yield fork(resetPasswordFlow)
 }

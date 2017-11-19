@@ -1,37 +1,42 @@
 import React from 'react';
 
-export class ListUsers extends React.Component{
+
+class ListUsers extends React.Component{
     constructor(props){
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this._handleClick = this._handleClick.bind(this);
+		this._handleClickOnUser = this._handleClickOnUser.bind(this);
 
-    }
+	}
 
-    handleClick(element){
-        //Ducoup quand on clique ça affiche la page de l'utilisateur, changer le path? Faire un linkto ?
 
-        console.log(element.id);
-    }
+   _handleClick(event){
+       event.preventDefault();
+       this.props.handleClick("CreateUser");
+   }
 
-    componentWillMount(){
-        this.rows = (
-          <tbody>
-          {this.props.users.map(element => {
-              return(
-                  <tr key={element.id} onClick={()=>this.handleClick(element)}>
-                      <td>{element.login}</td>
-                      <td>{element.nom} {element.prenom}</td>
-                      <td>{element.role}</td>
-                  </tr>
-              );
-          })}
-          </tbody>
-
-        );
-
-    }
+   _handleClickOnUser(id){
+		this.props.displayUser(id);
+		this.props.handleClick("DisplayUser");
+   }
 
     render(){
-        return this.rows;
+        return <div><table className="user">
+			<thead>
+			{this.props.formState.users.map(element => {
+				return(
+					<tr key={element.iduser} onClick={()=>this._handleClickOnUser(element.iduser)}>
+						<td>{element.login}</td>
+						<td>{element.name} {element.prenom}</td>
+						<td>{element.description}</td>
+					</tr>
+				);
+			})}
+            </thead>
+		</table>
+			<button onClick={this._handleClick}>Créer utilisateur</button>
+        </div>;
     }
 }
+
+export default (ListUsers);

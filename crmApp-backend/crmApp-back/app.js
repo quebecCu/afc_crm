@@ -8,12 +8,13 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var reset = require('./routes/reset');
+var resetPassword = require('./routes/ResetPassword');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
+var createCustomer = require ('./routes/createCustomer');
 var app = express();
-var bcrypt = require('bcrypt');
 
-//view engine setup 
+//view engine setup
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
 
@@ -28,7 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use( function(req, res, next) {
 	  res.header('Access-Control-Allow-Origin', '*');
 	  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-	  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+	  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials, Origin');
+	  res.header("Access-Control-Allow-Credentials", "true");
 	  next();
 	});
 
@@ -38,6 +40,8 @@ app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
 app.use('/', fournisseurs);
+app.use('/', resetPassword);
+app.use('/', createCustomer);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

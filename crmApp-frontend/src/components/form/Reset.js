@@ -1,7 +1,6 @@
 //import MyInput from './../components/Input';
 import React, { Component } from 'react';
 import '../../style/Reset.css';
-import Request from 'superagent' ;
 import {store} from '../../store';
 import {push} from 'react-router-redux';
 
@@ -36,24 +35,24 @@ class Reset extends Component   {
 	render() {
 		return ( 
 
-				<div className ="reset">
-				<div className="elelment">
-					<h2> </h2>
-					<div className="element-main">
-						<h1>Mot de passe oublié</h1>
-						<p> Entrez le courriel courrespondant a votre dossier</p>
-						<form method="POST" onSubmit = {this._submit}>
-							<input  type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} required/>
-							<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
-							<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button>
-							</div>
-						</form>
-						
+				<div className ="reset container-fluid">
+					<div className="elelment row">
+						<h2> </h2>
+						<div className="element-main">
+							<h1>Mot de passe oublié</h1>
+							<p> Entrez le courriel courrespondant a votre dossier</p>
+							<form method="POST" onSubmit = {this._submit}>
+								<input  type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} required/>
+								<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
+								<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button>
+								</div>
+							</form>
+
+						</div>
 					</div>
-				</div>
-				<div className="copy-right">
-							<p>© 2017 CRM Application UDES. All rights reserved </p>
-				</div>
+					<div className="copy-right row ">
+						<p className="col text-center">© 2017 CRM Application UDES. All rights reserved </p>
+					</div>
 				</div>
 		);
 	}

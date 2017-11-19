@@ -1,54 +1,72 @@
 import React, { Component } from 'react';
-//import Login from './Login';
-import { connect  } from 'react-redux';
-import PageCollectives from '../components/PageCollectives';
+import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
-import RechercheComponent from '../components/RechercheComponent';
-
-import '../style/Login.css';
-/// TODO 
-import {searchRequest, changeForm} from '../actions/crmRechercheCollective'
+import {changeViewCollective} from "../actions/crmCollectiveContainer";
+import CreationClient from "./GridContainer";
+import {changeViewDashboard} from "../actions/crmDashboard";
 
 class CollectivePageContainer extends Component   {
-	
+	constructor(props){
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+		this.handleClick2 = this.handleClick2.bind(this);
+	}
+
+	handleClick(event) {
+		event.preventDefault();
+		this.props.changeViewCollective(event.target.className);
+	}
+
+	handleClick2(event) {
+		event.preventDefault();
+		this.props.changeViewDashboard(event.target.className);
+	}
+
 	render() {
-		let { formState, changeForm } = this.props.crmRechercheCollective;
-		
+        let {view} = this.props.crmCollectiveContainer;
 		return(
-		<div className = "row">
-		<div className = "col-md-4 col-md-offset-4">
-		<	PageCollectives
-			PageCollectivesClients
-			RechercheComponent
-						onSubmit = {this.props.searchRequest}
-						formState = {formState}
-						changeForm = {this.props.changeForm}
-																/>
+		<div className="text-center">
+			{
+				view === "" && <h1>Assurances collectives</h1>
+			}
+			{
+				view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
+			}
+			{
+				view === "" && <button onClick={this.handleClick2} className="suppliers">Fournisseurs</button>
+			}
+			{
+				view === "customers" && <PageCollectivesClients handleClick={this.handleClick}/>
+			}
+			{
+				view === "newCustomer" && <CreationClient view="newCustomer"/>
+			}
+			{
+				view === "customerFile" && <CreationClient view="customerFile"/>
+			}
 		</div>
-		</div>
-		
-		)
+
+		);
 	}
 }
 
 function mapStateToProps (state) {
-	
-	return{
-		crmRechercheCollective: state.crmRechercheCollective
-	}
+
+    return{
+        crmCollectiveContainer: state.crmCollectiveContainer
+    }
 }
 
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
-	
-	return{
-		searchRequest: (formData) => {
-			dispatch(searchRequest(formData))
-		},
-		changeForm : (newFormState) => {
-			dispatch(changeForm(newFormState))
-		}		
-	}
-}
+    return{
+    	  changeViewCollective : (newView) => {
+              dispatch(changeViewCollective(newView))
+          },
+          changeViewDashboard : (newView) => {
+              dispatch(changeViewDashboard(newView))
+          }
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps) (CollectivePageContainer)

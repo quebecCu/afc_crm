@@ -1,17 +1,17 @@
 import {combineReducers} from 'redux';
 import { routerReducer} from 'react-router-redux';
 import {CLEAR_SESSION} from '../actions/crmLogin';
-import {RESET_REQUEST} from '../actions/crmReset';
-import {RESET_PASSWORD_REQUEST} from '../actions/crmResetPassword';
-import {SEARCH_REQUEST} from '../actions/crmRechercheCollective';
-import {SEARCH_REQUEST_FOUR} from '../actions/crmRechercheFournisseur';
 import crmLogin from './crmLogin';
 import crmReset from './crmReset';
 import crmResetPassword from './crmResetPassword';
 import crmRechercheCollective from './crmRechercheCollective';
 import crmRechercheFournisseur from './crmRechercheFournisseur';
 import crmCreateUser from './crmCreateUser';
-// TODO les autres reducers a rajouter ici 
+import crmDashboard from "./crmDashboard";
+import crmCollectiveContainer from './crmCollectiveContainer';
+import crmUserManagement from './crmUserManagement';
+import crmGridLayout from './crmGridLayout';
+// TODO les autres reducers a rajouter ici
 
 
 const appReducer = combineReducers ({
@@ -21,34 +21,23 @@ const appReducer = combineReducers ({
 	crmRechercheCollective,
 	crmRechercheFournisseur,
 	crmCreateUser,
-	crmResetPassword
-})
-
+	crmResetPassword,
+	crmDashboard,
+	crmCollectiveContainer,
+	crmUserManagement,
+	crmGridLayout,
+});
 
 const rootReducer = (state, action) => {
 	switch (action.type) {
-	case CLEAR_SESSION: {
-		const {routerReducer, crmLogin} = state;
-		state =  {routerReducer, crmLogin};
-	}
-	case RESET_REQUEST: {
-		const {routerReducer, crmReset} = state;
-		state =  {routerReducer, crmReset};
-	}
-	case SEARCH_REQUEST: {
-		const {routerReducer, crmRechercheCollective} = state;
-		state =  {routerReducer, crmRechercheCollective};
-	}
-	case SEARCH_REQUEST_FOUR: {
-		const {routerReducer, crmRechercheFournisseur} = state;
-		state = {routerReducer, crmRechercheFournisseur};
-	}
-	case RESET_PASSWORD_REQUEST: {
-		const {routerReducer, crmResetPassword} = state;
-		state = {routerReducer, crmResetPassword};
-	}
+		case CLEAR_SESSION:
+			const {routerReducer, crmLogin} = state;
+			state =  {routerReducer, crmLogin};
+			break;
+		default:
+			break;
 	}
 	return appReducer(state, action);
-}
+};
 
 export default rootReducer;

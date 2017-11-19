@@ -13,7 +13,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
    font-size: 100%;
    background:#0086E5; 
    font-family: 'Roboto', sans-serif;
-   height: -webkit-fill-available;
 }
 .reset a {
   text-decoration: none;
@@ -25,10 +24,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   -o-transition: 0.5s all;
 }
 /*--elemt style strat here--*/
-.reset .elelment 
+.reset .elelment
 {
     padding: 1px;
     margin:0px;
+
 h2 {
     font-size: 2.5em;
     color: #fff;
@@ -58,7 +58,7 @@ h2 {
 }
 .reset .element-main input[type="email"] {
     font-size: 1.5em;
-    color: #FFFF;
+    color: #FFFFF;
     padding: 1em 0.5em;
     display: block;
     width: 95%;
@@ -91,7 +91,7 @@ h2 {
 }
 /*---copyrights--*/
 .reset .copy-right {
-    margin: 9em 0em 2em 0em;
+    margin: 9em 0em 0em 0em;
 }
 .reset .copy-right p {
     text-align: center;
@@ -187,7 +187,7 @@ h2 {
     padding: 0.8em 0.5em;
 }
 .copy-right {
-    margin: 3em 0em 2em 0em;
+    margin: 0em 0em 0em 0em;
 }
 .copy-right p {
     font-size: 0.85em;
