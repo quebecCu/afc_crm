@@ -66,6 +66,7 @@ class CreateUser extends React.Component{
 		}
 		document.getElementById("mailHelp").style.display = "none";
 		document.getElementById("mailInvalid").style.display = "none";
+		document.getElementById("loginInvalid").style.display = "none";
 
 
 	}
@@ -110,10 +111,16 @@ class CreateUser extends React.Component{
 			document.getElementById("lastNameHelp").style.display = "block";
 			isValid = false;
 		}
-		if(!formState.login && this.props.view === "CreateUser"){
+		if(!formState.login && this.props.view === "CreateUser" ){
 			document.getElementById("loginLabel").className += " text-danger";
 			document.getElementById("login").className += " is-invalid";
 			document.getElementById("loginHelp").style.display = "block";
+			isValid = false;
+		}
+		if(!/^[a-zA-Z0-9]{7,20}$/.test(formState.login)){
+			document.getElementById("loginLabel").className += " text-danger";
+			document.getElementById("login").className += " is-invalid";
+			document.getElementById("loginInvalid").style.display = "block";
 			isValid = false;
 		}
 		if(!formState.mdpProv && this.props.view === "CreateUser"){
@@ -128,11 +135,11 @@ class CreateUser extends React.Component{
 			document.getElementById("mailHelp").style.display = "block";
 			isValid = false;
 		}
-
 		if(!/[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*/.test(formState.mail)){
 			document.getElementById("mailLabel").className += " text-danger";
 			document.getElementById("mail").className += " is-invalid";
 			document.getElementById("mailInvalid").style.display = "block";
+			isValid = false;
 		}
 		return isValid;
 
@@ -159,6 +166,7 @@ class CreateUser extends React.Component{
 		document.getElementById("nameHelp").style.display = "none";
 		document.getElementById("lastNameHelp").style.display = "none";
 		document.getElementById("loginHelp").style.display = "none";
+		document.getElementById("loginInvalid").style.display = "none";
 		if(this.props.view==="CreateUser"){
 			document.getElementById("mdpHelp").style.display = "none";
 		}

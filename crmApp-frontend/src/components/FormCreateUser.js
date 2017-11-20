@@ -108,6 +108,8 @@ export class FormCreateUser extends React.Component {
 						onChange={this.onChangeLogin}
 						value={this.props.formState.login}/>
 					<p id="loginHelp" className="help-block text-danger">Veuillez rentrer le login de l'utilisateur</p>
+					<p id="loginInvalid" className="help-block text-danger">Veuillez rentrer un login valide (pas de caractères spéciaux)</p>
+
 				</div>
 
 			</div>
