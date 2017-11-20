@@ -692,7 +692,7 @@ function createEmployee(userInformations, userCreated, t, res) {
 		.into('public."PERSONNE"')
 		.set("nom", userInformations.nom)
 		.set("prenom", userInformations.prenom)
-		.set("titre", "Mr")
+		.set("idtitre", 1)
 		.returning('*');
 
 	return t.one(addPersonne.toString())
@@ -722,7 +722,7 @@ function updateEmployee(userInformations, t, res) {
 				.table('public."PERSONNE"')
 				.set("nom", userInformations.nom)
 				.set("prenom", userInformations.prenom)
-				.set("titre", "Mr")
+				.set("idtitre", 1)
 				.where("idpersonne = " + personExisting.idpersonne)
 				.returning('*');
 			return t.one(updatePersonne.toString())
