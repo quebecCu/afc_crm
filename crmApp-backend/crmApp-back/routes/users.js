@@ -65,7 +65,7 @@ const getAllUsers = () =>
 	squel.select()
 		.from('users."UTILISATEUR"', 'u')
 		.left_join('users."ROLEADM"', 'r', 'u.idrole = r.idrole')
-		.where('r.isAdmin = 0')
+		.where('r.isadmin = false')
 		.order('iduser')
 		.toString();
 

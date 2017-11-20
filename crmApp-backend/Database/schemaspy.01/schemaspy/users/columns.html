@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>tboluoek Database</title>
+  <title>CRM_2 Database</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
@@ -45,7 +45,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../index.html" class="navbar-brand"><b>tboluoek</b> Database</a>
+          <a href="../index.html" class="navbar-brand"><b>CRM_2</b> Database</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -101,149 +101,6 @@
 				</thead>
 				<tbody>
 				<tr>
-				 <td>PERMISSIONUTIL_ENTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF_AFFICHAGE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_ENTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_AFFICHAGE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_AFFICHAGE</td>
-				 <td>Table</td>
-				 <td>affichage</td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>RELATION_FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td>code_fournisseur</td>
-				 <td>varchar</td>
-				 <td>100</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_ENTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODIFICATION_CLIENT</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>UTILISATEUR</td>
-				 <td>Table</td>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>login</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>UTILISATEUR</td>
-				 <td>Table</td>
-				 <td>resetpasswordexpires</td>
-				 <td>int8</td>
-				 <td>19</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_FOURN</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>UTILISATEUR</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>INVITE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
 				 <td>PERMISSIONUTIL_CONTRCOLL</td>
 				 <td>Table</td>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
@@ -255,9 +112,9 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>PERMISSIONROLE_GLOB</td>
+				 <td>MODIFICATION_CLIENT</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identite</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -268,7 +125,62 @@
 				<tr>
 				 <td>INVITE</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_CONTRCOLL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_ENTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>EMPLOYE_INT</td>
+				 <td>Table</td>
+				 <td>idpersonne</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>POSITION</td>
+				 <td>Table</td>
+				 <td>position</td>
+				 <td>varchar</td>
+				 <td>1000</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_CONTRCOLL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -290,281 +202,6 @@
 				<tr>
 				 <td>EMPLOYE_INT</td>
 				 <td>Table</td>
-				 <td>idpersonne</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>OPERATION</td>
-				 <td>Table</td>
-				 <td>level</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_FOURN</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_FOURN</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>POSITION</td>
-				 <td>Table</td>
-				 <td>position</td>
-				 <td>varchar</td>
-				 <td>1000</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_GLOB</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_ENTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_FOURN</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ROLEADM</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;users.&quot;ROLEADM_idrole_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_GLOB</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>RELATION_FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_AFFICHAGE</td>
-				 <td>Table</td>
-				 <td>affichage</td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_ENTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_CONTRCOLL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTITE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identite</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;users.&quot;ENTITE_identite_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_GLOB</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identite</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_CONTRCOLL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>UTILISATEUR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;users.&quot;UTILISATEUR_iduser_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_CONTRCOLL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_AFFICHAGE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTITE</td>
-				 <td>Table</td>
-				 <td>description</td>
-				 <td>varchar</td>
-				 <td>60</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>EMPLOYE_INT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_CONTRCOLL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>INVITE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>OPERATION</td>
-				 <td>Table</td>
-				 <td>description</td>
-				 <td>varchar</td>
-				 <td>30</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>EMPLOYE_INT</td>
-				 <td>Table</td>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idemploye</td>
 				 <td>serial</td>
 				 <td>10</td>
@@ -574,40 +211,7 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>PERMISSIONROLE_CONTRCOLL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ROLEADM</td>
-				 <td>Table</td>
-				 <td>description</td>
-				 <td>varchar</td>
-				 <td>30</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>UTILISATEUR</td>
-				 <td>Table</td>
-				 <td>resetpasswordtoken</td>
-				 <td>varchar</td>
-				 <td>200</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONUTIL_FOURN</td>
+				 <td>PERMISSIONUTIL_CONTRCOLL</td>
 				 <td>Table</td>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
 				 <td>int4</td>
@@ -629,18 +233,7 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>UTILISATEUR</td>
-				 <td>Table</td>
-				 <td>password</td>
-				 <td>varchar</td>
-				 <td>200</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERMISSIONROLE_ENTR</td>
+				 <td>PERMISSIONROLE_GLOB</td>
 				 <td>Table</td>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
 				 <td>int4</td>
@@ -653,7 +246,62 @@
 				<tr>
 				 <td>PERMISSIONROLE_GLOB</td>
 				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTITE</td>
+				 <td>Table</td>
+				 <td>description</td>
+				 <td>varchar</td>
+				 <td>60</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF_AFFICHAGE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_AFFICHAGE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_GLOB</td>
+				 <td>Table</td>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>INVITE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -673,20 +321,9 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CONTRAT_COLLECTIF_AFFICHAGE</td>
-				 <td>Table</td>
-				 <td>affichage</td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
 				 <td>PERMISSIONROLE_GLOB</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identite</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -695,9 +332,75 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>PERMISSIONROLE_FOURN</td>
+				 <td>PERMISSIONROLE_ENTR</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>UTILISATEUR</td>
+				 <td>Table</td>
+				 <td>resetpasswordexpires</td>
+				 <td>int8</td>
+				 <td>19</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>POSITION</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposition</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;users.&quot;POSITION_idposition_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>UTILISATEUR</td>
+				 <td>Table</td>
+				 <td>password</td>
+				 <td>varchar</td>
+				 <td>200</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_GLOB</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identite</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>OPERATION</td>
+				 <td>Table</td>
+				 <td>level</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_AFFICHAGE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -708,7 +411,7 @@
 				<tr>
 				 <td>MODIFICATION_CLIENT</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -728,14 +431,311 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>POSITION</td>
+				 <td>PERMISSIONUTIL_CONTRCOLL</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposition</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_FOURN</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_ENTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ROLEADM</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
 				 <td>serial</td>
 				 <td>10</td>
 				 <td title=''></td>
 				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;users.&quot;POSITION_idposition_seq&quot;&#39;::regclass)</td>
+				 <td>nextval(&#39;users.&quot;ROLEADM_idrole_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_FOURN</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>RELATION_FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>RELATION_FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td>code_fournisseur</td>
+				 <td>varchar</td>
+				 <td>100</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_CONTRCOLL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_FOURN</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_ENTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_FOURN</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>UTILISATEUR</td>
+				 <td>Table</td>
+				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>login</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>INVITE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_FOURN</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONROLE_ENTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_FOURN</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>UTILISATEUR</td>
+				 <td>Table</td>
+				 <td>resetpasswordtoken</td>
+				 <td>varchar</td>
+				 <td>200</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_ENTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idoperation</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTITE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identite</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;users.&quot;ENTITE_identite_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>RELATION_FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idemploye</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_AFFICHAGE</td>
+				 <td>Table</td>
+				 <td>affichage</td>
+				 <td>bool</td>
+				 <td>1</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>OPERATION</td>
+				 <td>Table</td>
+				 <td>description</td>
+				 <td>varchar</td>
+				 <td>30</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERMISSIONUTIL_GLOB</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ROLEADM</td>
+				 <td>Table</td>
+				 <td>description</td>
+				 <td>varchar</td>
+				 <td>30</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>UTILISATEUR</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>EMPLOYE_INT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF_AFFICHAGE</td>
+				 <td>Table</td>
+				 <td>affichage</td>
+				 <td>bool</td>
+				 <td>1</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_AFFICHAGE</td>
+				 <td>Table</td>
+				 <td>affichage</td>
+				 <td>bool</td>
+				 <td>1</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
 				 <td></td>
 				</tr>
 				<tr>
@@ -750,14 +750,14 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>RELATION_FOURNISSEUR</td>
+				 <td>UTILISATEUR</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idemploye</td>
-				 <td>int4</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iduser</td>
+				 <td>serial</td>
 				 <td>10</td>
 				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;users.&quot;UTILISATEUR_iduser_seq&quot;&#39;::regclass)</td>
 				 <td></td>
 				</tr>
 								</tbody>
