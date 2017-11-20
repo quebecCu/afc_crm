@@ -13,7 +13,7 @@ const fournisseurs = require('./routes/fournisseurs');
 const assurancesCollectives = require('./routes/assurancesCollectives');
 const createCustomer = require ('./routes/createCustomer');
 const app = express();
-require('dotenv').load();
+
 
 //view engine setup
 app.set('views', path.join(__dirname, 'views'));

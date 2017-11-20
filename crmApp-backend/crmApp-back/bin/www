@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+const dotenv = require('dotenv').load();
 var app = require('../app');
 var debug = require('debug')('crmapp-back:server');
 var http = require('http');
@@ -14,7 +14,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3002');
 app.set('port', port);
- 
+
 /**
  * Create HTTP server.
  */
