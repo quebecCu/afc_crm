@@ -50,8 +50,8 @@ DROP TABLE IF EXISTS "CAT_ACTIVITE" CASCADE;
 
 CREATE TABLE public."ADRESSE" (
   idadresse  serial PRIMARY KEY,
-  rue  varchar(30),
-  ville  varchar(20),
+  rue  varchar(255),
+  ville  varchar(50),
   province  varchar(10),
   codepostal  char(7)
 );
@@ -63,7 +63,7 @@ CREATE TABLE public."RELEVE" (
 
 CREATE TABLE public."PROVENANCE" (
   idprovenance  serial  PRIMARY KEY,
-  libelleprovenance  varchar(30)
+  libelleprovenance  varchar(50)
 );
 
 CREATE TABLE public."AGA" (
@@ -84,7 +84,7 @@ CREATE TABLE public."TITRE" (
 CREATE TABLE public."PERSONNE" (
   idpersonne  serial PRIMARY KEY,
   nom  varchar(20) NOT NULL,
-  prenom  varchar(30) NOT NULL,
+  prenom  varchar(50) NOT NULL,
   idtitre integer REFERENCES "TITRE" (idtitre) NOT NULL,
   date_naiss date,
   idadresse integer  REFERENCES  "ADRESSE" (idadresse),
@@ -92,7 +92,7 @@ CREATE TABLE public."PERSONNE" (
   ext_tel_principal varchar(3),
   num_tel_secondaire  varchar(10),
   ext_tel_secondaire varchar(3),
-  mail  varchar(30)
+  mail  varchar(255)
 );
 
 
@@ -144,7 +144,7 @@ CREATE TABLE public."ETAT" (
 
 CREATE TABLE public."ROLE" (
   idrole  serial  PRIMARY KEY,
-  libellerole  varchar(30)
+  libellerole  varchar(50)
 );
 
 CREATE TABLE public."CLIENT" (
@@ -162,7 +162,7 @@ CREATE TABLE public."DOMAINE_ASSURANCE" (
 
 CREATE TABLE public."MODALITE" (
   idmodalite  serial  PRIMARY KEY,
-  libelleavantage  varchar(30),
+  libelleavantage  varchar(50),
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
   idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
   idtype  integer  REFERENCES "TYPE" (idtype)
@@ -182,7 +182,7 @@ CREATE TABLE public."REGLE" (
 
 CREATE TABLE public."CADEAU" (
   idcadeau  serial  PRIMARY KEY,
-  libellecadeau  varchar(30)
+  libellecadeau  varchar(50)
 );
 
 CREATE TABLE public."CONTRAT" (
@@ -259,7 +259,7 @@ CREATE TABLE public."ENTREPRISE" (
   idclient  integer  PRIMARY KEY REFERENCES "CLIENT" (idclient),
   idadresse  integer  REFERENCES "ADRESSE" (idadresse),
   idreleve  integer  REFERENCES "RELEVE" (idreleve),
-  nom  varchar(30) NOT NULL,
+  nom  varchar(255) NOT NULL,
   tel_principal  varchar(20),
   ext_tel_principal  varchar(5),
  -- tel_secondaire  char(10),
@@ -285,7 +285,7 @@ CREATE TABLE public."FOURNISSEUR_ATTR" (
   idattrfournisseur  serial  PRIMARY KEY,
   idtype  integer  REFERENCES "TYPE" (idtype),
   label  varchar(40) NOT NULL,
-  description  varchar(30),
+  description  varchar(50),
   forme  varchar(100),
   valeur_defaut varchar(40),
   ext varchar(20)
@@ -295,7 +295,7 @@ CREATE TABLE public."ENTREPRISE_ATTR" (
   idattrentreprise  serial  PRIMARY KEY,
   idtype  integer  REFERENCES "TYPE" (idtype),
   label  varchar(40) NOT NULL,
-  description  varchar(30),
+  description  varchar(50),
   forme  varchar(100),
   valeur_defaut varchar(40),
   ext varchar(20)
@@ -305,7 +305,7 @@ CREATE TABLE public."CONTRAT_COLLECTIF_ATTR" (
   idattrcontratcoll  serial  PRIMARY KEY,
   idtype  integer  REFERENCES "TYPE" (idtype),
   label  varchar(20) NOT NULL,
-  description  varchar(30),
+  description  varchar(50),
   forme  varchar(100),
   valeur_defaut varchar(40)
 );
