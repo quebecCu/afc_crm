@@ -14,7 +14,7 @@ const options = {promiseLib: promise};
 }*/
 
 /*const dbConfig = {
-	    database: 'CRM_2',
+	    database: 'CRM',
 	    user: 'postgres',
 	    password: 'password',
 	    port: 5432,
@@ -33,9 +33,10 @@ const connectionString =
 	'@' +
 	process.env.host +
 	':' +
-	process.env.port +
+	process.env.database_port +
 	'/' +
 	process.env.database;
+
 const db = pgp(connectionString);
 
 db.query(squel.select()
