@@ -2,40 +2,47 @@
 <database name="CRM_2" schema="users" type="PostgreSQL - 9.6.5">
    <tables>
       <table name="CONTRAT_COLLECTIF_AFFICHAGE" numRows="0" remarks="" schema="users" type="TABLE">
-         <column autoUpdated="false" digits="0" id="0" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="0" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrcontratcoll" foreignKey="CONTRAT_COLLECTIF_AFFICHAGE_idattrcontratcoll_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="1" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idattrcontratcoll" sequenceNumberInPK="1"/>
          <index name="CONTRAT_COLLECTIF_AFFICHAGE_pkey" unique="true">
             <column ascending="true" name="idattrcontratcoll"/>
          </index>
       </table>
-      <table name="EMPLOYE_INT" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="EMPLOYE_INT" numRows="9" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;EMPLOYE_INT_idemploye_seq&quot;'::regclass)" digits="0" id="0" name="idemploye" nullable="false" remarks="" size="10" type="serial">
             <child column="idemploye" foreignKey="RELATION_FOURNISSEUR_idemploye_fkey" implied="false" onDeleteCascade="false" schema="users" table="RELATION_FOURNISSEUR"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="iduser" nullable="true" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="EMPLOYE_INT_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="2" name="idpersonne" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="2" name="idpersonne" nullable="true" remarks="" size="10" type="int4">
+            <parent column="idpersonne" foreignKey="EMPLOYE_INT_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="PERSONNE"/>
+         </column>
          <primaryKey column="idemploye" sequenceNumberInPK="1"/>
          <index name="EMPLOYE_INT_pkey" unique="true">
             <column ascending="true" name="idemploye"/>
          </index>
       </table>
-      <table name="ENTITE" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="ENTITE" numRows="6" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;ENTITE_identite_seq&quot;'::regclass)" digits="0" id="0" name="identite" nullable="false" remarks="" size="10" type="serial">
             <child column="identite" foreignKey="PERMISSIONROLE_GLOB_identite_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONROLE_GLOB"/>
             <child column="identite" foreignKey="PERMISSIONUTIL_GLOB_identite_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONUTIL_GLOB"/>
             <child column="identite" foreignKey="POSITION_identite_fkey" implied="false" onDeleteCascade="false" schema="users" table="POSITION"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="description" nullable="true" remarks="" size="60" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="identite" sequenceNumberInPK="1"/>
          <index name="ENTITE_pkey" unique="true">
             <column ascending="true" name="identite"/>
          </index>
       </table>
       <table name="ENTREPRISE_AFFICHAGE" numRows="0" remarks="" schema="users" type="TABLE">
-         <column autoUpdated="false" digits="0" id="0" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="0" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrentreprise" foreignKey="ENTREPRISE_AFFICHAGE_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="1" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idattrentreprise" sequenceNumberInPK="1"/>
          <index name="ENTREPRISE_AFFICHAGE_pkey" unique="true">
@@ -43,7 +50,9 @@
          </index>
       </table>
       <table name="FOURNISSEUR_AFFICHAGE" numRows="0" remarks="" schema="users" type="TABLE">
-         <column autoUpdated="false" digits="0" id="0" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="0" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrfournisseur" foreignKey="FOURNISSEUR_AFFICHAGE_idattrfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="1" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idattrfournisseur" sequenceNumberInPK="1"/>
          <index name="FOURNISSEUR_AFFICHAGE_pkey" unique="true">
@@ -54,8 +63,12 @@
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="INVITE_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idclient" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="2" name="idpersonne" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idclient" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idclient" foreignKey="INVITE_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="idpersonne" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idpersonne" foreignKey="INVITE_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="PERSONNE"/>
+         </column>
          <primaryKey column="iduser" sequenceNumberInPK="1"/>
          <primaryKey column="idclient" sequenceNumberInPK="2"/>
          <primaryKey column="idpersonne" sequenceNumberInPK="3"/>
@@ -69,7 +82,9 @@
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="MODIFICATION_CLIENT_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idclient" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idclient" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idclient" foreignKey="MODIFICATION_CLIENT_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="derniere_modification" nullable="true" remarks="" size="13" type="date"/>
          <primaryKey column="iduser" sequenceNumberInPK="1"/>
          <primaryKey column="idclient" sequenceNumberInPK="2"/>
@@ -78,7 +93,7 @@
             <column ascending="true" name="idclient"/>
          </index>
       </table>
-      <table name="OPERATION" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="OPERATION" numRows="3" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;OPERATION_idoperation_seq&quot;'::regclass)" digits="0" id="0" name="idoperation" nullable="false" remarks="" size="10" type="serial">
             <child column="idoperation" foreignKey="PERMISSIONROLE_CONTRCOLL_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONROLE_CONTRCOLL"/>
             <child column="idoperation" foreignKey="PERMISSIONROLE_ENTR_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONROLE_ENTR"/>
@@ -100,7 +115,9 @@
          <column autoUpdated="false" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="int4">
             <parent column="idrole" foreignKey="PERMISSIONROLE_CONTRCOLL_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="ROLEADM"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrcontratcoll" foreignKey="PERMISSIONROLE_CONTRCOLL_idattrcontratcoll_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="idoperation" nullable="false" remarks="" size="10" type="int4">
             <parent column="idoperation" foreignKey="PERMISSIONROLE_CONTRCOLL_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="OPERATION"/>
          </column>
@@ -117,7 +134,9 @@
          <column autoUpdated="false" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="int4">
             <parent column="idrole" foreignKey="PERMISSIONROLE_ENTR_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="ROLEADM"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrentreprise" foreignKey="PERMISSIONROLE_ENTR_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="idoperation" nullable="false" remarks="" size="10" type="int4">
             <parent column="idoperation" foreignKey="PERMISSIONROLE_ENTR_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="OPERATION"/>
          </column>
@@ -134,7 +153,9 @@
          <column autoUpdated="false" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="int4">
             <parent column="idrole" foreignKey="PERMISSIONROLE_FOURN_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="ROLEADM"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrfournisseur" foreignKey="PERMISSIONROLE_FOURN_idattrfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="idoperation" nullable="false" remarks="" size="10" type="int4">
             <parent column="idoperation" foreignKey="PERMISSIONROLE_FOURN_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="OPERATION"/>
          </column>
@@ -147,7 +168,7 @@
             <column ascending="true" name="idoperation"/>
          </index>
       </table>
-      <table name="PERMISSIONROLE_GLOB" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="PERMISSIONROLE_GLOB" numRows="35" remarks="" schema="users" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="int4">
             <parent column="idrole" foreignKey="PERMISSIONROLE_GLOB_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="ROLEADM"/>
          </column>
@@ -170,7 +191,9 @@
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="PERMISSIONUTIL_CONTRCOLL_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrcontratcoll" foreignKey="PERMISSIONUTIL_CONTRCOLL_idattrcontratcoll_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="idoperation" nullable="false" remarks="" size="10" type="int4">
             <parent column="idoperation" foreignKey="PERMISSIONUTIL_CONTRCOLL_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="OPERATION"/>
          </column>
@@ -187,7 +210,9 @@
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="PERMISSIONUTIL_ENTR_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrentreprise" foreignKey="PERMISSIONUTIL_ENTR_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="idoperation" nullable="false" remarks="" size="10" type="int4">
             <parent column="idoperation" foreignKey="PERMISSIONUTIL_ENTR_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="OPERATION"/>
          </column>
@@ -204,7 +229,9 @@
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="PERMISSIONUTIL_FOURN_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idattrfournisseur" foreignKey="PERMISSIONUTIL_FOURN_idattrfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR_ATTR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="idoperation" nullable="false" remarks="" size="10" type="int4">
             <parent column="idoperation" foreignKey="PERMISSIONUTIL_FOURN_idoperation_fkey" implied="false" onDeleteCascade="false" schema="users" table="OPERATION"/>
          </column>
@@ -217,7 +244,7 @@
             <column ascending="true" name="idoperation"/>
          </index>
       </table>
-      <table name="PERMISSIONUTIL_GLOB" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="PERMISSIONUTIL_GLOB" numRows="33" remarks="" schema="users" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="PERMISSIONUTIL_GLOB_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
@@ -251,7 +278,9 @@
          <column autoUpdated="false" digits="0" id="0" name="idemploye" nullable="false" remarks="" size="10" type="int4">
             <parent column="idemploye" foreignKey="RELATION_FOURNISSEUR_idemploye_fkey" implied="false" onDeleteCascade="false" schema="users" table="EMPLOYE_INT"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="idfournisseur" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="idfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idfournisseur" foreignKey="RELATION_FOURNISSEUR_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR"/>
+         </column>
          <column autoUpdated="false" digits="0" id="2" name="code_fournisseur" nullable="true" remarks="" size="100" type="varchar"/>
          <primaryKey column="idemploye" sequenceNumberInPK="1"/>
          <primaryKey column="idfournisseur" sequenceNumberInPK="2"/>
@@ -260,7 +289,7 @@
             <column ascending="true" name="idfournisseur"/>
          </index>
       </table>
-      <table name="ROLEADM" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="ROLEADM" numRows="5" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;ROLEADM_idrole_seq&quot;'::regclass)" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="serial">
             <child column="idrole" foreignKey="PERMISSIONROLE_CONTRCOLL_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONROLE_CONTRCOLL"/>
             <child column="idrole" foreignKey="PERMISSIONROLE_ENTR_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONROLE_ENTR"/>
@@ -275,7 +304,7 @@
             <column ascending="true" name="idrole"/>
          </index>
       </table>
-      <table name="UTILISATEUR" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="UTILISATEUR" numRows="4" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;UTILISATEUR_iduser_seq&quot;'::regclass)" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="serial">
             <child column="iduser" foreignKey="EMPLOYE_INT_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="EMPLOYE_INT"/>
             <child column="iduser" foreignKey="INVITE_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="INVITE"/>

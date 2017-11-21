@@ -118,6 +118,14 @@
 				 </td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="FOURNISSEUR_AFFICHAGE.idattrfournisseur references public.FOURNISSEUR_ATTR.idattrfournisseur via FOURNISSEUR_AFFICHAGE_idattrfournisseur_fkey">
+						<a href='../../public/tables/FOURNISSEUR_ATTR.html'>FOURNISSEUR_ATTR</a><span class='relatedKey'>.idattrfournisseur</span>
+					</td>
+					<td class="constraint detail">
+						FOURNISSEUR_AFFICHAGE_idattrfournisseur_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
 				  </table>					 
 				 </td>
 				 <td></td>
@@ -176,6 +184,49 @@
 				</tbody>
 				</table>   			  
 			</div><!-- /.box-body -->
+		</div>
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+
+              <h3 id="Relationships" class="box-title">Relationships</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>Close relationships within degrees of separation</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
+			  			              <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="FOURNISSEUR_AFFICHAGE.html" title="FOURNISSEUR_AFFICHAGE" alt="" coords="321,5,651,131">
+<area shape="rect" id="node2" href="../../public/tables/FOURNISSEUR_ATTR.html" title="public.FOURNISSEUR_ATTR" alt="" coords="5,14,277,98">
+</map>
+
+					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/FOURNISSEUR_AFFICHAGE.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
+<area shape="rect" id="node1" href="FOURNISSEUR_AFFICHAGE.html" title="FOURNISSEUR_AFFICHAGE" alt="" coords="321,5,651,131">
+<area shape="rect" id="node2" href="../../public/tables/FOURNISSEUR_ATTR.html" title="public.FOURNISSEUR_ATTR" alt="" coords="5,153,277,237">
+<area shape="rect" id="node3" href="PERMISSIONROLE_FOURN.html" title="PERMISSIONROLE_FOURN" alt="" coords="351,149,621,233">
+<area shape="rect" id="node4" href="PERMISSIONUTIL_FOURN.html" title="PERMISSIONUTIL_FOURN" alt="" coords="355,250,617,334">
+</map>
+
+					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/FOURNISSEUR_AFFICHAGE.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
 		</div>
 	      </section>
     
