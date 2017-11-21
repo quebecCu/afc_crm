@@ -10,6 +10,7 @@ let initialState={
     formState:{
         role: '',
     	operations:[],
+		titre:'',
         nom: '',
 		prenom:'',
         login: '',
