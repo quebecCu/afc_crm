@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const login = require('./routes/login');
+
 const reset = require('./routes/reset');
-const resetPassword = require('./routes/ResetPassword');
+const resetPassword = require('./routes/resetPassword');
 const fournisseurs = require('./routes/fournisseurs');
 const assurancesCollectives = require('./routes/assurancesCollectives');
 const createCustomer = require ('./routes/createCustomer');
