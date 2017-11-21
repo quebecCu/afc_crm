@@ -37,8 +37,8 @@ export function * createUser () {
 			tokenToSend="";
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 
 		//communication avec server
@@ -79,6 +79,7 @@ export function * updateUser(){
 
 		let user = yield take(UPDATE_USER);
 		let{id,
+			titre,
 			role,
 			nom,
 			prenom,
@@ -92,8 +93,8 @@ export function * updateUser(){
 			tokenToSend="";
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 		//communication avec server
 		var server = "http://localhost:3002/users/update/";
@@ -102,6 +103,7 @@ export function * updateUser(){
 		
 		axios.post(backendUrl, {
 			id:id,
+			titre:titre,
 			role: role,
 			nom: nom,
 			prenom: prenom,
@@ -133,11 +135,11 @@ export function * deleteUser(){
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-		
+
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 
 		let id = yield take(DELETE_USER);
@@ -169,11 +171,11 @@ export function * getOperations() {
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-		
+
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 		var server = "http://localhost:3002/users/operations";
 		var backendUrl = window.location.host;
@@ -201,11 +203,11 @@ export function * getDefaultPerms() {
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-		
+
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 		var server = "http://localhost:3002/users/defaultPerms";
 		var backendUrl = window.location.host;
@@ -239,11 +241,11 @@ export function * getRoles() {
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-		
+
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 		axios.get(backendUrl,config)
 		.then(function (response) {
@@ -272,11 +274,11 @@ export function * getListUsers() {
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-		
+
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 		axios.get(backendUrl,config)
 		.then(function (response) {
@@ -307,11 +309,11 @@ export function * requestUserToDisplay(){
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
-		
+
 		var config ={
 				headers: {
-					"Authorization": tokenToSend 
-				} 
+					"Authorization": tokenToSend
+				}
 		}
 		var server = "http://localhost:3002/users/user/"+user.id;
 		var backendUrl = window.location.host;

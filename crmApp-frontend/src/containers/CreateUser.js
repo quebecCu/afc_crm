@@ -41,6 +41,7 @@ class CreateUser extends React.Component{
 		else{
 			this.props.changeForm({...this.props.formState,
 				role: '',
+				titre: '',
 				nom: '',
 				prenom:'',
 				login: '',
@@ -64,6 +65,7 @@ class CreateUser extends React.Component{
 		if(this.props.view==="CreateUser"){
 			document.getElementById("mdpHelp").style.display = "none";
 		}
+		document.getElementById("titreHelp").style.display="none";
 		document.getElementById("mailHelp").style.display = "none";
 		document.getElementById("mailInvalid").style.display = "none";
 		document.getElementById("loginInvalid").style.display = "none";
@@ -117,7 +119,7 @@ class CreateUser extends React.Component{
 			document.getElementById("loginHelp").style.display = "block";
 			isValid = false;
 		}
-		if(!/^[a-zA-Z0-9]{7,20}$/.test(formState.login)){
+		if(!/^[a-zA-Z0-9]{4,20}$/.test(formState.login)){
 			document.getElementById("loginLabel").className += " text-danger";
 			document.getElementById("login").className += " is-invalid";
 			document.getElementById("loginInvalid").style.display = "block";
@@ -133,6 +135,12 @@ class CreateUser extends React.Component{
 			document.getElementById("mailLabel").className += " text-danger";
 			document.getElementById("mail").className += " is-invalid";
 			document.getElementById("mailHelp").style.display = "block";
+			isValid = false;
+		}
+		if(!formState.titre){
+			document.getElementById("titreLabel").className += " text-danger";
+			document.getElementById("titre").className += " is-invalid";
+			document.getElementById("titreHelp").style.display = "block";
 			isValid = false;
 		}
 		if(!/[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*/.test(formState.mail)){
@@ -160,6 +168,7 @@ class CreateUser extends React.Component{
 		}
 		document.getElementById("mailLabel").className = "col-sm-3 col-form-label";
 		document.getElementById("mail").className = "form-control";
+		document.getElementById("titreLabel").className = "col-sm-3 col-form-label";
 
 		document.getElementById("nameHelp").style.display = "none";
 		document.getElementById("roleHelp").style.display = "none";
@@ -172,6 +181,7 @@ class CreateUser extends React.Component{
 		}
 		document.getElementById("mailHelp").style.display = "none";
 		document.getElementById("mailInvalid").style.display = "none";
+		document.getElementById("titreHelp").style.display = "none";
 
 
 	}

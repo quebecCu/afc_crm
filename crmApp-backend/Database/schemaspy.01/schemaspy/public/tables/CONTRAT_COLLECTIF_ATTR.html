@@ -122,6 +122,30 @@
 						CONTRAT_COLLECTIF_FACUL_idattrcontratcoll_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
 					</td>
 				   </tr>
+				   <tr>
+					<td title="CONTRAT_COLLECTIF_AFFICHAGE.idattrcontratcoll references CONTRAT_COLLECTIF_ATTR.idattrcontratcoll via CONTRAT_COLLECTIF_AFFICHAGE_idattrcontratcoll_fkey">
+						<a href='../../users/tables/CONTRAT_COLLECTIF_AFFICHAGE.html'>CONTRAT_COLLECTIF_AFFICHAGE</a><span class='relatedKey'>.idattrcontratcoll</span>
+					</td>
+					<td class="constraint detail">
+						CONTRAT_COLLECTIF_AFFICHAGE_idattrcontratcoll_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="PERMISSIONROLE_CONTRCOLL.idattrcontratcoll references CONTRAT_COLLECTIF_ATTR.idattrcontratcoll via PERMISSIONROLE_CONTRCOLL_idattrcontratcoll_fkey">
+						<a href='../../users/tables/PERMISSIONROLE_CONTRCOLL.html'>PERMISSIONROLE_CONTRCOLL</a><span class='relatedKey'>.idattrcontratcoll</span>
+					</td>
+					<td class="constraint detail">
+						PERMISSIONROLE_CONTRCOLL_idattrcontratcoll_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="PERMISSIONUTIL_CONTRCOLL.idattrcontratcoll references CONTRAT_COLLECTIF_ATTR.idattrcontratcoll via PERMISSIONUTIL_CONTRCOLL_idattrcontratcoll_fkey">
+						<a href='../../users/tables/PERMISSIONUTIL_CONTRCOLL.html'>PERMISSIONUTIL_CONTRCOLL</a><span class='relatedKey'>.idattrcontratcoll</span>
+					</td>
+					<td class="constraint detail">
+						PERMISSIONUTIL_CONTRCOLL_idattrcontratcoll_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
 				  </table>				 
 				 </td>
 				 <td>
@@ -175,7 +199,7 @@
 				<tr>
 				 <td><span id="description">description</span></td>
 				 <td>varchar</td>
-				 <td>30</td>
+				 <td>50</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -284,23 +308,29 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="176,5,548,248">
-<area shape="rect" id="node2" href="TYPE.html" title="TYPE" alt="" coords="5,37,132,150">
-<area shape="rect" id="node3" href="CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="592,7,884,150">
+<area shape="rect" id="node1" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="176,229,548,471">
+<area shape="rect" id="node2" href="TYPE.html" title="TYPE" alt="" coords="5,260,132,373">
+<area shape="rect" id="node3" href="CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="631,5,923,148">
+<area shape="rect" id="node4" href="../../users/tables/CONTRAT_COLLECTIF_AFFICHAGE.html" title="users.CONTRAT_COLLECTIF_AFFICHAGE" alt="" coords="592,165,961,279">
+<area shape="rect" id="node5" href="../../users/tables/PERMISSIONROLE_CONTRCOLL.html" title="users.PERMISSIONROLE_CONTRCOLL" alt="" coords="603,296,951,409">
+<area shape="rect" id="node6" href="../../users/tables/PERMISSIONUTIL_CONTRCOLL.html" title="users.PERMISSIONUTIL_CONTRCOLL" alt="" coords="607,427,947,540">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/CONTRAT_COLLECTIF_ATTR.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="658,39,818,123">
-<area shape="rect" id="node2" href="MODALITE.html" title="MODALITE" alt="" coords="285,5,439,89">
-<area shape="rect" id="node3" href="TYPE.html" title="TYPE" alt="" coords="5,175,132,288">
-<area shape="rect" id="node4" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="176,143,548,386">
-<area shape="rect" id="node5" href="CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="592,259,884,401">
-<area shape="rect" id="node6" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="244,404,480,488">
-<area shape="rect" id="node7" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="253,505,471,589">
-<area shape="rect" id="node8" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="247,607,477,691">
+<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="697,5,857,89">
+<area shape="rect" id="node2" href="MODALITE.html" title="MODALITE" alt="" coords="285,28,439,112">
+<area shape="rect" id="node3" href="TYPE.html" title="TYPE" alt="" coords="5,267,132,380">
+<area shape="rect" id="node4" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="176,235,548,478">
+<area shape="rect" id="node5" href="CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="631,499,923,641">
+<area shape="rect" id="node6" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="244,496,480,580">
+<area shape="rect" id="node7" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="253,597,471,681">
+<area shape="rect" id="node8" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="247,699,477,783">
+<area shape="rect" id="node9" href="../../users/tables/CONTRAT_COLLECTIF_AFFICHAGE.html" title="users.CONTRAT_COLLECTIF_AFFICHAGE" alt="" coords="592,107,961,220">
+<area shape="rect" id="node10" href="../../users/tables/PERMISSIONROLE_CONTRCOLL.html" title="users.PERMISSIONROLE_CONTRCOLL" alt="" coords="603,237,951,351">
+<area shape="rect" id="node11" href="../../users/tables/PERMISSIONUTIL_CONTRCOLL.html" title="users.PERMISSIONUTIL_CONTRCOLL" alt="" coords="607,368,947,481">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/CONTRAT_COLLECTIF_ATTR.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							

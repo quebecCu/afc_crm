@@ -11,12 +11,19 @@ export class FormCreateUser extends React.Component {
 		this.onChangeLogin = this.onChangeLogin.bind(this);
 		this.onChangeMdp = this.onChangeMdp.bind(this);
 		this.onChangeMail = this.onChangeMail.bind(this);
+		this.onChangeTitre = this.onChangeTitre.bind(this);
 	}
 
 	componentDidMount(){
 		if(this.props.view==="UpdateUser"){
 			document.getElementById("login").disabled = true;
 		}
+	}
+
+	onChangeTitre(event){
+		let titre = event.target.value;
+		console.log('titre'+titre);
+		this.props.changeForm({...this.props.formState, titre: titre});
 	}
 
 	onChangeRole(event) {
@@ -74,6 +81,11 @@ export class FormCreateUser extends React.Component {
 			</div>)
 		}
 		return <div>
+			<div className="form-group row"><label id="titreLabel" className="col-sm-3 col-form-label">Titre : </label>
+					<label className="radio-inline col-sm-3"><input id="titre" type="radio" name="titre" onClick={this.onChangeTitre} value="Mr"/> Monsieur</label>
+					<label className="radio-inline col-sm-3"><input id="titre" type="radio" name="titre" onClick={this.onChangeTitre} value="Mme"/> Madame </label>
+				<p id="titreHelp" className="help-block text-danger">Sélectionner un titre</p>
+			</div>
 			<div className="form-group row"><label id="lastNameLabel" className="col-sm-3 col-form-label">Nom : </label>
 				<div className="col-sm-3"><input
 					id="lastName"
