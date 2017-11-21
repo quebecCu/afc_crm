@@ -13,7 +13,7 @@ var security = require('../security/security');
 var jwt = require('jsonwebtoken');
 var expressJwtIp = require('express-jwt-ip');
 
-
+// Request retrieving principal user informations by its login
 let getUserByLogin = (login) => {
 	squel.select()
 		.from('users."UTILISATEUR"')
@@ -21,8 +21,18 @@ let getUserByLogin = (login) => {
 		.toString()
 };
 
+//Request all the entities displayable
+let getEntitiesDisplayed = () => {
+	return squel.select()
+		.from('users."ENTITE"')
+		.where('affichage = true')
+		.toString()
+};
+
+// Roles ignored by all the requests (not searched)
 let ignoredRole = ["Visiteur", "Administrateur"];
 
+// Request retrieving all f the user information with its id
 let getUserById = (id) => {
 	return squel.select()
 		.from('users."UTILISATEUR"', "util")
@@ -36,12 +46,12 @@ let getUserById = (id) => {
 		.field('ent.identite', "ident")
 		.field('ent.description', "entdesc")
 		.field('role.description', "roledesc")
-		.join('users."PERMISSIONUTIL_GLOB"', "perm", "perm.iduser = util.iduser")
-		.join('users."OPERATION"', "op", "op.idoperation = perm.idoperation")
-		.join('users."ROLEADM"', "role", "util.idrole = role.idrole")
-		.join('users."ENTITE"', "ent", "ent.identite = perm.identite")
-		.join('users."EMPLOYE_INT"', "emp", "emp.iduser = util.iduser")
-		.join('public."PERSONNE"', "pers", "pers.idpersonne = emp.idpersonne")
+		.left_join('users."PERMISSIONUTIL_GLOB"', "perm", "perm.iduser = util.iduser")
+		.left_join('users."OPERATION"', "op", "op.idoperation = perm.idoperation")
+		.left_join('users."ROLEADM"', "role", "util.idrole = role.idrole")
+		.left_join('users."ENTITE"', "ent", "ent.identite = perm.identite")
+		.left_join('users."EMPLOYE_INT"', "emp", "emp.iduser = util.iduser")
+		.left_join('public."PERSONNE"', "pers", "pers.idpersonne = emp.idpersonne")
 		.where("util.iduser = " + id)
 		.toString();
 };
@@ -61,6 +71,7 @@ let getDefaultPermissions = (whereClause) => {
 		.toString();
 };
 
+// Request retrieving all of the users
 const getAllUsers = () =>
 	squel.select()
 		.from('users."UTILISATEUR"', 'u')
@@ -69,6 +80,22 @@ const getAllUsers = () =>
 		.order('iduser')
 		.toString();
 
+// Request retrieving the id of "Mr" or "Mme"
+let getIdTitre = (titre) =>
+squel.select()
+	.from('public."TITRE"', 't')
+	.field('t.idtitre')
+	.where("t.libelletitre = '" + titre + "'")
+	.toString();
+	
+/**
+ * Route retrieving the users list
+ * @method GET
+ * @URL /users/list
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: success, users: Array }
+ * @ErrorResponse { status: 'fail', message: 'Erreur' }
+ * **/
 router.get('/list', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /listUsers');
 
@@ -102,6 +129,14 @@ router.get('/list', expressJwtIp.ip(), function (req, res) {
 	}
 });
 
+/**
+ * Route retrieving a user informations with its id
+ * @method GET
+ * @URL /users/:id 
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: success, message: { id, login, mail, name, lastname, role, userPerms } }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /userById');
 	var tokenReceived = req.get("authorization");
@@ -113,11 +148,14 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 
 	if (!!decoded && (_ip === _ipReceived)) {
 		let id = req.params.id;
-
-		db.any(getUserById(id))
-			.then(userRetrieved => {
+		
+		db.multi(getUserById(id) + ";" + getEntitiesDisplayed())
+			.spread((userRetrieved, entities) => {
+				console.log(JSON.stringify(userRetrieved));
+				console.log(JSON.stringify(entities));
 				res.status(200);
-				var permissions = buildPermissions(userRetrieved);
+				// We retrieve all of the permissions of a user
+				var permissions = buildPermissions(userRetrieved, entities);
 				var resp = {
 					id: userRetrieved[0].iduser,
 					login: userRetrieved[0].login,
@@ -146,14 +184,26 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 	}
 });
 
-function buildPermissions(entity) {
+function findIdEntity(name, element) {
+    return (element.description == name);
+}
+
+/**
+ * This function associates the level to the user permissions
+ * @param entity User from which the permissions have to be analyzed
+ * @returns An array containing the level of permissions of a user on every entity
+ */
+function buildPermissions(initpermissions, entities) {
 	var groups = {};
-	for (var i = 0; i < entity.length; i++) {
-		var groupName = entity[i].entdesc;
-		if (!groups[groupName]) {
-			groups[groupName] = [];
+	entities.forEach((entity) => {
+		groups[entity.description] = [];
+	})
+	
+	for (var i = 0; i < initpermissions.length; i++) {
+		if(!!initpermissions[i].entdesc) {
+			var groupName = initpermissions[i].entdesc;
+			groups[groupName].push(initpermissions[i]);
 		}
-		groups[groupName].push(entity[i]);
 	}
 	var permissions = [];
 	var level;
@@ -161,13 +211,14 @@ function buildPermissions(entity) {
 
 	for (var groupName in groups) {
 		level = 0;
-		ident = groups[groupName][0].ident;
+		rightEntity = entities.find(findIdEntity.bind(null, groupName));
+		ident = rightEntity.identite;
 		groups[groupName].forEach(function (op) {
 			level += op.oplevel;
 		});
 		permissions.push({id: ident, group: groupName, level: level});
 	}
-
+	console.log(permissions);
 	return permissions;
 }
 
@@ -252,15 +303,20 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 													}
 												})
 											});
-											var addRights = squel.insert()
-												.into('users."PERMISSIONUTIL_GLOB"')
-												.setFieldsRows(newRights)
-												.returning('*')
-												.toParam();
-											return t.any(addRights)
-												.then(data => {
-													return createEmployee(user, userCreated, t, res);
-												})
+											
+											if(newRights.length !== 0) {
+												var addRights = squel.insert()
+													.into('users."PERMISSIONUTIL_GLOB"')
+													.setFieldsRows(newRights)
+													.returning('*')
+													.toParam();
+												return t.any(addRights)
+													.then(data => {
+														return createEmployee(user, userCreated, t, res);
+													})
+											} else {
+												return createEmployee(user, userCreated, t, res);
+											}
 										})
 								})
 									.then(data => {
@@ -394,20 +450,25 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 								var deleteRights = squel.delete()
 									.from('users."PERMISSIONUTIL_GLOB"')
 									.where("iduser = " + user.id);
-
+								
 								var addRights = squel.insert()
 									.into('users."PERMISSIONUTIL_GLOB"')
 									.setFieldsRows(newRights)
 									.returning('*')
 									.toParam();
-								console.log(deleteRights.toString())
+
 								return t.none(deleteRights.toString())
-									.then(() => {
-										return t.any(addRights)
-											.then(data => {
+										.then(() => {
+											if(newRights.length !== 0) {
+												return t.any(addRights) 
+														.then((data) => {
+															return updateEmployee(user, t, res);
+														})
+											} else {
 												return updateEmployee(user, t, res);
-											});
-									});
+											}
+										})
+								
 							})
 					})
 						.then(data => {
@@ -521,9 +582,8 @@ router.get('/defaultPerms', expressJwtIp.ip(), function (req, res) {
 		});
 
 		let whereClause = whereClauses.join(" AND ");
-		console.log(getDefaultPermissions(whereClause));
-		db.any(getDefaultPermissions(whereClause))
-			.then(roleRetrieved => {
+		db.multi(getDefaultPermissions(whereClause) + ";" + getEntitiesDisplayed())
+			.spread((roleRetrieved, entities) => {
 
 				var roles = {};
 				for (var i = 0; i < roleRetrieved.length; i++) {
@@ -536,7 +596,7 @@ router.get('/defaultPerms', expressJwtIp.ip(), function (req, res) {
 				var defaultPermissions = [];
 				let permissions = {};
 				for (var roleName in roles) {
-					permissions = buildPermissions(roles[roleName]);
+					permissions = buildPermissions(roles[roleName], entities);
 					defaultPermissions.push({role: roleName, droits: permissions});
 				}
 
