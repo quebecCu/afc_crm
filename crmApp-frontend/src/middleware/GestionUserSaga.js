@@ -43,8 +43,10 @@ export function * createUser () {
 
 		//communication avec server
 		var server = "http://localhost:3002/users/create";
-
-		axios.post(server, {
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/create';
+		
+		axios.post(backendUrl, {
 			role: role,
 			nom: nom,
 			prenom: prenom,
@@ -95,8 +97,10 @@ export function * updateUser(){
 		}
 		//communication avec server
 		var server = "http://localhost:3002/users/update/";
-
-		axios.post(server, {
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/update/';
+		
+		axios.post(backendUrl, {
 			id:id,
 			role: role,
 			nom: nom,
@@ -141,8 +145,10 @@ export function * deleteUser(){
 
 		//communication avec server
 		var server = "http://localhost:3002/users/user/"+id.id ;
-
-		axios.delete(server, config)
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/user/'+id.id ;
+		
+		axios.delete(backendUrl, config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success"){
 				alert ('L\'utilisateur a été supprimé avec succès');
@@ -170,8 +176,10 @@ export function * getOperations() {
 				} 
 		}
 		var server = "http://localhost:3002/users/operations";
-
-		axios.get(server, config)
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/operations';
+		
+		axios.get(backendUrl, config)
 		.then(function(response){
 			if(!!response.data.status && response.data.status === "success"){
 				store.dispatch(updateOperations(response.data.message));
@@ -200,8 +208,10 @@ export function * getDefaultPerms() {
 				} 
 		}
 		var server = "http://localhost:3002/users/defaultPerms";
-
-		axios.get(server,config)
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/defaultPerms';
+		
+		axios.get(backendUrl,config)
 		.then(function(response){
 			if(!!response.data.status && response.data.status === "success"){
 				store.dispatch(updateDefaultPerms(response.data.message));
@@ -223,6 +233,9 @@ export function * getRoles() {
 
 		//communication avec server
 		var server = "http://localhost:3002/users/getRoles";
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
@@ -232,7 +245,7 @@ export function * getRoles() {
 					"Authorization": tokenToSend 
 				} 
 		}
-		axios.get(server,config)
+		axios.get(backendUrl,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success"){
 				store.dispatch(updateRoles(response.data.roles));
@@ -253,6 +266,9 @@ export function * getListUsers() {
 		console.log('loading users from back-end');
 
 		var server = "http://localhost:3002/users/list";
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/list';
+		
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
@@ -262,7 +278,7 @@ export function * getListUsers() {
 					"Authorization": tokenToSend 
 				} 
 		}
-		axios.get(server,config)
+		axios.get(backendUrl,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success") {
 				console.log('users list' + response.data.users);
@@ -285,6 +301,9 @@ export function * requestUserToDisplay(){
 
 		console.log('loading user to display from back-end' + user.id);
 		var server = "http://localhost:3002/users/list";
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/list';
+		
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend == undefined)
 			tokenToSend="";
@@ -295,8 +314,10 @@ export function * requestUserToDisplay(){
 				} 
 		}
 		var server = "http://localhost:3002/users/user/"+user.id;
-
-		axios.get(server,config)
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/user/'+user.id;
+		
+		axios.get(backendUrl,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success") {
 				console.log('user' + response.data.message);
