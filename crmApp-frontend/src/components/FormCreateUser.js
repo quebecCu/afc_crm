@@ -18,6 +18,9 @@ export class FormCreateUser extends React.Component {
 		if(this.props.view==="UpdateUser"){
 			document.getElementById("login").disabled = true;
 		}
+	}
+
+	componentDidUpdate(){
 		if(this.props.formState.titre==="Mr"){
 			document.getElementById("titreMr").checked = true;
 		}
@@ -28,7 +31,6 @@ export class FormCreateUser extends React.Component {
 
 	onChangeTitre(event){
 		let titre = event.target.value;
-		console.log('titre'+titre);
 		this.props.changeForm({...this.props.formState, titre: titre});
 	}
 
@@ -37,7 +39,6 @@ export class FormCreateUser extends React.Component {
 		//quand on change le rôle, les permissions par défaut du rôle sélectionné s'attribuent aux userPerms
 		let idRole;//id du role sélectionné dans la table des permissions par défaut
 		for (let i = 0; i < this.props.formState.defaultPerms.length; i++) {
-			console.log("defperm"+this.props.formState.defaultPerms[i]);
 			if (role === this.props.formState.defaultPerms[i].role) {
 				idRole = i;
 			}

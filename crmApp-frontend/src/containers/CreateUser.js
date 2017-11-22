@@ -25,8 +25,10 @@ class CreateUser extends React.Component{
 			let newMail = JSON.parse(JSON.stringify(this.props.user.mail));
 			let newUserPerms = JSON.parse(JSON.stringify(this.props.user.userPerms));
 			let userID=JSON.parse(JSON.stringify(this.props.user.id));
+			let userTitre = JSON.parse(JSON.stringify(this.props.user.titre))
 			this.props.changeForm({
 				id:userID,
+				titre:userTitre,
 				role: newRole,
 				nom: newName,
 				prenom:newLastName,
@@ -80,7 +82,6 @@ class CreateUser extends React.Component{
 		let isValid = this._validateForm();
 		if(isValid){
 			if(this.props.view === "CreateUser"){
-				console.log('formstate'+formState);
 				this.props.submitUser(formState);
 			}
 			else{//Cas où on est en modification de l'utilisateur
@@ -94,7 +95,6 @@ class CreateUser extends React.Component{
 		this._resetStyle();
 		let {formState} = this.props.crmCreateUser;
 		let isValid = true;
-		console.log("state"+formState.role + formState.name);
 		if(!formState.role){
 			document.getElementById("roleLabel").className += " text-danger";
 			document.getElementById("role").className += " is-invalid";
@@ -139,11 +139,10 @@ class CreateUser extends React.Component{
 		}
 		if(!formState.titre){
 			document.getElementById("titreLabel").className += " text-danger";
-			document.getElementById("titre").className += " is-invalid";
 			document.getElementById("titreHelp").style.display = "block";
 			isValid = false;
 		}
-		if(!/[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*/.test(formState.mail)){
+		if(!/[a-zA-Z0-9!#$%&amp;'*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*/.test(formState.mail)){
 			document.getElementById("mailLabel").className += " text-danger";
 			document.getElementById("mail").className += " is-invalid";
 			document.getElementById("mailInvalid").style.display = "block";

@@ -34,7 +34,7 @@ export function * createUser () {
 
 		let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 		var config ={
 				headers: {
@@ -91,7 +91,7 @@ export function * updateUser(){
 		} = user.updatedUser;
 
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 		var config ={
 				headers: {
@@ -135,7 +135,7 @@ export function * deleteUser(){
 	while(true){
 
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 
 		var config ={
@@ -145,7 +145,6 @@ export function * deleteUser(){
 		}
 
 		let id = yield take(DELETE_USER);
-		console.log("middlewaare"+id);
 
 		//communication avec server
 		var server = "http://localhost:3002/users/user/"+id.id ;
@@ -171,7 +170,7 @@ export function * getOperations() {
 	while(true){
 		yield take(GET_OPERATIONS);
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 
 		var config ={
@@ -203,7 +202,7 @@ export function * getDefaultPerms() {
 		yield take(GET_DEFAULTPERMS);
 		console.log("on passe par getDefaultPerms middleware");
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 
 		var config ={
@@ -241,7 +240,7 @@ export function * getRoles() {
 		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
 
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 
 		var config ={
@@ -274,7 +273,7 @@ export function * getListUsers() {
 		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/list';
 
 		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		if(tokenToSend === undefined)
 			tokenToSend="";
 
 		var config ={
@@ -285,7 +284,6 @@ export function * getListUsers() {
 		axios.get(backendUrl,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success") {
-				console.log('users list' + response.data.users);
 				store.dispatch(updateUsers(response.data.users));
 			} else {
 				alert ('Erreur lors du chargement des utilisateurs');
@@ -300,31 +298,25 @@ export function * getListUsers() {
 export function * requestUserToDisplay(){
 	while(true) {
 		let user = yield take(REQUEST_USER_BY_ID);
-		console.log(user);
-		let{id} = user.id;
 
 		console.log('loading user to display from back-end' + user.id);
-		var server = "http://localhost:3002/users/list";
-		var backendUrl = window.location.host;
-		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/list';
 
-		var tokenToSend= localStorage.getItem("cookieSession");
-		if(tokenToSend == undefined)
+		let tokenToSend= localStorage.getItem("cookieSession");
+		if(tokenToSend === undefined)
 			tokenToSend="";
 
-		var config ={
+		let config ={
 				headers: {
 					"Authorization": tokenToSend
 				}
-		}
-		var server = "http://localhost:3002/users/user/"+user.id;
-		var backendUrl = window.location.host;
+		};
+		let server = "http://localhost:3002/users/user/"+user.id;
+		let backendUrl = window.location.host;
 		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/user/'+user.id;
 
 		axios.get(backendUrl,config)
 		.then(function (response) {
 			if(!!response.data.status && response.data.status === "success") {
-				console.log('user' + response.data.message);
 
 				store.dispatch(updateUserToDisplay(response.data.message));
 			} else {
