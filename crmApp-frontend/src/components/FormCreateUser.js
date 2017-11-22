@@ -18,6 +18,12 @@ export class FormCreateUser extends React.Component {
 		if(this.props.view==="UpdateUser"){
 			document.getElementById("login").disabled = true;
 		}
+		if(this.props.formState.titre==="Mr"){
+			document.getElementById("titreMr").checked = true;
+		}
+		else if(this.props.formState.titre === "Mme"){
+			document.getElementById("titreMme").checked = true;
+		}
 	}
 
 	onChangeTitre(event){
@@ -82,8 +88,8 @@ export class FormCreateUser extends React.Component {
 		}
 		return <div>
 			<div className="form-group row"><label id="titreLabel" className="col-sm-3 col-form-label">Titre : </label>
-					<label className="radio-inline col-sm-3"><input id="titre" type="radio" name="titre" onClick={this.onChangeTitre} value="Mr"/> Monsieur</label>
-					<label className="radio-inline col-sm-3"><input id="titre" type="radio" name="titre" onClick={this.onChangeTitre} value="Mme"/> Madame </label>
+					<label className="radio-inline col-sm-3"><input id="titreMr" type="radio" name="titre" onClick={this.onChangeTitre} value="Mr"/> Monsieur</label>
+					<label className="radio-inline col-sm-3"><input id="titreMme" type="radio" name="titre" onClick={this.onChangeTitre} value="Mme"/> Madame </label>
 				<p id="titreHelp" className="help-block text-danger">Sélectionner un titre</p>
 			</div>
 			<div className="form-group row"><label id="lastNameLabel" className="col-sm-3 col-form-label">Nom : </label>
