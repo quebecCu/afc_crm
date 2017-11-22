@@ -41,6 +41,7 @@ let getUserById = (id) => {
 		.field('util.login')
 		.field('pers.nom')
 		.field('pers.prenom')
+		.field('tit.libelletitre')
 		.field('op.description', "opdesc")
 		.field('op.level', "oplevel")
 		.field('ent.identite', "ident")
@@ -52,6 +53,7 @@ let getUserById = (id) => {
 		.left_join('users."ENTITE"', "ent", "ent.identite = perm.identite")
 		.left_join('users."EMPLOYE_INT"', "emp", "emp.iduser = util.iduser")
 		.left_join('public."PERSONNE"', "pers", "pers.idpersonne = emp.idpersonne")
+		.left_join('public."TITRE"', "tit", "pers.idtitre = tit.idtitre")
 		.where("util.iduser = " + id)
 		.toString();
 };
@@ -163,6 +165,7 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 					name: userRetrieved[0].nom,
 					lastname: userRetrieved[0].prenom,
 					role: userRetrieved[0].roledesc,
+					titre : userRetrieved[0].libelletitre,
 					userPerms: permissions
 				};
 
@@ -242,6 +245,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 			mdpProv: req.body.mdpProv,
 			mail: req.body.mail,
 			permissionsUser: req.body.userPerms,
+			titre:req.body.titre
 		};
 
 		var geExistingUser = squel.select()
@@ -391,6 +395,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 			prenom: req.body.prenom,
 			mail: req.body.mail,
 			permissionsUser: req.body.userPerms,
+			titre:req.body.titre
 		};
 
 		console.log(user);
@@ -748,48 +753,55 @@ router.get('/getRoles', expressJwtIp.ip(), function (req, res) {
 });
 
 function createEmployee(userInformations, userCreated, t, res) {
-	var addPersonne = squel.insert()
-		.into('public."PERSONNE"')
-		.set("nom", userInformations.nom)
-		.set("prenom", userInformations.prenom)
-		.set("idtitre", 1)
-		.returning('*');
+	return t.one(getIdTitre(userInformations.titre))
+		.then(titre => {
+			var addPersonne = squel.insert()
+			.into('public."PERSONNE"')
+			.set("nom", userInformations.nom)
+			.set("prenom", userInformations.prenom)
+			.set("idtitre", titre.idtitre)
+			.returning('*');
 
-	return t.one(addPersonne.toString())
-		.then(personCreated => {
-			var addEmployee = squel.insert()
-				.into('users."EMPLOYE_INT"')
-				.set("iduser", userCreated.iduser)
-				.set("idpersonne", personCreated.idpersonne)
-				.returning('*');
+			return t.one(addPersonne.toString())
+				.then(personCreated => {
+					var addEmployee = squel.insert()
+						.into('users."EMPLOYE_INT"')
+						.set("iduser", userCreated.iduser)
+						.set("idpersonne", personCreated.idpersonne)
+						.returning('*');
 
-			return t.one(addEmployee.toString())
-				.then(employeeCreated => {
+					return t.one(addEmployee.toString())
+						.then(employeeCreated => {
+						})
 				})
-		})
+		});
+	
 }
 
 function updateEmployee(userInformations, t, res) {
-	var getPersonne = squel.select()
+	
+	return t.one(getIdTitre(userInformations.titre))
+	.then(titre => {
+		var getPersonne = squel.select()
 		.from('public."PERSONNE"', "pers")
 		.join('users."EMPLOYE_INT"', "emp", "pers.idpersonne = emp.idpersonne")
 		.join('users."UTILISATEUR"', "util", "util.iduser = emp.iduser")
 		.where("util.iduser = " + userInformations.id);
 
-	return t.one(getPersonne.toString())
-		.then(personExisting => {
-			var updatePersonne = squel.update()
+		return t.one(getPersonne.toString())
+			.then(personExisting => {
+				var updatePersonne = squel.update()
 				.table('public."PERSONNE"')
 				.set("nom", userInformations.nom)
 				.set("prenom", userInformations.prenom)
-				.set("idtitre", 1)
+				.set("idtitre", titre.idtitre)
 				.where("idpersonne = " + personExisting.idpersonne)
 				.returning('*');
-			return t.one(updatePersonne.toString())
+		return t.one(updatePersonne.toString())
 				.then(personUpdated => {
 				})
 		})
-
+	});
 }
 
 module.exports = router;
