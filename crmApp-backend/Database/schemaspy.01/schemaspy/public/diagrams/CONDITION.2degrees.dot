@@ -39,6 +39,7 @@ digraph "twoDegreesRelationshipsDiagram" {
   "MODULE":"elipses":w -> "FOURNISSEUR":"idfournisseur":e [arrowhead=none dir=back arrowtail=crowodot];
   "SOUSCRIPTIONS":"elipses":w -> "MODALITE":"idmodalite":e [arrowhead=none dir=back arrowtail=crowodot];
   "SOUSCRIPTIONS":"elipses":w -> "MODULE":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "users.RELATION_FOURNISSEUR":"elipses":w -> "FOURNISSEUR":"idfournisseur":e [arrowhead=none dir=back arrowtail=crowodot];
   "ADRESSE" [
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
@@ -87,7 +88,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>CONTRAT</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">3 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">2 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">3 &gt;</TD></TR>
     </TABLE>>
     URL="CONTRAT.html"
     tooltip="CONTRAT"
@@ -97,7 +98,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>CONTRAT_COLLECTIF_ATTR</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
     </TABLE>>
     URL="CONTRAT_COLLECTIF_ATTR.html"
     tooltip="CONTRAT_COLLECTIF_ATTR"
@@ -117,7 +118,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>ENTREPRISE_ATTR</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">5 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
     </TABLE>>
     URL="ENTREPRISE_ATTR.html"
     tooltip="ENTREPRISE_ATTR"
@@ -126,10 +127,10 @@ digraph "twoDegreesRelationshipsDiagram" {
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>FOURNISSEUR</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="idfournisseur" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="./schemaspy/public/images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="110" HEIGHT="16">idfournisseur</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="idadresse" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="./schemaspy/public/images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="110" HEIGHT="16">idadresse</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="idfournisseur" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="./schemaspy/public/images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="94" HEIGHT="16">idfournisseur</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="idadresse" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="./schemaspy/public/images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="94" HEIGHT="16">idadresse</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">5 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">17 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">6 &gt;</TD></TR>
     </TABLE>>
     URL="FOURNISSEUR.html"
     tooltip="FOURNISSEUR"
@@ -139,7 +140,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>FOURNISSEUR_ATTR</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">18 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
     </TABLE>>
     URL="FOURNISSEUR_ATTR.html"
     tooltip="FOURNISSEUR_ATTR"
@@ -194,9 +195,19 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>TYPE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="idtype" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="./schemaspy/public/images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="58" HEIGHT="16">idtype</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">5 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">5 &gt;</TD></TR>
     </TABLE>>
     URL="TYPE.html"
     tooltip="TYPE"
+  ];
+  "users.RELATION_FOURNISSEUR" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>users.RELATION_FOURNISSEUR</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../users/tables/RELATION_FOURNISSEUR.html"
+    tooltip="users.RELATION_FOURNISSEUR"
   ];
 }

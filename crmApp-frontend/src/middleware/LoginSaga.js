@@ -21,8 +21,12 @@ export function * loginFlow (){
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
-
-		axios.post(server, {
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/login';
+	
+		
+		
+		axios.post(backendUrl, {
 			username: username,
 			password: encrypted
 		})

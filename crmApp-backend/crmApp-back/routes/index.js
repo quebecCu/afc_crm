@@ -7,8 +7,6 @@ var squel = require("squel");
 /* GET home page. */
 router.get('/test2', function(req, res) {
 
-	console.log("Test2 backend");
-
 	db.query(squel.select()
         .from('users."UTILISATEUR"')
         .toString())

@@ -47,7 +47,8 @@ CREATE TABLE users."UTILISATEUR" (
 
 CREATE TABLE users."ENTITE" (
   identite serial PRIMARY KEY,
-  description  varchar(60)
+  description  varchar(60),
+  affichage boolean
 );
 
 CREATE TABLE users."POSITION" (

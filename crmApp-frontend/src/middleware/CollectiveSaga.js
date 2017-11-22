@@ -21,8 +21,11 @@ export function * searchFlow (){
 
 		//communication avec server
 		var server = "http://localhost:3002/assurancesCollectives";
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/assurancesCollectives';
+		
 		//changer la location de la variable server pour plus de securite 
-		axios.post(server, {
+		axios.post(backendUrl, {
 		}, config)
 		.then(function (response) {
 			if(!!response.data.clients ){

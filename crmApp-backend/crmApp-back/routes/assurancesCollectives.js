@@ -16,7 +16,7 @@ var squel = squelb.useFlavour('postgres');
  * @SuccessResponse { status: 200, clients: {Array} }
  * @ErrorResponse { status: 'fail', message: 'Erreur' }
  * **/
-router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
+router.post('/assurancesCollectives', expressJwtIp.ip(), function (req, res) {
 
 	var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
@@ -27,8 +27,9 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 
 	let clients;
 
-	if(!!decoded && (_ip === _ipReceived)) {
+	if (!!decoded && (_ip === _ipReceived)) {
 
+		// TODO: Refactor query
 		//construire la requete
 		/*
 		 * nom entreprise
@@ -42,14 +43,14 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 				.from('public."ENTREPRISE"', "entreprise")
 				.field('entreprise.nom')
 				.field('client.idclient')
-				.field('entreprise.nb_employes')
 				.field('activite.libelleactivite')
 				.field('client.prospect')
 				.field('etat.libelleetat')
 				.join('public."ACTIVITE"', "activite", "activite.idactivite = entreprise.idactivite")
 				.join('public."CLIENT"', "client", "client.idclient = entreprise.idclient")
 				.join('public."ETAT"', "etat", "etat.idetat = client.idetat")
-				.toString()	+ ";"+ squel.select()
+				.toString()
+			+ ";" + squel.select()
 				.from('public."CONTRAT"', "contrat")
 				.field('contrat.idcontrat')
 				.field('contrat.police')
@@ -57,71 +58,75 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function(req, res) {
 				.field('contrat.mois_renouvellement')
 				.field('contrat.idrepresentant')
 				.join('public."ENTREPRISE"', "entreprise", "contrat.idclient = entreprise.idclient")
-
-				.toString()	+ ";"+ squel.select()
+				.toString() + ";" + squel.select()
 				.from('public."FOURNISSEUR"', "fournisseur")
 				.field('fournisseur.nom')
 				.field('fournisseur.idfournisseur')
 				.join('public."CONTRAT"', "contrat", "contrat.idfournisseur = fournisseur.idfournisseur")
 				.toString()
-				+ ";"+ squel.select()
+			+ ";" + squel.select()
 				.from('public."CLIENT"', "client")
 				.field('client.idclient')
 				.field('client.prospect')
 				.join('public."ENTREPRISE"', "entreprise", "client.idclient = entreprise.idclient")
-				.toString()	
-				+ ";"+ squel.select()
+				.toString()
+			+ ";" + squel.select()
 				.from('public."PERSONNE"', "personne")
 				.field('personne.idpersonne')
 				.field('personne.nom')
 				.field('personne.prenom')
 				.join('public."CONTRAT"', "contrat", "personne.idpersonne = contrat.idrepresentant")
 				.toString())
-				.spread(function (entreprise, contrat,fournisseur,client,personne) {
-					var clientsToSend = [];
-					let _entreprise,_nomEmploye, _police, _moisRenouvellement, _nomAssureur, _prospect, _statut, _fullName
+			.spread(function (entreprise, contrat, fournisseur, client, personne) {
+				var clientsToSend = [];
+				let _entreprise, _nomEmploye, _police, _moisRenouvellement, _nomAssureur, _prospect, _statut, _fullName
 
-					for ( var i =0; i <entreprise.length; i++){
-						if(!!entreprise[i].nom)
-							_entreprise = entreprise[i].nom;
-						if(!!personne[i].nom)
-							_nomEmploye = personne[i].nom;
-						if(!!personne[i].prenom)
-							_prenomEmploye = personne[i].prenom;
-						if(!!contrat[i].police)
-							_police = contrat[i].police;
-						if(!!contrat[i].mois_renouvellement)
-							_moisRenouvellement = contrat[i].mois_renouvellement;
-						if(!!fournisseur[i].nom)
-							_nomAssureur = fournisseur[i].nom;
-						if(!!entreprise[i].prospect)
-							_prospect = entreprise[i].prospect;
-						if(!!entreprise[i].libelleetat)
-							_statut = entreprise[i].libelleetat;
+				// TODO: Refactor clientArrayBuilder & fix some issues
+				for (var i = 0; i < entreprise.length; i++) {
+					if (!!entreprise[i].nom)
+						_entreprise = entreprise[i].nom;
+					if (!!personne[i].nom)
+						_nomEmploye = personne[i].nom;
+					if (!!personne[i].prenom)
+						_prenomEmploye = personne[i].prenom;
+					if (!!contrat[i].police)
+						_police = contrat[i].police;
+					if (!!contrat[i].mois_renouvellement)
+						_moisRenouvellement = contrat[i].mois_renouvellement;
+					if (!!fournisseur[i].nom)
+						_nomAssureur = fournisseur[i].nom;
+					if (!!entreprise[i].prospect)
+						_prospect = entreprise[i].prospect;
+					if (!!entreprise[i].libelleetat)
+						_statut = entreprise[i].libelleetat;
 
-						_fullName = _nomEmploye + " " + _prenomEmploye;
-						
-						client = {nom_entreprise: _entreprise, nom_employe: _fullName , no_police:_police, mois_renouvellement: _moisRenouvellement, nom_assureur: _nomAssureur, status: _statut, prospect: _prospect 	}
-						clientsToSend.push(client);
+					_fullName = _nomEmploye + " " + _prenomEmploye;
 
+					client = {
+						nom_entreprise: _entreprise,
+						nom_employe: _fullName,
+						no_police: _police,
+						mois_renouvellement: _moisRenouvellement,
+						nom_assureur: _nomAssureur,
+						status: _statut,
+						prospect: _prospect
 					}
+					clientsToSend.push(client);
+				}
 
-					res.status(200);
-					res.send({
-						clients:  clientsToSend
-					});
+				res.status(200);
+				res.send({
+					clients: clientsToSend
 				});
+			});
 	} else {
 		res.send({
-			status : 'fail',
-			message : 'Erreur'
+			status: 'fail',
+			message: 'Erreur'
 		});
 
 	}
-
 	console.log("end post /assurancesCollectives");
-
 });
-
 
 module.exports = router;

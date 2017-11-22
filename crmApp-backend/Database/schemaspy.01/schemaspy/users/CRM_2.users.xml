@@ -11,7 +11,7 @@
             <column ascending="true" name="idattrcontratcoll"/>
          </index>
       </table>
-      <table name="EMPLOYE_INT" numRows="7" remarks="" schema="users" type="TABLE">
+      <table name="EMPLOYE_INT" numRows="9" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;EMPLOYE_INT_idemploye_seq&quot;'::regclass)" digits="0" id="0" name="idemploye" nullable="false" remarks="" size="10" type="serial">
             <child column="idemploye" foreignKey="RELATION_FOURNISSEUR_idemploye_fkey" implied="false" onDeleteCascade="false" schema="users" table="RELATION_FOURNISSEUR"/>
          </column>
@@ -26,13 +26,14 @@
             <column ascending="true" name="idemploye"/>
          </index>
       </table>
-      <table name="ENTITE" numRows="8" remarks="" schema="users" type="TABLE">
+      <table name="ENTITE" numRows="6" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;ENTITE_identite_seq&quot;'::regclass)" digits="0" id="0" name="identite" nullable="false" remarks="" size="10" type="serial">
             <child column="identite" foreignKey="PERMISSIONROLE_GLOB_identite_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONROLE_GLOB"/>
             <child column="identite" foreignKey="PERMISSIONUTIL_GLOB_identite_fkey" implied="false" onDeleteCascade="false" schema="users" table="PERMISSIONUTIL_GLOB"/>
             <child column="identite" foreignKey="POSITION_identite_fkey" implied="false" onDeleteCascade="false" schema="users" table="POSITION"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="description" nullable="true" remarks="" size="60" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="identite" sequenceNumberInPK="1"/>
          <index name="ENTITE_pkey" unique="true">
             <column ascending="true" name="identite"/>
@@ -167,7 +168,7 @@
             <column ascending="true" name="idoperation"/>
          </index>
       </table>
-      <table name="PERMISSIONROLE_GLOB" numRows="42" remarks="" schema="users" type="TABLE">
+      <table name="PERMISSIONROLE_GLOB" numRows="35" remarks="" schema="users" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="int4">
             <parent column="idrole" foreignKey="PERMISSIONROLE_GLOB_idrole_fkey" implied="false" onDeleteCascade="false" schema="users" table="ROLEADM"/>
          </column>
@@ -243,7 +244,7 @@
             <column ascending="true" name="idoperation"/>
          </index>
       </table>
-      <table name="PERMISSIONUTIL_GLOB" numRows="55" remarks="" schema="users" type="TABLE">
+      <table name="PERMISSIONUTIL_GLOB" numRows="33" remarks="" schema="users" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="int4">
             <parent column="iduser" foreignKey="PERMISSIONUTIL_GLOB_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="UTILISATEUR"/>
          </column>
@@ -303,7 +304,7 @@
             <column ascending="true" name="idrole"/>
          </index>
       </table>
-      <table name="UTILISATEUR" numRows="6" remarks="" schema="users" type="TABLE">
+      <table name="UTILISATEUR" numRows="4" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;UTILISATEUR_iduser_seq&quot;'::regclass)" digits="0" id="0" name="iduser" nullable="false" remarks="" size="10" type="serial">
             <child column="iduser" foreignKey="EMPLOYE_INT_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="EMPLOYE_INT"/>
             <child column="iduser" foreignKey="INVITE_iduser_fkey" implied="false" onDeleteCascade="false" schema="users" table="INVITE"/>
@@ -324,6 +325,9 @@
          <primaryKey column="iduser" sequenceNumberInPK="1"/>
          <index name="UTILISATEUR_pkey" unique="true">
             <column ascending="true" name="iduser"/>
+         </index>
+         <index name="UTILISATEUR_login_key" unique="true">
+            <column ascending="true" name="login"/>
          </index>
       </table>
    </tables>

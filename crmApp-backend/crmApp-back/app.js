@@ -1,18 +1,20 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var index = require('./routes/index');
-var users = require('./routes/users');
-var login = require('./routes/login');
-var reset = require('./routes/reset');
-var resetPassword = require('./routes/ResetPassword');
-var fournisseurs = require('./routes/fournisseurs');
-var assurancesCollectives = require('./routes/assurancesCollectives');
-var createCustomer = require ('./routes/createCustomer');
-var app = express();
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const index = require('./routes/index');
+const users = require('./routes/users');
+const login = require('./routes/login');
+
+const reset = require('./routes/reset');
+const resetPassword = require('./routes/resetPassword');
+const fournisseurs = require('./routes/fournisseurs');
+const assurancesCollectives = require('./routes/assurancesCollectives');
+const createCustomer = require ('./routes/createCustomer');
+const app = express();
+
 
 //view engine setup
 app.set('views', path.join(__dirname, 'views'));

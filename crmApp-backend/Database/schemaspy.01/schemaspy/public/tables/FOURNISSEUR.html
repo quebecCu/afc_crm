@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>FOURNISSEUR - tboluoek Database</title>
+  <title>FOURNISSEUR - CRM_2 Database</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
@@ -45,7 +45,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../../index.html" class="navbar-brand"><b>tboluoek</b> Database</a>
+          <a href="../../index.html" class="navbar-brand"><b>CRM_2</b> Database</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -154,6 +154,14 @@
 						MODULE_idfournisseur_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
 					</td>
 				   </tr>
+				   <tr>
+					<td title="RELATION_FOURNISSEUR.idfournisseur references FOURNISSEUR.idfournisseur via RELATION_FOURNISSEUR_idfournisseur_fkey">
+						<a href='../../users/tables/RELATION_FOURNISSEUR.html'>RELATION_FOURNISSEUR</a><span class='relatedKey'>.idfournisseur</span>
+					</td>
+					<td class="constraint detail">
+						RELATION_FOURNISSEUR_idfournisseur_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
 				  </table>				 
 				 </td>
 				 <td>
@@ -190,7 +198,7 @@
 				<tr>
 				 <td><span id="nom">nom</span></td>
 				 <td>varchar</td>
-				 <td>20</td>
+				 <td>50</td>
 				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -239,40 +247,6 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td><span id="carte_noel">carte_noel</span></td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="tag">tag</span></td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
 				 <td><span id="tel_principal">tel_principal</span></td>
 				 <td>varchar</td>
 				 <td>10</td>
@@ -306,332 +280,9 @@
 				 </td>
 				 <td></td>
 				</tr>
-				<tr>
-				 <td><span id="tel_secondaire">tel_secondaire</span></td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="ext_tel_secondaire">ext_tel_secondaire</span></td>
-				 <td>varchar</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="fax">fax</span></td>
-				 <td>bpchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="mail">mail</span></td>
-				 <td>varchar</td>
-				 <td>30</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="ligne800">ligne800</span></td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="nb_etq_a_imprimer">nb_etq_a_imprimer</span></td>
-				 <td>int2</td>
-				 <td>5</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="pack1">pack1</span></td>
-				 <td>varchar</td>
-				 <td>30</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="pack2">pack2</span></td>
-				 <td>varchar</td>
-				 <td>30</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="min_emp1">min_emp1</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="min_emp2">min_emp2</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="div">div</span></td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="pae">pae</span></td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="seuil">seuil</span></td>
-				 <td>numeric</td>
-				 <td>10,2</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="force">force</span></td>
-				 <td>varchar</td>
-				 <td>180</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="faible">faible</span></td>
-				 <td>varchar</td>
-				 <td>180</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="groupe">groupe</span></td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="sous_groupe">sous_groupe</span></td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="services">services</span></td>
-				 <td>varchar</td>
-				 <td>180</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="notes">notes</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
 								</tbody>
 				</table>
-				<p title='28 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
+				<p title='7 columns'>Table contained <span id="recordNumber">17</span> rows<p/>
 			</div>
 		</div>
 		<div class="box box-primary">		
@@ -690,40 +341,42 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="615,5,775,177">
-<area shape="rect" id="node2" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="197,390,520,1278">
-<area shape="rect" id="node5" href="ADRESSE.html" title="ADRESSE" alt="" coords="5,421,153,535">
-<area shape="rect" id="node3" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="564,195,827,345">
-<area shape="rect" id="node4" href="CONTRAT.html" title="CONTRAT" alt="" coords="589,363,802,623">
-<area shape="rect" id="node6" href="FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="575,677,815,820">
-<area shape="rect" id="node7" href="MODULE.html" title="MODULE" alt="" coords="871,410,1027,589">
+<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="575,5,735,177">
+<area shape="rect" id="node2" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="197,495,459,767">
+<area shape="rect" id="node5" href="ADRESSE.html" title="ADRESSE" alt="" coords="5,527,153,640">
+<area shape="rect" id="node3" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="524,195,787,345">
+<area shape="rect" id="node4" href="CONTRAT.html" title="CONTRAT" alt="" coords="549,363,762,623">
+<area shape="rect" id="node6" href="FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="535,677,775,820">
+<area shape="rect" id="node7" href="MODULE.html" title="MODULE" alt="" coords="852,410,1008,589">
+<area shape="rect" id="node8" href="../../users/tables/RELATION_FOURNISSEUR.html" title="users.RELATION_FOURNISSEUR" alt="" coords="503,837,808,951">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/FOURNISSEUR.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="1179,425,1368,509">
-<area shape="rect" id="node2" href="MODULE.html" title="MODULE" alt="" coords="912,463,1068,642">
-<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="279,383,439,467">
-<area shape="rect" id="node5" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="197,586,520,1474">
-<area shape="rect" id="node10" href="CONTRAT.html" title="CONTRAT" alt="" coords="589,107,802,367">
-<area shape="rect" id="node20" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="573,660,818,744">
-<area shape="rect" id="node17" href="ADRESSE.html" title="ADRESSE" alt="" coords="5,380,153,493">
-<area shape="rect" id="node4" href="CONDITION.html" title="CONDITION" alt="" coords="1193,679,1353,851">
-<area shape="rect" id="node6" href="MODALITE.html" title="MODALITE" alt="" coords="913,660,1067,744">
-<area shape="rect" id="node7" href="TYPE.html" title="TYPE" alt="" coords="637,799,753,883">
-<area shape="rect" id="node8" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="564,457,827,606">
-<area shape="rect" id="node9" href="POSTE.html" title="POSTE" alt="" coords="295,484,423,568">
-<area shape="rect" id="node11" href="AGA.html" title="AGA" alt="" coords="301,281,417,365">
-<area shape="rect" id="node12" href="CLIENT.html" title="CLIENT" alt="" coords="293,79,424,163">
-<area shape="rect" id="node13" href="REGLE.html" title="REGLE" alt="" coords="295,180,423,264">
-<area shape="rect" id="node14" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="872,264,1108,348">
-<area shape="rect" id="node15" href="CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="871,109,1109,193">
-<area shape="rect" id="node16" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="609,5,781,89">
-<area shape="rect" id="node18" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="875,835,1105,919">
-<area shape="rect" id="node19" href="FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="1153,868,1393,1011">
-<area shape="rect" id="node21" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="1173,532,1373,616">
+<area shape="rect" id="node1" href="BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="1160,441,1349,525">
+<area shape="rect" id="node2" href="MODULE.html" title="MODULE" alt="" coords="893,497,1049,675">
+<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="248,384,408,468">
+<area shape="rect" id="node5" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="197,603,459,875">
+<area shape="rect" id="node10" href="CONTRAT.html" title="CONTRAT" alt="" coords="549,107,762,367">
+<area shape="rect" id="node20" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="533,828,778,912">
+<area shape="rect" id="node17" href="ADRESSE.html" title="ADRESSE" alt="" coords="5,381,153,495">
+<area shape="rect" id="node4" href="CONDITION.html" title="CONDITION" alt="" coords="1175,796,1335,968">
+<area shape="rect" id="node6" href="MODALITE.html" title="MODALITE" alt="" coords="895,828,1048,912">
+<area shape="rect" id="node7" href="TYPE.html" title="TYPE" alt="" coords="597,929,713,1013">
+<area shape="rect" id="node8" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="524,457,787,606">
+<area shape="rect" id="node9" href="POSTE.html" title="POSTE" alt="" coords="264,501,392,585">
+<area shape="rect" id="node11" href="AGA.html" title="AGA" alt="" coords="270,283,386,367">
+<area shape="rect" id="node12" href="CLIENT.html" title="CLIENT" alt="" coords="263,80,393,164">
+<area shape="rect" id="node13" href="REGLE.html" title="REGLE" alt="" coords="264,181,392,265">
+<area shape="rect" id="node14" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="853,264,1089,348">
+<area shape="rect" id="node15" href="CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="852,109,1091,193">
+<area shape="rect" id="node16" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="569,5,741,89">
+<area shape="rect" id="node18" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="856,967,1087,1051">
+<area shape="rect" id="node19" href="FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="1135,992,1375,1135">
+<area shape="rect" id="node21" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="1155,589,1355,673">
+<area shape="rect" id="node22" href="../../users/tables/RELATION_FOURNISSEUR.html" title="users.RELATION_FOURNISSEUR" alt="" coords="503,660,808,773">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/FOURNISSEUR.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
