@@ -18,9 +18,7 @@ var expressJwtIp = require('express-jwt-ip');
 router.post('/login', expressJwtIp.ip(), function(req, res) {
 
 	var usernameText = req.body.username;	
-	var encodedMdp = req.body.password;
-	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
-	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
+	var mdpText = req.body.password;
 	var certKey = 'aplsszjknbndsj';
 	var _ip = res.locals.ip;
 
@@ -85,9 +83,7 @@ router.post('/login', expressJwtIp.ip(), function(req, res) {
 
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;
-	var encodedMdp = req.body.password;
-	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
-	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
+	var mdpText = req.body.password;
 
 	let salt = genSaltSync (10);
 	let hash = hashSync(mdpText, salt);
