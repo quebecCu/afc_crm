@@ -28,7 +28,7 @@ router.post('/ResetPassword', async function (req, res) {
 
 	// Check if the token is NOT valid
 	if (await isTokenInvalid(resetToken)) {
-		sendResponse("DEBUG|resetPassword|theTokenIsNotValid", res, "fail");
+		sendResponse("Le lien de réinitialisation est expiré \n\nMerci de retourner a l'accueil", res, "fail");
 		return;
 	}
 
