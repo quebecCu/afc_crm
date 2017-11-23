@@ -277,8 +277,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 								let rights = data[1];
 								var newRights = [];
 								var newRight;
-								var decrypted = CryptoJS.AES.decrypt(user.mdpProv, 'secretKey13579');
-								var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
+								var mdpText = user.mdpProv;
 
 								let salt = genSaltSync(10);
 								let hash = hashSync(mdpText, salt);

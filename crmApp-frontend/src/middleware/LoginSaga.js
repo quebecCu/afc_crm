@@ -7,7 +7,6 @@ import {
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
-import CryptoJS from 'crypto-js';
 
 export function * loginFlow (){
 	while(true){

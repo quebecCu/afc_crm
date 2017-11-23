@@ -1,6 +1,5 @@
 /** Imports **/
 import axios from 'axios';
-import CryptoJS from 'crypto-js';
 import {push} from 'react-router-redux';
 
 import 'react-s-alert/dist/s-alert-default.css';
@@ -19,16 +18,16 @@ export function* resetPasswordFlow() {
 
 		yield put(sendingRequest(true));
 
-		let encryptedNewPassword = CryptoJS.AES.encrypt(newPassword, "secretKey24680").toString();
-		let encryptedConfirmPassword = CryptoJS.AES.encrypt(confirmPassword, "secretKey24680").toString();
 
 		// TODO: Add a .ENV file?
 		let server = "http://localhost:3002/ResetPassword";
 		//changer la location de la variable server pour plus de securite
-
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/ResetPassword';
+	
 		axios.post(server, {
-			confirmPassword: encryptedConfirmPassword,
-			newPassword: encryptedNewPassword,
+			confirmPassword: newPassword,
+			newPassword: confirmPassword,
 			resetToken: resetToken
 		}).then((response) => {
 			if (!!response.data && response.data.status === 'success') {

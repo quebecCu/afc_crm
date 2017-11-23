@@ -32,13 +32,9 @@ router.post('/ResetPassword', async function (req, res) {
 		return;
 	}
 
-	// Decrypt the password
-	const decryptedPass = CryptoJS.AES.decrypt(req.body.newPassword, 'secretKey24680');
-	const decryptedConf = CryptoJS.AES.decrypt(req.body.confirmPassword, 'secretKey24680');
-
 	// Make the password into a encoded uft8 string
-	const pwdText = decryptedPass.toString(CryptoJS.enc.Utf8);
-	const pwdTextConf = decryptedConf.toString(CryptoJS.enc.Utf8);
+	const pwdText = req.body.newPassword;
+	const pwdTextConf = req.body.confirmPassword;
 
 	// Check if the password match
 	if (pwdText !== pwdTextConf) {

@@ -11,7 +11,6 @@ import {
 
 import axios from 'axios';
 import {store} from '../store';
-import CryptoJS from 'crypto-js';
 
 
 export function * createUser () {
@@ -32,7 +31,6 @@ export function * createUser () {
 			userPerms
 		} = user.newUser;
 
-		let mdpProvEncoded = CryptoJS.AES.encrypt(mdpProv, "secretKey13579").toString();
 		var tokenToSend= localStorage.getItem("cookieSession");
 		if(tokenToSend === undefined)
 			tokenToSend="";
@@ -53,7 +51,7 @@ export function * createUser () {
 			nom: nom,
 			prenom: prenom,
 			login: login,
-			mdpProv: mdpProvEncoded,
+			mdpProv: mdpProv,
 			mail: mail,
 			userPerms: userPerms,
 		}, config)
