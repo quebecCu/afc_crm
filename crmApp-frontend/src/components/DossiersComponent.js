@@ -62,8 +62,8 @@ class DossiersComponent extends Component {
                         <tr onClick={this.handleClick.bind(this)} key={element.nom_entreprise}>
                             <td>{element.nom_entreprise}</td>
                             <td>{element.nom_employe}</td>
-                            <td>{element.no_police}</td>
-                            <td>{element.mois_renouvellement}</td>
+                            <td style={{ display: 'none'}}>{element.no_police}</td>
+                            <td style={{ display: 'none'}}>{element.mois_renouvellement}</td>
                             <td>{element.nom_assureur}</td>
                             <td>{element.status === "Actif" ? "Actif" : "Annulé"}</td>
                             <td>{ (element.prospect === true ?  "Oui" : "Non" )}</td>
