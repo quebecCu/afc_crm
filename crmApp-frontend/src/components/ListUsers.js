@@ -16,6 +16,23 @@ class ListUsers extends React.Component{
    }
 
    _handleClickOnUser(id){
+   		this.props.displaySub(true);
+   		let links = this.props.linksSubUser;
+   		let check = true;
+   		links.forEach(link => {
+   			if(link.idUser === id) {
+   				check = false;
+			}
+		});
+   		if(check) {
+			this.props.formState.users.forEach(element => {
+				if(id === element.iduser) {
+					links.push({name: element.login, view: 'DisplayUser', idUser: id});
+				}
+			});
+			this.props.addSub(links);
+		}
+
 		this.props.displayUser(id);
 		this.props.handleClick("DisplayUser");
    }

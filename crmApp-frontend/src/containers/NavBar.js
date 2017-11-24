@@ -4,11 +4,22 @@ import {connect} from "react-redux";
 import NavBarLink from "../components/NavBarLink";
 import {logout} from "../actions/crmLogin";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
-import {changeViewUserManagement} from "../actions/crmUserManagement";
+import {changeViewUserManagement, requestUserById} from "../actions/crmUserManagement";
 import '../style/NavBar.css';
+import {addSubUserNav} from "../actions/crmNavBar";
 
 class NavBar extends Component {
+	constructor(props) {
+		super(props);
+		this._deleteSubUser = this._deleteSubUser.bind(this);
+	}
 
+	_deleteSubUser(idUser) {
+		let links = this.props.crmNavBar.linksSubUser.filter(link => {
+			return link.idUser !== idUser;
+		});
+		this.props.addSubUserNav(links);
+	}
 
     render() {
         return (
@@ -24,15 +35,8 @@ class NavBar extends Component {
                             <li>
                                 <NavBarLink name="Assurances Individuelles" id="indIns" handleClick={this.props.changeViewDashboard} view={this.props.view} />
                             </li>
-                            {/*<li data-toggle="collapse" data-target="#products" className="collapsed active">
-                                <a href="#"><i className="fa fa-gift fa-lg"></i> Assurances Collectives <span className="arrow"></span></a>
-                            </li>
-                            <ul className="sub-menu collapse" id="products">
-                                <li><a href="#">Clients</a></li>
-                                <li><a href="#">Fournisseurs</a></li>
-                            </ul>*/}
                             <li>
-                                <NavBarLink name="Assurances Collectives" id="collIns" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewCollective}/>
+                                <NavBarLink name="Assurances Collectives" id="collIns" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewCollective} reset=""/>
                             </li>
                             <li>
                                 <NavBarLink name="Placements" id="placements" handleClick={this.props.changeViewDashboard} view={this.props.view} />
@@ -40,11 +44,32 @@ class NavBar extends Component {
                             <li>
                                 <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} />
                             </li>
-                            <li >
+
                             {
-    							this.props.crmLogin.isAdmin === true && <NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement}/>
-                            } 
-                            </li>
+    							this.props.crmLogin.isAdmin === true
+								&& this.props.crmNavBar.displaySubUser === false
+								&& <li ><NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement} reset=""/></li>
+                            }
+
+
+								{
+									this.props.crmLogin.isAdmin === true
+									&& this.props.crmNavBar.displaySubUser === true
+									&& <li><NavBarLink name="Gestion des utilisateurs" id="usersManagement" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewUserManagement} reset=""/></li>
+								}
+
+
+								{
+									this.props.crmLogin.isAdmin === true
+									&& this.props.crmNavBar.displaySubUser === true
+									&& this.props.crmNavBar.linksSubUser.map(link => {
+										return <ul id="subUser"><li><NavBarLink name={link.name} id="usersManagement" handleClick={this.props.changeViewDashboard}
+																				view={this.props.view} resetView={this.props.changeViewUserManagement}
+																				reset={link.view} displayUser={this.props.requestUserById}
+																				idUser={link.idUser} menu="subMenu" deleteSub={this._deleteSubUser}/></li></ul>
+									})
+								}
+
                             <li>
                                 <div  id="logout" onClick={this.props.logout} className="link text-center">Déconnexion</div>
                             </li>
@@ -62,7 +87,8 @@ class NavBar extends Component {
 function mapStateToProps (state) {
 
     return{
-    		crmLogin: state.crmLogin
+    		crmLogin: state.crmLogin,
+			crmNavBar: state.crmNavBar
     }
 }
 
@@ -80,8 +106,13 @@ const  mapDispatchToProps = (dispatch) => {
         },
         changeViewUserManagement: (newView) => {
             dispatch(changeViewUserManagement(newView));
-        }
-
+        },
+		requestUserById: (id) => {
+			dispatch(requestUserById(id));
+		},
+		addSubUserNav: (newSubUser) => {
+        	dispatch(addSubUserNav(newSubUser));
+		}
     }
 };
 
