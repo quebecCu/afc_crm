@@ -39,7 +39,7 @@ class RechercheComponent extends Component {
 		this.props.changeFormColl(newFormState);
 		this._filtre ();
 	}
-	
+
 	_hardReset() {
 		let newFormState={
 					nomEntreprise:'',
@@ -60,7 +60,7 @@ class RechercheComponent extends Component {
 		this.props.changeFormColl(newFormState);
 		this._filtre ();
 	}
-	
+
 	 componentDidMount() {
 		 this._reset();
 	    }
@@ -84,7 +84,7 @@ class RechercheComponent extends Component {
 	_filtre (){
 		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
 			inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
-		
+
 		inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
 		inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
 		inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
@@ -92,7 +92,7 @@ class RechercheComponent extends Component {
 		inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 		inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
 		inputProspect = document.getElementById("prospects").value.toUpperCase();
-		
+
 		table = document.getElementById("PageCollectivesClientsTable");
 		tr = table.getElementsByTagName("tr");
 		// Loop through all table rows, and hide those who don't match the search query
@@ -101,26 +101,23 @@ class RechercheComponent extends Component {
 			td1 = tr[i].getElementsByTagName("td")[1];
 			td2 = tr[i].getElementsByTagName("td")[2];
 			td3 = tr[i].getElementsByTagName("td")[3];
-			td4 = tr[i].getElementsByTagName("td")[4];
-			td5 = tr[i].getElementsByTagName("td")[5];
-			td6 = tr[i].getElementsByTagName("td")[6];
-			if (td0 || td1 || td2 || td3 ||td4 ||td5 ||td6) {
-				if (td6.innerHTML.toUpperCase().indexOf(inputProspect) > -1 &&  td5.innerHTML.toUpperCase().indexOf(inputSelectedStatut) > -1 && td3.innerHTML.toUpperCase().indexOf(inputMoisRenouvellement) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNomEntreprise) > -1 && td4.innerHTML.toUpperCase().indexOf(inputNomAssureur) > -1 
+			if (td0 || td1 || td2 || td3 ) {
+				if ( td3.innerHTML.toUpperCase().indexOf(inputMoisRenouvellement) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNomEntreprise) > -1 > -1
 						&& td2.innerHTML.toUpperCase().indexOf(inputNumeroPolice) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomEmploye) > -1) {
 					tr[i].style.display = "";
 				} else {
 					tr[i].style.display = "none";
 				}
-			} 
+			}
 		}
 	}
-	
+
 	_emitChange (newFormState){
 		this.props.changeFormColl(newFormState);
 	}
 
 	render() {
-				
+
 		return(
 				<form action="" id="recherche" className="container-fluid">
 				<input type="text" id ="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
@@ -129,13 +126,13 @@ class RechercheComponent extends Component {
 				<input type="text" id ="moisRenouvellement" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
 				<input type="text" id ="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
 
-				<select  required id = "selectedStatut" onChange={this._filtre} > 
+				<select  required id = "selectedStatut" onChange={this._filtre} >
 				<option value=""  >-- Choisir le statut --</option>
 				<option value="actif" selected="selected" >Actif</option>
 				<option value="annulé">Annulé</option>
 				</select>
-				
-				<select  required name="prospects" id = "prospects" onChange={this._filtre} > 
+
+				<select  required name="prospects" id = "prospects" onChange={this._filtre} >
 				<option value=""  selected="selected">-- Type prospect --</option>
 				<option value="oui">Prospect</option>
 				<option value="non"> Non prospect </option>

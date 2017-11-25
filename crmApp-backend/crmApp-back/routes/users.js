@@ -1,25 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var squelb = require('squel');
-var squel = squelb.useFlavour('postgres');
-var db = require('../models/index');
-var express = require('express');
+const express = require('express');
+const router = express.Router();
+const squelb = require('squel');
+const squel = squelb.useFlavour('postgres');
+const db = require('../models/index');
 //Load the bcrypt module
-var CryptoJS = require("crypto-js");
-var {hashSync, genSaltSync} = require('bcryptjs');
-var bcrypt = require('bcryptjs');
-var security = require('../security/security');
-var jwt = require('jsonwebtoken');
-var expressJwtIp = require('express-jwt-ip');
-
-
-let getUserByLogin = (login) => {
-	squel.select()
-		.from('users."UTILISATEUR"')
-		.where('login like ?', login)
-		.toString()
-};
+const CryptoJS = require("crypto-js");
+const {hashSync, genSaltSync} = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const expressJwtIp = require('express-jwt-ip');
 
 let ignoredRole = ["Visiteur", "Administrateur"];
 
@@ -90,11 +78,10 @@ router.get('/list', expressJwtIp.ip(), function (req, res) {
 			})
 			.catch(error => {
 				console.log('ERROR:', error);
-			})
+			});
 
 		console.log('end GET /listUsers');
-	}
-	else {
+	} else {
 		res.send({
 			status: 'fail',
 			message: 'Erreur'
@@ -136,8 +123,7 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 			.catch(error => {
 				console.log('ERROR:', error);
 			})
-	}
-	else {
+	} else {
 		res.send({
 			status: 'fail',
 			message: 'Erreur'
@@ -636,8 +622,7 @@ router.delete('/user/:id', expressJwtIp.ip(), function (req, res) {
 						});
 				}
 			});
-	}
-	else {
+	} else {
 		res.send({
 			status: 'fail',
 			message: 'Il n\'est pas possible de supprimer cet utilisateur'

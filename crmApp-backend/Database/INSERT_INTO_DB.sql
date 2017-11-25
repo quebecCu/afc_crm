@@ -5,6 +5,182 @@
 --## COPYRIGHT (c)                                  ###
 --#####################################################
 
+
+-----public schema-----
+SELECT setval('public."PROVENANCE_idprovenance_seq"', 1, FALSE);
+SELECT setval('public."CLIENT_idclient_seq"', 1, FALSE);
+SELECT setval('public."ADRESSE_idadresse_seq"', 1, FALSE);
+SELECT setval('public."ETAT_idetat_seq"', 1, FALSE);
+SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
+SELECT setval('public."AGA_idaga_seq"', 1, FALSE);
+SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
+SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
+SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
+SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
+SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
+SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
+SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
+SELECT setval('public."REGLE_idregle_seq"', 1, FALSE);
+SELECT setval('public."CADEAU_idcadeau_seq"', 1, FALSE);
+SELECT setval('public."MODULE_idmodule_seq"', 1, FALSE);
+SELECT setval('public."ACTIVITE_idactivite_seq"', 1, FALSE);
+SELECT setval('public."CHAMBRE_COMMERCE_idchambrecommerce_seq"', 1, FALSE);
+SELECT setval('public."FOURNISSEUR_ATTR_idattrfournisseur_seq"', 1, FALSE);
+SELECT setval('public."ENTREPRISE_ATTR_idattrentreprise_seq"', 1, FALSE);
+SELECT setval('public."CONTRAT_COLLECTIF_ATTR_idattrcontratcoll_seq"', 1, FALSE);
+
+--TYPE--
+INSERT INTO public."TYPE"(libelletype) VALUES ('Int');
+INSERT INTO public."TYPE"(libelletype) VALUES ('String');
+INSERT INTO public."TYPE"(libelletype) VALUES ('Date');
+INSERT INTO public."TYPE"(libelletype) VALUES ('Bool');
+
+--TITRE--
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
+INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
+
+--POSTE--
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Président/Vice-Président');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Représentant');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint interne');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint Administratif');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Service de réclamations');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Service aux conseillers');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Services à la clientèle');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Participants du régime');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Ressources humines');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Controleur');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Comptable');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Secrétaire');
+INSERT INTO public."POSTE"(libelleposte) VALUES ('Autre');
+
+--PROVENANCE--
+INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Publicité Internet');
+INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Démarchage');
+INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Bouche à oreilles');
+
+--ETAT--
+INSERT INTO public."ETAT"(libelleetat) VALUES ('Actif');
+INSERT INTO public."ETAT"(libelleetat) VALUES ('Annulé');
+
+--CHAMBRE COMMERCE--
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Sherbrooke');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Drummmondville');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Magog-Orford');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Richmond');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Autres');
+
+--ACTIVITE--
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Construction');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Commerce au détail ou grossiste');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Entreprise de service');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Ferme/Forest');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Manufacture');
+INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Organisme à but non-lucratif');
+
+--ADRESSE--
+INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Boul. université', 'Sherbrooke', 'Quebec', 'J1K2N4');
+INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugarbaby', 'Sherbrooke', 'Quebec', 'J1K2R1');
+INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugardaddy', 'Sherbrooke', 'Quebec', 'J1K2R1');
+
+--CADEAU--
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Bulletin');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Calendrier');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Carte de fête');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Carte de noel');
+INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Autres');
+
+--RELEVE--
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Courriel');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Poste');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Telecopieur');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Non');
+INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Autres');
+
+--CLIENT--
+INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (1, 1, false, 'Ce client veut des pigeons voyageurs à chaque 2eme mercredi du mois');
+INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3, true, 'Ce client a toujours chaud');
+
+--ENTREPRISE--
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc');
+
+--FOURNISSEUR--
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Avantage Maximum');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Capitale');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Croix Bleue');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Desjardins Sécurité Financière');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Empire vie');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Financière Sun Life');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Great-West');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Humania');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Industrielle-Alliance');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Manuvie');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'PME+');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'RACCC');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'RBC Assurances');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'SSQ GROUPE FINANCIER');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'UV Mutuelle');
+INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Autres');
+
+--PERSONNE--
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Oukil', 'Aziz', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Ana', 'Pasfaitlescourses', 2);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Adam', 'Troisjour', 1);
+INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Atito', 'Maxime', 1);
+
+--CONTRAT--
+INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (1, 10, 2, 4, 10, 9632584 , 'insertion pour la mif');
+INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (2, 10, 2, 2, 6, 5222 , 'insertion pour la mif2222');
+
+--ENTREPRISE_ATTR--
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre d''employés', 'Indiquez le nombre d''employés', null, 1);
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Courriel', 'Courriel', null, 'mail@mail.com');
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Téléphone secondaire', 'Numéro de téléphone secondaire', null, '(819)000-0000');
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Ext', 'Extension', null, '(819)000-0000');
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Fax', 'Télécopieur', null, '(819)000-0000');
+
+--ENTREPRISE_FACUL--
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 1, 10);
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (2, 1, 'test@test.com');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 1, '(819)822-8282');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 1, '(819)822-8282');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 1, '(819)822-8282');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 2, 150);
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (2, 2, 'test2@test.com');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 2, '(819)811-8181');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 2, '(819)811-8181');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 2, '(819)811-8181');
+
+--FOURNISSEUR_FAC--
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Petits groupes', 'Petits groupes', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre minimum petits groupes', 'Nombre minimum d''employés', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Grands groupes', 'Grands groupes', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre minimum grands groupes', 'Nombre minimum d''employés', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Dividendes', 'Revenus de dividendes assurables ?', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'PAE', 'Programme d''aide aux employés inclus avec l''ILD ?', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Annulation ?', 'Annulation voyage ?', null, null, '00 000$');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Bagages ?', 'Assurance bagages ?', null, null, '0 000$');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Voyage #jours', 'Nombre de jours maximum', null, null, '000');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Voyage #$', 'Maximum payable', null, null, '00 000 000$');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Seuil de mutualisation', 'Seuil de mutualisation', null, null, '00 000$');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Âge maximum en AMC', 'Âge maximum en AMC', null, null, 'ans');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, '#Mois de garantie', '#Mois de garantie de taux démographique', null, null, 'mois');
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'FORCE', 'Forces', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'FAIBLE', 'Faiblesses', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'MEMO', 'Mémo', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'SERVICES', 'Services', null, null);
+INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'AUTRES', 'Autres', null, null);
+
+--CONTACT_CLIENT--
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(1, 2, 1, true);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 4, 1, true);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 3, 4, false);
+
+-----end public schema -----
+
+
 -----users schema-----
 SELECT setval('users."ROLEADM_idrole_seq"', 1, FALSE);
 SELECT setval('users."UTILISATEUR_iduser_seq"', 1, FALSE);
@@ -162,170 +338,5 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 --ENDDATATEST
 
 -----end user schema -----
-
-
------public schema-----
-SELECT setval('public."PROVENANCE_idprovenance_seq"', 1, FALSE);
-SELECT setval('public."CLIENT_idclient_seq"', 1, FALSE);
-SELECT setval('public."ADRESSE_idadresse_seq"', 1, FALSE);
-SELECT setval('public."ETAT_idetat_seq"', 1, FALSE);
-SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
-SELECT setval('public."AGA_idaga_seq"', 1, FALSE);
-SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
-SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
-SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
-SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
-SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
-SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
-SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
-SELECT setval('public."REGLE_idregle_seq"', 1, FALSE);
-SELECT setval('public."CADEAU_idcadeau_seq"', 1, FALSE);
-SELECT setval('public."MODULE_idmodule_seq"', 1, FALSE);
-SELECT setval('public."ACTIVITE_idactivite_seq"', 1, FALSE);
-SELECT setval('public."CHAMBRE_COMMERCE_idchambrecommerce_seq"', 1, FALSE);
-SELECT setval('public."FOURNISSEUR_ATTR_idattrfournisseur_seq"', 1, FALSE);
-SELECT setval('public."ENTREPRISE_ATTR_idattrentreprise_seq"', 1, FALSE);
-SELECT setval('public."CONTRAT_COLLECTIF_ATTR_idattrcontratcoll_seq"', 1, FALSE);
-
---TYPE--
-INSERT INTO public."TYPE"(libelletype) VALUES ('Int');
-INSERT INTO public."TYPE"(libelletype) VALUES ('String');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Date');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Bool');
-
---TITRE--
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
-INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
-
---POSTE--
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Représentant');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint interne');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Soumissions');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Administration');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Réclamations');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Service aux conseillers');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Services à la clientèle');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Participants du régime');
-
---PROVENANCE--
-INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Publicité Internet');
-INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Démarchage');
-INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Bouche à oreilles');
-
---ETAT--
-INSERT INTO public."ETAT"(libelleetat) VALUES ('Actif');
-INSERT INTO public."ETAT"(libelleetat) VALUES ('Inactif');
-
---CHAMBRE COMMERCE--
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Sherbrooke');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Drummmondville');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Magog-Orford');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Richmond');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Autres');
-
---ACTIVITE--
-INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Construction');
-INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Commerce au détail ou grossiste');
-INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Entreprise de service');
-INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Ferme/Forest');
-INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Manufacture');
-INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Organisme à but non-lucratif');
-
---ADRESSE--
-INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Boul. université', 'Sherbrooke', 'Quebec', 'J1K2N4');
-INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugarbaby', 'Sherbrooke', 'Quebec', 'J1K2R1');
-INSERT INTO public."ADRESSE"(rue, ville, province, codepostal) VALUES ('Rue du sugardaddy', 'Sherbrooke', 'Quebec', 'J1K2R1');
-
---CADEAU--
-INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Bulletin');
-INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Calendrier');
-INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Carte de fête');
-INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Carte de noel');
-INSERT INTO public."CADEAU"(libellecadeau) VALUES ('Autres');
-
---RELEVE--
-INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Courriel');
-INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Poste');
-INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Telecopieur');
-INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Non');
-INSERT INTO public."RELEVE"(modeenvoiereleve) VALUES ('Autres');
-
---CLIENT--
-INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (1, 1, false, 'Ce client veut des pigeons voyageurs à chaque 2eme mercredi du mois');
-INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3, true, 'Ce client a toujours chaud');
-
---ENTREPRISE--
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc');
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc');
-
---FOURNISSEUR--
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Avantage Maximum');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Capitale');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Croix Bleue');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Desjardins Sécurité Financière');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Empire vie');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Financière Sun Life');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Great-West');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Humania');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Industrielle-Alliance');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Manuvie');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'PME+');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'RACCC');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'RBC Assurances');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'SSQ GROUPE FINANCIER');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'UV Mutuelle');
-INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Autres');
-
---PERSONNE--
-INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Oukil', 'Aziz', 1);
-INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Ana', 'Pasfaitlescourses', 2);
-INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Adam', 'Troisjour', 1);
-INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Atito', 'Maxime', 1);
-
---CONTRAT--
-INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (1, 10, 2, 4, 10, 9632584 , 'insertion pour la mif');
-INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (2, 10, 2, 2, 6, 5222 , 'insertion pour la mif2222');
-
---ENTREPRISE_ATTR--
-INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre d''employés', 'Indiquez le nombre d''employés', null, 1);
-INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Courriel', 'Courriel', null, 'mail@mail.com');
-INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Téléphone secondaire', 'Numéro de téléphone secondaire', null, '(819)000-0000');
-INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Ext', 'Extension', null, '(819)000-0000');
-INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Fax', 'Télécopieur', null, '(819)000-0000');
-
---ENTREPRISE_FACUL--
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 1, 10);
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (2, 1, 'test@test.com');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 1, '(819)822-8282');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 1, '(819)822-8282');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 1, '(819)822-8282');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 2, 150);
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (2, 2, 'test2@test.com');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 2, '(819)811-8181');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 2, '(819)811-8181');
-INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 2, '(819)811-8181');
-
---FOURNISSEUR_FAC--
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Petits groupes', 'Petits groupes', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre minimum petits groupes', 'Nombre minimum d''employés', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Grands groupes', 'Grands groupes', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre minimum grands groupes', 'Nombre minimum d''employés', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Dividendes', 'Revenus de dividendes assurables ?', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'PAE', 'Programme d''aide aux employés inclus avec l''ILD ?', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Annulation ?', 'Annulation voyage ?', null, null, '00 000$');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Bagages ?', 'Assurance bagages ?', null, null, '0 000$');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Voyage #jours', 'Nombre de jours maximum', null, null, '000');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Voyage #$', 'Maximum payable', null, null, '00 000 000$');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Seuil de mutualisation', 'Seuil de mutualisation', null, null, '00 000$');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Âge maximum en AMC', 'Âge maximum en AMC', null, null, 'ans');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, '#Mois de garantie', '#Mois de garantie de taux démographique', null, null, 'mois');
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'FORCE', 'Forces', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'FAIBLE', 'Faiblesses', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'MEMO', 'Mémo', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'SERVICES', 'Services', null, null);
-INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'AUTRES', 'Autres', null, null);
-
------end public schema -----
 
 

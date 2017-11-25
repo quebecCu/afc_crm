@@ -1,13 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
+const express = require('express');
+const router = express.Router();
 //Load the bcrypt module
-var bcrypt = require('bcrypt');
-var db = require('../models');
-var squelb = require('squel');
-var squel = squelb.useFlavour('postgres');
-var jwt = require('jsonwebtoken');
-var expressJwtIp = require('express-jwt-ip');
+const bcrypt = require('bcrypt');
+const db = require('../models');
+const squelb = require('squel');
+const squel = squelb.useFlavour('postgres');
+const jwt = require('jsonwebtoken');
+const expressJwtIp = require('express-jwt-ip');
 
 /**
  * Route serving Clients module

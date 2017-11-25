@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var db = require('../models');
-var squel = require("squel");
+const express = require('express');
+const router = express.Router();
+const db = require('../models');
+const squel = require("squel");
 
 /* GET home page. */
 router.get('/test2', function(req, res) {

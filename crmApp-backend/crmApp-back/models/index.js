@@ -1,8 +1,8 @@
 "use strict";
 
-var squel = require("squel");
-var promise = require('bluebird');
-var options = {
+const squel = require("squel");
+const promise = require('bluebird');
+const options = {
     promiseLib: promise
 };
 const dbConfig = {

@@ -11,6 +11,7 @@ var reset = require('./routes/reset');
 var resetPassword = require('./routes/ResetPassword');
 var fournisseurs = require('./routes/fournisseurs');
 var assurancesCollectives = require('./routes/assurancesCollectives');
+const clients = require('./routes/clients');
 var createCustomer = require ('./routes/createCustomer');
 var app = express();
 
@@ -36,6 +37,7 @@ app.use( function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/clients', clients);
 app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
