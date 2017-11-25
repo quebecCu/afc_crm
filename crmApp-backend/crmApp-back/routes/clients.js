@@ -100,7 +100,7 @@ router.get('/aga', expressJwtIp.ip(), function (req, res) {
 });
 
 router.get('/activities', expressJwtIp.ip(), function (req, res) {
-	console.log('route GET /chambers');
+	console.log('route GET /activities');
 	/*var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode
