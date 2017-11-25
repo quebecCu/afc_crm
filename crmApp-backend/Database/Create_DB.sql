@@ -66,15 +66,10 @@ CREATE TABLE public."PROVENANCE" (
   libelleprovenance  varchar(50)
 );
 
-CREATE TABLE public."AGA" (
-  idaga  serial  PRIMARY KEY,
-  libelleaga  varchar(10)
-);
-
 CREATE TABLE public."TYPE" (
   idtype  serial  PRIMARY KEY,
   libelletype  varchar(10),
-  forme varchar(20)
+  forme varchar(100)
 );
 
 CREATE TABLE public."TITRE" (
@@ -186,12 +181,17 @@ CREATE TABLE public."CADEAU" (
   libellecadeau  varchar(50)
 );
 
+CREATE TABLE public."CHAMBRE_COMMERCE" (
+  idchambrecommerce  serial  PRIMARY KEY,
+  libellechambrecommerce  varchar(80)
+);
+
 CREATE TABLE public."CONTRAT" (
   idcontrat  serial  PRIMARY KEY,
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idclient  integer REFERENCES  "CLIENT" (idclient),
   idregle  integer REFERENCES  "REGLE" (idregle),
-  idaga  integer REFERENCES  "AGA" (idaga),
+  idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   date_signature  date,
   mois_renouvellement  integer,
@@ -251,11 +251,6 @@ CREATE TABLE public."ACTIVITE" (
   libelleactivite  varchar(80)
 );
 
-CREATE TABLE public."CHAMBRE_COMMERCE" (
-  idchambrecommerce  serial  PRIMARY KEY,
-  libellechambrecommerce  varchar(80)
-);
-
 CREATE TABLE public."ENTREPRISE" (
   idclient  integer  PRIMARY KEY REFERENCES "CLIENT" (idclient),
   idadresse  integer  REFERENCES "ADRESSE" (idadresse),
@@ -278,7 +273,6 @@ CREATE TABLE public."ENTREPRISE" (
  -- rver_rmq varchar(180),
  -- nb_etq_a_imprimer  int2,
  -- nb_mois_entente  integer, -- ?
-  idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idactivite  integer  REFERENCES  "ACTIVITE" (idactivite)
 );
 
