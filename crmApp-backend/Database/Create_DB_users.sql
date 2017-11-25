@@ -128,16 +128,32 @@ CREATE TABLE users."INVITE" (
 
 CREATE TABLE users."CONTRAT_COLLECTIF_AFFICHAGE" (
   idattrcontratcoll  integer PRIMARY KEY REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
+  posX integer,
+  posY integer,
+  height integer,
+  width integer,
+  minwidth integer,
   affichage  boolean
+  
 );
 
 CREATE TABLE users."FOURNISSEUR_AFFICHAGE" (
   idattrfournisseur  integer PRIMARY KEY REFERENCES public."FOURNISSEUR_ATTR" (idattrfournisseur),
+  posX integer,
+  posY integer,
+  height integer,
+  width integer,
+  minwidth integer,
   affichage  boolean
 );
 
 CREATE TABLE users."ENTREPRISE_AFFICHAGE" (
   idattrentreprise  integer PRIMARY KEY REFERENCES public."ENTREPRISE_ATTR" (idattrentreprise),
+  posX integer,
+  posY integer,
+  height integer,
+  width integer,
+  minwidth integer,
   affichage  boolean
 );
 

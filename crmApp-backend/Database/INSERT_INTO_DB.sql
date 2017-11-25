@@ -32,10 +32,10 @@ SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
 SELECT setval('public."TITRE_idtitre_seq"', 1, FALSE);
 
 --TYPE--
-INSERT INTO public."TYPE"(libelletype) VALUES ('Int');
-INSERT INTO public."TYPE"(libelletype) VALUES ('String');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Date');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Bool');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Nombre', '[-+]?[0-9]*\.?[0-9]+');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('String', '(.*?)');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Date', '!^(0?\d|[12]\d|3[01])-(0?\d|1[012])-((?:19|20)\d{2})$!');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Booléen', '[Oui|Non]');
 
 --TITRE--
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
@@ -178,6 +178,34 @@ SELECT setval('users."UTILISATEUR_iduser_seq"', 1, FALSE);
 SELECT setval('users."ENTITE_identite_seq"', 1, FALSE);
 SELECT setval('users."OPERATION_idoperation_seq"', 1, FALSE);
 SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
+
+
+--AFFICHAGE-CLIENT--
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (2, 0, 1, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (3, 0, 2, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (4, 1, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (5, 1, 1, 1, 3, 3, true);
+
+--AFFICHAGE-FOURNISSEUR--
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (2, 0, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (3, 0, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (4, 0, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (5, 1, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (6, 1, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (7, 1, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (8, 1, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (9, 2, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (10, 2, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (11, 2, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (12, 2, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (13, 3, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (14, 3, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (15, 3, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (16, 3, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (17, 4, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (18, 4, 1, 1, 3, 3, true);
 
 ---ROLEADM---
 INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Administrateur', TRUE);

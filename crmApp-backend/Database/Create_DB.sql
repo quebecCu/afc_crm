@@ -73,7 +73,8 @@ CREATE TABLE public."AGA" (
 
 CREATE TABLE public."TYPE" (
   idtype  serial  PRIMARY KEY,
-  libelletype  varchar(10)
+  libelletype  varchar(10),
+  forme varchar(20)
 );
 
 CREATE TABLE public."TITRE" (
