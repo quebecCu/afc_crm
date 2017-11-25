@@ -11,6 +11,12 @@ export const UPDATE_CHAMBRE_COMMERCE = 'UPDATE_CHAMBRE_COMMERCE';
 export const CREATE_NEW_FIELD = 'CREATE_NEW_FIELD';
 export const GET_CHAMP_TYPES = 'GET_CHAMP_TYPES';
 export const UPDATE_CHAMP_TYPES = 'UPDATE_CHAMP_TYPES';
+export const GET_ACTIVITES = 'GET_ACTIVITES';
+export const UPDATE_ACTIVITES = 'UPDATE_ACTIVITES';
+export const GET_ETATS = 'GET_ETATS';
+export const UPDATE_ETATS = 'UPDATE_ETATS';
+export const GET_PROVENANCES = 'GET_PROVENANCES';
+export const UPDATE_PROVENANCES = 'UPDATE_PROVENANCES';
 
 export function changeViewGrid (newView){
 	return {type: CHANGE_VIEW_GRID, newView}
@@ -62,4 +68,28 @@ export function getChampTypes() {
 
 export function updateChampTypes(champTypes) {
 	return {type: UPDATE_CHAMP_TYPES, champTypes}
+}
+
+export function getActivites() {
+	return {type: GET_ACTIVITES}
+}
+
+export function updateActivites(activites) {
+	return {type: UPDATE_ACTIVITES, activites}
+}
+
+export function getEtats() {
+	return {type: GET_ETATS}
+}
+
+export function updateEtats(etats) {
+	return {type: UPDATE_ETATS, etats}
+}
+
+export function getProvenances() {
+	return {type: GET_PROVENANCES}
+}
+
+export function updateProvenances(provenances) {
+	return {type: UPDATE_PROVENANCES, provenances}
 }

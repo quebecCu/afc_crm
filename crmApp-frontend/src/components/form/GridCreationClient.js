@@ -77,10 +77,47 @@ export class GridCreationClient extends Component {
 						</select>
 					</div>
 					<div className="form-group">
-						<label htmlFor="activite" className="control-label">Activité</label>
-						<input type="text" className="form-control" id="activite" name="activite" required/>
+						<label className="control-label " htmlFor="activite">Activité</label>
+						<select className="form-control" id="activite" name="activite" required>
+							{
+								this.props.activites.map(activite => {
+									return <option value={activite.value}>{activite.label}</option>
+								})
+							}
+						</select>
 					</div>
+					<div className="form-group">
+						<label className="control-label " htmlFor="etat">Etat</label>
+						<select className="form-control" id="etat" name="etat" required>
+							{
+								this.props.etats.map(etat => {
+									return <option value={etat.value}>{etat.label}</option>
+								})
+							}
+						</select>
+					</div>
+					<div className="form-group">
+						<label className="control-label " htmlFor="provenance">Provenance</label>
+						<select className="form-control" id="provenance" name="provenance" required>
+							{
+								this.props.provenances.map(provenance => {
+									return <option value={provenance.value}>{provenance.label}</option>
+								})
+							}
+						</select>
+					</div>
+					<div className="form-group">
+						<label className="control-label " htmlFor="prospect">Prospect</label>
+						<select className="form-control" id="prospect" name="prospect" required>
+								<option value={true}>Vrai</option>
+								<option value={false}>Faux</option>
 
+						</select>
+					</div>
+					<div className="form-group">
+						<label htmlFor="notes" className="control-label">Notes</label>
+						<textarea className="form-control" id="notes" name="notes" required/>
+					</div>
                     <ResponsiveReactGridLayout className="layout" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
 											   breakpoints={{lg: 1000, md: 900, sm: 768, xs: 480, xxs: 0}} autoSize={true}
 											   onDragStop={this.props.handleDrag} compactType={null} >
