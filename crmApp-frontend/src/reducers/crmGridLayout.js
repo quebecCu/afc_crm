@@ -1,5 +1,6 @@
 import {
-	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_VIEW_GRID, UPDATE_CHAMBRE_COMMERCE,
+	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_VIEW_GRID, UPDATE_ACTIVITES, UPDATE_CHAMBRE_COMMERCE, UPDATE_CHAMP_TYPES,
+	UPDATE_ETATS, UPDATE_PROVENANCES,
 	UPDATE_RELEVES
 } from '../actions/crmGridLayout';
 
@@ -8,6 +9,10 @@ import {
 let initialState = {
 	releves: [],
 	chambreCommerce: [],
+	champTypes: [],
+	activites: [],
+	etats: [],
+	provenances: [],
 	grid: [],
 	layouts: {},
 	view:'read',
@@ -28,6 +33,14 @@ export default function reducer (state = initialState, action ){
 			return {...state,releves: action.releves, error:''};
 		case UPDATE_CHAMBRE_COMMERCE:
 			return {...state,chambreCommerce: action.chambreCommerce, error:''};
+		case UPDATE_CHAMP_TYPES:
+			return {...state,champTypes: action.champTypes, error:''};
+		case UPDATE_ACTIVITES:
+			return {...state,activites: action.activites, error:''};
+		case UPDATE_ETATS:
+			return {...state,etats: action.etats, error:''};
+		case UPDATE_PROVENANCES:
+			return {...state,provenances: action.provenances, error:''};
 		default:
 			return state
 
