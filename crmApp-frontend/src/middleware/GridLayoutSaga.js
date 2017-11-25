@@ -1,7 +1,8 @@
 import {take, fork} from 'redux-saga/effects';
 import {
 	REQUEST_GRID, changeGrid, changeLayout, CREATE_CUSTOMER_FILE, changeViewGrid,
-	UPDATE_CUSTOMER_FILE, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce
+	UPDATE_CUSTOMER_FILE, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce, CREATE_NEW_FIELD,
+	requestGrid, GET_CHAMP_TYPES, updateChampTypes
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -95,6 +96,28 @@ export function * getChambreCommerce (){
 	}
 }
 
+//Récupère les types de champ que l'administrateur peut créer
+export function * getChampTypes (){
+	while(true){
+
+		yield take(GET_CHAMP_TYPES);
+
+		//communication avec server
+		let server = "http://localhost:3002/getChampTypes";
+
+		axios.post(server, {
+		},config)
+			.then(function (response) {
+				if(!!response.data.champTypes){
+					store.dispatch(updateChampTypes(response.data.champTypes));
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 //Envoie les champs et leurs positions au back-end (Création d'un client)
 export function * sendFile() {
 	while(true) {
@@ -160,10 +183,44 @@ export function * updateFile() {
 	}
 }
 
+//Envoie le nouveau champ crée au back-end
+export function * createNewField() {
+	while(true) {
+		let champ = yield take(CREATE_NEW_FIELD);
+		let {
+			description,
+			nom,
+			type
+		} = champ.newField;
+		console.log("create new field");
+
+		let server = "http://localhost:3002/createNewField";
+
+		axios.post(server, {
+			description: description,
+			nom: nom,
+			type: type
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					console.log('Nouveau champ crée avec succès');
+					store.dispatch(requestGrid());
+				} else {
+					alert('Erreur lors de la création d\'un nouveau champ');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 export function * GridFlow () {
 	yield fork (getGridLayout);
 	yield fork (sendFile);
 	yield fork (updateFile);
 	yield fork (getReleves);
 	yield fork (getChambreCommerce);
+	yield fork (createNewField);
+	yield fork (getChampTypes);
 }

@@ -90,7 +90,7 @@ export class GridCreationClient extends Component {
                                     <div key={element.key} className="form-group">
                                         <label htmlFor={element.label} className="control-label">{element.nom}</label>
                                         <input type="text" name={element.label} id={element.label} className="form-control"
-											   value={element.value} onChange={this.props.handleChangeInput}/>
+											   value={element.value} onChange={this.props.handleChangeInput} placeholder={element.description}/>
                                     </div>
                                 );
                             })
@@ -112,12 +112,22 @@ export class GridCreationClient extends Component {
 					this.props.isAdmin === true &&
 					<form onSubmit={this.props.handleSubmitChamp} className="col-4 offset-4">
 						<div className="form-group">
-							<label htmlFor="champ" style={{fontSize: 13}} className="control-label">Nom du nouveau champ </label>
-							<input type="text" name="champNom" id="champNom" className="form-control"/>
+							<label htmlFor="champNom" style={{fontSize: 13}} className="control-label">Nom du nouveau champ </label>
+							<input type="text" name="champNom" id="champNom" className="form-control" required/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="champ" style={{fontSize: 13}} className="control-label">Identifiant du nouveau champ </label>
-							<input type="text" name="champId" id="champId" className="form-control"/>
+							<label htmlFor="champDescription" style={{fontSize: 13}} className="control-label">Description du nouveau champ </label>
+							<input type="text" name="champDescription" id="champDescription" className="form-control"/>
+						</div>
+						<div className="form-group">
+							<label className="control-label " htmlFor="champType">Type du nouveau champ</label>
+							<select className="form-control" id="champType" name="champType" required>
+								{
+									this.props.champTypes.map(type => {
+										return <option value={type.value}>{type.label}</option>
+									})
+								}
+							</select>
 						</div>
 						<div className="form-group">
 							<input type="submit" value="Créer un nouveau champ" className="btn btn-primary"/>

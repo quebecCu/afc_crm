@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import {GridCreationClient} from "../components/form/GridCreationClient";
 import {connect} from "react-redux";
 import {
-	changeGrid, changeLayout, changeViewGrid, createCustomerFile, requestGrid,
-	updateCustomerFile
+	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
+	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
-import {getChambreCommerce, getReleves} from "../middleware/GridLayoutSaga";
 
 class CreationClient extends Component {
     constructor(props) {
@@ -24,6 +23,7 @@ class CreationClient extends Component {
 		}
 		//this.props.getChambreCommerce();
         //this.props.getReleves();
+		//this.props.getChampTypes();
     }
 
 	//Rends les champs static
@@ -85,28 +85,31 @@ class CreationClient extends Component {
 	//On crée un nouveau champ !
     _handleSubmitChamp(event) {
         event.preventDefault();
-		let {layouts, grid} = this.props.crmGridLayout;
+		/*let {layouts, grid} = this.props.crmGridLayout;
         let key = (grid.length+1).toString();
         let x = (grid.length % 4)*3;
         let y = 3;
         if(grid.length % 4 === 0 && grid.length !== 0) {
             y++;
         }
-        layouts.lg.push({w: 3, h: 1, x: x, y: y, i: key, minW: 3});
+        layouts.lg.push({w: 3, h: 1, x: x, y: y, i: key, minW: 3});*/
 
 
-        grid.push({key: key, label: document.getElementById('champId').value, nom: document.getElementById('champNom').value, value: ''});
+        //grid.push({key: key, label: document.getElementById('champDescription').value, nom: document.getElementById('champNom').value, value: ''});
+		let description = document.getElementById('champDescription').value;
+		let nom = document.getElementById('champNom').value;
+		let type = document.getElementById('champType').value;
 		document.getElementById('champNom').value = '';
-		document.getElementById('champId').value = '';
-
-		this.props.changeGrid(grid);
-		this.props.changeLayout({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
-        //dispatch le nouveau champ au back-end
-		this._handleNonStatic();
+		document.getElementById('champDescription').value = '';
+		document.getElementById('champType').value = '';
+		//this.props.changeGrid(grid);
+		//this.props.changeLayout({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
+        this.props.createNewField({description: description, nom: nom, type: type});
+		//this._handleNonStatic();
     }
 
     render() {
-		let {grid, layouts, view, releves, chambreCommerce} = this.props.crmGridLayout;
+		let {grid, layouts, view, releves, chambreCommerce, champTypes} = this.props.crmGridLayout;
 		let {isAdmin} = this.props.crmLogin;
         return (
         	<div>
@@ -116,7 +119,8 @@ class CreationClient extends Component {
 										handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 										handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
-										isAdmin={isAdmin} releves={releves} chambreCommerce={chambreCommerce}/>
+										isAdmin={isAdmin} releves={releves}
+										champTypes={champTypes} chambreCommerce={chambreCommerce} />
 				}
 				{
 					this.props.view === 'customerFile' && view === 'read'
@@ -129,7 +133,8 @@ class CreationClient extends Component {
 										   handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client"
-										   isAdmin={isAdmin} releves={releves} chambreCommerce={chambreCommerce}/>
+										   isAdmin={isAdmin} releves={releves}
+										   champTypes={champTypes} chambreCommerce={chambreCommerce}/>
 				}
 			</div>
         )
@@ -170,6 +175,12 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		getChambreCommerce: () => {
 			dispatch(getChambreCommerce());
+		},
+		createNewField: (newField) => {
+			dispatch(createNewField(newField));
+		},
+		getChampTypes: () => {
+			dispatch(getChampTypes());
 		}
 	}
 };
