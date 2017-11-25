@@ -99,8 +99,8 @@ INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (1, 1,
 INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3, true, 'Ce client a toujours chaud');
 
 --ENTREPRISE--
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (1, 2, 1, 3, 1, 'Sugar baby Inc');
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (2, 3, 2, 1, 3, 'Sugar daddy Inc');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (1, 2, 1, 3, 1, 'Groupe CGI');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (2, 3, 2, 1, 3, 'Sherweb Inc');
 
 --FOURNISSEUR--
 INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');

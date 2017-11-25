@@ -22,7 +22,7 @@ class ListUsers extends React.Component{
 
     render(){
         return <div><table className="user">
-			<thead>
+			<thead   style={{ overflow: 'auto'}}>
 			{this.props.formState.users.map(element => {
 				return(
 					<tr key={element.iduser} onClick={()=>this._handleClickOnUser(element.iduser)}>
