@@ -3,7 +3,8 @@ import {GridCreationClient} from "../components/form/GridCreationClient";
 import {connect} from "react-redux";
 import {
 	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
-	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes, getActivites, getEtats, getProvenances
+	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes, getActivites, getEtats, getProvenances,
+	changeRequiredFields
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
 
@@ -59,18 +60,18 @@ class CreationClient extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Creation du client)
     _handleSubmitCreate(event) {
        event.preventDefault();
-       let {layouts, grid} = this.props.crmGridLayout;
+       let {layouts, grid, requiredFields} = this.props.crmGridLayout;
        this._handleStatic();
-       this.props.createCustomerFile({layouts, grid});
+       this.props.createCustomerFile({layouts, grid, requiredFields});
        console.log("submit file");
     }
 
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du client)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
-		let {layouts, grid} = this.props.crmGridLayout;
+		let {layouts, grid, requiredFields} = this.props.crmGridLayout;
 		this._handleStatic();
-		this.props.updateCustomerFile({layouts, grid});
+		this.props.updateCustomerFile({layouts, grid, requiredFields});
 		console.log("submit file");
 	}
 
@@ -114,7 +115,7 @@ class CreationClient extends Component {
     render() {
 		let {grid, layouts, view, releves,
 			chambreCommerce, champTypes, activites,
-			etats, provenances} = this.props.crmGridLayout;
+			etats, provenances, requiredFields} = this.props.crmGridLayout;
 		let {isAdmin} = this.props.crmLogin;
         return (
         	<div>
@@ -126,7 +127,8 @@ class CreationClient extends Component {
 										handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
 										isAdmin={isAdmin} releves={releves}
 										champTypes={champTypes} chambreCommerce={chambreCommerce}
-										activites={activites} etats={etats} provenances={provenances}/>
+										activites={activites} etats={etats} provenances={provenances}
+										changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}/>
 				}
 				{
 					this.props.view === 'customerFile' && view === 'read'
@@ -141,7 +143,8 @@ class CreationClient extends Component {
 										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client"
 										   isAdmin={isAdmin} releves={releves}
 										   champTypes={champTypes} chambreCommerce={chambreCommerce}
-										   activites={activites} etats={etats} provenances={provenances}/>
+										   activites={activites} etats={etats} provenances={provenances}
+										   changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}/>
 				}
 			</div>
         )
@@ -197,6 +200,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		getProvenances: () => {
 			dispatch(getProvenances());
+		},
+		changeRequiredFields: (newRequiredFields) => {
+			dispatch(changeRequiredFields(newRequiredFields));
 		}
 	}
 };

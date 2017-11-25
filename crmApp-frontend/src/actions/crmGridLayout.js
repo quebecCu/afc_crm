@@ -17,6 +17,7 @@ export const GET_ETATS = 'GET_ETATS';
 export const UPDATE_ETATS = 'UPDATE_ETATS';
 export const GET_PROVENANCES = 'GET_PROVENANCES';
 export const UPDATE_PROVENANCES = 'UPDATE_PROVENANCES';
+export const CHANGE_REQUIRED_FIELDS = 'CHANGE_REQUIRED_FIELDS';
 
 export function changeViewGrid (newView){
 	return {type: CHANGE_VIEW_GRID, newView}
@@ -92,4 +93,8 @@ export function getProvenances() {
 
 export function updateProvenances(provenances) {
 	return {type: UPDATE_PROVENANCES, provenances}
+}
+
+export function changeRequiredFields(newRequiredFields) {
+	return {type: CHANGE_REQUIRED_FIELDS, newRequiredFields}
 }

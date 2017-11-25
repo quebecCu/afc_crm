@@ -190,7 +190,8 @@ export function * sendFile() {
 		let file = yield take(CREATE_CUSTOMER_FILE);
 		let {
 			grid,
-			layouts
+			layouts,
+			requiredFields
 		} = file.file;
 		console.log("send file");
 		let layout = layouts.lg;
@@ -223,7 +224,8 @@ export function * updateFile() {
 		let file = yield take(UPDATE_CUSTOMER_FILE);
 		let {
 			grid,
-			layouts
+			layouts,
+			requiredFields
 		} = file.file;
 		console.log("update file");
 		let layout = layouts.lg;
