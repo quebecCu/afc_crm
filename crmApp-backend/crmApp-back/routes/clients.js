@@ -71,8 +71,8 @@ router.get('/statementSendingModes', expressJwtIp.ip(), function (req, res) {
 	//}
 });
 
-router.get('/chambers', expressJwtIp.ip(), function (req, res) {
-	console.log('route GET /chambers');
+router.get('/aga', expressJwtIp.ip(), function (req, res) {
+	console.log('route GET /aga');
 	/*var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode
