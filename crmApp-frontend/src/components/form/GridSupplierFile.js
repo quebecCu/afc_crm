@@ -6,7 +6,7 @@ import {Responsive, WidthProvider} from 'react-grid-layout';
 import TitreValeur from "../TitreValeur";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-export class GridCustomerFile extends Component {
+export class GridSupplierFile extends Component {
 	constructor(props) {
 		super(props);
 		this._handleModify = this._handleModify.bind(this);
@@ -19,7 +19,7 @@ export class GridCustomerFile extends Component {
 	render() {
 		return (
 			<div>
-				<h1>Fiche Client</h1>
+				<h1>Fiche Fournisseur</h1>
 				<form action='/' >
 					<ResponsiveReactGridLayout className="layout" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
 											   breakpoints={{lg: 1000, md: 900, sm: 768, xs: 480, xxs: 0}} autoSize={true}
@@ -37,7 +37,7 @@ export class GridCustomerFile extends Component {
 					</ResponsiveReactGridLayout>
 				</form>
 
-				<button className="btn btn-dark" id="write" onClick={this._handleModify}>Modifier la fiche client</button>
+				<button className="btn btn-dark" id="write" onClick={this._handleModify}>Modifier la fiche fournisseur</button>
 
 			</div>
 

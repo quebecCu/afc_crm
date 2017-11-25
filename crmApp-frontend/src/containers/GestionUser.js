@@ -20,7 +20,9 @@ class GestionUser extends React.Component {
 		let {view, formState} = this.props.crmUserManagement;
 		let {linksSubUser} = this.props.crmNavBar;
 		return <div id="UserManagement" >
-			<div className="view text-center" style={{ overflow: 'auto'}}>
+		
+		<div className="view text-center" >
+					<h1>Liste des utilisateurs: </h1>
 				{
 					view === "" && <ListUsers formState={formState} handleClick={this.props.changeViewUserManagement}
 											  displayUser={this.props.requestUserById} addSub={this.props.addSubUserNav}

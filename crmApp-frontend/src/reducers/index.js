@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { routerReducer} from 'react-router-redux';
+import {routerReducer} from 'react-router-redux';
 import {CLEAR_SESSION} from '../actions/crmLogin';
 import crmLogin from './crmLogin';
 import crmReset from './crmReset';
@@ -11,11 +11,14 @@ import crmDashboard from "./crmDashboard";
 import crmCollectiveContainer from './crmCollectiveContainer';
 import crmUserManagement from './crmUserManagement';
 import crmGridLayout from './crmGridLayout';
+import crmClientList from './crmClientList'
 import crmNavBar from './crmNavBar';
+import crmSuppliersContainer from './crmSuppliersContainer';
+import crmGridSuppliersLayout from './crmGridSuppliersLayout';
 // TODO les autres reducers a rajouter ici
 
 
-const appReducer = combineReducers ({
+const appReducer = combineReducers({
 	routerReducer,
 	crmLogin,
 	crmReset,
@@ -27,14 +30,17 @@ const appReducer = combineReducers ({
 	crmCollectiveContainer,
 	crmUserManagement,
 	crmGridLayout,
-	crmNavBar
+	crmClientList,
+	crmNavBar,
+	crmSuppliersContainer,
+	crmGridSuppliersLayout
 });
 
 const rootReducer = (state, action) => {
 	switch (action.type) {
 		case CLEAR_SESSION:
 			const {routerReducer, crmLogin} = state;
-			state =  {routerReducer, crmLogin};
+			state = {routerReducer, crmLogin};
 			break;
 		default:
 			break;

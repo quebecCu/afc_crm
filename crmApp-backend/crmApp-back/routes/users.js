@@ -1,17 +1,15 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var squelb = require('squel');
-var squel = squelb.useFlavour('postgres');
-var db = require('../models/index');
-var express = require('express');
+const express = require('express');
+const router = express.Router();
+const squelb = require('squel');
+const squel = squelb.useFlavour('postgres');
+const db = require('../models/index');
 //Load the bcrypt module
-var CryptoJS = require("crypto-js");
-var {hashSync, genSaltSync} = require('bcryptjs');
-var bcrypt = require('bcryptjs');
-var security = require('../security/security');
-var jwt = require('jsonwebtoken');
-var expressJwtIp = require('express-jwt-ip');
+const CryptoJS = require("crypto-js");
+const {hashSync, genSaltSync} = require('bcryptjs');
+const bcrypt = require('bcryptjs');
+const security = require('../security/security');
+const jwt = require('jsonwebtoken');
+const expressJwtIp = require('express-jwt-ip');
 
 // Request retrieving principal user informations by its login
 let getUserByLogin = (login) => {
@@ -84,12 +82,12 @@ const getAllUsers = () =>
 
 // Request retrieving the id of "Mr" or "Mme"
 let getIdTitre = (titre) =>
-squel.select()
-	.from('public."TITRE"', 't')
-	.field('t.idtitre')
-	.where("t.libelletitre = '" + titre + "'")
-	.toString();
-	
+	squel.select()
+		.from('public."TITRE"', 't')
+		.field('t.idtitre')
+		.where("t.libelletitre = '" + titre + "'")
+		.toString();
+
 /**
  * Route retrieving the users list
  * @method GET
@@ -119,11 +117,10 @@ router.get('/list', expressJwtIp.ip(), function (req, res) {
 			})
 			.catch(error => {
 				console.log('ERROR:', error);
-			})
+			});
 
 		console.log('end GET /listUsers');
-	}
-	else {
+	} else {
 		res.send({
 			status: 'fail',
 			message: 'Erreur'
@@ -134,7 +131,7 @@ router.get('/list', expressJwtIp.ip(), function (req, res) {
 /**
  * Route retrieving a user informations with its id
  * @method GET
- * @URL /users/:id 
+ * @URL /users/:id
  * @param expressJwtIp.ip() server IP address
  * @SuccessResponse { status: success, message: { id, login, mail, name, lastname, role, userPerms } }
  * @ErrorResponse { status: 'fail', message: error }
@@ -150,7 +147,7 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 
 	if (!!decoded && (_ip === _ipReceived)) {
 		let id = req.params.id;
-		
+
 		db.multi(getUserById(id) + ";" + getEntitiesDisplayed())
 			.spread((userRetrieved, entities) => {
 				console.log(JSON.stringify(userRetrieved));
@@ -165,7 +162,7 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 					name: userRetrieved[0].nom,
 					lastname: userRetrieved[0].prenom,
 					role: userRetrieved[0].roledesc,
-					titre : userRetrieved[0].libelletitre,
+					titre: userRetrieved[0].libelletitre,
 					userPerms: permissions
 				};
 
@@ -177,8 +174,7 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 			.catch(error => {
 				console.log('ERROR:', error);
 			})
-	}
-	else {
+	} else {
 		res.send({
 			status: 'fail',
 			message: 'Erreur'
@@ -188,7 +184,7 @@ router.get('/user/:id', expressJwtIp.ip(), function (req, res) {
 });
 
 function findIdEntity(name, element) {
-    return (element.description == name);
+	return (element.description == name);
 }
 
 /**
@@ -201,9 +197,9 @@ function buildPermissions(initpermissions, entities) {
 	entities.forEach((entity) => {
 		groups[entity.description] = [];
 	})
-	
+
 	for (var i = 0; i < initpermissions.length; i++) {
-		if(!!initpermissions[i].entdesc) {
+		if (!!initpermissions[i].entdesc) {
 			var groupName = initpermissions[i].entdesc;
 			groups[groupName].push(initpermissions[i]);
 		}
@@ -245,7 +241,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 			mdpProv: req.body.mdpProv,
 			mail: req.body.mail,
 			permissionsUser: req.body.userPerms,
-			titre:req.body.titre
+			titre: req.body.titre
 		};
 
 		var geExistingUser = squel.select()
@@ -306,8 +302,8 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 													}
 												})
 											});
-											
-											if(newRights.length !== 0) {
+
+											if (newRights.length !== 0) {
 												var addRights = squel.insert()
 													.into('users."PERMISSIONUTIL_GLOB"')
 													.setFieldsRows(newRights)
@@ -394,7 +390,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 			prenom: req.body.prenom,
 			mail: req.body.mail,
 			permissionsUser: req.body.userPerms,
-			titre:req.body.titre
+			titre: req.body.titre
 		};
 
 		console.log(user);
@@ -454,7 +450,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 								var deleteRights = squel.delete()
 									.from('users."PERMISSIONUTIL_GLOB"')
 									.where("iduser = " + user.id);
-								
+
 								var addRights = squel.insert()
 									.into('users."PERMISSIONUTIL_GLOB"')
 									.setFieldsRows(newRights)
@@ -462,17 +458,17 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 									.toParam();
 
 								return t.none(deleteRights.toString())
-										.then(() => {
-											if(newRights.length !== 0) {
-												return t.any(addRights) 
-														.then((data) => {
-															return updateEmployee(user, t, res);
-														})
-											} else {
-												return updateEmployee(user, t, res);
-											}
-										})
-								
+									.then(() => {
+										if (newRights.length !== 0) {
+											return t.any(addRights)
+												.then((data) => {
+													return updateEmployee(user, t, res);
+												})
+										} else {
+											return updateEmployee(user, t, res);
+										}
+									})
+
 							})
 					})
 						.then(data => {
@@ -637,8 +633,6 @@ router.delete('/user/:id', expressJwtIp.ip(), function (req, res) {
 
 	if (!!decoded && (_ip === _ipReceived)) {
 
-		console.log("OKKKKKKKKKK");
-
 		console.log("DELETE /user/:id");
 		let id = req.params.id;
 		console.log('id: ', id);
@@ -700,8 +694,7 @@ router.delete('/user/:id', expressJwtIp.ip(), function (req, res) {
 						});
 				}
 			});
-	}
-	else {
+	} else {
 		res.send({
 			status: 'fail',
 			message: 'Il n\'est pas possible de supprimer cet utilisateur'
@@ -755,11 +748,11 @@ function createEmployee(userInformations, userCreated, t, res) {
 	return t.one(getIdTitre(userInformations.titre))
 		.then(titre => {
 			var addPersonne = squel.insert()
-			.into('public."PERSONNE"')
-			.set("nom", userInformations.nom)
-			.set("prenom", userInformations.prenom)
-			.set("idtitre", titre.idtitre)
-			.returning('*');
+				.into('public."PERSONNE"')
+				.set("nom", userInformations.nom)
+				.set("prenom", userInformations.prenom)
+				.set("idtitre", titre.idtitre)
+				.returning('*');
 
 			return t.one(addPersonne.toString())
 				.then(personCreated => {
@@ -774,33 +767,33 @@ function createEmployee(userInformations, userCreated, t, res) {
 						})
 				})
 		});
-	
+
 }
 
 function updateEmployee(userInformations, t, res) {
-	
-	return t.one(getIdTitre(userInformations.titre))
-	.then(titre => {
-		var getPersonne = squel.select()
-		.from('public."PERSONNE"', "pers")
-		.join('users."EMPLOYE_INT"', "emp", "pers.idpersonne = emp.idpersonne")
-		.join('users."UTILISATEUR"', "util", "util.iduser = emp.iduser")
-		.where("util.iduser = " + userInformations.id);
 
-		return t.one(getPersonne.toString())
-			.then(personExisting => {
-				var updatePersonne = squel.update()
-				.table('public."PERSONNE"')
-				.set("nom", userInformations.nom)
-				.set("prenom", userInformations.prenom)
-				.set("idtitre", titre.idtitre)
-				.where("idpersonne = " + personExisting.idpersonne)
-				.returning('*');
-		return t.one(updatePersonne.toString())
-				.then(personUpdated => {
+	return t.one(getIdTitre(userInformations.titre))
+		.then(titre => {
+			var getPersonne = squel.select()
+				.from('public."PERSONNE"', "pers")
+				.join('users."EMPLOYE_INT"', "emp", "pers.idpersonne = emp.idpersonne")
+				.join('users."UTILISATEUR"', "util", "util.iduser = emp.iduser")
+				.where("util.iduser = " + userInformations.id);
+
+			return t.one(getPersonne.toString())
+				.then(personExisting => {
+					var updatePersonne = squel.update()
+						.table('public."PERSONNE"')
+						.set("nom", userInformations.nom)
+						.set("prenom", userInformations.prenom)
+						.set("idtitre", titre.idtitre)
+						.where("idpersonne = " + personExisting.idpersonne)
+						.returning('*');
+					return t.one(updatePersonne.toString())
+						.then(personUpdated => {
+						})
 				})
-		})
-	});
+		});
 }
 
 module.exports = router;

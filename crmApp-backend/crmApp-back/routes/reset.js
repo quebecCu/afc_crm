@@ -1,10 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var nodemailer = require('nodemailer');
-var db = require('../models');
-var crypto = require('crypto');
-var squel = require('squel');
+const express = require('express');
+const router = express.Router();
+const nodemailer = require('nodemailer');
+const db = require('../models');
+const squel = require('squel');
 
 /* GET Email reset logic && send email. */
 router.post('/reset', function(req, res) {
@@ -18,14 +16,14 @@ router.post('/reset', function(req, res) {
 		    port: '587',
 		    secureConnection: 'false',
 		    auth: {
-			user: 'crm.udes@gmail.com', 
-			pass: 'CrmUdes2017'  
+			user: 'crm.udes@gmail.com',
+			pass: 'CrmUdes2017'
 		},
 		tls: {
 			rejectUnauthorized: false,
 			ciphers: 'SSLv3'
 		}
-	}); 
+	});
 
 	var mailOptions = {
 			from: 'crm.udes@gmail.com',
@@ -61,7 +59,7 @@ router.post('/reset', function(req, res) {
 						status : 'fail',
 						message : 'Le courriel est incorrect'
 					});
-				}  
+				}
 			});
 
 	function _updateFunction (_token, chrono) {

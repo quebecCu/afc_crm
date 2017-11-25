@@ -13,9 +13,9 @@ const reset = require('./routes/reset');
 const resetPassword = require('./routes/resetPassword');
 const fournisseurs = require('./routes/fournisseurs');
 const assurancesCollectives = require('./routes/assurancesCollectives');
+const clients = require('./routes/clients');
 const createCustomer = require ('./routes/createCustomer');
 const app = express();
-
 
 //view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +40,7 @@ app.use( function(req, res, next) {
 app.use('/', index);
 app.use('/users', users);
 app.use('/positions', positions);
+app.use('/clients', clients);
 app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
