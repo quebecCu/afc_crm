@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {GridCreationFournisseur} from "../components/form/GridCreationFournisseur";
 import {connect} from "react-redux";
 import {
-	changeGrid, changeLayout, changeViewGrid, createSuppliersFile, requestGrid,
+	changeGridFour, changeLayoutFour, changeViewGridFour, createSuppliersFile, requestGridFour,
 	updateSuppliersFile
 } from "../actions/crmGridLayoutSuppliers";
 import {GridSupplierFile} from "../components/form/GridSupplierFile";
@@ -20,7 +20,7 @@ class CreationFournisseur extends Component {
         this._handleChangeInput = this._handleChangeInput.bind(this);
 
         if(this.props.view === 'newSupplier') {
-			this.props.requestGrid();
+			this.props.requestGridFour();
 		}
 		//this.props.getChambreCommerce();
         //this.props.getReleves();
@@ -34,7 +34,7 @@ class CreationFournisseur extends Component {
 			layout.push({i: layouts.lg[champ].i, x: layouts.lg[champ].x, y: layouts.lg[champ].y,
 				w: layouts.lg[champ].w, h: layouts.lg[champ].h, minW: layouts.lg[champ].minW, static: true});
         }
-		this.props.changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
+		this.props.changeLayoutFour({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
     }
 
     //Change le state: sauvegarde la position des champs
@@ -50,7 +50,7 @@ class CreationFournisseur extends Component {
 			layout.push({i: layouts.lg[champ].i, x: layouts.lg[champ].x, y: layouts.lg[champ].y,
 				w: layouts.lg[champ].w, h: layouts.lg[champ].h, minW: layouts.lg[champ].minW, static: false});
 		}
-		this.props.changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
+		this.props.changeLayoutFour({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
     }
 
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Creation du fournisseur)
@@ -79,7 +79,7 @@ class CreationFournisseur extends Component {
     			grid[champ].value = event.target.value;
 			}
 		}
-		this.props.changeGrid(grid);
+		this.props.changeGridFour(grid);
 	}
 
 	//On crée un nouveau champ !
@@ -99,8 +99,8 @@ class CreationFournisseur extends Component {
 		document.getElementById('champNom').value = '';
 		document.getElementById('champId').value = '';
 
-		this.props.changeGrid(grid);
-		this.props.changeLayout({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
+		this.props.changeGridFour(grid);
+		this.props.changeLayoutFour({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
         //dispatch le nouveau champ au back-end
 		this._handleNonStatic();
     }
@@ -120,7 +120,7 @@ class CreationFournisseur extends Component {
 				}
 				{
 					this.props.view === 'supplierFile' && view === 'read'
-					&& <GridSupplierFile handleModify={this.props.changeViewGrid}
+					&& <GridSupplierFile handleModify={this.props.changeViewGridFour}
 										 layouts={layouts} grid={grid}/>
 				}
 				{
@@ -147,20 +147,20 @@ function mapStateToProps (state) {
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
 	return{
-		changeLayout: (newLayout) => {
-			dispatch(changeLayout(newLayout));
+		changeLayoutFour: (newLayout) => {
+			dispatch(changeLayoutFour(newLayout));
 		},
-		changeGrid: (newGrid) => {
-			dispatch(changeGrid(newGrid));
+		changeGridFour: (newGrid) => {
+			dispatch(changeGridFour(newGrid));
 		},
-		requestGrid: () => {
-			dispatch(requestGrid());
+		requestGridFour: () => {
+			dispatch(requestGridFour());
 		},
 		createSuppliersFile: (file) => {
 			dispatch(createSuppliersFile(file));
 		},
-		changeViewGrid: (newView) => {
-			dispatch(changeViewGrid(newView))
+		changeViewGridFour: (newView) => {
+			dispatch(changeViewGridFour(newView))
 		},
 		updateSuppliersFile: (file) => {
 			dispatch(updateSuppliersFile(file))

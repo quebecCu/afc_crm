@@ -1,5 +1,5 @@
 import {
-	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_VIEW_GRID 
+	CHANGE_GRID_FOUR, CHANGE_LAYOUT_FOUR, CHANGE_VIEW_GRID_FOUR 
 } from '../actions/crmGridLayoutSuppliers';
 //ajouter le reste dans l'import
 
@@ -14,11 +14,11 @@ export default function reducer (state = initialState, action ){
 
 	switch (action.type){
 
-		case CHANGE_LAYOUT:
+		case CHANGE_LAYOUT_FOUR:
 			return {...state ,layouts: action.newLayout , error:''};
-		case CHANGE_GRID:
+		case CHANGE_GRID_FOUR:
 			return {...state ,grid: action.newGrid , error:''};
-		case CHANGE_VIEW_GRID:
+		case CHANGE_VIEW_GRID_FOUR:
 			return {...state ,view: action.newView , error:''};
 		default:
 			return state

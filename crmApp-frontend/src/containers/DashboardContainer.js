@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import AccueilPageContainer from "./AccueilPageContainer";
 import NavBar from "./NavBar";
-import PageFournisseurs from "./PageFournisseurs";
+import SuppliersPageContainer from "./SuppliersPageContainer";
 import ErrorPage from "../components/ErrorPage";
 import GestionUser from './GestionUser';
 import '../style/Dashboard.css'
@@ -27,7 +27,7 @@ class DashboardContainer extends Component {
 						this.props.crmDashboard.view === "collIns" && <CollectivePageContainer/>
 					}
 					{
-						this.props.crmDashboard.view === "suppliers" && <PageFournisseurs/>
+                        this.props.crmDashboard.view === "suppliers" && <SuppliersPageContainer />
 					}
 					{
 						this.props.crmDashboard.view === "usersManagement" && this.props.crmLogin.isAdmin === true &&

@@ -3,7 +3,7 @@ import '../../style/grid-layout.css';
 import '../../style/grid-rezisable.css';
 import '../../style/GridCreationClient.css';
 import {Responsive, WidthProvider} from 'react-grid-layout';
-import {TitreValeur} from "../TitreValeur";
+import TitreValeur from "../TitreValeur";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 export class GridSupplierFile extends Component {
