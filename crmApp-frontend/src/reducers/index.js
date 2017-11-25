@@ -12,6 +12,8 @@ import crmCollectiveContainer from './crmCollectiveContainer';
 import crmUserManagement from './crmUserManagement';
 import crmGridLayout from './crmGridLayout';
 import crmNavBar from './crmNavBar';
+import crmSuppliersContainer from './crmSuppliersContainer';
+import crmGridSuppliersLayout from './crmGridSuppliersLayout';
 // TODO les autres reducers a rajouter ici
 
 
@@ -27,7 +29,9 @@ const appReducer = combineReducers ({
 	crmCollectiveContainer,
 	crmUserManagement,
 	crmGridLayout,
-	crmNavBar
+	crmNavBar,
+	crmSuppliersContainer,
+	crmGridSuppliersLayout
 });
 
 const rootReducer = (state, action) => {
