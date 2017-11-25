@@ -2,7 +2,7 @@ import {take, fork} from 'redux-saga/effects';
 import {
 	REQUEST_GRID, changeGrid, changeLayout, CREATE_CUSTOMER_FILE, changeViewGrid,
 	UPDATE_CUSTOMER_FILE, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce, CREATE_NEW_FIELD,
-	requestGrid, GET_CHAMP_TYPES, updateChampTypes
+	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -118,6 +118,72 @@ export function * getChampTypes (){
 	}
 }
 
+//Récupère les activites
+export function * getActivites (){
+	while(true){
+
+		yield take(GET_ACTIVITES);
+
+		//communication avec server
+		let server = "http://localhost:3002/getActivites";
+
+		axios.post(server, {
+		},config)
+			.then(function (response) {
+				if(!!response.data.activites){
+					store.dispatch(updateActivites(response.data.activites));
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//Récupère les etats
+export function * getEtats (){
+	while(true){
+
+		yield take(GET_ETATS);
+
+		//communication avec server
+		let server = "http://localhost:3002/getEtats";
+
+		axios.post(server, {
+		},config)
+			.then(function (response) {
+				if(!!response.data.etats){
+					store.dispatch(updateChampTypes(response.data.etats));
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//Récupère les provenances
+export function * getProvenances (){
+	while(true){
+
+		yield take(GET_PROVENANCES);
+
+		//communication avec server
+		let server = "http://localhost:3002/getProvenances";
+
+		axios.post(server, {
+		},config)
+			.then(function (response) {
+				if(!!response.data.provenances){
+					store.dispatch(updateChampTypes(response.data.provenances));
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 //Envoie les champs et leurs positions au back-end (Création d'un client)
 export function * sendFile() {
 	while(true) {
@@ -223,4 +289,7 @@ export function * GridFlow () {
 	yield fork (getChambreCommerce);
 	yield fork (createNewField);
 	yield fork (getChampTypes);
+	yield fork (getActivites);
+	yield fork (getEtats);
+	yield fork (getProvenances);
 }

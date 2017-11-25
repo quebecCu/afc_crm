@@ -3,7 +3,7 @@ import {GridCreationClient} from "../components/form/GridCreationClient";
 import {connect} from "react-redux";
 import {
 	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
-	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes
+	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes, getActivites, getEtats, getProvenances
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
 
@@ -21,9 +21,12 @@ class CreationClient extends Component {
         if(this.props.view === 'newCustomer') {
 			this.props.requestGrid();
 		}
-		//this.props.getChambreCommerce();
-        //this.props.getReleves();
-		//this.props.getChampTypes();
+		/*this.props.getChambreCommerce();
+        this.props.getReleves();
+		this.props.getChampTypes();
+		this.props.getActivites();
+        this.props.getEtats();
+        this.props.getProvenances();*/
     }
 
 	//Rends les champs static
@@ -109,7 +112,9 @@ class CreationClient extends Component {
     }
 
     render() {
-		let {grid, layouts, view, releves, chambreCommerce, champTypes} = this.props.crmGridLayout;
+		let {grid, layouts, view, releves,
+			chambreCommerce, champTypes, activites,
+			etats, provenances} = this.props.crmGridLayout;
 		let {isAdmin} = this.props.crmLogin;
         return (
         	<div>
@@ -120,7 +125,8 @@ class CreationClient extends Component {
 										handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
 										isAdmin={isAdmin} releves={releves}
-										champTypes={champTypes} chambreCommerce={chambreCommerce} />
+										champTypes={champTypes} chambreCommerce={chambreCommerce}
+										activites={activites} etats={etats} provenances={provenances}/>
 				}
 				{
 					this.props.view === 'customerFile' && view === 'read'
@@ -134,7 +140,8 @@ class CreationClient extends Component {
 										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client"
 										   isAdmin={isAdmin} releves={releves}
-										   champTypes={champTypes} chambreCommerce={chambreCommerce}/>
+										   champTypes={champTypes} chambreCommerce={chambreCommerce}
+										   activites={activites} etats={etats} provenances={provenances}/>
 				}
 			</div>
         )
@@ -181,6 +188,15 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		getChampTypes: () => {
 			dispatch(getChampTypes());
+		},
+		getActivites: () => {
+			dispatch(getActivites());
+		},
+		getEtats: () => {
+			dispatch(getEtats());
+		},
+		getProvenances: () => {
+			dispatch(getProvenances());
 		}
 	}
 };
