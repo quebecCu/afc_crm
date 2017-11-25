@@ -25,8 +25,6 @@ export function* getClient() {
 		axios.get(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					console.log('client' + Object.keys(response.data.message));
-
 					store.dispatch(bindClientData(client, response.data.message));
 				} else {
 					alert('Erreur lors du chargement du client');

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ENTREPRISE_ATTR - tboluoek Database</title>
+  <title>ENTREPRISE_ATTR - CRM_2 Database</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
@@ -45,7 +45,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../../index.html" class="navbar-brand"><b>tboluoek</b> Database</a>
+          <a href="../../index.html" class="navbar-brand"><b>CRM_2</b> Database</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -122,6 +122,30 @@
 						ENTREPRISE_FACUL_idattrentreprise_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
 					</td>
 				   </tr>
+				   <tr>
+					<td title="ENTREPRISE_AFFICHAGE.idattrentreprise references ENTREPRISE_ATTR.idattrentreprise via ENTREPRISE_AFFICHAGE_idattrentreprise_fkey">
+						<a href='../../users/tables/ENTREPRISE_AFFICHAGE.html'>ENTREPRISE_AFFICHAGE</a><span class='relatedKey'>.idattrentreprise</span>
+					</td>
+					<td class="constraint detail">
+						ENTREPRISE_AFFICHAGE_idattrentreprise_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="PERMISSIONROLE_ENTR.idattrentreprise references ENTREPRISE_ATTR.idattrentreprise via PERMISSIONROLE_ENTR_idattrentreprise_fkey">
+						<a href='../../users/tables/PERMISSIONROLE_ENTR.html'>PERMISSIONROLE_ENTR</a><span class='relatedKey'>.idattrentreprise</span>
+					</td>
+					<td class="constraint detail">
+						PERMISSIONROLE_ENTR_idattrentreprise_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="PERMISSIONUTIL_ENTR.idattrentreprise references ENTREPRISE_ATTR.idattrentreprise via PERMISSIONUTIL_ENTR_idattrentreprise_fkey">
+						<a href='../../users/tables/PERMISSIONUTIL_ENTR.html'>PERMISSIONUTIL_ENTR</a><span class='relatedKey'>.idattrentreprise</span>
+					</td>
+					<td class="constraint detail">
+						PERMISSIONUTIL_ENTR_idattrentreprise_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
 				  </table>				 
 				 </td>
 				 <td>
@@ -158,7 +182,7 @@
 				<tr>
 				 <td><span id="label">label</span></td>
 				 <td>varchar</td>
-				 <td>20</td>
+				 <td>40</td>
 				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -175,7 +199,7 @@
 				<tr>
 				 <td><span id="description">description</span></td>
 				 <td>varchar</td>
-				 <td>30</td>
+				 <td>50</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -223,9 +247,26 @@
 				 </td>
 				 <td></td>
 				</tr>
+				<tr>
+				 <td><span id="ext">ext</span></td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
 								</tbody>
 				</table>
-				<p title='6 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
+				<p title='7 columns'>Table contained <span id="recordNumber">5</span> rows<p/>
 			</div>
 		</div>
 		<div class="box box-primary">		
@@ -284,23 +325,29 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="176,5,473,248">
-<area shape="rect" id="node2" href="TYPE.html" title="TYPE" alt="" coords="5,37,132,150">
-<area shape="rect" id="node3" href="ENTREPRISE_FACUL.html" title="ENTREPRISE_FACUL" alt="" coords="517,7,744,150">
+<area shape="rect" id="node1" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="176,229,473,501">
+<area shape="rect" id="node2" href="TYPE.html" title="TYPE" alt="" coords="5,260,132,373">
+<area shape="rect" id="node3" href="ENTREPRISE_FACUL.html" title="ENTREPRISE_FACUL" alt="" coords="556,5,783,148">
+<area shape="rect" id="node4" href="../../users/tables/ENTREPRISE_AFFICHAGE.html" title="users.ENTREPRISE_AFFICHAGE" alt="" coords="517,165,821,279">
+<area shape="rect" id="node5" href="../../users/tables/PERMISSIONROLE_ENTR.html" title="users.PERMISSIONROLE_ENTR" alt="" coords="520,296,819,409">
+<area shape="rect" id="node6" href="../../users/tables/PERMISSIONUTIL_ENTR.html" title="users.PERMISSIONUTIL_ENTR" alt="" coords="525,427,814,540">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/ENTREPRISE_ATTR.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="551,39,711,123">
+<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="589,8,749,92">
 <area shape="rect" id="node2" href="MODALITE.html" title="MODALITE" alt="" coords="248,5,401,89">
 <area shape="rect" id="node3" href="TYPE.html" title="TYPE" alt="" coords="5,141,132,255">
 <area shape="rect" id="node4" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="183,144,466,228">
-<area shape="rect" id="node5" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="176,246,473,489">
-<area shape="rect" id="node6" href="ENTREPRISE_FACUL.html" title="ENTREPRISE_FACUL" alt="" coords="517,361,744,504">
-<area shape="rect" id="node7" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="239,507,411,591">
-<area shape="rect" id="node8" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="209,608,440,692">
+<area shape="rect" id="node5" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="176,246,473,518">
+<area shape="rect" id="node6" href="ENTREPRISE_FACUL.html" title="ENTREPRISE_FACUL" alt="" coords="556,504,783,647">
+<area shape="rect" id="node7" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="239,536,411,620">
+<area shape="rect" id="node8" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="209,637,440,721">
+<area shape="rect" id="node9" href="../../users/tables/ENTREPRISE_AFFICHAGE.html" title="users.ENTREPRISE_AFFICHAGE" alt="" coords="517,112,821,225">
+<area shape="rect" id="node10" href="../../users/tables/PERMISSIONROLE_ENTR.html" title="users.PERMISSIONROLE_ENTR" alt="" coords="520,243,819,356">
+<area shape="rect" id="node11" href="../../users/tables/PERMISSIONUTIL_ENTR.html" title="users.PERMISSIONUTIL_ENTR" alt="" coords="525,373,814,487">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/ENTREPRISE_ATTR.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							

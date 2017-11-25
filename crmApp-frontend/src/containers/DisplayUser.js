@@ -12,7 +12,7 @@ class DisplayUser extends React.Component{
 
 	_getPermission(level){
 		let label='';
-		this.props.formState.operations.map(element=>{
+		this.props.formState.operations.forEach(element=>{
 			if(level===element.value){
 				label = element.label;
 			}
@@ -30,7 +30,7 @@ class DisplayUser extends React.Component{
 		return (
 		<div className="container">
 			<div className="page-header" style={{paddingBottom:20}}>
-				<h1>Consultation de l'utilisateur {this.props.user.name} {this.props.user.lastname}</h1></div>
+				<h1>Consultation de l'utilisateur {this.props.user.titre} {this.props.user.name} {this.props.user.lastname}</h1></div>
 						<div className="row" style={{textAlign:"left", paddingBottom:10}}>
 							<div className="col-sm">
 								<span className="titre">Nom :</span>
@@ -64,7 +64,7 @@ class DisplayUser extends React.Component{
 						 {
 
 							this.props.user.userPerms.map(element=>{
-								return(<div className="row col-sm " style={{textAlign:"left"}}><li><span className="valeur">Droit de {this._getPermission(element.level)} sur la partie {element.group}</span></li></div>);
+								return(<div className="row col-sm " style={{textAlign:"left"}} key={element.id}><li><span className="valeur">Droit de {this._getPermission(element.level)} sur la partie {element.group}</span></li></div>);
 
 						})}
 						</ul>

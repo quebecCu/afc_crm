@@ -7,7 +7,6 @@ import {
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
-import CryptoJS from 'crypto-js';
 
 export function * loginFlow (){
 	while(true){
@@ -16,15 +15,16 @@ export function * loginFlow (){
 		yield put ({ type: SENDING_REQUEST, sending:true});
 
 
-		var encrypted = CryptoJS.AES.encrypt(password, "secretKey13579").toString();
-
 		//communication avec server
 		var server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite 
-
-		axios.post(server, {
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/login';
+	
+		
+		axios.post(backendUrl, {
 			username: username,
-			password: encrypted
+			password: password
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>RELATION_FOURNISSEUR - tboluoek Database</title>
+  <title>RELATION_FOURNISSEUR - CRM_2 Database</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
@@ -45,7 +45,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../../index.html" class="navbar-brand"><b>tboluoek</b> Database</a>
+          <a href="../../index.html" class="navbar-brand"><b>CRM_2</b> Database</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -143,6 +143,14 @@
 				 </td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="RELATION_FOURNISSEUR.idfournisseur references public.FOURNISSEUR.idfournisseur via RELATION_FOURNISSEUR_idfournisseur_fkey">
+						<a href='../../public/tables/FOURNISSEUR.html'>FOURNISSEUR</a><span class='relatedKey'>.idfournisseur</span>
+					</td>
+					<td class="constraint detail">
+						RELATION_FOURNISSEUR_idfournisseur_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
 				  </table>					 
 				 </td>
 				 <td></td>
@@ -225,17 +233,20 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="RELATION_FOURNISSEUR.html" title="RELATION_FOURNISSEUR" alt="" coords="231,5,581,160">
-<area shape="rect" id="node2" href="EMPLOYE_INT.html" title="EMPLOYE_INT" alt="" coords="5,7,187,150">
+<area shape="rect" id="node1" href="RELATION_FOURNISSEUR.html" title="RELATION_FOURNISSEUR" alt="" coords="276,69,627,224">
+<area shape="rect" id="node2" href="EMPLOYE_INT.html" title="EMPLOYE_INT" alt="" coords="28,5,209,155">
+<area shape="rect" id="node3" href="../../public/tables/FOURNISSEUR.html" title="public.FOURNISSEUR" alt="" coords="5,173,232,257">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/RELATION_FOURNISSEUR.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="EMPLOYE_INT.html" title="EMPLOYE_INT" alt="" coords="221,7,403,150">
-<area shape="rect" id="node2" href="UTILISATEUR.html" title="UTILISATEUR" alt="" coords="5,39,177,123">
-<area shape="rect" id="node3" href="RELATION_FOURNISSEUR.html" title="RELATION_FOURNISSEUR" alt="" coords="447,5,797,160">
+<area shape="rect" id="node1" href="EMPLOYE_INT.html" title="EMPLOYE_INT" alt="" coords="275,10,456,159">
+<area shape="rect" id="node2" href="../../public/tables/PERSONNE.html" title="public.PERSONNE" alt="" coords="5,107,208,191">
+<area shape="rect" id="node3" href="UTILISATEUR.html" title="UTILISATEUR" alt="" coords="21,5,193,89">
+<area shape="rect" id="node4" href="RELATION_FOURNISSEUR.html" title="RELATION_FOURNISSEUR" alt="" coords="523,74,873,229">
+<area shape="rect" id="node5" href="../../public/tables/FOURNISSEUR.html" title="public.FOURNISSEUR" alt="" coords="252,177,479,261">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/RELATION_FOURNISSEUR.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							

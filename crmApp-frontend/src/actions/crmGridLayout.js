@@ -4,7 +4,13 @@ export const REQUEST_GRID = 'REQUEST_GRID';
 export const CREATE_CUSTOMER_FILE = 'CREATE_CUSTOMER_FILE';
 export const CHANGE_VIEW_GRID = 'CHANGE_VIEW_GRID';
 export const UPDATE_CUSTOMER_FILE = 'UPDATE_CUSTOMER_FILE';
-
+export const GET_RELEVES = 'GET_RELEVES';
+export const GET_CHAMBRE_COMMERCE = 'GET_CHAMBRE_COMMERCE';
+export const UPDATE_RELEVES = 'UPDATE_RELEVES';
+export const UPDATE_CHAMBRE_COMMERCE = 'UPDATE_CHAMBRE_COMMERCE';
+export const CREATE_NEW_FIELD = 'CREATE_NEW_FIELD';
+export const GET_CHAMP_TYPES = 'GET_CHAMP_TYPES';
+export const UPDATE_CHAMP_TYPES = 'UPDATE_CHAMP_TYPES';
 
 export function changeViewGrid (newView){
 	return {type: CHANGE_VIEW_GRID, newView}
@@ -28,4 +34,32 @@ export function createCustomerFile(file) {
 
 export function updateCustomerFile(file) {
 	return {type: UPDATE_CUSTOMER_FILE, file}
+}
+
+export function getReleves() {
+	return {type: GET_RELEVES}
+}
+
+export function updateReleves(releves) {
+	return {type: UPDATE_RELEVES, releves}
+}
+
+export function getChambreCommerce() {
+	return {type: GET_RELEVES}
+}
+
+export function updateChambreCommerce(chambreCommerce) {
+	return {type: UPDATE_CHAMBRE_COMMERCE, chambreCommerce}
+}
+
+export function createNewField(newField) {
+	return {type: CREATE_NEW_FIELD, newField}
+}
+
+export function getChampTypes() {
+	return {type: GET_CHAMP_TYPES}
+}
+
+export function updateChampTypes(champTypes) {
+	return {type: UPDATE_CHAMP_TYPES, champTypes}
 }

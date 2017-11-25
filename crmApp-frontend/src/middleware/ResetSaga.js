@@ -18,7 +18,9 @@ export function * resetFlow (){
 		//communication avec server
 		var server = "http://localhost:3002/Reset";
 		//changer la location de la variable server pour plus de securite 
-		
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/Reset';
+	
 		axios.post(server, {
 			email: email,
 		})
