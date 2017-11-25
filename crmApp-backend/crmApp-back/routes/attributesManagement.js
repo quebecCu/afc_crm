@@ -63,7 +63,6 @@ let hideCustomerAttribute = (idattribute) =>
 let updateCustomerAttribute = (idattribute) =>
 	squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 	.table('public."ENTREPRISE_ATTR"')
-	.set("idtype", attribute.idtype)
 	.set("label", attribute.label)
 	.set("description", attribute.description)
 	.set("forme", attribute.forme)
@@ -88,7 +87,7 @@ let getTypes = () =>
 	.from('public."TYPE"')
 	.field("idtype")
 	.field("libelletype")
-	//.field("forme")
+	.field("forme")
 	.toString();
 
 router.get('/customer', expressJwtIp.ip(), function (req, res) {
@@ -208,7 +207,6 @@ router.post('/update/customer', expressJwtIp.ip(), function (req, res) {
 		var attribute = {
 			idattrentreprise: req.body.id,
 			label: req.body.label,
-			idtype: req.body.idtype,
 			description: req.body.description,
 			forme: req.body.forme,
 			valeur_defaut: req.body.valeur_defaut,
