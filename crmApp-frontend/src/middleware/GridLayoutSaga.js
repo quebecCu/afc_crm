@@ -9,13 +9,13 @@ import {changeViewCollective} from "../actions/crmCollectiveContainer";
 
 
 var tokenToSend= localStorage.getItem("cookieSession");
-if(tokenToSend == undefined)
+if(tokenToSend === undefined)
 	tokenToSend="";
 
 var config ={
 		headers: {
-			"Authorization": tokenToSend 
-		} 
+			"Authorization": tokenToSend
+		}
 }
 export function * getGridLayout (){
 	while(true){
@@ -24,7 +24,7 @@ export function * getGridLayout (){
 
 		//communication avec server
 		let server = "http://localhost:3002/getCustomerGrid";
-	
+
 		axios.post(server, {
 		},config)
 			.then(function (response) {

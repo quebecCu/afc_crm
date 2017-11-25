@@ -33,7 +33,7 @@ class DashboardContainer extends Component {
 							this.props.crmDashboard.view === "suppliers" && <PageFournisseurs />
                         }
                         {
-							this.props.crmDashboard.view === "usersManagement" && this.props.crmLogin.isAdmin === true && <GestionUser />
+							this.props.crmDashboard.view === "usersManagement" && isAdmin === true && <GestionUser />
                         }
                         {
 							this.props.crmDashboard.view === "customer" && <Page1 />
