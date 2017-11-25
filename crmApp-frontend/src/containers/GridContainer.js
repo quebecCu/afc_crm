@@ -6,6 +6,7 @@ import {
 	updateCustomerFile
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
+import {getChambreCommerce, getReleves} from "../middleware/GridLayoutSaga";
 
 class CreationClient extends Component {
     constructor(props) {
@@ -21,9 +22,11 @@ class CreationClient extends Component {
         if(this.props.view === 'newCustomer') {
 			this.props.requestGrid();
 		}
+		//this.props.getChambreCommerce();
+        //this.props.getReleves();
     }
 
-
+	//Rends les champs static
     _handleStatic() {
 		let {layouts} = this.props.crmGridLayout;
 		let layout = [];
@@ -34,10 +37,12 @@ class CreationClient extends Component {
 		this.props.changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
     }
 
+    //Change le state: sauvegarde la position des champs
     _handleDrag(newItem) {
 		this.props.changeLayout({lg: newItem, md: newItem, sm: newItem, xs: newItem, xxs: newItem});
     }
 
+    //Rends les champs non-static, on peut les déplacer
     _handleNonStatic() {
 		let {layouts} = this.props.crmGridLayout;
 		let layout = [];
@@ -48,6 +53,7 @@ class CreationClient extends Component {
 		this.props.changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout});
     }
 
+    //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Creation du client)
     _handleSubmitCreate(event) {
        event.preventDefault();
        let {layouts, grid} = this.props.crmGridLayout;
@@ -56,6 +62,7 @@ class CreationClient extends Component {
        console.log("submit file");
     }
 
+    //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du client)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
 		let {layouts, grid} = this.props.crmGridLayout;
@@ -64,6 +71,7 @@ class CreationClient extends Component {
 		console.log("submit file");
 	}
 
+	//Change le state : Sauvegarde la valeur des champs
     _handleChangeInput(event) {
     	let {grid} = this.props.crmGridLayout;
     	for (let champ = 0 ; champ < grid.length ; champ++) {
@@ -74,6 +82,7 @@ class CreationClient extends Component {
 		this.props.changeGrid(grid);
 	}
 
+	//On crée un nouveau champ !
     _handleSubmitChamp(event) {
         event.preventDefault();
 		let {layouts, grid} = this.props.crmGridLayout;
@@ -92,12 +101,13 @@ class CreationClient extends Component {
 
 		this.props.changeGrid(grid);
 		this.props.changeLayout({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
-        //dispatch le nbChamp
+        //dispatch le nouveau champ au back-end
 		this._handleNonStatic();
     }
 
     render() {
-		let {grid, layouts, view} = this.props.crmGridLayout;
+		let {grid, layouts, view, releves, chambreCommerce} = this.props.crmGridLayout;
+		let {isAdmin} = this.props.crmLogin;
         return (
         	<div>
 				{
@@ -105,7 +115,8 @@ class CreationClient extends Component {
 					&& <GridCreationClient handleStatic={this._handleStatic} handleSubmit={this._handleSubmitCreate} layouts={layouts}
 										handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 										handleSubmitChamp={this._handleSubmitChamp} grid={grid}
-										handleChangeInput={this._handleChangeInput} title="Création d'une fiche client" />
+										handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
+										isAdmin={isAdmin} releves={releves} chambreCommerce={chambreCommerce}/>
 				}
 				{
 					this.props.view === 'customerFile' && view === 'read'
@@ -117,7 +128,8 @@ class CreationClient extends Component {
 					&& <GridCreationClient handleStatic={this._handleStatic} handleSubmit={this._handleSubmitUpdate} layouts={layouts}
 										   handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
-										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client" />
+										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client"
+										   isAdmin={isAdmin} releves={releves} chambreCommerce={chambreCommerce}/>
 				}
 			</div>
         )
@@ -127,7 +139,8 @@ class CreationClient extends Component {
 function mapStateToProps (state) {
 
 	return{
-		crmGridLayout: state.crmGridLayout
+		crmGridLayout: state.crmGridLayout,
+		crmLogin: state.crmLogin
 	}
 }
 
@@ -151,6 +164,12 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		updateCustomerFile: (file) => {
 			dispatch(updateCustomerFile(file))
+		},
+		getReleves: () => {
+			dispatch(getReleves());
+		},
+		getChambreCommerce: () => {
+			dispatch(getChambreCommerce());
 		}
 	}
 };
