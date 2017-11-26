@@ -18,6 +18,9 @@ export const UPDATE_ETATS = 'UPDATE_ETATS';
 export const GET_PROVENANCES = 'GET_PROVENANCES';
 export const UPDATE_PROVENANCES = 'UPDATE_PROVENANCES';
 export const CHANGE_REQUIRED_FIELDS = 'CHANGE_REQUIRED_FIELDS';
+export const UPDATE_POSITIONS = 'UPDATE_POSITIONS';
+export const UPDATE_FIELD = 'UPDATE_FIELD';
+export const CHANGE_NEW_FIELD = 'CHANGE_NEW_FIELD';
 
 export function changeViewGrid (newView){
 	return {type: CHANGE_VIEW_GRID, newView}
@@ -52,7 +55,7 @@ export function updateReleves(releves) {
 }
 
 export function getChambreCommerce() {
-	return {type: GET_RELEVES}
+	return {type: GET_CHAMBRE_COMMERCE}
 }
 
 export function updateChambreCommerce(chambreCommerce) {
@@ -97,4 +100,16 @@ export function updateProvenances(provenances) {
 
 export function changeRequiredFields(newRequiredFields) {
 	return {type: CHANGE_REQUIRED_FIELDS, newRequiredFields}
+}
+
+export function updatePositions(positions) {
+	return {type: UPDATE_POSITIONS, positions}
+}
+
+export function updateField(field) {
+	return {type: UPDATE_FIELD, field}
+}
+
+export function changeNewField(newField) {
+	return {type: CHANGE_NEW_FIELD, newField}
 }

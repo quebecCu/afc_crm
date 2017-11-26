@@ -1,5 +1,6 @@
 import {
-	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_REQUIRED_FIELDS, CHANGE_VIEW_GRID, UPDATE_ACTIVITES, UPDATE_CHAMBRE_COMMERCE,
+	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_NEW_FIELD, CHANGE_REQUIRED_FIELDS, CHANGE_VIEW_GRID, UPDATE_ACTIVITES,
+	UPDATE_CHAMBRE_COMMERCE,
 	UPDATE_CHAMP_TYPES,
 	UPDATE_ETATS, UPDATE_PROVENANCES,
 	UPDATE_RELEVES
@@ -17,6 +18,7 @@ let initialState = {
 	requiredFields: {},
 	grid: [],
 	layouts: {},
+	formNewField: {},
 	view:'read',
 	errors: ''
 };
@@ -45,6 +47,8 @@ export default function reducer (state = initialState, action ){
 			return {...state,provenances: action.provenances, error:''};
 		case CHANGE_REQUIRED_FIELDS:
 			return {...state ,requiredFields: action.newRequiredFields , error:''};
+		case CHANGE_NEW_FIELD:
+			return {...state ,formNewField: action.newField , error:''};
 		default:
 			return state
 

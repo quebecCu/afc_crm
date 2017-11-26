@@ -2,7 +2,9 @@ import {take, fork} from 'redux-saga/effects';
 import {
 	REQUEST_GRID, changeGrid, changeLayout, CREATE_CUSTOMER_FILE, changeViewGrid,
 	UPDATE_CUSTOMER_FILE, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce, CREATE_NEW_FIELD,
-	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES
+	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
+	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChambreCommerce, getChampTypes, getEtats,
+	getActivites, getProvenances, UPDATE_FIELD
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -26,24 +28,17 @@ export function * getGridLayout (){
 		yield take(REQUEST_GRID);
 
 		//communication avec server
-		let server = "http://localhost:3002/getCustomerGrid";
+		let server = "http://localhost:3002/attributesManagement/customer";
 
-		axios.post(server, {
-		},config)
+		axios.get(server,config)
 			.then(function (response) {
-				if(!!response.data.grid ){
-					store.dispatch(changeGrid(response.data.grid));
-					let layout = [];
-					let y = 0;
-					for (let i=0 ; i < response.data.grid.length ; i++){
-						let key = (i+1).toString();
-						let x = (i % 4)*3;
-						if(i % 4 === 0 && i !== 0) {
-							y++;
-						}
-						layout.push({i: key, x: x, y: y, w: 3, h: 1, minW: 3})
-					}
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(changeGrid(response.data.message));
+					let layout = response.data.message.map(champ => {
+						return {i: champ.idattrentreprise.toString(), x: champ.posx, y: champ.posy, w: champ.width, h: champ.height, minW: champ.minwidth};
+					});
 					store.dispatch(changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
+					store.dispatch(getReleves());
 				}
 			})
 			.catch(function (error) {
@@ -53,19 +48,19 @@ export function * getGridLayout (){
 }
 
 //Récupère les valeurs de la liste des relevés
-export function * getReleves (){
+export function * requestReleves (){
 	while(true){
 
 		yield take(GET_RELEVES);
 
 		//communication avec server
-		let server = "http://localhost:3002/getReleves";
+		let server = "http://localhost:3002/clients/statementSendingModes";
 
-		axios.post(server, {
-		},config)
+		axios.get(server, config)
 			.then(function (response) {
-				if(!!response.data.releves ){
-					store.dispatch(updateReleves(response.data.releves));
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateReleves(response.data.message));
+					store.dispatch(getChambreCommerce())
 				}
 			})
 			.catch(function (error) {
@@ -75,19 +70,18 @@ export function * getReleves (){
 }
 
 //Récupère les valeurs de la liste des chambres de commerce
-export function * getChambreCommerce (){
+export function * requestChambreCommerce (){
 	while(true){
 
 		yield take(GET_CHAMBRE_COMMERCE);
-
 		//communication avec server
-		let server = "http://localhost:3002/getChambreCommerce";
+		let server = "http://localhost:3002/clients/aga";
 
-		axios.post(server, {
-		},config)
+		axios.get(server,config)
 			.then(function (response) {
-				if(!!response.data.chambreCommerce ){
-					store.dispatch(updateChambreCommerce(response.data.chambreCommerce));
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateChambreCommerce(response.data.message));
+					store.dispatch(getChampTypes());
 				}
 			})
 			.catch(function (error) {
@@ -97,19 +91,19 @@ export function * getChambreCommerce (){
 }
 
 //Récupère les types de champ que l'administrateur peut créer
-export function * getChampTypes (){
+export function * requestChampTypes (){
 	while(true){
 
 		yield take(GET_CHAMP_TYPES);
 
 		//communication avec server
-		let server = "http://localhost:3002/getChampTypes";
+		let server = "http://localhost:3002/attributesManagement/types";
 
-		axios.post(server, {
-		},config)
+		axios.get(server,config)
 			.then(function (response) {
-				if(!!response.data.champTypes){
-					store.dispatch(updateChampTypes(response.data.champTypes));
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateChampTypes(response.data.message));
+					store.dispatch(getActivites());
 				}
 			})
 			.catch(function (error) {
@@ -119,19 +113,19 @@ export function * getChampTypes (){
 }
 
 //Récupère les activites
-export function * getActivites (){
+export function * requestActivites (){
 	while(true){
 
 		yield take(GET_ACTIVITES);
 
 		//communication avec server
-		let server = "http://localhost:3002/getActivites";
+		let server = "http://localhost:3002/clients/activities";
 
-		axios.post(server, {
-		},config)
+		axios.get(server, config)
 			.then(function (response) {
-				if(!!response.data.activites){
-					store.dispatch(updateActivites(response.data.activites));
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateActivites(response.data.message));
+					store.dispatch(getEtats());
 				}
 			})
 			.catch(function (error) {
@@ -141,19 +135,19 @@ export function * getActivites (){
 }
 
 //Récupère les etats
-export function * getEtats (){
+export function * requestEtats (){
 	while(true){
 
 		yield take(GET_ETATS);
 
 		//communication avec server
-		let server = "http://localhost:3002/getEtats";
+		let server = "http://localhost:3002/clients/states";
 
-		axios.post(server, {
-		},config)
+		axios.get(server,config)
 			.then(function (response) {
-				if(!!response.data.etats){
-					store.dispatch(updateChampTypes(response.data.etats));
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateEtats(response.data.message));
+					store.dispatch(getProvenances());
 				}
 			})
 			.catch(function (error) {
@@ -163,19 +157,18 @@ export function * getEtats (){
 }
 
 //Récupère les provenances
-export function * getProvenances (){
+export function * requestProvenances (){
 	while(true){
 
 		yield take(GET_PROVENANCES);
 
 		//communication avec server
-		let server = "http://localhost:3002/getProvenances";
+		let server = "http://localhost:3002/clients/provenances";
 
-		axios.post(server, {
-		},config)
+		axios.get(server, config)
 			.then(function (response) {
-				if(!!response.data.provenances){
-					store.dispatch(updateChampTypes(response.data.provenances));
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateProvenances(response.data.message));
 				}
 			})
 			.catch(function (error) {
@@ -184,24 +177,21 @@ export function * getProvenances (){
 	}
 }
 
-//Envoie les champs et leurs positions au back-end (Création d'un client)
+//Envoie les champs au back-end (Création d'un client)
 export function * sendFile() {
 	while(true) {
 		let file = yield take(CREATE_CUSTOMER_FILE);
 		let {
 			grid,
-			layouts,
 			requiredFields
 		} = file.file;
 		console.log("send file");
-		let layout = layouts.lg;
 
 		let server = "http://localhost:3002/createCustomer";
 		console.log(grid);
-		console.log(layout);
 		axios.post(server, {
 			grid: grid,
-			layout: layout,
+			requiredFields: requiredFields
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -218,23 +208,21 @@ export function * sendFile() {
 	}
 }
 
-//Envoie les champs et leurs positions au back-end (Modification d'un client)
+//Envoie les champs au back-end (Modification d'un client)
 export function * updateFile() {
 	while(true) {
 		let file = yield take(UPDATE_CUSTOMER_FILE);
 		let {
 			grid,
-			layouts,
 			requiredFields
 		} = file.file;
 		console.log("update file");
-		let layout = layouts.lg;
 
 		let server = "http://localhost:3002/updateCustomer";
 
 		axios.post(server, {
 			grid: grid,
-			layout: layout,
+			requiredFields: requiredFields
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -256,18 +244,27 @@ export function * createNewField() {
 	while(true) {
 		let champ = yield take(CREATE_NEW_FIELD);
 		let {
-			description,
-			nom,
-			type
+			form,
+			posx,
+			posy
 		} = champ.newField;
 		console.log("create new field");
 
-		let server = "http://localhost:3002/createNewField";
+		let server = "http://localhost:3002/attributesManagement/create/customer";
 
 		axios.post(server, {
-			description: description,
-			nom: nom,
-			type: type
+			description: form.description,
+			label: form.label,
+			idtype: form.type,
+			forme: null,
+			valeur_defaut: null,
+			ext: null,
+			posx: posx,
+			posy: posy,
+			height: 1,
+			minwidth: 3,
+			width: 3
+
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -283,15 +280,70 @@ export function * createNewField() {
 	}
 }
 
+//on envoie la position des champs
+export function * updatePositions() {
+	while(true) {
+		let positions = yield take(UPDATE_POSITIONS);
+		let {
+			layouts,
+		} = positions.positions;
+		let layout = layouts.lg;
+
+		let server = "http://localhost:3002/attributesManagement/update/customer/display";
+
+		axios.post(server, {
+			layout: layout,
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					console.log("update des positions est un succès")
+				} else {
+					alert('Erreur lors de la modification des positions');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//on envoie les infos d'un champ à modifier
+export function * sendUpdateField() {
+	while(true) {
+		let field = yield take(UPDATE_FIELD);
+		let {
+			id
+		} = field.field;
+
+		let server = "http://localhost:3002/attributesManagement/update/customer";
+
+		axios.post(server, {
+			id: id,
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+
+				} else {
+					alert('Erreur lors de la modification des positions');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 export function * GridFlow () {
 	yield fork (getGridLayout);
 	yield fork (sendFile);
 	yield fork (updateFile);
-	yield fork (getReleves);
-	yield fork (getChambreCommerce);
+	yield fork (requestReleves);
+	yield fork (requestChambreCommerce);
 	yield fork (createNewField);
-	yield fork (getChampTypes);
-	yield fork (getActivites);
-	yield fork (getEtats);
-	yield fork (getProvenances);
+	yield fork (requestChampTypes);
+	yield fork (requestActivites);
+	yield fork (requestEtats);
+	yield fork (requestProvenances);
+	yield fork (updatePositions);
+	yield fork (sendUpdateField);
 }
