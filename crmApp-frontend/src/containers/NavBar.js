@@ -5,6 +5,7 @@ import NavBarLink from "../components/NavBarLink";
 import {logout} from "../actions/crmLogin";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {changeViewUserManagement, requestUserById} from "../actions/crmUserManagement";
+import {changeViewContract} from "../actions/crmContract";
 import '../style/NavBar.css';
 import {addSubUserNav} from "../actions/crmNavBar";
 
@@ -38,6 +39,9 @@ class NavBar extends Component {
                             <li>
                                 <NavBarLink name="Assurances Collectives" id="collIns" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewCollective} reset=""/>
                             </li>
+							<li>
+								<NavBarLink name="Contrats" id="contracts" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewContract} reset="" />
+							</li>
                             <li>
                                 <NavBarLink name="Placements" id="placements" handleClick={this.props.changeViewDashboard} view={this.props.view} />
                             </li>
@@ -95,6 +99,9 @@ function mapStateToProps (state) {
 const  mapDispatchToProps = (dispatch) => {
 
     return{
+    	changeViewContract: (newView) => {
+    		dispatch(changeViewContract(newView));
+		},
         changeViewDashboard: (newView) => {
             dispatch(changeViewDashboard(newView));
         },
