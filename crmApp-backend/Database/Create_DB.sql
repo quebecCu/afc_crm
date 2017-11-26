@@ -16,7 +16,6 @@ DROP TABLE IF EXISTS "PROVENANCE" CASCADE;
 DROP TABLE IF EXISTS "AGA" CASCADE;
 DROP TABLE IF EXISTS "TYPE" CASCADE;
 DROP TABLE IF EXISTS "MODALITE" CASCADE;
-DROP TABLE IF EXISTS "CONDITION" CASCADE;
 DROP TABLE IF EXISTS "ROLE" CASCADE;
 DROP TABLE IF EXISTS "RELATION" CASCADE;
 DROP TABLE IF EXISTS "PERSONNE" CASCADE;
@@ -47,6 +46,7 @@ DROP TABLE IF EXISTS "CHAMBRE_COMMERCE" CASCADE;
 DROP TABLE IF EXISTS "CADEAU_ENVOYE" CASCADE;
 DROP TABLE IF EXISTS "CADEAU" CASCADE;
 DROP TABLE IF EXISTS "CAT_ACTIVITE" CASCADE;
+DROP TABLE IF EXISTS "CONDITION" CASCADE;
 
 CREATE TABLE public."ADRESSE" (
   idadresse  serial PRIMARY KEY,
@@ -171,11 +171,6 @@ CREATE TABLE public."RELATION" (
   CONSTRAINT  pk_RELATION  PRIMARY KEY (idclient, idpersonne, idrole)
 );
 
-CREATE TABLE public."REGLE" (
-  idregle  serial  PRIMARY KEY,
-  libelleregle  varchar(20)
-);
-
 CREATE TABLE public."CADEAU" (
   idcadeau  serial  PRIMARY KEY,
   libellecadeau  varchar(50)
@@ -190,7 +185,6 @@ CREATE TABLE public."CONTRAT" (
   idcontrat  serial  PRIMARY KEY,
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idclient  integer REFERENCES  "CLIENT" (idclient),
-  idregle  integer REFERENCES  "REGLE" (idregle),
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
   idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
   date_signature  date,
@@ -346,18 +340,4 @@ CREATE TABLE public."CADEAU_ENVOYE" (
   identreprise integer REFERENCES "ENTREPRISE" (idclient),
   description varchar (50),
   CONSTRAINT  pk_CADEAU_ENVOYE  PRIMARY KEY (idcadeau, identreprise)
-);
-
-CREATE TABLE public."CONDITION" (
-  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
-  idmodalite  integer  REFERENCES "MODALITE" (idmodalite),
-  CONSTRAINT  pk_CONDITION  PRIMARY KEY (idfournisseur, idmodalite),
-  idtype  integer  REFERENCES "TYPE" (idtype),
-  valeur varchar(20)
-);
-
-CREATE TABLE public."CAT_ACTIVITE" (
-  idposte integer REFERENCES "POSTE" (idposte),
-  idcategorie integer REFERENCES "CATEGORIE" (idcategorie),
-  CONSTRAINT  pk_CAT_ACTIVITE  PRIMARY KEY (idposte, idcategorie)
 );

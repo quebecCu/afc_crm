@@ -19,7 +19,6 @@ SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
 SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
 SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
 SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
-SELECT setval('public."REGLE_idregle_seq"', 1, FALSE);
 SELECT setval('public."CADEAU_idcadeau_seq"', 1, FALSE);
 SELECT setval('public."MODULE_idmodule_seq"', 1, FALSE);
 SELECT setval('public."ACTIVITE_idactivite_seq"', 1, FALSE);
@@ -141,7 +140,7 @@ INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant,
 
 --ENTREPRISE_ATTR--
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre d''employés', 'Indiquez le nombre d''employés', null, 1);
-INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Courriel', 'Courriel', '[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', 'mail@mail.com');
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Courriel', 'Courriel', null, 'mail@mail.com');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Téléphone secondaire', 'Numéro de téléphone secondaire', null, '(819)000-0000');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Ext', 'Extension', null, '(819)000-0000');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Fax', 'Télécopieur', null, '(819)000-0000');
@@ -195,10 +194,10 @@ SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
 
 --AFFICHAGE-CLIENT--
 INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
-INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (2, 0, 1, 1, 3, 3, true);
-INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (3, 0, 2, 1, 3, 3, true);
-INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (4, 1, 0, 1, 3, 3, true);
-INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (5, 1, 1, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (2, 3, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (3, 6, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (4, 9, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (5, 0, 1, 1, 3, 3, true);
 
 --AFFICHAGE-FOURNISSEUR--
 INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
