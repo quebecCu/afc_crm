@@ -8,7 +8,7 @@ var security = require('../security/security');
 var jwt = require('jsonwebtoken');
 var expressJwtIp = require('express-jwt-ip');
 
-let getCustomerAttributes = () => 
+let getCustomerAttributes = () =>
 	squel.select()
 	.from('users."ENTREPRISE_AFFICHAGE"', 'aff')
 	.field("aff.idattrentreprise")
@@ -27,7 +27,7 @@ let getCustomerAttributes = () =>
 	.left_join('public."TYPE"', "type", "att.idtype = type.idtype")
 	.where("affichage = true")
 	.toString();
-	
+
 
 let createCustomerAttribute = (attribute) =>
 	squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
@@ -40,7 +40,7 @@ let createCustomerAttribute = (attribute) =>
 	.set("ext", attribute.ext)
 	.returning('*')
 	.toString();
-	
+
 let createCustomerDis = (attribute) =>
 	squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 	.into('users."ENTREPRISE_AFFICHAGE"')
@@ -52,15 +52,15 @@ let createCustomerDis = (attribute) =>
 	.set("minwidth", attribute.minwidth)
 	.set("affichage", true)
 	.toString();
-	
+
 let hideCustomerAttribute = (idattribute) =>
 	squel.update()
 	.table('users."ENTREPRISE_AFFICHAGE"')
 	.set("affichage", false)
 	.where("idattrentreprise = " + idattribute)
 	.toString();
-	
-let updateCustomerAttribute = (idattribute) =>
+
+let updateCustomerAttribute = (attribute) =>
 	squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 	.table('public."ENTREPRISE_ATTR"')
 	.set("label", attribute.label)
@@ -68,9 +68,9 @@ let updateCustomerAttribute = (idattribute) =>
 	.set("forme", attribute.forme)
 	.set("valeur_defaut", attribute.valeur_defaut)
 	.set("ext", attribute.ext)
-	.where("idattrentreprise = " + idattrentreprise)
+	.where("idattrentreprise = " + attribute.idattrentreprise)
 	.toString();
-	
+
 let updateCustomerAttributeDis = (attribute) =>
 	squel.update()
 	.table('users."ENTREPRISE_AFFICHAGE"')
@@ -100,7 +100,7 @@ router.get('/customer', expressJwtIp.ip(), function (req, res) {
 	var _ip = res.locals.ip;*/
 
 	//if (!!decoded && (_ip === _ipReceived)) {
-		
+
 		db.any(getCustomerAttributes())
 			.then((attributes) => {
 				console.log(JSON.stringify(attributes));
@@ -128,7 +128,7 @@ router.get('/types', expressJwtIp.ip(), function (req, res) {
 	var _ip = res.locals.ip;*/
 
 	//if (!!decoded && (_ip === _ipReceived)) {
-		
+
 		db.any(getTypes())
 			.then((types) => {
 				console.log(JSON.stringify(types));
@@ -169,7 +169,7 @@ router.post('/create/customer', expressJwtIp.ip(), function (req, res) {
 			minwidth: req.body.minwidth,
 			width: req.body.width
 		};
-		
+
 		db.tx(function (t) {
 			return t.one(createCustomerAttribute(attribute))
 			.then((newAttribute) => {
@@ -190,7 +190,7 @@ router.post('/create/customer', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Le nouvel attribut de l\'entreprise n\'a pas pu être créé'
 				});
 		});
-			
+
 	//}
 });
 
@@ -204,6 +204,7 @@ router.post('/update/customer', expressJwtIp.ip(), function (req, res) {
 	var _ip = res.locals.ip;*/
 
 	//if (!!decoded && (_ip === _ipReceived)) {
+
 		var attribute = {
 			idattrentreprise: req.body.id,
 			label: req.body.label,
@@ -212,7 +213,7 @@ router.post('/update/customer', expressJwtIp.ip(), function (req, res) {
 			valeur_defaut: req.body.valeur_defaut,
 			ext: req.body.ext
 		};
-		
+	console.log(attribute);
 		db.none(updateCustomerAttribute(attribute))
 		.then(() => {
 			res.send({
@@ -226,7 +227,7 @@ router.post('/update/customer', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'L'attribut n\'a pas pu être mis à jour'
 				});
 		});
-			
+
 	//}
 });
 
@@ -241,9 +242,9 @@ router.post('/update/customer/display', expressJwtIp.ip(), function (req, res) {
 
 	//if (!!decoded && (_ip === _ipReceived)) {
 		var attributes = req.body.layout;
-		
+
 		db.tx(t => {
-		    const queries = attributes.map(attribute => {			
+		    const queries = attributes.map(attribute => {
 				let newAttribute = {
 					idattrentreprise: attribute.i,
 					posx: attribute.x,
@@ -268,7 +269,7 @@ router.post('/update/customer/display', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'La position des attributs n\'a pas pu être mise à jour'
 				});
 		    });
-			
+
 	//}
 });
 
@@ -284,7 +285,7 @@ router.delete('/customer/:id', expressJwtIp.ip(), function (req, res) {
 
 	//if (!!decoded && (_ip === _ipReceived)) {
 		let id = req.params.id;
-		
+
 		db.none(hideCustomerAttribute(id))
 				.then(() => {
 					res.send({
@@ -298,7 +299,7 @@ router.delete('/customer/:id', expressJwtIp.ip(), function (req, res) {
 							message: error.toString() //'L'attribut n\'a pas pu être supprimé'
 						});
 				});
-			
+
 	//}
 });
 

@@ -26,6 +26,22 @@ export class GridCreationClient extends Component {
 		this._changeDescription = this._changeDescription.bind(this);
 		this._changeLabel = this._changeLabel.bind(this);
 		this._changeType = this._changeType.bind(this);
+		this._deleteField = this._deleteField.bind(this);
+		this._changeNameModifyField = this._changeNameModifyField.bind(this);
+		this._changeDescModifyField = this._changeDescModifyField.bind(this);
+		this._changeIdModifyField = this._changeIdModifyField.bind(this);
+	}
+
+	_changeNameModifyField(event) {
+		this.props.changeUpdateField({...this.props.formUpdateField , nameField: event.target.value});
+	}
+
+	_changeDescModifyField(event) {
+		this.props.changeUpdateField({...this.props.formUpdateField , descField: event.target.value});
+	}
+
+	_changeIdModifyField(event) {
+		this.props.changeUpdateField({...this.props.formUpdateField , id: event.target.value});
 	}
 
 	_changeNomEntreprise(event) {
@@ -98,6 +114,10 @@ export class GridCreationClient extends Component {
 
 	_changeType(event) {
 		this.props.changeNewField({...this.props.formNewField , type: event.target.value});
+	}
+
+	_deleteField(event) {
+		this.props.deleteField(event.target.value);
 	}
 
     render() {
@@ -174,7 +194,7 @@ export class GridCreationClient extends Component {
 								onChange={this._changeChambreCommerce} value={this.props.requiredFields.chambreCommerce} required>
 							{
 								this.props.chambreCommerce.map(chambre => {
-									return <option value={chambre.libellechambrecommerce}>{chambre.libellechambrecommerce}</option>
+									return <option key={chambre.idchambrecommerce} value={chambre.libellechambrecommerce}>{chambre.libellechambrecommerce}</option>
 								})
 							}
 						</select>
@@ -185,7 +205,7 @@ export class GridCreationClient extends Component {
 								onChange={this._changeActivite} value={this.props.requiredFields.activite} required>
 							{
 								this.props.activites.map(activite => {
-									return <option value={activite.libelleactivite}>{activite.libelleactivite}</option>
+									return <option key={activite.idactivite} value={activite.libelleactivite}>{activite.libelleactivite}</option>
 								})
 							}
 						</select>
@@ -196,7 +216,7 @@ export class GridCreationClient extends Component {
 								onChange={this._changeEtat} value={this.props.requiredFields.etat} required>
 							{
 								this.props.etats.map(etat => {
-									return <option value={etat.libelleetat}>{etat.libelleetat}</option>
+									return <option key={etat.idetat} value={etat.libelleetat}>{etat.libelleetat}</option>
 								})
 							}
 						</select>
@@ -207,7 +227,7 @@ export class GridCreationClient extends Component {
 								onChange={this._changeProvenance} value={this.props.requiredFields.provenance} required>
 							{
 								this.props.provenances.map(provenance => {
-									return <option value={provenance.libelleprovenance}>{provenance.libelleprovenance}</option>
+									return <option key={provenance.idprovenance} value={provenance.libelleprovenance}>{provenance.libelleprovenance}</option>
 								})
 							}
 						</select>
@@ -244,44 +264,56 @@ export class GridCreationClient extends Component {
 										</div>
 
 										<span className="fa fa-pencil" style={{cursor:"pointer", position: 'absolute', right: '2px', top: 0}}
-												 data-toggle="modal" data-target="#modalModifyField"/>
+												 data-toggle="modal" data-target={"#"+element.idattrentreprise+"modal"}/>
                                     </div>
                                 );
                             })
                         }
 
                     </ResponsiveReactGridLayout>
-					<div className="modal fade" id="modalModifyField" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div className="modal-dialog" role="document">
-							<div className="modal-content">
-								<div className="modal-header">
-									<h4 className="modal-title" id="myModalLabel">Modification du champ</h4>
-									<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								</div>
-								<div className="modal-body">
-
-										<div className="form-group">
-											<label htmlFor="modificationNomChamp" className="control-label">Nouveau titre du champ</label>
-											<input type="text" className="form-control" id="modificationNomChamp" name="modificationNomChamp"/>
-										</div>
-										<div className="form-group">
-											<label htmlFor="modificationDescChamp" className="control-label">Nouvelle description du champ</label>
-											<input type="text" className="form-control" id="modificationDescChamp" name="modificationDescChamp"/>
-										</div>
-
-								</div>
-								<div className="modal-footer">
-									<button type="button" className="btn btn-danger">Supprimer le champ</button>
-									<button type="button" className="btn btn-primary">Modifier le champ</button>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div className="form-group">
 						<input type="submit" value="Valider" className="btn btn-primary"/>
 					</div>
                 </form>
-
+				{
+					this.props.grid.map(element => {
+						return (
+							<div className="modal fade" id={element.idattrentreprise+"modal"} key={element.idattrentreprise+"modal"}
+								 tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div className="modal-dialog" role="document">
+									<div className="modal-content">
+										<div className="modal-header">
+											<h4 className="modal-title" id="myModalLabel">Modification du champ : {element.label}</h4>
+											<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div className="modal-body">
+											<form onSubmit={this.props.handleModifyField}>
+												<div className="form-group">
+													<label htmlFor="modificationNomChamp" className="control-label">Nouveau titre du champ</label>
+													<input type="text" className="form-control" id="modificationNomChamp"
+														   name="modificationNomChamp" onChange={this._changeNameModifyField}
+														   value={this.props.formUpdateField.nameField} required/>
+												</div>
+												<div className="form-group">
+													<label htmlFor="modificationDescChamp" className="control-label">Nouvelle description du champ</label>
+													<input type="text" className="form-control" id="modificationDescChamp"
+														   name="modificationDescChamp" onChange={this._changeDescModifyField}
+														   value={this.props.formUpdateField.descField} required/>
+												</div>
+												<button type="button" className="btn btn-danger" data-dismiss="modal"
+														value={element.idattrentreprise} onClick={this._deleteField}>Supprimer le champ</button>
+												<button type="submit" className="btn btn-primary"
+														value={element.idattrentreprise} onClick={this._changeIdModifyField}>Modifier le champ</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						);
+					})
+				}
 				<div className="form-group">
                 	<button onClick={this.props.handleStatic}>Ancrer les champs</button>
                 	<button onClick={this.props.handleNonStatic}>Changer la position des boutons</button>

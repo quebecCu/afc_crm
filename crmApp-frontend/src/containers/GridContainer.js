@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
 	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
 	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes, getActivites, getEtats, getProvenances,
-	changeRequiredFields, updatePositions, updateField, changeNewField
+	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
 
@@ -88,27 +88,25 @@ class CreationClient extends Component {
         event.preventDefault();
 		let {grid, formNewField} = this.props.crmGridLayout;
         let x = (grid.length % 4)*3;
-        let y = 3;
-        if(grid.length % 4 === 0 && grid.length !== 0) {
-            y++;
-        }
+        let y = Math.floor(grid.length/4);
 
 		document.getElementById('champNom').value = '';
 		document.getElementById('champDescription').value = '';
 		document.getElementById('champType').value = '';
         this.props.createNewField({form: formNewField, posx: x, posy: y});
-		//this._handleNonStatic();
     }
 
     _handleModifyField(event) {
     	event.preventDefault();
-    	return false;
+    	let {formUpdateField} = this.props.crmGridLayout;
+    	this.props.updateField(formUpdateField);
 	}
 
     render() {
 		let {grid, layouts, view, releves,
 			chambreCommerce, champTypes, activites,
-			etats, provenances, requiredFields, formNewField} = this.props.crmGridLayout;
+			etats, provenances, requiredFields,
+			formNewField, formUpdateField} = this.props.crmGridLayout;
 		let {isAdmin} = this.props.crmLogin;
         return (
         	<div>
@@ -122,8 +120,9 @@ class CreationClient extends Component {
 										champTypes={champTypes} chambreCommerce={chambreCommerce}
 										activites={activites} etats={etats} provenances={provenances}
 										changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
-										handleModifyFields={this._handleModifyField} changeNewField={this.props.changeNewField}
-										formNewField={formNewField}/>
+										handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
+										formNewField={formNewField} deleteField={this.props.deleteField}
+										formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}/>
 				}
 				{
 					this.props.view === 'customerFile' && view === 'read'
@@ -140,8 +139,9 @@ class CreationClient extends Component {
 										   champTypes={champTypes} chambreCommerce={chambreCommerce}
 										   activites={activites} etats={etats} provenances={provenances}
 										   changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
-										   handleModifyFields={this._handleModifyField} changeNewField={this.props.changeNewField}
-										   formNewField={formNewField}/>
+										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
+										   formNewField={formNewField} deleteField={this.props.deleteField}
+										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}/>
 				}
 			</div>
         )
@@ -177,26 +177,8 @@ const  mapDispatchToProps = (dispatch) => {
 		updateCustomerFile: (file) => {
 			dispatch(updateCustomerFile(file))
 		},
-		getReleves: () => {
-			dispatch(getReleves());
-		},
-		getChambreCommerce: () => {
-			dispatch(getChambreCommerce());
-		},
 		createNewField: (newField) => {
 			dispatch(createNewField(newField));
-		},
-		getChampTypes: () => {
-			dispatch(getChampTypes());
-		},
-		getActivites: () => {
-			dispatch(getActivites());
-		},
-		getEtats: () => {
-			dispatch(getEtats());
-		},
-		getProvenances: () => {
-			dispatch(getProvenances());
 		},
 		changeRequiredFields: (newRequiredFields) => {
 			dispatch(changeRequiredFields(newRequiredFields));
@@ -209,6 +191,12 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		changeNewField: (newField) => {
 			dispatch(changeNewField(newField));
+		},
+		deleteField: (field) => {
+			dispatch(deleteField(field));
+		},
+		changeUpdateField: (newUpdateField) => {
+			dispatch(changeUpdateField(newUpdateField));
 		}
 	}
 };

@@ -4,7 +4,7 @@ import {
 	UPDATE_CUSTOMER_FILE, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce, CREATE_NEW_FIELD,
 	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
 	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChambreCommerce, getChampTypes, getEtats,
-	getActivites, getProvenances, UPDATE_FIELD
+	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -312,19 +312,48 @@ export function * sendUpdateField() {
 	while(true) {
 		let field = yield take(UPDATE_FIELD);
 		let {
+			descField,
+			nameField,
 			id
 		} = field.field;
-
 		let server = "http://localhost:3002/attributesManagement/update/customer";
 
 		axios.post(server, {
 			id: id,
+			label: nameField,
+			description: descField,
+			forme: null,
+			valeur_defaut: null,
+			ext: null
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-
+					alert("La modification du champ est un succès");
+					store.dispatch(requestGrid());
 				} else {
 					alert('Erreur lors de la modification des positions');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//on supprime un champ
+export function * sendDeleteField() {
+	while(true) {
+		let field = yield take(DELETE_FIELD);
+		let id = field.field;
+
+		let server = "http://localhost:3002/attributesManagement/customer/"+id;
+
+		axios.delete(server,config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(requestGrid());
+				} else {
+					alert('Erreur lors de la supression d\'un champ');
 				}
 			})
 			.catch(function (error) {
@@ -346,4 +375,5 @@ export function * GridFlow () {
 	yield fork (requestProvenances);
 	yield fork (updatePositions);
 	yield fork (sendUpdateField);
+	yield fork (sendDeleteField);
 }

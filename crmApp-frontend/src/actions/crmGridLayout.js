@@ -20,7 +20,9 @@ export const UPDATE_PROVENANCES = 'UPDATE_PROVENANCES';
 export const CHANGE_REQUIRED_FIELDS = 'CHANGE_REQUIRED_FIELDS';
 export const UPDATE_POSITIONS = 'UPDATE_POSITIONS';
 export const UPDATE_FIELD = 'UPDATE_FIELD';
+export const CHANGE_UPDATE_FIELD = 'CHANGE_UPDATE_FIELD';
 export const CHANGE_NEW_FIELD = 'CHANGE_NEW_FIELD';
+export const DELETE_FIELD = 'DELETE_FIELD';
 
 export function changeViewGrid (newView){
 	return {type: CHANGE_VIEW_GRID, newView}
@@ -110,6 +112,14 @@ export function updateField(field) {
 	return {type: UPDATE_FIELD, field}
 }
 
+export function changeUpdateField(newUpdateField) {
+	return {type: CHANGE_UPDATE_FIELD, newUpdateField}
+}
+
 export function changeNewField(newField) {
 	return {type: CHANGE_NEW_FIELD, newField}
+}
+
+export function deleteField(field) {
+	return {type: DELETE_FIELD, field}
 }
