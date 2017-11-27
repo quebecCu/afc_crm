@@ -9,7 +9,7 @@ export function* searchFlow() {
 		yield take(SENDING_REQUEST_COLL);
 
 		var tokenToSend = localStorage.getItem("cookieSession");
-		if (tokenToSend == undefined)
+		if (tokenToSend === undefined)
 			tokenToSend = "";
 
 		var config = {

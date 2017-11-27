@@ -22,29 +22,29 @@ class DashboardContainer extends Component {
 				<NavBar view={view}/>
 				<div className="view container" id="main">
 					{
-						this.props.crmDashboard.view === "Home" && <AccueilPageContainer/>
+						view === "Home" && <AccueilPageContainer/>
 					}
 					{
-						this.props.crmDashboard.view === "collIns" && <CollectivePageContainer/>
+						view === "collIns" && <CollectivePageContainer/>
 					}
 					{
-                        this.props.crmDashboard.view === "suppliers" && <SuppliersPageContainer />
+                        view === "suppliers" && <SuppliersPageContainer />
 					}
 					{
-						this.props.crmDashboard.view === "usersManagement" && this.props.crmLogin.isAdmin === true &&
+						view === "usersManagement" && isAdmin === true &&
 						<GestionUser/>
 					}
 					{
-						this.props.crmDashboard.view === "contracts" && <ContractsContainer />
+						view === "contracts" && <ContractsContainer />
 					}
 					{
-						this.props.crmDashboard.view === "customer" && <PageClient/>
+						view === "customer" && <PageClient/>
 					}
 					{
-						this.props.crmDashboard.view === "indIns" && <ErrorPage/>
+						view === "indIns" && <ErrorPage/>
 					}
 					{
-						this.props.crmDashboard.view === "placements" && <ErrorPage/>
+						view === "placements" && <ErrorPage/>
 					}
 
 				</div>

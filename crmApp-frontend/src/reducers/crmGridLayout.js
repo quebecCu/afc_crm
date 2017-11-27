@@ -16,11 +16,34 @@ let initialState = {
 	activites: [],
 	etats: [],
 	provenances: [],
-	requiredFields: {},
+	requiredFields: {
+		nomEntreprise: '',
+		releve: '',
+		rue: '',
+		ville: '',
+		province: '',
+		codePostal: '',
+		telephone: '',
+		extension: '',
+		date: '',
+		chambreCommerce: '',
+		activite: '',
+		etat: '',
+		provenance: '',
+		prospect: '',
+		notes: ''
+	},
 	grid: [],
 	layouts: {},
-	formNewField: {},
-	formUpdateField: {},
+	formNewField:  {
+		description: '',
+		label: '',
+		type: "1"
+	},
+	formUpdateField: {
+		nameField: '',
+		descField: ''
+	},
 	view:'read',
 	errors: ''
 };

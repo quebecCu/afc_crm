@@ -4,7 +4,7 @@ import {
 	UPDATE_CUSTOMER_FILE, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce, CREATE_NEW_FIELD,
 	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
 	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChambreCommerce, getChampTypes, getEtats,
-	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField
+	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField, changeNewField
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -35,7 +35,15 @@ export function * getGridLayout (){
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(changeGrid(response.data.message));
 					let layout = response.data.message.map(champ => {
-						return {i: champ.idattrentreprise.toString(), x: champ.posx, y: champ.posy, w: champ.width, h: champ.height, minW: champ.minwidth};
+						return {
+							i: champ.idattrentreprise.toString(),
+							x: champ.posx,
+							y: champ.posy,
+							w: champ.width,
+							h: champ.height,
+							minW: champ.minwidth,
+							static: true
+						};
 					});
 					store.dispatch(changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
 					store.dispatch(getReleves());
@@ -268,7 +276,14 @@ export function * createNewField() {
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					console.log('Nouveau champ crée avec succès');
+					alert('Nouveau champ crée avec succès');
+					store.dispatch(changeNewField(
+						{
+							description: '',
+							label: '',
+							type: "1"
+						}
+					));
 					store.dispatch(requestGrid());
 				} else {
 					alert('Erreur lors de la création d\'un nouveau champ');
@@ -296,7 +311,6 @@ export function * updatePositions() {
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					console.log("update des positions est un succès")
 				} else {
 					alert('Erreur lors de la modification des positions');
 				}
@@ -329,6 +343,10 @@ export function * sendUpdateField() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert("La modification du champ est un succès");
+					store.dispatch(changeUpdateField({
+						nameField: '',
+						descField: ''
+					}));
 					store.dispatch(requestGrid());
 				} else {
 					alert('Erreur lors de la modification des positions');
@@ -352,6 +370,7 @@ export function * sendDeleteField() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(requestGrid());
+					alert("Champ supprimé avec succès");
 				} else {
 					alert('Erreur lors de la supression d\'un champ');
 				}

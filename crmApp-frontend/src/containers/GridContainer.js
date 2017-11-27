@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {GridCreationClient} from "../components/form/GridCreationClient";
+import {GridCreationClient} from "../components/form/GridCreationCustomer/GridCreationClient";
 import {connect} from "react-redux";
 import {
 	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
-	updateCustomerFile, getReleves, getChambreCommerce, getChampTypes, getActivites, getEtats, getProvenances,
+	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
