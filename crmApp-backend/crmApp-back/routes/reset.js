@@ -12,12 +12,12 @@ router.post('/reset', function(req, res) {
 	var _token = Math.random().toString(36).slice(2);
 	var chrono = Date.now() + 3600000;
 	var transporter = nodemailer.createTransport({
-		 host: 'smtp.gmail.com',
+		 host: 'smtp-relay.sendinblue.com',
 		    port: '587',
 		    secureConnection: 'false',
 		    auth: {
 			user: 'crm.udes@gmail.com',
-			pass: 'CrmUdes2017'
+			pass: 'VtDgs3x9qFb28Swk'
 		},
 		tls: {
 			rejectUnauthorized: false,
@@ -29,7 +29,7 @@ router.post('/reset', function(req, res) {
 			from: 'crm.udes@gmail.com',
 			to: emailReceived,
 			subject: 'Récuperation de mot de passe oublié',
-			text: 'Voici votre mot de passe oublié:\n\n  http://localhost:3000/ResetPassword/' + _token + '\n\nÉquipe CRM',
+			text: 'Voici votre mot de passe oublié:\n\n  https://salty-scrubland-22457.herokuapp.com/ResetPassword/' + _token + '\n\nÉquipe CRM',
 	};
 	db.query(
 			squel.select()
