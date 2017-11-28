@@ -36,6 +36,7 @@ INSERT INTO public."TYPE"(libelletype) VALUES ('Int');
 INSERT INTO public."TYPE"(libelletype) VALUES ('String');
 INSERT INTO public."TYPE"(libelletype) VALUES ('Date');
 INSERT INTO public."TYPE"(libelletype) VALUES ('Bool');
+INSERT INTO public."TYPE"(libelletype) VALUES ('Float');
 
 --TITRE--
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
@@ -133,8 +134,215 @@ INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Adam', 'Troisjour',
 INSERT INTO public."PERSONNE"(nom, prenom, idtitre) VALUES ('Atito', 'Maxime', 1);
 
 --CONTRAT--
-INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (1, 10, 2, 4, 10, 9632584 , 'insertion pour la mif');
-INSERT INTO public."CONTRAT"(idcontrat, idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (2, 10, 2, 2, 6, 5222 , 'insertion pour la mif2222');
+INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 4, 10, 9632584 , 'Contrat de test');
+INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 2, 6, 5222 , 'Contrat de test2');
+
+--DOMAINE_ASS--
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance Vie - Adhérent et personnes à charge');
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance soins dentaires'); --id:2
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance soins medicaux');
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance Invalidité courte durée'); --id:4
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance Invalidité longue durée');
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance Maladies Graves'); --id:6
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Assurance Maladie Complémentaire');
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Historique de Taux'); --id:8
+INSERT INTO DOMAINE_ASSURANCES(libelledomaine) VALUES('Rémunération');
+
+--CATEGORIE--
+INSERT INTO CATEGORIE (libellecategorie) VALUES ('Cadres');
+INSERT INTO CATEGORIE (libellecategorie) VALUES ('Employés');
+INSERT INTO CATEGORIE (libellecategorie) VALUES ('Administrateur');
+
+--MODALITES--
+--Assurance vie id:1
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Classe', 1, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Formule', 1, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum SP', 1, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum AP', 1, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Conjoint', 1, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Enfants', 1, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 1, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 1, 2);
+
+--Assurance invalidite courte duree id:4
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Ct_Classe', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Hospitalisation', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Accident', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Durée', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Pourcentage', 4, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum SP', 4, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum AP', 4, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Imposables ?', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Assurances Emploi', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Reduction du taux A.E', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 4, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 4, 2);
+
+--Assurance invalidite longue duree id:5
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Lt_Classe', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Délai de carrence', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Durée', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Pourcentage', 5, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum SP', 5, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum AP', 5, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Imposables ?', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Indexation', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Protection occupation', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('LT_NOTE', 5, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 5, 2);
+
+--Assurance maladie complementaire id:7
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Franchise médicaments', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance médicaments', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Mecanisme de substitution', 7, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Franchise pour autres frais médicaux', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance médicaments', 7, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance autres frais', 7, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Paramédicaux', 7, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Examen de la vue', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Verres correcteurs', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Assurance voyage', 7, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Annulation voyage', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Assurance bagages', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 7, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 7, 2);
+
+--Soins dentaires id:2
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Franchise', 2, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance base', 2, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance Perio/Endo', 2, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance Majeurs', 2, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Coassurance Orthodontie', 2, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Examen de rappel', 2, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maximum annuel', 2, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 2, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 2, 2);
+
+--Assurance maladies graves id:6
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Employé', 6, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Conjoint', 6, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Enfants', 6, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Nombre de maladies', 6, 1);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Maladies préexistantes', 6, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 6, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 6, 2);
+
+--Remuneration id:9
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Vie, DMA, PAC', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('CT', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('LT', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('AMC', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Dentaire', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('MG', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('PAE', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Notes', 9, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Date payée : Base', 9, 3);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Montant payé : Base', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Montant payé : Boni', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Rémunération totale', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Rémunération globale', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Conseiller', 9, 2);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Pourcentage payable', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Montant du', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Montant payé', 9, 5);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Date payée', 9, 3);
+INSERT INTO MODALITE(libelleavantage, iddomaineass, idtype) VALUES('Solde', 9, 5);
+
+--MODALITE_VALEUR--
+--Classe
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Autres', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Propriétaires', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Cadres', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Employés', 2);
+--Formule
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('1x salaire', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('2x salaire', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('3x salaire', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Montant fixe', 2);
+--Conjoint & Enfants
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('2500', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('5000', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('7500', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('10000', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('15000', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('20000', 1);
+--Terminaison
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('70 ans', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('75 ans', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('80 ans', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('85 ans', 2);
+--Hospitalisation, Accident, Maladie
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('0 jours', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('7 jours', 2);
+--Durée
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('16 semaines', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('26 semaines', 2);
+--Pourcentage
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('60', 5);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('66.67', 5);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('67', 5);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('75', 5);
+--Imposable
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES (true, 4);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES (false, 4);
+--Indexation
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Non', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Selon IPC maximum 3%', 2);
+--Protection de l'occupation
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('24 mois', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('60 mois', 2);
+--Revenus admissibles
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('salaire de base', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('salaire et dividendes', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('salaire, dividences, commissions et bonis', 2);
+--AMC_MEDF
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('aucune', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('25$ ind. / 50$ Fam', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('50 ind. / 100$ Fam', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('100$ ind. / 200$ Fam', 2);
+--COASSM
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('70', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('75', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('80', 1);
+--PARA_MAX
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('300', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('400', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('500', 1);
+--EX_VUE
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('50$/24mois', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('75$/24mois', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('1 examen/24mois', 2);
+--Verres cprrecteurs
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('200$/24mois', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('300$/24mois', 2);
+--Maximum payable
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('1000000', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('2000000', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('3000000', 1);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('5000000', 1);
+--Annulation voyage
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Annulation et interruption voyage', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Aucune', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Annulation 5000$', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Annulation et interruption 5000$', 2);
+--Assurance bagages
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Aucune', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('500$', 2);
+--Terminaison
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Retraite', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Retraite ou 70ans', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Retraite ou 75ans', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Retraite ou 80ans', 2);
+INSERT INTO MODALITES_VALEUR(valeur, idtype) VALUES ('Retraite ou 85ans', 2);
+
+--VALEUR_MODALITE_CONTRAT--
+INSERT INTO VALEUR_MODALITE_CONTRAT(idmodalite, idmodvaleur) VALUES (1, 1);
+
+--MODULES--
+INSERT INTO MODULE(idcontrat, iddomaineass, idcategorie ) VALUES(1, 1, 1);
+
+--SOUSCRIPTION--
+INSERT INTO SOUSCRIPTION(idmodalite, idmodule, valeur) VALUES(1, 1, '');
 
 --ENTREPRISE_ATTR--
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre d''employés', 'Indiquez le nombre d''employés', null, 1);

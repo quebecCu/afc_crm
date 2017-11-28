@@ -7,7 +7,6 @@ import ErrorPage from "../components/ErrorPage";
 import GestionUser from './GestionUser';
 import '../style/Dashboard.css'
 import CollectivePageContainer from "./CollectivePageContainer";
-import PageClient from './PageClient';
 
 class DashboardContainer extends Component {
 
@@ -32,9 +31,6 @@ class DashboardContainer extends Component {
 					{
 						this.props.crmDashboard.view === "usersManagement" && this.props.crmLogin.isAdmin === true &&
 						<GestionUser/>
-					}
-					{
-						this.props.crmDashboard.view === "customer" && <PageClient/>
 					}
 					{
 						this.props.crmDashboard.view === "indIns" && <ErrorPage/>

@@ -157,14 +157,13 @@ CREATE TABLE public."CLIENT" (
 
 CREATE TABLE public."DOMAINE_ASSURANCE" (
   iddomaineass  serial  PRIMARY KEY,
-  libelledomaine  varchar(20)
+  libelledomaine  varchar(255)
 );
 
 CREATE TABLE public."MODALITE" (
   idmodalite  serial  PRIMARY KEY,
-  libelleavantage  varchar(50),
+  libelleavantage  varchar(255),
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
-  idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
   idtype  integer  REFERENCES "TYPE" (idtype)
 );
 
@@ -223,7 +222,7 @@ CREATE TABLE public."MODULE" (
   idmodule  serial  PRIMARY KEY,
   iddomaineass  integer REFERENCES "DOMAINE_ASSURANCE" (iddomaineass),
   idcontrat  integer  REFERENCES  "CONTRAT" (idcontrat),
-  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur)
+  idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie)
 );
 
 CREATE TABLE public."BENEFICIAIRES" (
@@ -236,8 +235,9 @@ CREATE TABLE public."SOUSCRIPTIONS" (
   idmodule  integer  REFERENCES  "MODULE" (idmodule),
   idmodalite  integer  REFERENCES  "MODALITE" (idmodalite),
   CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idmodule, idmodalite),
-  valeur varchar(20)
+  valeur varchar(255)
 );
+
 -- pk fk idcli ?
 CREATE TABLE public."CLIENT_INDIVIDUEL" (
   idclient  integer  REFERENCES  "CLIENT" (idclient),
@@ -365,4 +365,15 @@ CREATE TABLE public."CAT_ACTIVITE" (
   idposte integer REFERENCES "POSTE" (idposte),
   idcategorie integer REFERENCES "CATEGORIE" (idcategorie),
   CONSTRAINT  pk_CAT_ACTIVITE  PRIMARY KEY (idposte, idcategorie)
+);
+
+CREATE TABLE public."VALEUR_MODALITE_CONTRAT" (
+  idmodalite integer REFERENCES "MODALITE" (idmodalite),
+  idmodvaleur integer REFERENCES "MODALITES_VALEUR" (idmodvaleur)
+);
+
+CREATE TABLE public."MODALITES_VALEUR" (
+  idmodvaleur serial PRIMARY KEY,
+  valeur varchar(50),
+  idtype integer REFERENCES "TYPE" (idtype)
 );
