@@ -5,13 +5,18 @@
          <column autoUpdated="false" digits="0" id="0" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="int4">
             <parent column="idattrcontratcoll" foreignKey="CONTRAT_COLLECTIF_AFFICHAGE_idattrcontratcoll_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF_ATTR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="1" name="posx" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="2" name="posy" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="height" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="width" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="5" name="minwidth" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="6" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idattrcontratcoll" sequenceNumberInPK="1"/>
          <index name="CONTRAT_COLLECTIF_AFFICHAGE_pkey" unique="true">
             <column ascending="true" name="idattrcontratcoll"/>
          </index>
       </table>
-      <table name="EMPLOYE_INT" numRows="9" remarks="" schema="users" type="TABLE">
+      <table name="EMPLOYE_INT" numRows="4" remarks="" schema="users" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users.&quot;EMPLOYE_INT_idemploye_seq&quot;'::regclass)" digits="0" id="0" name="idemploye" nullable="false" remarks="" size="10" type="serial">
             <child column="idemploye" foreignKey="RELATION_FOURNISSEUR_idemploye_fkey" implied="false" onDeleteCascade="false" schema="users" table="RELATION_FOURNISSEUR"/>
          </column>
@@ -39,21 +44,31 @@
             <column ascending="true" name="identite"/>
          </index>
       </table>
-      <table name="ENTREPRISE_AFFICHAGE" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="ENTREPRISE_AFFICHAGE" numRows="5" remarks="" schema="users" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4">
             <parent column="idattrentreprise" foreignKey="ENTREPRISE_AFFICHAGE_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_ATTR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="1" name="posx" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="2" name="posy" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="height" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="width" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="5" name="minwidth" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="6" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idattrentreprise" sequenceNumberInPK="1"/>
          <index name="ENTREPRISE_AFFICHAGE_pkey" unique="true">
             <column ascending="true" name="idattrentreprise"/>
          </index>
       </table>
-      <table name="FOURNISSEUR_AFFICHAGE" numRows="0" remarks="" schema="users" type="TABLE">
+      <table name="FOURNISSEUR_AFFICHAGE" numRows="18" remarks="" schema="users" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="idattrfournisseur" nullable="false" remarks="" size="10" type="int4">
             <parent column="idattrfournisseur" foreignKey="FOURNISSEUR_AFFICHAGE_idattrfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR_ATTR"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="1" name="posx" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="2" name="posy" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="height" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="width" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="5" name="minwidth" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="6" name="affichage" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idattrfournisseur" sequenceNumberInPK="1"/>
          <index name="FOURNISSEUR_AFFICHAGE_pkey" unique="true">
             <column ascending="true" name="idattrfournisseur"/>

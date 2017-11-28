@@ -1,5 +1,8 @@
 import {
-	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_VIEW_GRID, UPDATE_ACTIVITES, UPDATE_CHAMBRE_COMMERCE, UPDATE_CHAMP_TYPES,
+	CHANGE_GRID, CHANGE_LAYOUT, CHANGE_NEW_FIELD, CHANGE_REQUIRED_FIELDS, CHANGE_UPDATE_FIELD, CHANGE_VIEW_GRID,
+	UPDATE_ACTIVITES,
+	UPDATE_CHAMBRE_COMMERCE,
+	UPDATE_CHAMP_TYPES,
 	UPDATE_ETATS, UPDATE_PROVENANCES,
 	UPDATE_RELEVES
 } from '../actions/crmGridLayout';
@@ -13,8 +16,34 @@ let initialState = {
 	activites: [],
 	etats: [],
 	provenances: [],
+	requiredFields: {
+		nomEntreprise: '',
+		releve: '',
+		rue: '',
+		ville: '',
+		province: '',
+		codePostal: '',
+		telephone: '',
+		extension: '',
+		date: '',
+		chambreCommerce: '',
+		activite: '',
+		etat: '',
+		provenance: '',
+		prospect: '',
+		notes: ''
+	},
 	grid: [],
 	layouts: {},
+	formNewField:  {
+		description: '',
+		label: '',
+		type: "1"
+	},
+	formUpdateField: {
+		nameField: '',
+		descField: ''
+	},
 	view:'read',
 	errors: ''
 };
@@ -41,6 +70,12 @@ export default function reducer (state = initialState, action ){
 			return {...state,etats: action.etats, error:''};
 		case UPDATE_PROVENANCES:
 			return {...state,provenances: action.provenances, error:''};
+		case CHANGE_REQUIRED_FIELDS:
+			return {...state ,requiredFields: action.newRequiredFields , error:''};
+		case CHANGE_NEW_FIELD:
+			return {...state ,formNewField: action.newField , error:''};
+		case CHANGE_UPDATE_FIELD:
+			return {...state ,formUpdateField: action.newUpdateField , error:''};
 		default:
 			return state
 

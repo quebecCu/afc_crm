@@ -101,130 +101,20 @@
 				</thead>
 				<tbody>
 				<tr>
-				 <td>CONTRAT</td>
+				 <td>FOURNISSEUR_ATTR</td>
 				 <td>Table</td>
-				 <td>date_signature</td>
-				 <td>date</td>
-				 <td>13</td>
+				 <td>valeur_defaut</td>
+				 <td>varchar</td>
+				 <td>40</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idregle</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR</td>
+				 <td>PERSONNE</td>
 				 <td>Table</td>
 				 <td>nom</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODULE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iddomaineass</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_ATTR</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>DOMAINE_ASSURANCE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iddomaineass</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;DOMAINE_ASSURANCE_iddomaineass_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF_ATTR</td>
-				 <td>Table</td>
-				 <td>forme</td>
-				 <td>varchar</td>
-				 <td>100</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONDITION</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>prime</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF_ATTR</td>
-				 <td>Table</td>
-				 <td>label</td>
 				 <td>varchar</td>
 				 <td>20</td>
 				 <td title=''></td>
@@ -233,22 +123,33 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
+				 <td>ADRESSE</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
-				 <td>int4</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idadresse</td>
+				 <td>serial</td>
 				 <td>10</td>
 				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;ADRESSE_idadresse_seq&quot;&#39;::regclass)</td>
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>ENTREPRISE_ATTR</td>
+				 <td>RELEVE</td>
 				 <td>Table</td>
-				 <td>label</td>
-				 <td>varchar</td>
-				 <td>40</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idreleve</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;RELEVE_idreleve_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtitre</td>
+				 <td>int4</td>
+				 <td>10</td>
 				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -266,353 +167,12 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CLIENT_INDIVIDUEL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>nb_employes</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CAT_ACTIVITE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idadresse</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>REGLE</td>
-				 <td>Table</td>
-				 <td>libelleregle</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CLIENT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idprovenance</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td>police</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ETAT</td>
-				 <td>Table</td>
-				 <td>libelleetat</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>TYPE</td>
-				 <td>Table</td>
-				 <td>libelletype</td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_CLIENT</td>
-				 <td>Table</td>
-				 <td>estdecideur</td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CLIENT</td>
-				 <td>Table</td>
-				 <td>prospect</td>
-				 <td>bool</td>
-				 <td>1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_FACUL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td>tel_principal</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_INDIVIDUEL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>BENEFICIAIRES</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>base</td>
-				 <td>numeric</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>DOMAINE_ASSURANCE</td>
-				 <td>Table</td>
-				 <td>libelledomaine</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
 				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>ext_tel_secondaire</td>
-				 <td>varchar</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>autre_vendeur_datepaye</td>
-				 <td>date</td>
-				 <td>13</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PROVENANCE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idprovenance</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;PROVENANCE_idprovenance_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_ATTR</td>
-				 <td>Table</td>
-				 <td>description</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td>mois_renouvellement</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>TYPE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;TYPE_idtype_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ROLE</td>
-				 <td>Table</td>
-				 <td>libellerole</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
 				 <td>Table</td>
 				 <td>ext_tel_principal</td>
 				 <td>varchar</td>
-				 <td>5</td>
+				 <td>3</td>
 				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_ATTR</td>
-				 <td>Table</td>
-				 <td>forme</td>
-				 <td>varchar</td>
-				 <td>100</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CADEAU_ENVOYE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcadeau</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
-				 <td>Table</td>
-				 <td>valeur_defaut</td>
-				 <td>varchar</td>
-				 <td>40</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>REGLE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idregle</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;REGLE_idregle_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td>tel_principal</td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td>notes</td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>RELATION</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
 				 <td></td>
@@ -634,875 +194,6 @@
 				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
 				 <td>int4</td>
 				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idreleve</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>autre_vendeur_paye</td>
-				 <td>numeric</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_FACUL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_CLIENT</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtitre</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>AGA</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idaga</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;AGA_idaga_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF_FACUL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODULE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodule</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;MODULE_idmodule_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idactivite</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODALITE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodalite</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;MODALITE_idmodalite_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>boni</td>
-				 <td>numeric</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idchambrecommerce</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
-				 <td>Table</td>
-				 <td>forme</td>
-				 <td>varchar</td>
-				 <td>100</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>SOUSCRIPTIONS</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodalite</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>prenom</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_ATTR</td>
-				 <td>Table</td>
-				 <td>valeur_defaut</td>
-				 <td>varchar</td>
-				 <td>40</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_FACUL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td>ext_tel_principal</td>
-				 <td>varchar</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODULE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>SOUSCRIPTIONS</td>
-				 <td>Table</td>
-				 <td>valeur</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_FACUL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identreprise</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>nom</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ADRESSE</td>
-				 <td>Table</td>
-				 <td>province</td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CLIENT_INDIVIDUEL</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ROLE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;ROLE_idrole_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>POSTE</td>
-				 <td>Table</td>
-				 <td>libelleposte</td>
-				 <td>varchar</td>
-				 <td>40</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONDITION</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodalite</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idaga</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>RELEVE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idreleve</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;RELEVE_idreleve_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>RELEVE</td>
-				 <td>Table</td>
-				 <td>modeenvoiereleve</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
-				 <td>Table</td>
-				 <td>ext</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODALITE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CADEAU_ENVOYE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identreprise</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>BENEFICIAIRES</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodule</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ADRESSE</td>
-				 <td>Table</td>
-				 <td>ville</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CADEAU</td>
-				 <td>Table</td>
-				 <td>libellecadeau</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CADEAU_ENVOYE</td>
-				 <td>Table</td>
-				 <td>description</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CAT_ACTIVITE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcategorie</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>num_tel_principal</td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>mail</td>
-				 <td>varchar</td>
-				 <td>255</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_ATTR</td>
-				 <td>Table</td>
-				 <td>ext</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>split</td>
-				 <td>numeric</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>TITRE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtitre</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;TITRE_idtitre_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td>date_creation</td>
-				 <td>date</td>
-				 <td>13</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_CLIENT</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrepresentant</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>bdu</td>
-				 <td>numeric</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CATEGORIE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcategorie</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;CATEGORIE_idcategorie_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONDITION</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CHAMBRE_COMMERCE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idchambrecommerce</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;CHAMBRE_COMMERCE_idchambrecommerce_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_ATTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;ENTREPRISE_ATTR_idattrentreprise_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>POSTE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;POSTE_idposte_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF_ATTR</td>
-				 <td>Table</td>
-				 <td>description</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTACT_CLIENT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>TITRE</td>
-				 <td>Table</td>
-				 <td>libelletitre</td>
-				 <td>varchar</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>taux_commission</td>
-				 <td>numeric</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ADRESSE</td>
-				 <td>Table</td>
-				 <td>codepostal</td>
-				 <td>bpchar</td>
-				 <td>7</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CLIENT</td>
-				 <td>Table</td>
-				 <td>notes</td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONDITION</td>
-				 <td>Table</td>
-				 <td>valeur</td>
-				 <td>varchar</td>
-				 <td>20</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ADRESSE</td>
-				 <td>Table</td>
-				 <td>rue</td>
-				 <td>varchar</td>
-				 <td>255</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_FACUL</td>
-				 <td>Table</td>
-				 <td>valeur</td>
-				 <td>varchar</td>
-				 <td>40</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idadresse</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;FOURNISSEUR_ATTR_idattrfournisseur_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>AGA</td>
-				 <td>Table</td>
-				 <td>libelleaga</td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CADEAU</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcadeau</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;CADEAU_idcadeau_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PROVENANCE</td>
-				 <td>Table</td>
-				 <td>libelleprovenance</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE</td>
-				 <td>Table</td>
-				 <td>date_creation</td>
-				 <td>date</td>
-				 <td>13</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>(&#39;now&#39;::text)::date</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;FOURNISSEUR_idfournisseur_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>MODALITE</td>
-				 <td>Table</td>
-				 <td>libelleavantage</td>
-				 <td>varchar</td>
-				 <td>50</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CLIENT</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;CLIENT_idclient_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF_FACUL</td>
-				 <td>Table</td>
-				 <td>valeur</td>
-				 <td>varchar</td>
-				 <td>40</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
-				 <td>Table</td>
-				 <td>label</td>
-				 <td>varchar</td>
-				 <td>40</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>ext_tel_principal</td>
-				 <td>varchar</td>
-				 <td>3</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>pdate</td>
-				 <td>date</td>
-				 <td>13</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -1522,9 +213,141 @@
 				<tr>
 				 <td>CATEGORIE</td>
 				 <td>Table</td>
-				 <td>libellecategorie</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcategorie</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;CATEGORIE_idcategorie_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODULE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_INDIVIDUEL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td>label</td>
 				 <td>varchar</td>
-				 <td>20</td>
+				 <td>40</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>TYPE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;TYPE_idtype_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>boni</td>
+				 <td>numeric</td>
+				 <td>3</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td>ext_tel_principal</td>
+				 <td>varchar</td>
+				 <td>3</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_FACUL</td>
+				 <td>Table</td>
+				 <td>valeur</td>
+				 <td>varchar</td>
+				 <td>40</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>BENEFICIAIRES</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodule</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td>nom</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CADEAU_ENVOYE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcadeau</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODALITE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iddomaineass</td>
+				 <td>int4</td>
+				 <td>10</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -1542,9 +365,416 @@
 				 <td></td>
 				</tr>
 				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;PERSONNE_idpersonne_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td>tel_principal</td>
+				 <td>varchar</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF_FACUL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td>date_creation</td>
+				 <td>date</td>
+				 <td>13</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>taux_commission</td>
+				 <td>numeric</td>
+				 <td>3</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_ATTR</td>
+				 <td>Table</td>
+				 <td>ext</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td>police</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_FACUL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;CLIENT_idclient_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>split</td>
+				 <td>numeric</td>
+				 <td>3</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;FOURNISSEUR_idfournisseur_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CADEAU_ENVOYE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identreprise</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
 				 <td>MODALITE</td>
 				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iddomaineass</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>prime</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODALITE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodalite</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;MODALITE_idmodalite_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>SOUSCRIPTIONS</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodule</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td>prenom</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td>ext_tel_principal</td>
+				 <td>varchar</td>
+				 <td>5</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td>tel_principal</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idautrevendeur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODULE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CADEAU</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcadeau</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;CADEAU_idcadeau_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ETAT</td>
+				 <td>Table</td>
+				 <td>libelleetat</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td>num_tel_principal</td>
+				 <td>varchar</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF_ATTR</td>
+				 <td>Table</td>
+				 <td>forme</td>
+				 <td>varchar</td>
+				 <td>100</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_FACUL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idchambrecommerce</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td>notes</td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td>ext</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_FACUL</td>
+				 <td>Table</td>
+				 <td>valeur</td>
+				 <td>varchar</td>
+				 <td>40</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTACT_FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_FACUL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>identreprise</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>base</td>
+				 <td>numeric</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODALITE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcategorie</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td>date_signature</td>
+				 <td>date</td>
+				 <td>13</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CADEAU_ENVOYE</td>
+				 <td>Table</td>
+				 <td>description</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idactivite</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title='nullable'>√</td>
@@ -1555,7 +785,7 @@
 				<tr>
 				 <td>RELATION</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title=''></td>
@@ -1564,11 +794,176 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CONTRAT_COLLECTIF_ATTR</td>
+				 <td>FOURNISSEUR_ATTR</td>
 				 <td>Table</td>
-				 <td>valeur_defaut</td>
+				 <td>label</td>
 				 <td>varchar</td>
 				 <td>40</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ADRESSE</td>
+				 <td>Table</td>
+				 <td>province</td>
+				 <td>varchar</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>BENEFICIAIRES</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrentreprise</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;ENTREPRISE_ATTR_idattrentreprise_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT</td>
+				 <td>Table</td>
+				 <td>prospect</td>
+				 <td>bool</td>
+				 <td>1</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td>description</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODULE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iddomaineass</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTACT_CLIENT</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td>forme</td>
+				 <td>varchar</td>
+				 <td>100</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idadresse</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CHAMBRE_COMMERCE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idchambrecommerce</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;CHAMBRE_COMMERCE_idchambrecommerce_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ADRESSE</td>
+				 <td>Table</td>
+				 <td>ville</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT_INDIVIDUEL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idclient</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idprovenance</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ADRESSE</td>
+				 <td>Table</td>
+				 <td>rue</td>
+				 <td>varchar</td>
+				 <td>255</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -1586,42 +981,42 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CHAMBRE_COMMERCE</td>
+				 <td>CONTRAT_COLLECTIF_ATTR</td>
 				 <td>Table</td>
-				 <td>libellechambrecommerce</td>
+				 <td>valeur_defaut</td>
 				 <td>varchar</td>
-				 <td>80</td>
+				 <td>40</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>ETAT</td>
+				 <td>PROVENANCE</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idetat</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idprovenance</td>
 				 <td>serial</td>
 				 <td>10</td>
 				 <td title=''></td>
 				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;ETAT_idetat_seq&quot;&#39;::regclass)</td>
+				 <td>nextval(&#39;&quot;PROVENANCE_idprovenance_seq&quot;&#39;::regclass)</td>
 				 <td></td>
 				</tr>
 				<tr>
 				 <td>CONTRAT_COLLECTIF_FACUL</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
+				 <td>valeur</td>
+				 <td>varchar</td>
+				 <td>40</td>
+				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CLIENT</td>
+				 <td>CONTRAT_COLLECTIF</td>
 				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idetat</td>
+				 <td>hresmin</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title='nullable'>√</td>
@@ -1630,20 +1025,86 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>PERSONNE</td>
+				 <td>PROVENANCE</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>libelleprovenance</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>autre_vendeur_datepaye</td>
+				 <td>date</td>
+				 <td>13</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>DOMAINE_ASSURANCE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>iddomaineass</td>
 				 <td>serial</td>
 				 <td>10</td>
 				 <td title=''></td>
 				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;PERSONNE_idpersonne_seq&quot;&#39;::regclass)</td>
+				 <td>nextval(&#39;&quot;DOMAINE_ASSURANCE_iddomaineass_seq&quot;&#39;::regclass)</td>
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>PERSONNE</td>
+				 <td>CONTACT_CLIENT</td>
 				 <td>Table</td>
-				 <td>date_naiss</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ROLE</td>
+				 <td>Table</td>
+				 <td>libellerole</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>RELEVE</td>
+				 <td>Table</td>
+				 <td>modeenvoiereleve</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>bdu</td>
+				 <td>numeric</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>pdate</td>
 				 <td>date</td>
 				 <td>13</td>
 				 <td title='nullable'>√</td>
@@ -1663,45 +1124,34 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>CONTRAT_COLLECTIF</td>
-				 <td>Table</td>
-				 <td>hresmin</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>PERSONNE</td>
-				 <td>Table</td>
-				 <td>num_tel_secondaire</td>
-				 <td>varchar</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ADRESSE</td>
-				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idadresse</td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;&quot;ADRESSE_idadresse_seq&quot;&#39;::regclass)</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>FOURNISSEUR_ATTR</td>
+				 <td>CONTRAT_COLLECTIF_ATTR</td>
 				 <td>Table</td>
 				 <td>description</td>
 				 <td>varchar</td>
 				 <td>50</td>
 				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CADEAU</td>
+				 <td>Table</td>
+				 <td>libellecadeau</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF_FACUL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrcontratcoll</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
 				 <td></td>
@@ -1718,6 +1168,50 @@
 				 <td></td>
 				</tr>
 				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>autre_vendeur_paye</td>
+				 <td>numeric</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td>date_creation</td>
+				 <td>date</td>
+				 <td>13</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>(&#39;now&#39;::text)::date</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ETAT</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idetat</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;ETAT_idetat_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>SOUSCRIPTIONS</td>
+				 <td>Table</td>
+				 <td>valeur</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
 				 <td>RELATION</td>
 				 <td>Table</td>
 				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
@@ -1726,6 +1220,39 @@
 				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>SOUSCRIPTIONS</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodalite</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF</td>
+				 <td>Table</td>
+				 <td>nb_employes</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>TITRE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtitre</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;TITRE_idtitre_seq&quot;&#39;::regclass)</td>
 				 <td></td>
 				</tr>
 				<tr>
@@ -1740,20 +1267,9 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>MODULE</td>
+				 <td>POSTE</td>
 				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td>ENTREPRISE_FACUL</td>
-				 <td>Table</td>
-				 <td>valeur</td>
+				 <td>libelleposte</td>
 				 <td>varchar</td>
 				 <td>40</td>
 				 <td title='nullable'>√</td>
@@ -1762,20 +1278,86 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>SOUSCRIPTIONS</td>
+				 <td>CONTACT_CLIENT</td>
 				 <td>Table</td>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodule</td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title=''></td>
+				 <td>estdecideur</td>
+				 <td>bool</td>
+				 <td>1</td>
+				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CATEGORIE</td>
+				 <td>Table</td>
+				 <td>libellecategorie</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT</td>
+				 <td>Table</td>
+				 <td>notes</td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>TITRE</td>
+				 <td>Table</td>
+				 <td>libelletitre</td>
+				 <td>varchar</td>
+				 <td>3</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>POSTE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;POSTE_idposte_seq&quot;&#39;::regclass)</td>
 				 <td></td>
 				</tr>
 				<tr>
 				 <td>CONTRAT_COLLECTIF</td>
 				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idautrevendeur</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcontrat</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td>ext_tel_secondaire</td>
+				 <td>varchar</td>
+				 <td>3</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrepresentant</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title='nullable'>√</td>
@@ -1784,12 +1366,309 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td>MODALITE</td>
+				 <td>FOURNISSEUR_ATTR</td>
 				 <td>Table</td>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idcategorie</td>
+				 <td>description</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>TYPE</td>
+				 <td>Table</td>
+				 <td>libelletype</td>
+				 <td>varchar</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_ATTR</td>
+				 <td>Table</td>
+				 <td>forme</td>
+				 <td>varchar</td>
+				 <td>100</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>RELATION</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_ATTR</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idtype</td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ADRESSE</td>
+				 <td>Table</td>
+				 <td>codepostal</td>
+				 <td>bpchar</td>
+				 <td>7</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td>mail</td>
+				 <td>varchar</td>
+				 <td>255</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td>mois_renouvellement</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_COLLECTIF_ATTR</td>
+				 <td>Table</td>
+				 <td>label</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td>num_tel_secondaire</td>
+				 <td>varchar</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE_ATTR</td>
+				 <td>Table</td>
+				 <td>valeur_defaut</td>
+				 <td>varchar</td>
+				 <td>40</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idadresse</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CHAMBRE_COMMERCE</td>
+				 <td>Table</td>
+				 <td>libellechambrecommerce</td>
+				 <td>varchar</td>
+				 <td>80</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTACT_FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_ATTR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;FOURNISSEUR_ATTR_idattrfournisseur_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODALITE</td>
+				 <td>Table</td>
+				 <td>libelleavantage</td>
+				 <td>varchar</td>
+				 <td>50</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>PERSONNE</td>
+				 <td>Table</td>
+				 <td>date_naiss</td>
+				 <td>date</td>
+				 <td>13</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>DOMAINE_ASSURANCE</td>
+				 <td>Table</td>
+				 <td>libelledomaine</td>
+				 <td>varchar</td>
+				 <td>20</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>FOURNISSEUR_FACUL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idattrfournisseur</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>MODULE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idmodule</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;MODULE_idmodule_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>TYPE</td>
+				 <td>Table</td>
+				 <td>forme</td>
+				 <td>varchar</td>
+				 <td>100</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idetat</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ENTREPRISE</td>
+				 <td>Table</td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idreleve</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>ROLE</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idrole</td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;&quot;ROLE_idrole_seq&quot;&#39;::regclass)</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTACT_FOURNISSEUR</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idposte</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CLIENT_INDIVIDUEL</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td>CONTACT_CLIENT</td>
+				 <td>Table</td>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>idpersonne</td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title=''></td>
 				 <td title=''></td>
 				 <td>null</td>
 				 <td></td>

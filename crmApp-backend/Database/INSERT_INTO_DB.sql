@@ -12,7 +12,6 @@ SELECT setval('public."CLIENT_idclient_seq"', 1, FALSE);
 SELECT setval('public."ADRESSE_idadresse_seq"', 1, FALSE);
 SELECT setval('public."ETAT_idetat_seq"', 1, FALSE);
 SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
-SELECT setval('public."AGA_idaga_seq"', 1, FALSE);
 SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
 SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
 SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
@@ -20,7 +19,6 @@ SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
 SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
 SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
 SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
-SELECT setval('public."REGLE_idregle_seq"', 1, FALSE);
 SELECT setval('public."CADEAU_idcadeau_seq"', 1, FALSE);
 SELECT setval('public."MODULE_idmodule_seq"', 1, FALSE);
 SELECT setval('public."ACTIVITE_idactivite_seq"', 1, FALSE);
@@ -32,11 +30,10 @@ SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
 SELECT setval('public."TITRE_idtitre_seq"', 1, FALSE);
 
 --TYPE--
-INSERT INTO public."TYPE"(libelletype) VALUES ('Int');
-INSERT INTO public."TYPE"(libelletype) VALUES ('String');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Date');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Bool');
-INSERT INTO public."TYPE"(libelletype) VALUES ('Float');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Nombre', '[-+]?[0-9]*\.?[0-9]+');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('String', '(.*?)');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Date', '!^(0?\d|[12]\d|3[01])-(0?\d|1[012])-((?:19|20)\d{2})$!');
+INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Booléen', '[Oui|Non]');
 
 --TITRE--
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
@@ -66,12 +63,16 @@ INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Bouche à oreilles')
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Actif');
 INSERT INTO public."ETAT"(libelleetat) VALUES ('Annulé');
 
+
 --CHAMBRE COMMERCE--
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Sherbrooke');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Drummmondville');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Magog-Orford');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Chambre de Richmond');
-INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Autres');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('AFC');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Bois Francs - Érable');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Disraeli');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Drummondville');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Magog-Orford');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Richmond');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Sherbrooke');
+INSERT INTO public."CHAMBRE_COMMERCE"(libellechambrecommerce) VALUES ('Sources');
 
 --ACTIVITE--
 INSERT INTO public."ACTIVITE"(libelleactivite) VALUES ('Construction');
@@ -105,8 +106,8 @@ INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (1, 1,
 INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3, true, 'Ce client a toujours chaud');
 
 --ENTREPRISE--
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (1, 2, 1, 3, 1, 'Groupe CGI');
-INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, idchambrecommerce, nom) VALUES (2, 3, 2, 1, 3, 'Sherweb Inc');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, nom) VALUES (1, 2, 1, 3, 'Groupe CGI');
+INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, nom) VALUES (2, 3, 2, 1, 'Sherweb Inc');
 
 --FOURNISSEUR--
 INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');
@@ -350,6 +351,7 @@ INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Téléphone secondaire', 'Numéro de téléphone secondaire', null, '(819)000-0000');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Ext', 'Extension', null, '(819)000-0000');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Fax', 'Télécopieur', null, '(819)000-0000');
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Sous-groupe', 'Entrez la description des sous-groupes', null, 'Sous-groupe');
 
 --ENTREPRISE_FACUL--
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 1, 10);
@@ -357,11 +359,14 @@ INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) V
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 1, '(819)822-8282');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 1, '(819)822-8282');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 1, '(819)822-8282');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (6, 1, 'Ledemos');
+
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 2, 150);
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (2, 2, 'test2@test.com');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 2, '(819)811-8181');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 2, '(819)811-8181');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 2, '(819)811-8181');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (6, 2, 'Lecrew');
 
 --FOURNISSEUR_FAC--
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Petits groupes', 'Petits groupes', null, null);
@@ -383,6 +388,12 @@ INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'SERVICES', 'Services', null, null);
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'AUTRES', 'Autres', null, null);
 
+--CONTRAT_COLLECTIF_FACUL--
+INSERT INTO public."CONTRAT_COLLECTIF_FACUL" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Administrateur', 'AFC est-il administrateur ?', null, 'Non');
+INSERT INTO public."CONTRAT_COLLECTIF_FACUL" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Admissibilité', 'Délai d''amissibilité à l''assurance en mois', null, 0, 'mois');
+INSERT INTO public."CONTRAT_COLLECTIF_FACUL" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Heures minimum', 'Nombre d''heures minimum par semaine', null, 0, 'par semaine');
+
+
 --CONTACT_CLIENT--
 INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(1, 2, 1, true);
 INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 4, 1, true);
@@ -396,6 +407,35 @@ SELECT setval('users."UTILISATEUR_iduser_seq"', 1, FALSE);
 SELECT setval('users."ENTITE_identite_seq"', 1, FALSE);
 SELECT setval('users."OPERATION_idoperation_seq"', 1, FALSE);
 SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
+
+
+--AFFICHAGE-CLIENT--
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (2, 3, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (3, 6, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (4, 9, 0, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (5, 0, 1, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (6, 3, 1, 1, 3, 3, true);
+
+--AFFICHAGE-FOURNISSEUR--
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (2, 0, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (3, 0, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (4, 0, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (5, 1, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (6, 1, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (7, 1, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (8, 1, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (9, 2, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (10, 2, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (11, 2, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (12, 2, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (13, 3, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (14, 3, 1, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (15, 3, 2, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (16, 3, 3, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (17, 4, 0, 1, 3, 3, true);
+INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (18, 4, 1, 1, 3, 3, true);
 
 ---ROLEADM---
 INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Administrateur', TRUE);
@@ -525,165 +565,5 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 
 -----end user schema -----
 
-
-
-
------users schema-----
-SELECT setval('users."ROLEADM_idrole_seq"', 1, FALSE);
-SELECT setval('users."UTILISATEUR_iduser_seq"', 1, FALSE);
-SELECT setval('users."ENTITE_identite_seq"', 1, FALSE);
-SELECT setval('users."OPERATION_idoperation_seq"', 1, FALSE);
-SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
-SELECT setval('public."PERSONNE_idpersonne_seq"', 1, FALSE);
-SELECT setval('public."TITRE_idtitre_seq"', 1, FALSE);
-
----ROLEADM---
-INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Administrateur', TRUE);
-INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Associé', FALSE);
-INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Consultant', FALSE);
-INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Employé', FALSE);
-INSERT INTO users."ROLEADM"(description,isAdmin) VALUES ('Visiteur', FALSE);
-
-
----OPERATION---
-INSERT INTO users."OPERATION"(description, level) VALUES ('READ', 1);
-INSERT INTO users."OPERATION"(description, level) VALUES ('UPDATE', 2);
-INSERT INTO users."OPERATION"(description, level) VALUES ('CREATE', 4);
-
----MENU---
-INSERT INTO users."ENTITE"(description) VALUES ('Accueil');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des accès');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des utilisateurs');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des clients - ACollectives');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des prospects');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des fournisseurs');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des contrats - ACollectives');
-INSERT INTO users."ENTITE"(description) VALUES ('Gestion des contrats - AIndiv');
-
----PERMISSIONR---
---Administateur--
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 1, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 1, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 1, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 2, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 2, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 2, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 3, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 3, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 3, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 4, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 4, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 4, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 5, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 5, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 5, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 6, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 6, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 6, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 7, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 7, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 7, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (1, 8, 3);
-
---Associé--
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 1, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 4, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 4, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 4, 3);
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 5, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 6, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 6, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 6, 3);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 7, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 7, 2);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 7, 3);
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (2, 8, 1);
-
---Consultant--
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 1, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 4, 1);
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 5, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 6, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 7, 1);
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (3, 8, 1);
-
---Employé--
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 1, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 4, 1);
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 5, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 6, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 7, 1);
---INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (4, 8, 1);
-
---Visiteur--
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (5, 1, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (5, 4, 1);
-INSERT INTO users."PERMISSIONROLE_GLOB"(idrole, identite, idoperation) VALUES (5, 7, 1);
-
---BEGINDATATEST
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('alain', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 1);
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('azizou', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'azizou@gmail.com', 2);
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('maxime', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 3);
-INSERT INTO users."UTILISATEUR"(login, password, mail, idrole) VALUES ('jean_neymar', '$2a$10$rJCeox4/QAS7licPO4CR2eBzMqmLlZGow5l.jfxfg2VRWxOGfXOoy', 'ceciestuntest@test.com', 4);
-
---ADMIN RIGHTS-- (alain)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 1, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 2, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 2, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 2, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 3, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 3, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 3, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 4, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 4, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 5, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 5, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 5, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 6, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 6, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 6, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 7, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 7, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 7, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (1, 8, 3);
-
-INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (1, 1);
-
---Associé-- (azizou)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 4, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 4, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 6, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 6, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 6, 3);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 2);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (2, 7, 3);
-
-INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (2, 2);
-
---Consultant-- (maxime)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 6, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (3, 7, 1);
-INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (3, 3);
---ENDDATATEST
-
---Employé-- (jean)
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 4, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 6, 1);
-INSERT INTO users."PERMISSIONUTIL_GLOB"(iduser, identite, idoperation) VALUES (4, 7, 1);
-
-INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
---ENDDATATEST
-
------end user schema -----
 
 

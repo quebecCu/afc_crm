@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const users = require('./routes/users');
+const attributesManagement = require('./routes/attributesManagement');
 const login = require('./routes/login');
 
 const reset = require('./routes/reset');
@@ -38,6 +39,7 @@ app.use( function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/attributesManagement', attributesManagement);
 app.use('/clients', clients);
 app.use('/', login);
 app.use('/', reset);

@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var app = express();
-//Load the bcrypt module
-var bcrypt = require('bcrypt');
-var db = require('../models');
+var squelb = require('squel');
+var squel = squelb.useFlavour('postgres');
+var db = require('../models/index');
+var express = require('express');
+var security = require('../security/security');
 var jwt = require('jsonwebtoken');
 var expressJwtIp = require('express-jwt-ip');
-
 
 /* GET home page. */
 router.post('/getCustomerGrid', expressJwtIp.ip(), function (req, res) {
