@@ -39,7 +39,7 @@ let createCustomerAttribute = (attribute) =>
 	.set("valeur_defaut", attribute.valeur_defaut)
 	.set("ext", attribute.ext)
 	.returning('*')
-	.toString();
+	.toParam();
 
 let createCustomerDis = (attribute) =>
 	squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
@@ -51,7 +51,7 @@ let createCustomerDis = (attribute) =>
 	.set("width", attribute.width)
 	.set("minwidth", attribute.minwidth)
 	.set("affichage", true)
-	.toString();
+	.toParam();
 
 let hideCustomerAttribute = (idattribute) =>
 	squel.update()
@@ -69,7 +69,7 @@ let updateCustomerAttribute = (attribute) =>
 	.set("valeur_defaut", attribute.valeur_defaut)
 	.set("ext", attribute.ext)
 	.where("idattrentreprise = " + attribute.idattrentreprise)
-	.toString();
+	.toParam();
 
 let updateCustomerAttributeDis = (attribute) =>
 	squel.update()
@@ -214,6 +214,7 @@ router.post('/update/customer', expressJwtIp.ip(), function (req, res) {
 			ext: req.body.ext
 		};
 	console.log(attribute);
+	console.log(updateCustomerAttribute(attribute));
 		db.none(updateCustomerAttribute(attribute))
 		.then(() => {
 			res.send({
@@ -242,7 +243,6 @@ router.post('/update/customer/display', expressJwtIp.ip(), function (req, res) {
 
 	//if (!!decoded && (_ip === _ipReceived)) {
 		var attributes = req.body.layout;
-
 		db.tx(t => {
 		    const queries = attributes.map(attribute => {
 				let newAttribute = {

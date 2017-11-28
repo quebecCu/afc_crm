@@ -144,6 +144,7 @@ INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Téléphone secondaire', 'Numéro de téléphone secondaire', null, '(819)000-0000');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Ext', 'Extension', null, '(819)000-0000');
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Fax', 'Télécopieur', null, '(819)000-0000');
+INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'Sous-groupe', 'Entrez la description des sous-groupes', null, 'Sous-groupe');
 
 --ENTREPRISE_FACUL--
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 1, 10);
@@ -151,11 +152,14 @@ INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) V
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 1, '(819)822-8282');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 1, '(819)822-8282');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 1, '(819)822-8282');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (6, 1, 'Ledemos');
+
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (1, 2, 150);
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (2, 2, 'test2@test.com');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (3, 2, '(819)811-8181');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (4, 2, '(819)811-8181');
 INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (5, 2, '(819)811-8181');
+INSERT INTO public."ENTREPRISE_FACUL" (idattrentreprise, identreprise, valeur) VALUES (6, 2, 'Lecrew');
 
 --FOURNISSEUR_FAC--
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Petits groupes', 'Petits groupes', null, null);
@@ -176,6 +180,12 @@ INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'MEMO', 'Mémo', null, null);
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'SERVICES', 'Services', null, null);
 INSERT INTO public."FOURNISSEUR_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (2, 'AUTRES', 'Autres', null, null);
+
+--CONTRAT_COLLECTIF_FACUL--
+INSERT INTO public."CONTRAT_COLLECTIF_FACUL" (idtype, label, description, forme, valeur_defaut) VALUES (4, 'Administrateur', 'AFC est-il administrateur ?', null, 'Non');
+INSERT INTO public."CONTRAT_COLLECTIF_FACUL" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Admissibilité', 'Délai d''amissibilité à l''assurance en mois', null, 0, 'mois');
+INSERT INTO public."CONTRAT_COLLECTIF_FACUL" (idtype, label, description, forme, valeur_defaut, ext) VALUES (1, 'Heures minimum', 'Nombre d''heures minimum par semaine', null, 0, 'par semaine');
+
 
 --CONTACT_CLIENT--
 INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(1, 2, 1, true);
@@ -198,6 +208,7 @@ INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, w
 INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (3, 6, 0, 1, 3, 3, true);
 INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (4, 9, 0, 1, 3, 3, true);
 INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (5, 0, 1, 1, 3, 3, true);
+INSERT INTO users."ENTREPRISE_AFFICHAGE"(idattrentreprise, posX, posY, height, width, minwidth, affichage) VALUES (6, 3, 1, 1, 3, 3, true);
 
 --AFFICHAGE-FOURNISSEUR--
 INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);

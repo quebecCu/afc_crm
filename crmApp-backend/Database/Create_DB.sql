@@ -160,8 +160,8 @@ CREATE TABLE public."MODALITE" (
   idmodalite  serial  PRIMARY KEY,
   libelleavantage  varchar(50),
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
-  idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
-  idtype  integer  REFERENCES "TYPE" (idtype)
+  idtype  integer  REFERENCES "TYPE" (idtype),
+  multi boolean
 );
 
 CREATE TABLE public."RELATION" (
@@ -186,7 +186,7 @@ CREATE TABLE public."CONTRAT" (
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idclient  integer REFERENCES  "CLIENT" (idclient),
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
-  idrepresentant  integer  REFERENCES  "PERSONNE" (idpersonne),
+  idrepresentant  integer  REFERENCES  "EMPLOYE_INT" (idemploye),
   date_signature  date,
   mois_renouvellement  integer,
   police integer,
@@ -217,6 +217,7 @@ CREATE TABLE public."CONTRAT_COLLECTIF" (
 CREATE TABLE public."MODULE" (
   idmodule  serial  PRIMARY KEY,
   iddomaineass  integer REFERENCES "DOMAINE_ASSURANCE" (iddomaineass),
+  idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
   idcontrat  integer  REFERENCES  "CONTRAT" (idcontrat),
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur)
 );
@@ -233,6 +234,61 @@ CREATE TABLE public."SOUSCRIPTIONS" (
   CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idmodule, idmodalite),
   valeur varchar(20)
 );
+
+CREATE TABLE public."HISTORIQUE_TAUX" (
+  idclient  integer  REFERENCES  "CLIENT" (idclient),
+  idfournisseur  integer  REFERENCES  "FOURNISSEUR" (idfournisseur),
+  annee_dep integer CHECK (annee_dep>=1990),
+  annee_fin integer CHECK (annee_fin>=1990),
+  nb_employe integer,
+  diff double,
+  vie double,
+  dma double,
+  pac double,
+  ct double,
+  lt double,
+  amc_ind double,
+  amc_mono double,
+  amc_couple double,
+  amc_fam double,
+  dent_ind double,
+  dent_mono double,
+  dent_couple double,
+  dent_fam double,
+  mg_ind double,
+  mg_mono double,
+  mg_couple double,
+  mg_fam double,
+  pae double,
+ -- prime_ms a calculer
+ -- prime_an a calculer
+  CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idclient, idfournisseur)
+);
+
+CREATE TABLE public."REMUNERATION" (
+  idclient  integer  REFERENCES  "CLIENT" (idclient),
+  idfournisseur  integer  REFERENCES  "FOURNISSEUR" (idfournisseur),
+  annee_dep integer CHECK (annee_dep>=1990),
+  annee_fin integer CHECK (annee_fin>=1990),
+  vie integer,
+  ct double,
+  lt double,
+  amc double,
+  dent double,
+  mg double,
+  pae double,
+  recu double,
+  base double,
+  boni double,
+  conseiller integer REFERENCES "EMPLOYE_INT" (idemploye),
+  split double,
+  bdu double,
+  paye double,
+  dpaye date,
+  --sol a calculer
+  CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idclient, idfournisseur)
+);
+
 -- pk fk idcli ?
 CREATE TABLE public."CLIENT_INDIVIDUEL" (
   idclient  integer  REFERENCES  "CLIENT" (idclient),
@@ -296,7 +352,8 @@ CREATE TABLE public."CONTRAT_COLLECTIF_ATTR" (
   label  varchar(20) NOT NULL,
   description  varchar(50),
   forme  varchar(100),
-  valeur_defaut varchar(40)
+  valeur_defaut varchar(40),
+  ext varchar(20)
 );
 
 CREATE TABLE public."FOURNISSEUR_FACUL" (
