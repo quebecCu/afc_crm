@@ -37,9 +37,6 @@ class DashboardContainer extends Component {
 						view === "contracts" && <ContractsContainer />
 					}
 					{
-						view === "customer" && <PageClient/>
-					}
-					{
 						view === "indIns" && <ErrorPage/>
 					}
 					{
