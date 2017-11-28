@@ -1,5 +1,6 @@
 import React from 'react';
 import {changeViewContract} from "../actions/crmContract";
+import CreateContractContainer from './CreateContractContainer';
 import {connect} from "react-redux";
 
 class ContractsContainer extends React.Component {
@@ -26,7 +27,10 @@ class ContractsContainer extends React.Component {
 			}
 			{
 				view === "collContract" &&
-				<h1>SLT</h1>
+				<div><h1>Liste des contrats</h1><br /><button onClick={this._handleClick} value="create">Créer contrat</button></div>
+			}
+			{
+				view === "create" && <CreateContractContainer />
 			}
 		</div>;
 	}
@@ -46,6 +50,7 @@ const mapDispatchToProps = (dispatch) => {
 		changeViewContract: (newView) => {
 			dispatch(changeViewContract(newView));
 		}
+
 	}
 };
 
