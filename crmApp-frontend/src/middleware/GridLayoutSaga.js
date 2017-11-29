@@ -11,6 +11,7 @@ import axios from 'axios';
 import {store} from '../store';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {changeLoading} from "../actions/crmDashboard";
+import 'jest-localstorage-mock';
 
 
 let tokenToSend= localStorage.getItem("cookieSession");
