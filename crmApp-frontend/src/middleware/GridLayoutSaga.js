@@ -5,7 +5,7 @@ import {
 	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
 	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChampTypes, getEtats,
 	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField, changeNewField, GET_GRID_MODIFY,
-	getGridModify, changeRequiredFields
+	getGridModify, changeRequiredFields, DELETE_CUSTOMER
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -52,7 +52,7 @@ export function * getGridLayout (){
 					});
 					store.dispatch(changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
 					if(id) {
-						store.dispatch(getReleves(id));
+						store.dispatch(getReleves({id, grid}));
 					}
 					else {
 						store.dispatch(changeRequiredFields({
@@ -86,7 +86,6 @@ export function * requestReleves (){
 	while(true){
 
 		let view = yield take(GET_RELEVES);
-		let {id} = view;
 		//communication avec server
 		let server = "http://localhost:3002/clients/statementSendingModes";
 
@@ -94,8 +93,8 @@ export function * requestReleves (){
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateReleves(response.data.message));
-					if(id) {
-						store.dispatch(getChampTypes({id: id, releves: response.data.message}))
+					if(view.id) {
+						store.dispatch(getChampTypes({id: view.id.id, releves: response.data.message, grid: view.id.grid}))
 					}
 					else {
 						store.dispatch(getChampTypes())
@@ -124,6 +123,7 @@ export function * requestChampTypes (){
 						store.dispatch(getActivites({
 							id: view.data.id,
 							releves: view.data.releves,
+							grid: view.data.grid
 						}));
 					}
 					else {
@@ -153,7 +153,8 @@ export function * requestActivites (){
 						store.dispatch(getEtats({
 							id: view.data.id,
 							releves: view.data.releves,
-							activites: response.data.message
+							activites: response.data.message,
+							grid: view.data.grid
 						}));
 					}
 					else {
@@ -184,7 +185,8 @@ export function * requestEtats (){
 							id: view.data.id,
 							releves: view.data.releves,
 							activites: view.data.activites,
-							etats: response.data.message
+							etats: response.data.message,
+							grid: view.data.grid
 						}));
 					}
 					else {
@@ -211,13 +213,13 @@ export function * requestProvenances (){
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateProvenances(response.data.message));
 					if(view.data) {
-						store.dispatch(changeLoading(false));
 						store.dispatch(getGridModify({
 							id: view.data.id,
 							releves: view.data.releves,
 							activites: view.data.activites,
 							etats: view.data.etats,
-							provenances: response.data.message
+							provenances: response.data.message,
+							grid: view.data.grid
 						}))
 					}
 					else {
@@ -266,7 +268,11 @@ export function * sendFile() {
 					alert('La fiche client a été créée avec succès');
 					//store.dispatch(changeViewCollective('customerFile'));
 					//store.dispatch(changeViewGrid('read'))
-				} else {
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
 					alert('Erreur lors de la création de la fiche client');
 				}
 			})
@@ -282,22 +288,62 @@ export function * updateFile() {
 		let file = yield take(UPDATE_CUSTOMER_FILE);
 		let {
 			grid,
-			requiredFields
+			requiredFields,
+			idToDisplay
 		} = file.file;
 		console.log("update file");
 
-		let server = "http://localhost:3002/updateCustomer";
+		let facultatif = grid.map(champ => {
+			return {id: champ.idattrentreprise, value: champ.value}
+		});
+
+		let server = "http://localhost:3002/clients/update";
 
 		axios.post(server, {
-			grid: grid,
-			requiredFields: requiredFields
+			idclient: idToDisplay,
+			idreleve: requiredFields.releve,
+			nom: requiredFields.nomEntreprise,
+			tel_princ: requiredFields.telephone,
+			ext_tel_princ: requiredFields.extension,
+			idactivite: requiredFields.activite,
+			rue: requiredFields.rue,
+			ville: requiredFields.ville,
+			province: requiredFields.province,
+			codepostal: requiredFields.codePostal,
+			idetat: requiredFields.etat,
+			idprovenance: requiredFields.provenance,
+			prospect: requiredFields.prospect,
+			notes: requiredFields.notes,
+			facultatif: facultatif
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');
-					store.dispatch(changeViewCollective('customerFile'));
+					//store.dispatch(changeViewCollective('customerFile'));
 				} else {
 					alert('Erreur lors de la modification de la fiche client');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//On supprime la fiche client
+export function * deleteCustomerFile() {
+	while(true) {
+		let field = yield take(DELETE_CUSTOMER);
+		let id = field.id;
+		let server = "http://localhost:3002/clients/"+id;
+
+		axios.delete(server,config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(changeViewCollective("customers"));
+					alert("Fiche client supprimé avec succès");
+				} else {
+					alert('Erreur lors de la supression d\'un client');
 				}
 			})
 			.catch(function (error) {
@@ -367,7 +413,6 @@ export function * updatePositions() {
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					console.log("YOU DUN NOW");
 				} else {
 					alert('Erreur lors de la modification des positions');
 				}
@@ -442,9 +487,10 @@ export function * sendDeleteField() {
 export function * getGridLayoutToModify() {
 	while(true) {
 		let client = yield take(GET_GRID_MODIFY);
-		let {id, releves, activites, etats, provenances} = client.data;
+		let {id, releves, activites, etats, provenances, grid} = client.data;
 		let releve, activite, etat, provenance = '';
-
+		let gridModified = [];
+		console.log(grid);
 		let server = "http://localhost:3002/clients/"+id;
 
 		axios.get(server,config)
@@ -452,6 +498,11 @@ export function * getGridLayoutToModify() {
 				if (!!response.data.status && response.data.status === "success") {
 					let champs = response.data.message;
 					console.log(champs);
+
+					for(let i = 0 ; i < grid.length ; i++) {
+						gridModified.push({...grid[i], value: champs.facultatif[i].valeur});
+					}
+					store.dispatch(changeGrid(gridModified));
 					releves.forEach(type => {
 						if(type.modeenvoiereleve === champs.releve) {
 							releve = type.idreleve;
@@ -459,7 +510,7 @@ export function * getGridLayoutToModify() {
 					});
 
 					activites.forEach(type => {
-						if(type.libelleactivite === champs.form_type) {
+						if(type.libelleactivite === champs.forme_type) {
 							activite = type.idactivite;
 						}
 					});
@@ -479,10 +530,10 @@ export function * getGridLayoutToModify() {
 					store.dispatch(changeRequiredFields({
 						nomEntreprise: champs.nom,
 						releve: releve,
-						rue: '',
-						ville: '',
-						province: '',
-						codePostal: '',
+						rue: champs.rue,
+						ville: champs.ville,
+						province: champs.province,
+						codePostal: champs.codepostal,
 						telephone: champs.tel_principal,
 						extension: champs.ext_tel_principal,
 						date: champs.date_creation,
@@ -491,7 +542,8 @@ export function * getGridLayoutToModify() {
 						provenance: provenance,
 						prospect: true,
 						notes: champs.notes
-					}))
+					}));
+					store.dispatch(changeLoading(false));
 				} else {
 					alert('Erreur lors de la récupération d\'un client');
 				}
@@ -515,5 +567,6 @@ export function * GridFlow () {
 	yield fork (updatePositions);
 	yield fork (sendUpdateField);
 	yield fork (sendDeleteField);
-	yield fork (getGridLayoutToModify)
+	yield fork (getGridLayoutToModify);
+	yield fork (deleteCustomerFile);
 }

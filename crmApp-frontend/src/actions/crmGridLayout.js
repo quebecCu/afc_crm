@@ -22,6 +22,7 @@ export const CHANGE_NEW_FIELD = 'CHANGE_NEW_FIELD';
 export const DELETE_FIELD = 'DELETE_FIELD';
 export const GET_GRID_MODIFY = 'GET_GRID_MODIFY';
 export const CHANGE_ID_DISPLAY = 'CHANGE_ID_DISPLAY';
+export const DELETE_CUSTOMER = 'DELETE_CUSTOMER';
 
 export function changeLayout (newLayout){
 	return {type: CHANGE_LAYOUT, newLayout}
@@ -117,4 +118,8 @@ export function getGridModify(data) {
 
 export function changeIdDisplay(newId) {
 	return {type: CHANGE_ID_DISPLAY, newId}
+}
+
+export function deleteCustomer(id) {
+	return {type: DELETE_CUSTOMER, id}
 }

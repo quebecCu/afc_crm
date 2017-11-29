@@ -9,6 +9,7 @@ class FicheClient extends React.Component {
 		this.setContactsState = this.setContactsState.bind(this);
 		this.getPosition = this.getPosition.bind(this);
 		this._handleModify = this._handleModify.bind(this);
+		this._handleDelete = this._handleDelete.bind(this);
 	}
 
 	componentWillMount() {
@@ -49,6 +50,10 @@ class FicheClient extends React.Component {
 	_handleModify(event) { 
 		this.props.handleClick("customerFile"); 
 		this.props.changeIdDisplay(event.target.value); 
+	}
+
+	_handleDelete(event) {
+		this.props.deleteCustomer(event.target.value);
 	}
 
 	render() {
@@ -96,7 +101,10 @@ class FicheClient extends React.Component {
 					<TitreValeur titre="Infos complémentaires"/>
 				</div>
 				<div className="form-group"> 
-					<button type="button" className="btn btn-danger">Supprimer la fiche client</button> 
+					<button type="button" className="btn btn-danger"
+							onClick={this._handleDelete} value={this.props.client.id}>
+						Supprimer la fiche client
+					</button> 
 					<button type="button" className="btn btn-primary" 
 							onClick={this._handleModify} value={this.props.client.id}> 
 						Modifier la fiche client 
