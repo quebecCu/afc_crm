@@ -14,6 +14,7 @@ class ClientListContainer extends Component {
 		this.handleClick2 = this.handleClick2.bind(this);
 		this.handleClick3 = this.handleClick3.bind(this);
 		this._handleClientClick = this._handleClientClick.bind(this);
+		//this.props.changeLoading(true);
 	}
 
 	_handleClientClick(client, event) {

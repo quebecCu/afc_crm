@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import FicheClient from "./FicheClient";
+import {changeIdDisplay} from "../actions/crmGridLayout";
 
 class PageClient extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	render() {
 		return <FicheClient client={this.props.crmClientList.currentClient}
-							optionnalFields={this.props.crmClientList.clientOptionnalRows}/>;
+							handleClick={this.props.handleClick} changeIdDisplay={this.props.changeIdDisplay}
+							optionnalFields={this.props.crmClientList.clientOptionnalRows.facultatif}/>;
 	}
 }
 
@@ -22,7 +21,11 @@ function mapStateToProps(state) {
 
 //fonctions
 const mapDispatchToProps = (dispatch) => {
-	return {}
-}
+	return {
+		changeIdDisplay: (newId) => {
+			dispatch(changeIdDisplay(newId))
+		}
+	}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageClient);

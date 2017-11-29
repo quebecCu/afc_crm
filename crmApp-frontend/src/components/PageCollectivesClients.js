@@ -6,32 +6,40 @@ import {
 	sendingRequestColl
 } from '../actions/crmRechercheCollective';
 import ClientListContainer from "../containers/ClientListContainer";
+import {changeLoading} from "../actions/crmDashboard";
+import LoadingAnimation from "./LoadingAnimation";
 
 
 class PageCollectivesClients extends Component {
 
 	constructor(props) {
 		super(props);
-	}
-
-	componentWillMount() {
 		this.props.sendingRequestColl();
 	}
 
 	render() {
 		let {formState, dossiersState} = this.props.crmRechercheCollective;
-
+		let {loading} = this.props.crmDashboard;
 		return (
 			<div className="container-fluid text-center">
 				<h1>Assurances collectives</h1>
 				<h2>Clients</h2>
-				<ClientListContainer dossiersState={dossiersState}
-									 handleClick={this.props.handleClick}/>
-				<RechercheComponent
-					onSubmit={this.props.searchRequestColl}
-					formState={formState}
-					changeFormColl={this.props.changeFormColl}/>
-				<button onClick={this.props.handleClick} className="newCustomer">Créer une fiche client</button>
+				{
+					loading && <LoadingAnimation/>
+
+				}
+				{
+					!loading &&
+					<div>
+						<ClientListContainer dossiersState={dossiersState} changeLoading={this.props.changeLoading}
+											 handleClick={this.props.handleClick}/>
+						<RechercheComponent
+							onSubmit={this.props.searchRequestColl}
+							formState={formState}
+							changeFormColl={this.props.changeFormColl}/>
+						<button onClick={this.props.handleClick} className="newCustomer">Créer une fiche client</button>
+					</div>
+				}
 			</div>
 		);
 	}
@@ -40,7 +48,8 @@ class PageCollectivesClients extends Component {
 function mapStateToProps(state) {
 
 	return {
-		crmRechercheCollective: state.crmRechercheCollective
+		crmRechercheCollective: state.crmRechercheCollective,
+		crmDashboard: state.crmDashboard
 	}
 }
 
@@ -56,10 +65,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		sendingRequestColl: () => {
 			dispatch(sendingRequestColl())
+		},
+		changeLoading: (newLoading) => {
+			dispatch(changeLoading(newLoading))
 		}
-
 	}
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageCollectivesClients);

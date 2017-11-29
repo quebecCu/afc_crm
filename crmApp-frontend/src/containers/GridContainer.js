@@ -7,6 +7,7 @@ import {
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
 import {GridCustomerFile} from "../components/form/GridCustomerFile";
+import {changeLoading} from "../actions/crmDashboard";
 
 class CreationClient extends Component {
     constructor(props) {
@@ -22,6 +23,10 @@ class CreationClient extends Component {
 		window.scrollTo(0,0);
         if(this.props.view === 'newCustomer') {
 			this.props.requestGrid();
+		}
+		else {
+			let {idToDisplay} = this.props.crmGridLayout;
+			this.props.requestGrid(idToDisplay);
 		}
     }
 
@@ -39,8 +44,7 @@ class CreationClient extends Component {
     //Change le state: sauvegarde la position des champs
     _handleDrag(newItem) {
 		this.props.changeLayout({lg: newItem, md: newItem, sm: newItem, xs: newItem, xxs: newItem});
-		let {layouts} = this.props.crmGridLayout;
-		this.props.updatePositions({layouts});
+		this.props.updatePositions({newItem});
     }
 
     //Rends les champs non-static, on peut les déplacer
@@ -76,8 +80,8 @@ class CreationClient extends Component {
     _handleChangeInput(event) {
     	let {grid} = this.props.crmGridLayout;
     	for (let champ = 0 ; champ < grid.length ; champ++) {
-    		if(event.target.id === grid[champ].label) {
-    			grid[champ].value = event.target.value;
+    		if(parseInt(event.target.id) === grid[champ].idattrentreprise) {
+				grid[champ]= {...grid[champ] , value: event.target.value}
 			}
 		}
 		this.props.changeGrid(grid);
@@ -103,45 +107,43 @@ class CreationClient extends Component {
 	}
 
     render() {
-		let {grid, layouts, view, releves,
-			chambreCommerce, champTypes, activites,
+		let {grid, layouts, releves,
+			champTypes, activites,
 			etats, provenances, requiredFields,
 			formNewField, formUpdateField} = this.props.crmGridLayout;
 		let {isAdmin} = this.props.crmLogin;
+		let {loading} = this.props.crmDashboard;
         return (
         	<div>
 				{
 					this.props.view === 'newCustomer'
 					&& <GridCreationClient handleStatic={this._handleStatic} handleSubmit={this._handleSubmitCreate} layouts={layouts}
-										handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
-										handleSubmitChamp={this._handleSubmitChamp} grid={grid}
-										handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
-										isAdmin={isAdmin} releves={releves}
-										champTypes={champTypes} chambreCommerce={chambreCommerce}
-										activites={activites} etats={etats} provenances={provenances}
-										changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
-										handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
-										formNewField={formNewField} deleteField={this.props.deleteField}
-										formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}/>
+										   handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
+										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
+										   handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
+										   isAdmin={isAdmin} releves={releves}
+										   champTypes={champTypes}
+										   activites={activites} etats={etats} provenances={provenances}
+										   changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
+										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
+										   formNewField={formNewField} deleteField={this.props.deleteField}
+										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}
+										   changeLoading={this.props.changeLoading} loading={loading}/>
 				}
 				{
-					this.props.view === 'customerFile' && view === 'read'
-					&& <GridCustomerFile handleModify={this.props.changeViewGrid}
-										 layouts={layouts} grid={grid}/>
-				}
-				{
-					this.props.view === 'customerFile' && view === 'write'
+					this.props.view === 'customerFile'
 					&& <GridCreationClient handleStatic={this._handleStatic} handleSubmit={this._handleSubmitUpdate} layouts={layouts}
 										   handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client"
 										   isAdmin={isAdmin} releves={releves}
-										   champTypes={champTypes} chambreCommerce={chambreCommerce}
+										   champTypes={champTypes}
 										   activites={activites} etats={etats} provenances={provenances}
 										   changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
 										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
 										   formNewField={formNewField} deleteField={this.props.deleteField}
-										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}/>
+										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}
+										   changeLoading={this.props.changeLoading} loading={loading}/>
 				}
 			</div>
         )
@@ -152,7 +154,8 @@ function mapStateToProps (state) {
 
 	return{
 		crmGridLayout: state.crmGridLayout,
-		crmLogin: state.crmLogin
+		crmLogin: state.crmLogin,
+		crmDashboard: state.crmDashboard
 	}
 }
 
@@ -165,14 +168,11 @@ const  mapDispatchToProps = (dispatch) => {
 		changeGrid: (newGrid) => {
 			dispatch(changeGrid(newGrid));
 		},
-		requestGrid: () => {
-			dispatch(requestGrid());
+		requestGrid: (id) => {
+			dispatch(requestGrid(id));
 		},
 		createCustomerFile: (file) => {
 			dispatch(createCustomerFile(file));
-		},
-		changeViewGrid: (newView) => {
-			dispatch(changeViewGrid(newView))
 		},
 		updateCustomerFile: (file) => {
 			dispatch(updateCustomerFile(file))
@@ -197,6 +197,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		changeUpdateField: (newUpdateField) => {
 			dispatch(changeUpdateField(newUpdateField));
+		},
+		changeLoading: (newLoading) => {
+			dispatch(changeLoading(newLoading));
 		}
 	}
 };

@@ -4,7 +4,9 @@ import {
 
 let initialState = {
 	currentClient: {},
-	clientOptionnalRows: [],
+	clientOptionnalRows: {
+		facultatif: []
+	},
 	errors: '',
 };
 

@@ -8,6 +8,7 @@ class FicheClient extends React.Component {
 		this.showContact = this.showContact.bind(this);
 		this.setContactsState = this.setContactsState.bind(this);
 		this.getPosition = this.getPosition.bind(this);
+		this._handleModify = this._handleModify.bind(this);
 	}
 
 	componentWillMount() {
@@ -43,6 +44,11 @@ class FicheClient extends React.Component {
 		var nouveauState = this.state.contactHidden.splice(position, 1, !etat);
 		//on force l'update pour que le component re-render et affiche le contact sur lequel on a cliqué
 		this.forceUpdate();*/
+	}
+
+	_handleModify(event) { 
+		this.props.handleClick("customerFile"); 
+		this.props.changeIdDisplay(event.target.value); 
 	}
 
 	render() {
@@ -88,6 +94,13 @@ class FicheClient extends React.Component {
 					<TitreValeur titre="Goodies"/>
 					<TitreValeur titre="Provenance client"/>
 					<TitreValeur titre="Infos complémentaires"/>
+				</div>
+				<div className="form-group"> 
+					<button type="button" className="btn btn-danger">Supprimer la fiche client</button> 
+					<button type="button" className="btn btn-primary" 
+							onClick={this._handleModify} value={this.props.client.id}> 
+						Modifier la fiche client 
+					</button> 
 				</div>
 			</div>
 		)
