@@ -535,7 +535,8 @@ router.get('/:idClient', expressJwtIp.ip(), function (req, res) {
 				db.one(getObligatoryClientRowsById(req.params.idClient))
 				.then((obligatoryRow) => {
 					obligatoryRow.facultatif = wantedClientRows;
-					
+					let date = new Date(obligatoryRow.date_creation);
+					obligatoryRow.date_creation = date.toLocaleDateString("fr-FR");
 					console.log(JSON.stringify(obligatoryRow));
 
 					res.status(200);
