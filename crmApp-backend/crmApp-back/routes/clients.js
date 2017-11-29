@@ -22,6 +22,86 @@ squel.updateJoin = function(options) {
     ]);
 };
 
+let getContacts = (idclient) =>
+squel.select()
+.field('pers.idpersonne', 'idpersonne')
+.field('prenom')
+.field('nom')
+.field('libelleposte')
+.field('libelletitre')
+.field('num_tel_principal')
+.field('ext_tel_principal')
+.field('mail')
+.field('estdecideur')
+.from('public."CONTACT_CLIENT"', 'cont')
+.left_join('public."PERSONNE"', 'pers', "pers.idpersonne = cont.idpersonne")
+.left_join('public."POSTE"', 'poste', "poste.idposte = cont.idposte")
+.left_join('public."TITRE"', 'titre', "pers.idtitre = titre.idtitre")
+.where('cont.idclient = ?', idclient)
+.toString();
+
+let getIdTitre = (titre) =>
+squel.select()
+	.from('public."TITRE"', 't')
+	.field('t.idtitre')
+	.where("t.libelletitre = ?", titre)
+	.toString();
+
+let createPerson = (person) =>
+squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.into('public."PERSONNE"')
+.set("nom", person.nom)
+.set("prenom", person.prenom)
+.set("idtitre", person.idtitre)
+.set("num_tel_principal", person.num_tel_principal)
+.set("ext_tel_principal", person.ext_tel_principal)
+.set("mail", person.mail)
+.returning('idpersonne')
+.toParam();
+
+let createContact = (person) =>
+squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.into('public."CONTACT_CLIENT"')
+.set("idpersonne", person.idpersonne)
+.set("estdecideur", person.estdecideur)
+.set("idposte", person.idposte)
+.set("idclient", person.idclient)
+.toParam();
+
+let updatePerson = (person) =>
+squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.table('public."PERSONNE"')
+.set("nom", person.nom)
+.set("prenom", person.prenom)
+.set("idtitre", person.idtitre)
+.set("num_tel_principal", person.num_tel_principal)
+.set("ext_tel_principal", person.ext_tel_principal)
+.set("mail", person.mail)
+.where("idpersonne = ?", person.idpersonne)
+.toParam();
+
+let updateContact = (person) =>
+squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.table('public."CONTACT_CLIENT"')
+.set("estdecideur", person.estdecideur)
+.set("idposte", person.idposte)
+.where("idpersonne = ?", person.idpersonne)
+.where("idclient = ?", person.idclient)
+.toParam();
+
+let deletePerson = (idpersonne) =>
+squel.delete()
+.from('public."PERSONNE"')
+.where("idpersonne = ?", idpersonne)
+.toParam();
+
+let deleteContact = (idpersonne, idclient) =>
+squel.delete()
+.from('public."CONTACT_CLIENT"')
+.where("idpersonne = ?", idpersonne)
+.where("idclient = ?", idclient)
+.toParam();
+
 let getStatementSendingModes = () =>
 squel.select()
 .from('public."RELEVE"')
@@ -43,6 +123,13 @@ squel.select()
 .field("libelleactivite")
 .toString();
 
+let getJobs = () =>
+squel.select()
+	.from('public."POSTE"')	
+	.field("idposte")
+	.field("libelleposte")
+	.toString();
+
 let getProvenances = () =>
 squel.select()
 .from('public."PROVENANCE"')
@@ -56,6 +143,179 @@ squel.select()
 .field("idetat")
 .field("libelleetat")
 .toString();
+
+router.get('/contacts/:id', expressJwtIp.ip(), function (req, res) {
+	console.log('route GET /contacts/:id');
+	/*var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;*/
+
+	//if (!!decoded && (_ip === _ipReceived)) {
+		let id = req.params.id;
+		db.any(getContacts(id))
+			.then((contacts) => {
+				console.log(JSON.stringify(contacts));
+				res.send({
+					status: 'success',
+					message: contacts
+				});
+			})
+			.catch(error => {
+				res.send({
+					status: 'fail',
+					message: error.toString() //'Les contacts n'ont pas pu être récupérés'
+				});
+			})
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
+});
+
+router.post('/contact/create', expressJwtIp.ip(), function (req, res) {
+	console.log('route POST /create/contact');
+	/*var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;*/
+
+	//if (!!decoded && (_ip === _ipReceived)) {
+	let person = {
+		idclient: req.body.idclient,
+		prenom: req.body.prenom,
+		nom: req.body.nom,
+		idposte: req.body.idposte,
+		titre: req.body.titre,
+		num_tel_principal: req.body.num_tel_principal,
+		ext_tel_principal: req.body.ext_tel_principal,
+		mail: req.body.mail,
+		estdecideur: req.body.estdecideur
+	}
+	
+	db.tx(t => {
+		return t.one(getIdTitre(person.titre))
+		.then(titre => {
+			person.idtitre = titre.idtitre;
+			return t.one(createPerson(person))
+				.then(personCreated => {
+					person.idpersonne = personCreated.idpersonne;
+					return t.none(createContact(person))
+					.then(() => {
+						res.send({
+							status: 'success',
+							message: null
+						});
+					})
+				})
+		})
+	})
+	.catch(error => {
+				res.send({
+					status: 'fail',
+					message: error.toString() //'Le contact client n'a pas pu être créé'
+				});
+	})
+			
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
+});
+
+router.post('/contact/update', expressJwtIp.ip(), function (req, res) {
+	console.log('route POST /contact/update');
+	/*var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;*/
+
+	//if (!!decoded && (_ip === _ipReceived)) {
+	let person = {
+		idclient: req.body.idclient,
+		idpersonne: req.body.idpersonne,
+		prenom: req.body.prenom,
+		nom: req.body.nom,
+		idposte: req.body.idposte,
+		titre: req.body.titre,
+		num_tel_principal: req.body.num_tel_principal,
+		ext_tel_principal: req.body.ext_tel_principal,
+		mail: req.body.mail,
+		estdecideur: req.body.estdecideur
+	}
+	
+	db.tx(t => {
+		return t.one(getIdTitre(person.titre))
+		.then(titre => {
+			person.idtitre = titre.idtitre;
+			return t.none(updatePerson(person))
+				.then(() => {
+					return t.none(updateContact(person))
+					.then(() => {
+						res.send({
+							status: 'success',
+							message: null
+						});
+					})
+				})
+		})
+	})
+	.catch(error => {
+				res.send({
+					status: 'fail',
+					message: error.toString() //'Le contact client n'a pas pu être créé'
+				});
+	})
+			
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
+});
+
+router.delete('/contact/:idclient/:idpersonne', expressJwtIp.ip(), function (req, res) {
+	console.log('route DELETE /contact/:idclient/:idpersonne');
+	/*var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;*/
+
+	//if (!!decoded && (_ip === _ipReceived)) {
+	let idclient = req.params.idclient;
+	let idpersonne = req.params.idpersonne;
+	
+	db.tx(t => {
+		return t.none(deleteContact(idpersonne, idclient))
+			.then(() => {
+				return t.none(deletePerson(idpersonne))
+				.then(() => {
+					res.send({
+						status: 'success',
+						message: null
+					});
+				})
+			})
+	})
+	.catch(error => {
+				res.send({
+					status: 'fail',
+					message: error.toString() //'Le contact client n'a pas pu être créé'
+				});
+	})
+			
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
+});
 
 router.get('/statementSendingModes', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /statementSendingModes');
@@ -82,7 +342,10 @@ router.get('/statementSendingModes', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Les modes d'envoi des relevés n\'ont pas pu être récupérés'
 				});
 			})
-	//}
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
 });
 
 router.get('/aga', expressJwtIp.ip(), function (req, res) {
@@ -110,7 +373,10 @@ router.get('/aga', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Les chambres de commerce disponibles n\'ont pas pu être récupérées'
 				});
 			})
-	//}
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
 });
 
 router.get('/activities', expressJwtIp.ip(), function (req, res) {
@@ -138,7 +404,10 @@ router.get('/activities', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Les activités disponibles n\'ont pas pu être récupérées'
 				});
 			})
-	//}
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
 });
 
 router.get('/states', expressJwtIp.ip(), function (req, res) {
@@ -166,11 +435,45 @@ router.get('/states', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Les activités disponibles n\'ont pas pu être récupérées'
 				});
 			})
-	//}
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
 });
 
-router.get('/provenances', expressJwtIp.ip(), function (req, res) {
-	console.log('route GET /provenances');
+router.get('/jobs', expressJwtIp.ip(), function (req, res) {
+	console.log('route GET /jobs');
+	/*var tokenReceived = req.get("authorization");
+	var secret = 'aplsszjknbndsj';
+	// decode
+	var decoded = jwt.decode(tokenReceived, secret);
+	var _ipReceived = decoded.ip;
+	var _ip = res.locals.ip;*/
+
+	//if (!!decoded && (_ip === _ipReceived)) {
+		
+		db.any(getJobs())
+			.then((jobs) => {
+				console.log(JSON.stringify(jobs));
+				res.send({
+					status: 'success',
+					message: jobs
+				});
+			})
+			.catch(error => {
+				res.send({
+					status: 'fail',
+					message: error.toString() //'Les activités disponibles n\'ont pas pu être récupérées'
+				});
+			})
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
+});
+
+router.get('/origin', expressJwtIp.ip(), function (req, res) {
+	console.log('route GET /origin');
 	/*var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode
@@ -194,7 +497,10 @@ router.get('/provenances', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Les activités disponibles n\'ont pas pu être récupérées'
 				});
 			})
-	//}
+	/*} else {
+		res.status(403);
+		sendResponse('Acces refusé', res, 'fail')
+	}*/
 });
 
 /**
@@ -268,7 +574,12 @@ const buildClientObject = (optionnalRows) => {
 		columnValue = optionnalRow.valeur;
 		columnTemp = optionnalRow.forme_type;
 		columnType = optionnalRow.type;
+		columnDesc = optionnalRow.description;
 		clientRow[columnName] = columnValue;
+		clientRow["description"] = columnDesc;
+		//A déterminer si on en a besoin ou non, suivant le traitement effectué en front-end
+		clientRow["type"] = columnType;
+		clientRow["forme"] = columnTemp;
 		clientRowsToReturn.push(clientRow);
 	});
 
@@ -281,7 +592,8 @@ const getClientById = (idClient) => {
 const getOptionnalClientRowsById = (idClient) => {
 	return squel.select()
 		.field('label')
-		.field('valeur')		
+		.field('valeur')	
+		.field('attr.description', 'description')
 		.field('type.libelletype', 'type')
 		.field('type.forme', 'forme_type')
 		.field('facul.idattrentreprise', 'idattr')
@@ -301,16 +613,20 @@ const getObligatoryClientRowsById = (idClient) => {
 		.field('modeenvoiereleve', 'releve')
 		.field('libelleactivite', 'forme_type')
 		.field('nom')
-		.field('nom')
 		.field('tel_principal')
 		.field('ext_tel_principal')
 		.field('date_creation')
 		.field('prospect')
 		.field('notes')
+		.field('rue')
+		.field('province')
+		.field('codepostal')	
+		.field('ville')
 		.from('"CLIENT"', 'cli')
 		.left_join('"ENTREPRISE"', 'entr', 'cli.idclient = entr.idclient')
 		.left_join('"RELEVE"', 'rel', 'entr.idreleve = rel.idreleve')		
-		.left_join('"ACTIVITE"', 'act', 'entr.idactivite = act.idactivite')			
+		.left_join('"ACTIVITE"', 'act', 'entr.idactivite = act.idactivite')		
+		.left_join('"ADRESSE"', 'adr', 'adr.idadresse = entr.idadresse')
 		.left_join('"ETAT"', 'etat', 'cli.idetat = etat.idetat')			
 		.left_join('"PROVENANCE"', 'prov', 'cli.idprovenance = prov.idprovenance')	
 		.where('cli.idclient = ?', idClient)
