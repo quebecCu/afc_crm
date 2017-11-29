@@ -1,26 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var {hashSync , genSaltSync} = require ('bcryptjs');
-var db = require('../models');
-var squelb = require('squel');
-var squel = squelb.useFlavour('postgres');
-var CryptoJS = require("crypto-js");
-var bcrypt = require ('bcryptjs');
-var security = require ('../security/security');
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-var expressJwtIp = require('express-jwt-ip');	
+const express = require('express');
+const router = express.Router();
+const {hashSync , genSaltSync} = require ('bcryptjs');
+const db = require('../models');
+const squelb = require('squel');
+const squel = squelb.useFlavour('postgres');
+const CryptoJS = require("crypto-js");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const expressJwtIp = require('express-jwt-ip');
 
 
 
 /* GET home page. */
 router.post('/login', expressJwtIp.ip(), function(req, res) {
 
-	var usernameText = req.body.username;	
-	var encodedMdp = req.body.password;
-	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
-	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
+	var usernameText = req.body.username;
+	var mdpText = req.body.password;
 	var certKey = 'aplsszjknbndsj';
 	var _ip = res.locals.ip;
 
@@ -46,17 +41,17 @@ router.post('/login', expressJwtIp.ip(), function(req, res) {
 					var iduser = user[0].iduser;
 					var mdpRetrieved = user[0].password;
 					var idroleRetrieved = user[0].idrole;
-					
+
 					bcrypt.compare(mdpText, mdpRetrieved, function(err, ress) {
 						// ress === true
 						if(!!ress) {
-							
+
 							// create a token
 						    var token = jwt.sign({ iduser: user[0].iduser,
 						    					   idrole: idroleRetrieved,
 						    					   ip: res.locals.ip}, certKey , { expiresIn: '8h'});
 
-							res.send({ 
+							res.send({
 								status : 'success',
 								message : {	cookie: token,
 									isAdmin: isAdmin
@@ -65,7 +60,7 @@ router.post('/login', expressJwtIp.ip(), function(req, res) {
 						} else {
 							console.log("Mot de passe saisi incorrect");
 
-							res.send({ 
+							res.send({
 								status : 'error',
 								message : 'L\'identification n\'a pas pu être réalisée'
 							});
@@ -73,7 +68,7 @@ router.post('/login', expressJwtIp.ip(), function(req, res) {
 					});
 				} else {
 					console.log('Le username ' +usernameText+ ' n\'existe pas')
-					res.send({ 
+					res.send({
 						status : 'fail',
 						message : 'Le login est incorrect'
 					});
@@ -85,9 +80,7 @@ router.post('/login', expressJwtIp.ip(), function(req, res) {
 
 router.post('/login/add', (req, res, next) => {
 	var usernameText = req.body.username;
-	var encodedMdp = req.body.password;
-	var decrypted=  CryptoJS.AES.decrypt(encodedMdp, 'secretKey13579');
-	var mdpText = decrypted.toString(CryptoJS.enc.Utf8);
+	var mdpText = req.body.password;
 
 	let salt = genSaltSync (10);
 	let hash = hashSync(mdpText, salt);
@@ -100,17 +93,17 @@ router.post('/login/add', (req, res, next) => {
 		}));
 		console.log(created);
 		if (!created) {
-			res.send({ 
+			res.send({
 				status : 'fail',
 				message : 'Ce login n\'est pas disponible'
 			});
 		} else {
-			res.send({ 
+			res.send({
 				status : 'success',
 				message : null
 			});
-			/*security.addDefaultRights(user.login, 2, function() { 
-				    	res.send({ 
+			/*security.addDefaultRights(user.login, 2, function() {
+				    	res.send({
 						status : 'success',
 						message : null
 					});

@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import PageCollectivesClients from '../components/PageCollectivesClients';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import CreationClient from "./GridContainer";
+import PageClient from "./PageClient";
 import {changeViewDashboard} from "../actions/crmDashboard";
 
-class CollectivePageContainer extends Component   {
-	constructor(props){
+class CollectivePageContainer extends Component {
+	constructor(props) {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleClick2 = this.handleClick2.bind(this);
@@ -14,7 +15,7 @@ class CollectivePageContainer extends Component   {
 
 	handleClick(event) {
 		event.preventDefault();
-		this.props.changeViewCollective(event.target.className);
+		this.props.changeViewCollective(event.currentTarget.className);
 	}
 
 	handleClick2(event) {
@@ -23,50 +24,54 @@ class CollectivePageContainer extends Component   {
 	}
 
 	render() {
-        let {view} = this.props.crmCollectiveContainer;
-		return(
-		<div className="text-center">
-			{
-				view === "" && <h1>Assurances collectives</h1>
-			}
-			{
-				view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
-			}
-			{
-				view === "" && <button onClick={this.handleClick2} className="suppliers">Fournisseurs</button>
-			}
-			{
-				view === "customers" && <PageCollectivesClients handleClick={this.handleClick}/>
-			}
-			{
-				view === "newCustomer" && <CreationClient view="newCustomer"/>
-			}
-			{
-				view === "customerFile" && <CreationClient view="customerFile"/>
-			}
-		</div>
+		let {view} = this.props.crmCollectiveContainer;
+		return (
+			<div className="text-center">
+				{
+					view === "" && <h1>Assurances collectives</h1>
+				}
+				{
+					view === "" && <button onClick={this.handleClick} className="customers">Clients</button>
+				}
+				{
+					view === "" && <button onClick={this.handleClick2} className="suppliers">Fournisseurs</button>
+				}
+				{
+					view === "customers" &&
+					<PageCollectivesClients handleClick={this.handleClick}/>
+				}
+				{
+					view === "newCustomer" && <CreationClient view="newCustomer"/>
+				}
+				{
+					view === "customerFile" && <CreationClient view="customerFile"/>
+				}
+				{
+					view==="customer" && <PageClient handleClick={this.props.changeViewCollective}/>
+				}
+			</div>
 
 		);
 	}
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
 
-    return{
-        crmCollectiveContainer: state.crmCollectiveContainer
-    }
+	return {
+		crmCollectiveContainer: state.crmCollectiveContainer
+	}
 }
 
 //fonctions
-const  mapDispatchToProps = (dispatch) => {
-    return{
-    	  changeViewCollective : (newView) => {
-              dispatch(changeViewCollective(newView))
-          },
-          changeViewDashboard : (newView) => {
-              dispatch(changeViewDashboard(newView))
-          }
-    }
+const mapDispatchToProps = (dispatch) => {
+	return {
+		changeViewCollective: (newView) => {
+			dispatch(changeViewCollective(newView))
+		},
+		changeViewDashboard: (newView) => {
+			dispatch(changeViewDashboard(newView))
+		}
+	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (CollectivePageContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(CollectivePageContainer)

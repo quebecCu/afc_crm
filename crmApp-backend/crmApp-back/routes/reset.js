@@ -1,10 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var nodemailer = require('nodemailer');
-var db = require('../models');
-var crypto = require('crypto');
-var squel = require('squel');
+const express = require('express');
+const router = express.Router();
+const nodemailer = require('nodemailer');
+const db = require('../models');
+const squel = require('squel');
 
 /* GET Email reset logic && send email. */
 router.post('/reset', function(req, res) {
@@ -14,24 +12,24 @@ router.post('/reset', function(req, res) {
 	var _token = Math.random().toString(36).slice(2);
 	var chrono = Date.now() + 3600000;
 	var transporter = nodemailer.createTransport({
-		 host: 'smtp.gmail.com',
+		 host: 'smtp-relay.sendinblue.com',
 		    port: '587',
 		    secureConnection: 'false',
 		    auth: {
-			user: 'crm.udes@gmail.com', 
-			pass: 'CrmUdes2017'  
+			user: 'crm.udes@gmail.com',
+			pass: 'VtDgs3x9qFb28Swk'
 		},
 		tls: {
 			rejectUnauthorized: false,
 			ciphers: 'SSLv3'
 		}
-	}); 
+	});
 
 	var mailOptions = {
 			from: 'crm.udes@gmail.com',
 			to: emailReceived,
 			subject: 'Récuperation de mot de passe oublié',
-			text: 'Voici votre mot de passe oublié:\n\n  http://localhost:3000/ResetPassword/' + _token + '\n\nÉquipe CRM',
+			text: 'Voici votre mot de passe oublié:\n\n  https://salty-scrubland-22457.herokuapp.com/ResetPassword/' + _token + '\n\nÉquipe CRM',
 	};
 	db.query(
 			squel.select()
@@ -61,7 +59,7 @@ router.post('/reset', function(req, res) {
 						status : 'fail',
 						message : 'Le courriel est incorrect'
 					});
-				}  
+				}
 			});
 
 	function _updateFunction (_token, chrono) {

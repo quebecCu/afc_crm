@@ -197,7 +197,7 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idregle">idregle</span></td>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idchambrecommerce">idchambrecommerce</span></td>
 				 <td>int4</td>
 				 <td>10</td>
 				 <td title='nullable'>√</td>
@@ -210,36 +210,11 @@
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
-					<td title="CONTRAT.idregle references REGLE.idregle via CONTRAT_idregle_fkey">
-						<a href='REGLE.html'>REGLE</a><span class='relatedKey'>.idregle</span>
+					<td title="CONTRAT.idchambrecommerce references CHAMBRE_COMMERCE.idchambrecommerce via CONTRAT_idchambrecommerce_fkey">
+						<a href='CHAMBRE_COMMERCE.html'>CHAMBRE_COMMERCE</a><span class='relatedKey'>.idchambrecommerce</span>
 					</td>
 					<td class="constraint detail">
-						CONTRAT_idregle_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idaga">idaga</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="CONTRAT.idaga references AGA.idaga via CONTRAT_idaga_fkey">
-						<a href='AGA.html'>AGA</a><span class='relatedKey'>.idaga</span>
-					</td>
-					<td class="constraint detail">
-						CONTRAT_idaga_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+						CONTRAT_idchambrecommerce_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
 					</td>
 				   </tr>
 				  </table>					 
@@ -260,8 +235,8 @@
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
-					<td title="CONTRAT.idrepresentant references PERSONNE.idpersonne via CONTRAT_idrepresentant_fkey">
-						<a href='PERSONNE.html'>PERSONNE</a><span class='relatedKey'>.idpersonne</span>
+					<td title="CONTRAT.idrepresentant references users.EMPLOYE_INT.idemploye via CONTRAT_idrepresentant_fkey">
+						<a href='../../users/tables/EMPLOYE_INT.html'>EMPLOYE_INT</a><span class='relatedKey'>.idemploye</span>
 					</td>
 					<td class="constraint detail">
 						CONTRAT_idrepresentant_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
@@ -341,7 +316,7 @@
 				</tr>
 								</tbody>
 				</table>
-				<p title='10 columns'>Table contained <span id="recordNumber">2</span> rows<p/>
+				<p title='9 columns'>Table contained <span id="recordNumber">2</span> rows<p/>
 			</div>
 		</div>
 		<div class="box box-primary">		
@@ -400,49 +375,48 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTRAT.html" title="CONTRAT" alt="" coords="253,275,593,635">
-<area shape="rect" id="node2" href="AGA.html" title="AGA" alt="" coords="47,495,168,609">
-<area shape="rect" id="node3" href="CLIENT.html" title="CLIENT" alt="" coords="31,175,184,347">
-<area shape="rect" id="node4" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="15,15,200,158">
-<area shape="rect" id="node5" href="REGLE.html" title="REGLE" alt="" coords="41,365,173,478">
-<area shape="rect" id="node6" href="PERSONNE.html" title="PERSONNE" alt="" coords="5,626,209,798">
-<area shape="rect" id="node7" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="638,485,875,627">
-<area shape="rect" id="node8" href="CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="637,277,876,368">
-<area shape="rect" id="node9" href="MODULE.html" title="MODULE" alt="" coords="679,5,835,184">
+<area shape="rect" id="node1" href="CONTRAT.html" title="CONTRAT" alt="" coords="296,185,636,515">
+<area shape="rect" id="node2" href="CHAMBRE_COMMERCE.html" title="CHAMBRE_COMMERCE" alt="" coords="5,355,252,468">
+<area shape="rect" id="node3" href="CLIENT.html" title="CLIENT" alt="" coords="52,165,205,337">
+<area shape="rect" id="node4" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="36,5,221,148">
+<area shape="rect" id="node5" href="../../users/tables/EMPLOYE_INT.html" title="users.EMPLOYE_INT" alt="" coords="19,485,239,599">
+<area shape="rect" id="node6" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="681,27,918,169">
+<area shape="rect" id="node7" href="CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="680,187,919,278">
+<area shape="rect" id="node8" href="MODULE.html" title="MODULE" alt="" coords="721,295,877,445">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/CONTRAT.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="1197,475,1386,559">
-<area shape="rect" id="node2" href="MODULE.html" title="MODULE" alt="" coords="904,169,1060,347">
-<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="231,997,435,1169">
-<area shape="rect" id="node9" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="240,344,425,487">
-<area shape="rect" id="node12" href="CONTRAT.html" title="CONTRAT" alt="" coords="479,550,819,910">
-<area shape="rect" id="node21" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="526,5,771,89">
-<area shape="rect" id="node19" href="ADRESSE.html" title="ADRESSE" alt="" coords="22,1095,170,1179">
-<area shape="rect" id="node22" href="TITRE.html" title="TITRE" alt="" coords="36,993,156,1077">
-<area shape="rect" id="node4" href="CLIENT.html" title="CLIENT" alt="" coords="256,1301,409,1473">
-<area shape="rect" id="node5" href="ETAT.html" title="ETAT" alt="" coords="38,1297,154,1381">
-<area shape="rect" id="node6" href="PROVENANCE.html" title="PROVENANCE" alt="" coords="5,1399,187,1483">
-<area shape="rect" id="node7" href="CLIENT_INDIVIDUEL.html" title="CLIENT_INDIVIDUEL" alt="" coords="539,1101,759,1185">
-<area shape="rect" id="node8" href="CONDITION.html" title="CONDITION" alt="" coords="569,144,729,228">
-<area shape="rect" id="node10" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="545,1203,753,1287">
-<area shape="rect" id="node11" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="517,448,780,532">
-<area shape="rect" id="node13" href="AGA.html" title="AGA" alt="" coords="272,720,393,833">
-<area shape="rect" id="node14" href="REGLE.html" title="REGLE" alt="" coords="267,589,399,703">
-<area shape="rect" id="node15" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="863,964,1101,1107">
-<area shape="rect" id="node16" href="CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="1145,967,1437,1051">
-<area shape="rect" id="node17" href="CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="863,553,1101,643">
-<area shape="rect" id="node18" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="563,1608,735,1692">
-<area shape="rect" id="node20" href="FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="529,245,769,329">
-<area shape="rect" id="node23" href="RELATION.html" title="RELATION" alt="" coords="573,1304,724,1388">
-<area shape="rect" id="node24" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="1191,171,1391,255">
-<area shape="rect" id="node25" href="../../users/tables/EMPLOYE_INT.html" title="users.EMPLOYE_INT" alt="" coords="539,1000,759,1084">
-<area shape="rect" id="node26" href="../../users/tables/INVITE.html" title="users.INVITE" alt="" coords="566,1405,731,1489">
-<area shape="rect" id="node27" href="../../users/tables/MODIFICATION_CLIENT.html" title="users.MODIFICATION_CLIENT" alt="" coords="507,1507,791,1591">
-<area shape="rect" id="node28" href="../../users/tables/RELATION_FOURNISSEUR.html" title="users.RELATION_FOURNISSEUR" alt="" coords="496,347,801,431">
+<area shape="rect" id="node1" href="BENEFICIAIRES.html" title="BENEFICIAIRES" alt="" coords="1527,696,1717,780">
+<area shape="rect" id="node2" href="MODULE.html" title="MODULE" alt="" coords="1235,169,1391,318">
+<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="243,1179,403,1263">
+<area shape="rect" id="node13" href="CONTRAT.html" title="CONTRAT" alt="" coords="809,263,1149,594">
+<area shape="rect" id="node23" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="857,161,1102,245">
+<area shape="rect" id="node20" href="ADRESSE.html" title="ADRESSE" alt="" coords="22,1012,170,1096">
+<area shape="rect" id="node4" href="CATEGORIE_MODULE.html" title="CATEGORIE_MODULE" alt="" coords="1505,120,1739,204">
+<area shape="rect" id="node5" href="CLIENT.html" title="CLIENT" alt="" coords="247,849,400,1021">
+<area shape="rect" id="node6" href="ETAT.html" title="ETAT" alt="" coords="38,809,154,893">
+<area shape="rect" id="node7" href="PROVENANCE.html" title="PROVENANCE" alt="" coords="5,911,187,995">
+<area shape="rect" id="node8" href="CLIENT_INDIVIDUEL.html" title="CLIENT_INDIVIDUEL" alt="" coords="503,1229,723,1313">
+<area shape="rect" id="node9" href="CONDITION.html" title="CONDITION" alt="" coords="533,344,693,428">
+<area shape="rect" id="node10" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="231,476,416,619">
+<area shape="rect" id="node11" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="509,1027,717,1111">
+<area shape="rect" id="node12" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="481,685,744,769">
+<area shape="rect" id="node14" href="CHAMBRE_COMMERCE.html" title="CHAMBRE_COMMERCE" alt="" coords="489,112,736,225">
+<area shape="rect" id="node15" href="../../users/tables/EMPLOYE_INT.html" title="users.EMPLOYE_INT" alt="" coords="503,1331,723,1444">
+<area shape="rect" id="node16" href="CONTRAT_COLLECTIF.html" title="CONTRAT_COLLECTIF" alt="" coords="1194,1499,1431,1641">
+<area shape="rect" id="node17" href="CONTRAT_COLLECTIF_FACUL.html" title="CONTRAT_COLLECTIF_FACUL" alt="" coords="1476,1501,1768,1585">
+<area shape="rect" id="node18" href="CONTRAT_INDIVIDUEL.html" title="CONTRAT_INDIVIDUEL" alt="" coords="1193,335,1432,426">
+<area shape="rect" id="node19" href="ENTREPRISE.html" title="ENTREPRISE" alt="" coords="527,925,699,1009">
+<area shape="rect" id="node21" href="FOURNISSEUR_FACUL.html" title="FOURNISSEUR_FACUL" alt="" coords="493,445,733,529">
+<area shape="rect" id="node22" href="HISTORIQUE_TAUX.html" title="HISTORIQUE_TAUX" alt="" coords="505,584,720,668">
+<area shape="rect" id="node24" href="RELATION.html" title="RELATION" alt="" coords="537,1128,688,1212">
+<area shape="rect" id="node25" href="REMUNERATION.html" title="REMUNERATION" alt="" coords="881,852,1077,936">
+<area shape="rect" id="node26" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="1522,221,1722,305">
+<area shape="rect" id="node27" href="../../users/tables/MODIFICATION_CLIENT.html" title="users.MODIFICATION_CLIENT" alt="" coords="471,787,755,871">
+<area shape="rect" id="node28" href="../../users/tables/RELATION_FOURNISSEUR.html" title="users.RELATION_FOURNISSEUR" alt="" coords="460,243,765,327">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/CONTRAT.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							

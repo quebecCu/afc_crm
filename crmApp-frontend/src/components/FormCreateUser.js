@@ -20,9 +20,17 @@ export class FormCreateUser extends React.Component {
 		}
 	}
 
+	componentDidUpdate(){
+		if(this.props.formState.titre==="Mr"){
+			document.getElementById("titreMr").checked = true;
+		}
+		else if(this.props.formState.titre === "Mme"){
+			document.getElementById("titreMme").checked = true;
+		}
+	}
+
 	onChangeTitre(event){
 		let titre = event.target.value;
-		console.log('titre'+titre);
 		this.props.changeForm({...this.props.formState, titre: titre});
 	}
 
@@ -31,7 +39,6 @@ export class FormCreateUser extends React.Component {
 		//quand on change le rôle, les permissions par défaut du rôle sélectionné s'attribuent aux userPerms
 		let idRole;//id du role sélectionné dans la table des permissions par défaut
 		for (let i = 0; i < this.props.formState.defaultPerms.length; i++) {
-			console.log("defperm"+this.props.formState.defaultPerms[i]);
 			if (role === this.props.formState.defaultPerms[i].role) {
 				idRole = i;
 			}
@@ -82,8 +89,8 @@ export class FormCreateUser extends React.Component {
 		}
 		return <div>
 			<div className="form-group row"><label id="titreLabel" className="col-sm-3 col-form-label">Titre : </label>
-					<label className="radio-inline col-sm-3"><input id="titre" type="radio" name="titre" onClick={this.onChangeTitre} value="Mr"/> Monsieur</label>
-					<label className="radio-inline col-sm-3"><input id="titre" type="radio" name="titre" onClick={this.onChangeTitre} value="Mme"/> Madame </label>
+					<label className="radio-inline col-sm-3"><input id="titreMr" type="radio" name="titre" onClick={this.onChangeTitre} value="Mr"/> Monsieur</label>
+					<label className="radio-inline col-sm-3"><input id="titreMme" type="radio" name="titre" onClick={this.onChangeTitre} value="Mme"/> Madame </label>
 				<p id="titreHelp" className="help-block text-danger">Sélectionner un titre</p>
 			</div>
 			<div className="form-group row"><label id="lastNameLabel" className="col-sm-3 col-form-label">Nom : </label>
