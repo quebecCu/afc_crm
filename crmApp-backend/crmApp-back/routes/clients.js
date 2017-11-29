@@ -472,8 +472,8 @@ router.get('/jobs', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
-router.get('/origin', expressJwtIp.ip(), function (req, res) {
-	console.log('route GET /origin');
+router.get('/provenances', expressJwtIp.ip(), function (req, res) {
+	console.log('route GET /provenances');
 	/*var tokenReceived = req.get("authorization");
 	var secret = 'aplsszjknbndsj';
 	// decode
