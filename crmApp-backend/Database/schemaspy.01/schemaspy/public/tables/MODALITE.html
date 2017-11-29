@@ -115,11 +115,27 @@
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
+					<td title="CONDITION.idmodalite references MODALITE.idmodalite via CONDITION_idmodalite_fkey">
+						<a href='CONDITION.html'>CONDITION</a><span class='relatedKey'>.idmodalite</span>
+					</td>
+					<td class="constraint detail">
+						CONDITION_idmodalite_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
 					<td title="SOUSCRIPTIONS.idmodalite references MODALITE.idmodalite via SOUSCRIPTIONS_idmodalite_fkey">
 						<a href='SOUSCRIPTIONS.html'>SOUSCRIPTIONS</a><span class='relatedKey'>.idmodalite</span>
 					</td>
 					<td class="constraint detail">
 						SOUSCRIPTIONS_idmodalite_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="VALEUR_MODALITE_CONTRAT.idmodalite references MODALITE.idmodalite via VALEUR_MODALITE_CONTRAT_idmodalite_fkey">
+						<a href='VALEUR_MODALITE_CONTRAT.html'>VALEUR_MODALITE_CONTRAT</a><span class='relatedKey'>.idmodalite</span>
+					</td>
+					<td class="constraint detail">
+						VALEUR_MODALITE_CONTRAT_idmodalite_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
 					</td>
 				   </tr>
 				  </table>				 
@@ -133,7 +149,7 @@
 				<tr>
 				 <td><span id="libelleavantage">libelleavantage</span></td>
 				 <td>varchar</td>
-				 <td>50</td>
+				 <td>255</td>
 				 <td title='nullable'>√</td>
 				 <td title=''></td>
 				 <td>null</td>
@@ -173,31 +189,6 @@
 				 <td></td>
 				</tr>
 				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idcategorie">idcategorie</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="MODALITE.idcategorie references CATEGORIE.idcategorie via MODALITE_idcategorie_fkey">
-						<a href='CATEGORIE.html'>CATEGORIE</a><span class='relatedKey'>.idcategorie</span>
-					</td>
-					<td class="constraint detail">
-						MODALITE_idcategorie_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
 				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="idtype">idtype</span></td>
 				 <td>int4</td>
 				 <td>10</td>
@@ -222,9 +213,26 @@
 				 </td>
 				 <td></td>
 				</tr>
+				<tr>
+				 <td><span id="multi">multi</span></td>
+				 <td>bool</td>
+				 <td>1</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
 								</tbody>
 				</table>
-				<p title='5 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
+				<p title='5 columns'>Table contained <span id="recordNumber">80</span> rows<p/>
 			</div>
 		</div>
 		<div class="box box-primary">		
@@ -283,26 +291,30 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="MODALITE.html" title="MODALITE" alt="" coords="295,46,545,259">
-<area shape="rect" id="node2" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="45,136,211,249">
-<area shape="rect" id="node3" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="5,5,251,119">
-<area shape="rect" id="node4" href="TYPE.html" title="TYPE" alt="" coords="65,267,191,380">
-<area shape="rect" id="node5" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="589,19,789,161">
+<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="666,304,826,476">
+<area shape="rect" id="node2" href="MODALITE.html" title="MODALITE" alt="" coords="295,165,553,378">
+<area shape="rect" id="node3" href="TYPE.html" title="TYPE" alt="" coords="65,357,191,471">
+<area shape="rect" id="node4" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="5,225,251,339">
+<area shape="rect" id="node5" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="646,5,846,148">
+<area shape="rect" id="node6" href="VALEUR_MODALITE_CONTRAT.html" title="VALEUR_MODALITE_CONTRAT" alt="" coords="597,166,895,286">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/MODALITE.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="295,5,577,89">
-<area shape="rect" id="node2" href="TYPE.html" title="TYPE" alt="" coords="65,183,191,296">
-<area shape="rect" id="node3" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="327,107,545,191">
-<area shape="rect" id="node4" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="321,208,551,292">
-<area shape="rect" id="node5" href="MODALITE.html" title="MODALITE" alt="" coords="311,411,561,625">
-<area shape="rect" id="node6" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="45,501,211,615">
-<area shape="rect" id="node7" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="5,331,251,444">
-<area shape="rect" id="node8" href="MODULE.html" title="MODULE" alt="" coords="365,309,507,393">
-<area shape="rect" id="node9" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="621,345,821,488">
+<area shape="rect" id="node1" href="CONDITION.html" title="CONDITION" alt="" coords="690,212,850,384">
+<area shape="rect" id="node2" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="343,5,529,89">
+<area shape="rect" id="node3" href="MODALITE.html" title="MODALITE" alt="" coords="307,449,565,662">
+<area shape="rect" id="node4" href="TYPE.html" title="TYPE" alt="" coords="65,308,191,421">
+<area shape="rect" id="node8" href="DOMAINE_ASSURANCE.html" title="DOMAINE_ASSURANCE" alt="" coords="5,644,251,757">
+<area shape="rect" id="node5" href="CONTRAT_COLLECTIF_ATTR.html" title="CONTRAT_COLLECTIF_ATTR" alt="" coords="295,347,577,431">
+<area shape="rect" id="node6" href="ENTREPRISE_ATTR.html" title="ENTREPRISE_ATTR" alt="" coords="327,107,545,191">
+<area shape="rect" id="node7" href="FOURNISSEUR_ATTR.html" title="FOURNISSEUR_ATTR" alt="" coords="321,208,551,292">
+<area shape="rect" id="node9" href="MODALITES_VALEUR.html" title="MODALITES_VALEUR" alt="" coords="322,680,550,764">
+<area shape="rect" id="node10" href="MODULE.html" title="MODULE" alt="" coords="365,781,507,865">
+<area shape="rect" id="node11" href="SOUSCRIPTIONS.html" title="SOUSCRIPTIONS" alt="" coords="670,731,870,873">
+<area shape="rect" id="node12" href="VALEUR_MODALITE_CONTRAT.html" title="VALEUR_MODALITE_CONTRAT" alt="" coords="621,498,919,618">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/MODALITE.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							

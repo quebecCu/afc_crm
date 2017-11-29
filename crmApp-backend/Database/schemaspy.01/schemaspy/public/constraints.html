@@ -82,7 +82,7 @@
 		<div class="box box-primary">
 			<div class="box-header with-border">
 			  <i class="ion ion-key"></i>
-              <h3 class="box-title">48 Foreign Key Constraints</h3>
+              <h3 class="box-title">61 Foreign Key Constraints</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -343,28 +343,6 @@
 				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
 				</tr>
 				<tr>
-				 <td>MODALITE_idcategorie_fkey</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td>
-						<a href='tables/MODALITE.html'>MODALITE</a><span>.idcategorie</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>			 
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td>
-						<a href='tables/CATEGORIE.html'>CATEGORIE</a><span>.idcategorie</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>	
-				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-				</tr>
-				<tr>
 				 <td>BENEFICIAIRES_idmodule_fkey</td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
@@ -402,6 +380,94 @@
 				   <tr>
 					<td>
 						<a href='tables/PERSONNE.html'>PERSONNE</a><span>.idpersonne</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>VALEUR_MODALITE_CONTRAT_idmodalite_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/VALEUR_MODALITE_CONTRAT.html'>VALEUR_MODALITE_CONTRAT</a><span>.idmodalite</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/MODALITE.html'>MODALITE</a><span>.idmodalite</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>VALEUR_MODALITE_CONTRAT_idmodvaleur_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/VALEUR_MODALITE_CONTRAT.html'>VALEUR_MODALITE_CONTRAT</a><span>.idmodvaleur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/MODALITES_VALEUR.html'>MODALITES_VALEUR</a><span>.idmodvaleur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CATEGORIE_MODULE_idmodule_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CATEGORIE_MODULE.html'>CATEGORIE_MODULE</a><span>.idmodule</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/MODULE.html'>MODULE</a><span>.idmodule</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CATEGORIE_MODULE_idcategorie_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CATEGORIE_MODULE.html'>CATEGORIE_MODULE</a><span>.idcategorie</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CATEGORIE.html'>CATEGORIE</a><span>.idcategorie</span>
 					</td>
 				   </tr>
 				  </table>				 
@@ -467,7 +533,7 @@
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
 					<td>
-						<a href='tables/PERSONNE.html'>PERSONNE</a><span>.idpersonne</span>
+						<a href='tables/EMPLOYE_INT.html'>EMPLOYE_INT</a><span>.idemploye</span>
 					</td>
 				   </tr>
 				  </table>				 
@@ -497,6 +563,28 @@
 				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
 				</tr>
 				<tr>
+				 <td>MODALITES_VALEUR_idtype_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/MODALITES_VALEUR.html'>MODALITES_VALEUR</a><span>.idtype</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/TYPE.html'>TYPE</a><span>.idtype</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
 				 <td>FOURNISSEUR_ATTR_idtype_fkey</td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
@@ -512,6 +600,50 @@
 				   <tr>
 					<td>
 						<a href='tables/TYPE.html'>TYPE</a><span>.idtype</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CAT_ACTIVITE_idposte_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CAT_ACTIVITE.html'>CAT_ACTIVITE</a><span>.idposte</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/POSTE.html'>POSTE</a><span>.idposte</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CAT_ACTIVITE_idcategorie_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CAT_ACTIVITE.html'>CAT_ACTIVITE</a><span>.idcategorie</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CATEGORIE.html'>CATEGORIE</a><span>.idcategorie</span>
 					</td>
 				   </tr>
 				  </table>				 
@@ -739,28 +871,6 @@
 				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
 				</tr>
 				<tr>
-				 <td>CONTRAT_INDIVIDUEL_idcontrat_fkey</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td>
-						<a href='tables/CONTRAT_INDIVIDUEL.html'>CONTRAT_INDIVIDUEL</a><span>.idcontrat</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>			 
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td>
-						<a href='tables/CONTRAT.html'>CONTRAT</a><span>.idcontrat</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>	
-				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-				</tr>
-				<tr>
 				 <td>CONTRAT_COLLECTIF_idcontrat_fkey</td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
@@ -798,6 +908,28 @@
 				   <tr>
 					<td>
 						<a href='tables/PERSONNE.html'>PERSONNE</a><span>.idpersonne</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CONTRAT_INDIVIDUEL_idcontrat_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CONTRAT_INDIVIDUEL.html'>CONTRAT_INDIVIDUEL</a><span>.idcontrat</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CONTRAT.html'>CONTRAT</a><span>.idcontrat</span>
 					</td>
 				   </tr>
 				  </table>				 
@@ -1025,28 +1157,6 @@
 				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
 				</tr>
 				<tr>
-				 <td>MODULE_idfournisseur_fkey</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td>
-						<a href='tables/MODULE.html'>MODULE</a><span>.idfournisseur</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>			 
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td>
-						<a href='tables/FOURNISSEUR.html'>FOURNISSEUR</a><span>.idfournisseur</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>	
-				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-				</tr>
-				<tr>
 				 <td>MODULE_idcontrat_fkey</td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
@@ -1091,6 +1201,116 @@
 				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
 				</tr>
 				<tr>
+				 <td>HISTORIQUE_TAUX_idclient_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/HISTORIQUE_TAUX.html'>HISTORIQUE_TAUX</a><span>.idclient</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CLIENT.html'>CLIENT</a><span>.idclient</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>HISTORIQUE_TAUX_idfournisseur_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/HISTORIQUE_TAUX.html'>HISTORIQUE_TAUX</a><span>.idfournisseur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/FOURNISSEUR.html'>FOURNISSEUR</a><span>.idfournisseur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>REMUNERATION_conseiller_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/REMUNERATION.html'>REMUNERATION</a><span>.conseiller</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/EMPLOYE_INT.html'>EMPLOYE_INT</a><span>.idemploye</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>REMUNERATION_idclient_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/REMUNERATION.html'>REMUNERATION</a><span>.idclient</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CLIENT.html'>CLIENT</a><span>.idclient</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>REMUNERATION_idfournisseur_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/REMUNERATION.html'>REMUNERATION</a><span>.idfournisseur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/FOURNISSEUR.html'>FOURNISSEUR</a><span>.idfournisseur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
 				 <td>CONTRAT_COLLECTIF_FACUL_idattrcontratcoll_fkey</td>
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
@@ -1128,6 +1348,72 @@
 				   <tr>
 					<td>
 						<a href='tables/CONTRAT_COLLECTIF.html'>CONTRAT_COLLECTIF</a><span>.idcontrat</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CONDITION_idmodalite_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CONDITION.html'>CONDITION</a><span>.idmodalite</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/MODALITE.html'>MODALITE</a><span>.idmodalite</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CONDITION_idtype_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CONDITION.html'>CONDITION</a><span>.idtype</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/TYPE.html'>TYPE</a><span>.idtype</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>	
+				 <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+				</tr>
+				<tr>
+				 <td>CONDITION_idfournisseur_fkey</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/CONDITION.html'>CONDITION</a><span>.idfournisseur</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>			 
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td>
+						<a href='tables/FOURNISSEUR.html'>FOURNISSEUR</a><span>.idfournisseur</span>
 					</td>
 				   </tr>
 				  </table>				 

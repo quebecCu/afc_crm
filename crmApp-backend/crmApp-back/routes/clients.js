@@ -575,7 +575,8 @@ const buildClientObject = (optionnalRows) => {
 		columnTemp = optionnalRow.forme_type;
 		columnType = optionnalRow.type;
 		columnDesc = optionnalRow.description;
-		clientRow[columnName] = columnValue;
+		clientRow["nom"] = columnName;
+		clientRow["valeur"] = columnValue;
 		clientRow["description"] = columnDesc;
 		//A déterminer si on en a besoin ou non, suivant le traitement effectué en front-end
 		clientRow["type"] = columnType;

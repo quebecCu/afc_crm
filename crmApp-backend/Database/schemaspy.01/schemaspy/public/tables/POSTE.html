@@ -115,6 +115,14 @@
 				 <td>
 				  <table border='0' cellspacing='0' cellpadding='0'>
 				   <tr>
+					<td title="CAT_ACTIVITE.idposte references POSTE.idposte via CAT_ACTIVITE_idposte_fkey">
+						<a href='CAT_ACTIVITE.html'>CAT_ACTIVITE</a><span class='relatedKey'>.idposte</span>
+					</td>
+					<td class="constraint detail">
+						CAT_ACTIVITE_idposte_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
 					<td title="CONTACT_CLIENT.idposte references POSTE.idposte via CONTACT_CLIENT_idposte_fkey">
 						<a href='CONTACT_CLIENT.html'>CONTACT_CLIENT</a><span class='relatedKey'>.idposte</span>
 					</td>
@@ -216,21 +224,24 @@
             <div class="tab-content no-padding">            
 				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="301,5,509,177">
-<area shape="rect" id="node2" href="POSTE.html" title="POSTE" alt="" coords="5,157,229,282">
-<area shape="rect" id="node3" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="273,195,536,345">
+<area shape="rect" id="node1" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="315,5,495,125">
+<area shape="rect" id="node2" href="POSTE.html" title="POSTE" alt="" coords="5,200,229,325">
+<area shape="rect" id="node3" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="301,143,509,315">
+<area shape="rect" id="node4" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="273,333,536,483">
 </map>
 
 					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/POSTE.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
 				</div>
 				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
 					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="301,40,509,212">
-<area shape="rect" id="node2" href="CLIENT.html" title="CLIENT" alt="" coords="52,5,183,89">
-<area shape="rect" id="node3" href="PERSONNE.html" title="PERSONNE" alt="" coords="37,107,197,191">
-<area shape="rect" id="node4" href="POSTE.html" title="POSTE" alt="" coords="5,310,229,435">
-<area shape="rect" id="node5" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="273,230,536,379">
-<area shape="rect" id="node6" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="25,208,210,292">
+<area shape="rect" id="node1" href="CAT_ACTIVITE.html" title="CAT_ACTIVITE" alt="" coords="315,5,495,125">
+<area shape="rect" id="node2" href="CATEGORIE.html" title="CATEGORIE" alt="" coords="36,21,199,105">
+<area shape="rect" id="node3" href="POSTE.html" title="POSTE" alt="" coords="5,325,229,451">
+<area shape="rect" id="node4" href="CONTACT_CLIENT.html" title="CONTACT_CLIENT" alt="" coords="301,175,509,347">
+<area shape="rect" id="node5" href="CLIENT.html" title="CLIENT" alt="" coords="52,122,183,206">
+<area shape="rect" id="node6" href="PERSONNE.html" title="PERSONNE" alt="" coords="37,223,197,307">
+<area shape="rect" id="node7" href="CONTACT_FOURNISSEUR.html" title="CONTACT_FOURNISSEUR" alt="" coords="273,365,536,515">
+<area shape="rect" id="node8" href="FOURNISSEUR.html" title="FOURNISSEUR" alt="" coords="25,469,210,553">
 </map>
 
 					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/POSTE.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
