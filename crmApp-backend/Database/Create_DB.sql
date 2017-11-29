@@ -192,7 +192,8 @@ CREATE TABLE public."MODALITE" (
   libelleavantage  varchar(255),
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
   idtype  integer  REFERENCES "TYPE" (idtype),
-  multi boolean
+  multi boolean,
+  ext char(1)
 );
 
 CREATE TABLE public."RELATION" (
