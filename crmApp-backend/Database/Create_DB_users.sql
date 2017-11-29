@@ -29,22 +29,6 @@ DROP TABLE IF EXISTS users."EMPLOYE_INT" CASCADE;
 DROP TABLE IF EXISTS users."RELATION_FOURNISSEUR" CASCADE;
 DROP TABLE IF EXISTS users."POSITION" CASCADE;
 
-CREATE TABLE users."ROLEADM" (
-  idrole serial PRIMARY KEY,
-  isAdmin boolean,
-  description  varchar(30)
-);
-
-CREATE TABLE users."UTILISATEUR" (
-  iduser serial PRIMARY KEY,
-  login  varchar(20) UNIQUE,
-  password  varchar(200),
-  mail  varchar(40),
-  idrole  integer REFERENCES users."ROLEADM" (idrole),
-  resetPasswordToken varchar(200),
-  resetPasswordExpires bigint 
-);
-
 CREATE TABLE users."ENTITE" (
   identite serial PRIMARY KEY,
   description  varchar(60),
@@ -119,12 +103,12 @@ CREATE TABLE users."PERMISSIONUTIL_FOURN" (
   CONSTRAINT  pk_PERMISSIONUTIL_FOURN  PRIMARY KEY (iduser, idattrfournisseur, idoperation)
 );
 
-CREATE TABLE users."INVITE" (
+/*CREATE TABLE users."INVITE" (
   iduser  integer REFERENCES users."UTILISATEUR" (iduser),
   idclient  integer REFERENCES public."CLIENT" (idclient),
   idpersonne  integer REFERENCES public."PERSONNE" (idpersonne),
-  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient, idpersonne) 
-);
+  CONSTRAINT  pk_INVITE  PRIMARY KEY (iduser, idclient, idpersonne)
+);*/
 
 CREATE TABLE users."CONTRAT_COLLECTIF_AFFICHAGE" (
   idattrcontratcoll  integer PRIMARY KEY REFERENCES public."CONTRAT_COLLECTIF_ATTR" (idattrcontratcoll),
@@ -162,12 +146,6 @@ CREATE TABLE users."MODIFICATION_CLIENT" (
   idclient  integer REFERENCES public."CLIENT" (idclient),
   derniere_modification date,
   CONSTRAINT  pk_MODIFICATION_CLIENT  PRIMARY KEY (iduser, idclient) 
-);
-
-CREATE TABLE users."EMPLOYE_INT" (
-  idemploye serial PRIMARY KEY,
-  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
-  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne)
 );
 
 CREATE TABLE users."RELATION_FOURNISSEUR" (

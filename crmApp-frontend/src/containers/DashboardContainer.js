@@ -8,7 +8,6 @@ import GestionUser from './GestionUser';
 import ContractsContainer from "./ContractsContainer";
 import '../style/Dashboard.css'
 import CollectivePageContainer from "./CollectivePageContainer";
-import PageClient from './PageClient';
 
 class DashboardContainer extends Component {
 
@@ -36,9 +35,6 @@ class DashboardContainer extends Component {
 					}
 					{
 						view === "contracts" && <ContractsContainer />
-					}
-					{
-						view === "customer" && <PageClient/>
 					}
 					{
 						view === "indIns" && <ErrorPage/>

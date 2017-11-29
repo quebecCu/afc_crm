@@ -4,7 +4,12 @@
 --## DECEMBRE 2017                                  ###
 --## COPYRIGHT (c)                                  ###
 --#####################################################
+DROP SCHEMA IF EXISTS users CASCADE;
+CREATE SCHEMA IF NOT EXISTS users;
 
+DROP TABLE IF EXISTS users."UTILISATEUR" CASCADE;
+DROP TABLE IF EXISTS users."ROLEADM" CASCADE;
+DROP TABLE IF EXISTS users."EMPLOYE_INT" CASCADE;
 DROP TABLE IF EXISTS "ADRESSE" CASCADE;
 DROP TABLE IF EXISTS "AVANTAGES" CASCADE;
 DROP TABLE IF EXISTS "TITRE" CASCADE;
@@ -91,6 +96,27 @@ CREATE TABLE public."PERSONNE" (
   mail  varchar(255)
 );
 
+CREATE TABLE users."ROLEADM" (
+  idrole serial PRIMARY KEY,
+  isAdmin boolean,
+  description  varchar(30)
+);
+
+CREATE TABLE users."UTILISATEUR" (
+  iduser serial PRIMARY KEY,
+  login  varchar(20) UNIQUE,
+  password  varchar(200),
+  mail  varchar(40),
+  idrole  integer REFERENCES users."ROLEADM" (idrole),
+  resetPasswordToken varchar(200),
+  resetPasswordExpires bigint
+);
+
+CREATE TABLE users."EMPLOYE_INT" (
+  idemploye serial PRIMARY KEY,
+  iduser  integer REFERENCES users."UTILISATEUR" (iduser),
+  idpersonne  integer REFERENCES public."PERSONNE" (idpersonne)
+);
 
 CREATE TABLE public."FOURNISSEUR" (
   idfournisseur  serial  PRIMARY KEY,
@@ -153,12 +179,12 @@ CREATE TABLE public."CLIENT" (
 
 CREATE TABLE public."DOMAINE_ASSURANCE" (
   iddomaineass  serial  PRIMARY KEY,
-  libelledomaine  varchar(20)
+  libelledomaine  varchar(255)
 );
 
 CREATE TABLE public."MODALITE" (
   idmodalite  serial  PRIMARY KEY,
-  libelleavantage  varchar(50),
+  libelleavantage  varchar(255),
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
   idtype  integer  REFERENCES "TYPE" (idtype),
   multi boolean
@@ -186,7 +212,7 @@ CREATE TABLE public."CONTRAT" (
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idclient  integer REFERENCES  "CLIENT" (idclient),
   idchambrecommerce  integer  REFERENCES  "CHAMBRE_COMMERCE" (idchambrecommerce),
-  idrepresentant  integer  REFERENCES  "EMPLOYE_INT" (idemploye),
+  idrepresentant  integer  REFERENCES  users."EMPLOYE_INT" (idemploye),
   date_signature  date,
   mois_renouvellement  integer,
   police integer,
@@ -218,8 +244,7 @@ CREATE TABLE public."MODULE" (
   idmodule  serial  PRIMARY KEY,
   iddomaineass  integer REFERENCES "DOMAINE_ASSURANCE" (iddomaineass),
   idcategorie  integer  REFERENCES "CATEGORIE" (idcategorie),
-  idcontrat  integer  REFERENCES  "CONTRAT" (idcontrat),
-  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur)
+  idcontrat  integer  REFERENCES  "CONTRAT" (idcontrat)
 );
 
 CREATE TABLE public."BENEFICIAIRES" (
@@ -232,7 +257,7 @@ CREATE TABLE public."SOUSCRIPTIONS" (
   idmodule  integer  REFERENCES  "MODULE" (idmodule),
   idmodalite  integer  REFERENCES  "MODALITE" (idmodalite),
   CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idmodule, idmodalite),
-  valeur varchar(20)
+  valeur varchar(255)
 );
 
 CREATE TABLE public."HISTORIQUE_TAUX" (
@@ -241,28 +266,28 @@ CREATE TABLE public."HISTORIQUE_TAUX" (
   annee_dep integer CHECK (annee_dep>=1990),
   annee_fin integer CHECK (annee_fin>=1990),
   nb_employe integer,
-  diff double,
-  vie double,
-  dma double,
-  pac double,
-  ct double,
-  lt double,
-  amc_ind double,
-  amc_mono double,
-  amc_couple double,
-  amc_fam double,
-  dent_ind double,
-  dent_mono double,
-  dent_couple double,
-  dent_fam double,
-  mg_ind double,
-  mg_mono double,
-  mg_couple double,
-  mg_fam double,
-  pae double,
+  diff numeric(7,2),
+  vie numeric(7,2),
+  dma numeric(7,2),
+  pac numeric(7,2),
+  ct numeric(7,2),
+  lt numeric(7,2),
+  amc_ind numeric(7,2),
+  amc_mono numeric(7,2),
+  amc_couple numeric(7,2),
+  amc_fam numeric(7,2),
+  dent_ind numeric(7,2),
+  dent_mono numeric(7,2),
+  dent_couple numeric(7,2),
+  dent_fam numeric(7,2),
+  mg_ind numeric(7,2),
+  mg_mono numeric(7,2),
+  mg_couple numeric(7,2),
+  mg_fam numeric(7,2),
+  pae numeric(7,2),
  -- prime_ms a calculer
  -- prime_an a calculer
-  CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idclient, idfournisseur)
+  CONSTRAINT  pk_HISTORIQUE_TAUX  PRIMARY KEY (idclient, idfournisseur)
 );
 
 CREATE TABLE public."REMUNERATION" (
@@ -271,22 +296,22 @@ CREATE TABLE public."REMUNERATION" (
   annee_dep integer CHECK (annee_dep>=1990),
   annee_fin integer CHECK (annee_fin>=1990),
   vie integer,
-  ct double,
-  lt double,
-  amc double,
-  dent double,
-  mg double,
-  pae double,
-  recu double,
-  base double,
-  boni double,
-  conseiller integer REFERENCES "EMPLOYE_INT" (idemploye),
-  split double,
-  bdu double,
-  paye double,
+  ct numeric(7,2),
+  lt numeric(7,2),
+  amc numeric(7,2),
+  dent numeric(7,2),
+  mg numeric(7,2),
+  pae numeric(7,2),
+  recu numeric(7,2),
+  base numeric(7,2),
+  boni numeric(7,2),
+  conseiller integer REFERENCES users."EMPLOYE_INT" (idemploye),
+  split numeric(7,2),
+  bdu numeric(7,2),
+  paye numeric(7,2),
   dpaye date,
   --sol a calculer
-  CONSTRAINT  pk_SOUSCRIPTIONS  PRIMARY KEY (idclient, idfournisseur)
+  CONSTRAINT  pk_EMPLOYE_INT  PRIMARY KEY (idclient, idfournisseur)
 );
 
 -- pk fk idcli ?
@@ -381,7 +406,7 @@ CREATE TABLE public."CONTACT_CLIENT" (
   idclient  integer  REFERENCES "CLIENT" (idclient),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
   idposte  integer  REFERENCES  "POSTE" (idposte),
-  estDecideur  boolean,  
+  estDecideur  boolean,
   CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne)
 );
 
@@ -398,3 +423,30 @@ CREATE TABLE public."CADEAU_ENVOYE" (
   description varchar (50),
   CONSTRAINT  pk_CADEAU_ENVOYE  PRIMARY KEY (idcadeau, identreprise)
 );
+
+CREATE TABLE public."CONDITION" (
+  idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
+  idmodalite  integer  REFERENCES "MODALITE" (idmodalite),
+  CONSTRAINT  pk_CONDITION  PRIMARY KEY (idfournisseur, idmodalite),
+  idtype  integer  REFERENCES "TYPE" (idtype),
+  valeur varchar(20)
+);
+
+CREATE TABLE public."CAT_ACTIVITE" (
+  idposte integer REFERENCES "POSTE" (idposte),
+  idcategorie integer REFERENCES "CATEGORIE" (idcategorie),
+  CONSTRAINT  pk_CAT_ACTIVITE  PRIMARY KEY (idposte, idcategorie)
+);
+
+CREATE TABLE public."MODALITES_VALEUR" (
+  idmodvaleur serial PRIMARY KEY,
+  valeur varchar(50),
+  idtype integer REFERENCES "TYPE" (idtype)
+);
+
+CREATE TABLE public."VALEUR_MODALITE_CONTRAT" (
+  idmodalite integer REFERENCES "MODALITE" (idmodalite),
+  idmodvaleur integer REFERENCES "MODALITES_VALEUR" (idmodvaleur)
+);
+
+

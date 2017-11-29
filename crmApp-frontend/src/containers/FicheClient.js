@@ -74,8 +74,12 @@ class FicheClient extends React.Component {
 				<div className="grandTitre">
 					<TitreValeur valeur="Contacts"/>
 				</div>
+				<div className="unePartie">
+				</div>
 				<div className="grandTitre">
-					<TitreValeur titre = "Assureur"/>
+					<TitreValeur valeur = "Assureur"/>
+				</div>
+				<div className="unePartie">
 				</div>
 				<div className="grandTitre">
 					<TitreValeur valeur="Divers"/>
