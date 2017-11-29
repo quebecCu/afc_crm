@@ -2,12 +2,9 @@ export const CHANGE_LAYOUT = 'CHANGE_LAYOUT';
 export const CHANGE_GRID = 'CHANGE_GRID';
 export const REQUEST_GRID = 'REQUEST_GRID';
 export const CREATE_CUSTOMER_FILE = 'CREATE_CUSTOMER_FILE';
-export const CHANGE_VIEW_GRID = 'CHANGE_VIEW_GRID';
 export const UPDATE_CUSTOMER_FILE = 'UPDATE_CUSTOMER_FILE';
 export const GET_RELEVES = 'GET_RELEVES';
-export const GET_CHAMBRE_COMMERCE = 'GET_CHAMBRE_COMMERCE';
 export const UPDATE_RELEVES = 'UPDATE_RELEVES';
-export const UPDATE_CHAMBRE_COMMERCE = 'UPDATE_CHAMBRE_COMMERCE';
 export const CREATE_NEW_FIELD = 'CREATE_NEW_FIELD';
 export const GET_CHAMP_TYPES = 'GET_CHAMP_TYPES';
 export const UPDATE_CHAMP_TYPES = 'UPDATE_CHAMP_TYPES';
@@ -23,10 +20,8 @@ export const UPDATE_FIELD = 'UPDATE_FIELD';
 export const CHANGE_UPDATE_FIELD = 'CHANGE_UPDATE_FIELD';
 export const CHANGE_NEW_FIELD = 'CHANGE_NEW_FIELD';
 export const DELETE_FIELD = 'DELETE_FIELD';
-
-export function changeViewGrid (newView){
-	return {type: CHANGE_VIEW_GRID, newView}
-}
+export const GET_GRID_MODIFY = 'GET_GRID_MODIFY';
+export const CHANGE_ID_DISPLAY = 'CHANGE_ID_DISPLAY';
 
 export function changeLayout (newLayout){
 	return {type: CHANGE_LAYOUT, newLayout}
@@ -36,8 +31,8 @@ export function changeGrid (newGrid){
 	return {type: CHANGE_GRID, newGrid}
 }
 
-export function requestGrid (){
-	return {type: REQUEST_GRID}
+export function requestGrid (id){
+	return {type: REQUEST_GRID, id}
 }
 
 export function createCustomerFile(file) {
@@ -48,52 +43,44 @@ export function updateCustomerFile(file) {
 	return {type: UPDATE_CUSTOMER_FILE, file}
 }
 
-export function getReleves() {
-	return {type: GET_RELEVES}
+export function getReleves(id) {
+	return {type: GET_RELEVES, id}
 }
 
 export function updateReleves(releves) {
 	return {type: UPDATE_RELEVES, releves}
 }
 
-export function getChambreCommerce() {
-	return {type: GET_CHAMBRE_COMMERCE}
-}
-
-export function updateChambreCommerce(chambreCommerce) {
-	return {type: UPDATE_CHAMBRE_COMMERCE, chambreCommerce}
-}
-
 export function createNewField(newField) {
 	return {type: CREATE_NEW_FIELD, newField}
 }
 
-export function getChampTypes() {
-	return {type: GET_CHAMP_TYPES}
+export function getChampTypes(data) {
+	return {type: GET_CHAMP_TYPES, data}
 }
 
 export function updateChampTypes(champTypes) {
 	return {type: UPDATE_CHAMP_TYPES, champTypes}
 }
 
-export function getActivites() {
-	return {type: GET_ACTIVITES}
+export function getActivites(data) {
+	return {type: GET_ACTIVITES, data}
 }
 
 export function updateActivites(activites) {
 	return {type: UPDATE_ACTIVITES, activites}
 }
 
-export function getEtats() {
-	return {type: GET_ETATS}
+export function getEtats(data) {
+	return {type: GET_ETATS, data}
 }
 
 export function updateEtats(etats) {
 	return {type: UPDATE_ETATS, etats}
 }
 
-export function getProvenances() {
-	return {type: GET_PROVENANCES}
+export function getProvenances(data) {
+	return {type: GET_PROVENANCES, data}
 }
 
 export function updateProvenances(provenances) {
@@ -122,4 +109,12 @@ export function changeNewField(newField) {
 
 export function deleteField(field) {
 	return {type: DELETE_FIELD, field}
+}
+
+export function getGridModify(data) {
+	return {type: GET_GRID_MODIFY, data}
+}
+
+export function changeIdDisplay(newId) {
+	return {type: CHANGE_ID_DISPLAY, newId}
 }

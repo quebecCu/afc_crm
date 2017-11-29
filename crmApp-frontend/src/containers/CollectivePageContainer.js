@@ -47,7 +47,7 @@ class CollectivePageContainer extends Component {
 					view === "customerFile" && <CreationClient view="customerFile"/>
 				}
 				{
-					view==="customer" && <PageClient/>
+					view==="customer" && <PageClient handleClick={this.props.changeViewCollective}/>
 				}
 			</div>
 

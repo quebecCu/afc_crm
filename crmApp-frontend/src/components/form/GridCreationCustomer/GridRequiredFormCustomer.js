@@ -12,7 +12,6 @@ class GridRequiredFormCustomer extends Component {
 		this._changeTel = this._changeTel.bind(this);
 		this._changeExtension = this._changeExtension.bind(this);
 		this._changeDate = this._changeDate.bind(this);
-		this._changeChambreCommerce = this._changeChambreCommerce.bind(this);
 		this._changeActivite = this._changeActivite.bind(this);
 		this._changeEtat = this._changeEtat.bind(this);
 		this._changeProvenance = this._changeProvenance.bind(this);
@@ -56,10 +55,6 @@ class GridRequiredFormCustomer extends Component {
 		this.props.changeRequiredFields({...this.props.requiredFields , date: event.target.value});
 	}
 
-	_changeChambreCommerce(event) {
-		this.props.changeRequiredFields({...this.props.requiredFields , chambreCommerce: event.target.value});
-	}
-
 	_changeActivite(event) {
 		this.props.changeRequiredFields({...this.props.requiredFields , activite: event.target.value});
 	}
@@ -95,7 +90,7 @@ class GridRequiredFormCustomer extends Component {
 								onChange={this._changeReleve} value={this.props.requiredFields.releve} required>
 							{
 								this.props.releves.map(releve => {
-									return <option key={releve.idreleve} value={releve.modeenvoiereleve}>{releve.modeenvoiereleve}</option>
+									return <option key={releve.idreleve} value={releve.idreleve}>{releve.modeenvoiereleve}</option>
 								})
 							}
 						</select>
@@ -144,23 +139,12 @@ class GridRequiredFormCustomer extends Component {
 						   onChange={this._changeDate} value={this.props.requiredFields.date} required/>
 				</div>
 				<div className="form-group">
-					<label className="control-label " htmlFor="chambreCommerce">Chambre de commerce</label>
-					<select className="form-control" id="chambreCommerce" name="chambreCommerce"
-							onChange={this._changeChambreCommerce} value={this.props.requiredFields.chambreCommerce} required>
-						{
-							this.props.chambreCommerce.map(chambre => {
-								return <option key={chambre.idchambrecommerce} value={chambre.libellechambrecommerce}>{chambre.libellechambrecommerce}</option>
-							})
-						}
-					</select>
-				</div>
-				<div className="form-group">
 					<label className="control-label " htmlFor="activite">Activité</label>
 					<select className="form-control" id="activite" name="activite"
 							onChange={this._changeActivite} value={this.props.requiredFields.activite} required>
 						{
 							this.props.activites.map(activite => {
-								return <option key={activite.idactivite} value={activite.libelleactivite}>{activite.libelleactivite}</option>
+								return <option key={activite.idactivite} value={activite.idactivite}>{activite.libelleactivite}</option>
 							})
 						}
 					</select>
@@ -171,7 +155,7 @@ class GridRequiredFormCustomer extends Component {
 							onChange={this._changeEtat} value={this.props.requiredFields.etat} required>
 						{
 							this.props.etats.map(etat => {
-								return <option key={etat.idetat} value={etat.libelleetat}>{etat.libelleetat}</option>
+								return <option key={etat.idetat} value={etat.idetat}>{etat.libelleetat}</option>
 							})
 						}
 					</select>
@@ -182,7 +166,7 @@ class GridRequiredFormCustomer extends Component {
 							onChange={this._changeProvenance} value={this.props.requiredFields.provenance} required>
 						{
 							this.props.provenances.map(provenance => {
-								return <option key={provenance.idprovenance} value={provenance.libelleprovenance}>{provenance.libelleprovenance}</option>
+								return <option key={provenance.idprovenance} value={provenance.idprovenance}>{provenance.libelleprovenance}</option>
 							})
 						}
 					</select>
@@ -199,7 +183,7 @@ class GridRequiredFormCustomer extends Component {
 				<div className="form-group">
 					<label htmlFor="notes" className="control-label">Notes</label>
 					<textarea className="form-control" id="notes" name="notes"
-							  onChange={this._changeNotes} value={this.props.requiredFields.nomEntreprise} required/>
+							  onChange={this._changeNotes} value={this.props.requiredFields.notes} required/>
 				</div>
 			</div>
 		);

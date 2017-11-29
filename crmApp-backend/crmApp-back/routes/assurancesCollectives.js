@@ -45,7 +45,7 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function (req, res) {
 			.left_join('public."CONTACT_CLIENT"', 'ccli', 'client.idclient = ccli.idclient')
 			.left_join('public."PERSONNE"', 'p', 'p.idpersonne = ccli.idpersonne')
 			.left_join('public."CONTRAT"', 'ctt', 'ctt.idclient = client.idclient')
-			.where('estDecideur = true')
+			//.where('estDecideur = true')
 			.toString())
 			.then(function (entreprise) {
 
