@@ -535,7 +535,8 @@ router.get('/:idClient', expressJwtIp.ip(), function (req, res) {
 				db.one(getObligatoryClientRowsById(req.params.idClient))
 				.then((obligatoryRow) => {
 					obligatoryRow.facultatif = wantedClientRows;
-					
+					let date = new Date(obligatoryRow.date_creation);
+					obligatoryRow.date_creation = date.toLocaleDateString("fr-FR");
 					console.log(JSON.stringify(obligatoryRow));
 
 					res.status(200);
@@ -575,7 +576,8 @@ const buildClientObject = (optionnalRows) => {
 		columnTemp = optionnalRow.forme_type;
 		columnType = optionnalRow.type;
 		columnDesc = optionnalRow.description;
-		clientRow[columnName] = columnValue;
+		clientRow["nom"] = columnName;
+		clientRow["valeur"] = columnValue;
 		clientRow["description"] = columnDesc;
 		//A déterminer si on en a besoin ou non, suivant le traitement effectué en front-end
 		clientRow["type"] = columnType;

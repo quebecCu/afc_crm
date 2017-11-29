@@ -1,4 +1,5 @@
 export const CHANGE_VIEW_CONTRACT = 'CHANGE_VIEW_CONTRACT';
+export const CHANGE_FORM_CONTRACT = 'CHANGE_FORM_CONTRACT';
 export const GET_EMPLOYES_AFC = 'GET_EMPLOYES_AFC';
 export const UPDATE_EMPLOYES_AFC = 'UPDATE_EMPLOYES_AFC';
 export const GET_LIST_ASSUREURS = 'GET_LIST_ASSUREURS';
@@ -8,6 +9,10 @@ export const UPDATE_AGA = 'UPDATE_AGA';
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}
+}
+
+export function changeFormContract (newForm){
+	return {type: CHANGE_FORM_CONTRACT, newForm}
 }
 
 export function getEmployesAFC(){

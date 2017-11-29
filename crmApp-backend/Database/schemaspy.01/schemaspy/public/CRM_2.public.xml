@@ -65,13 +65,42 @@
             <column ascending="true" name="identreprise"/>
          </index>
       </table>
-      <table name="CATEGORIE" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="CAT_ACTIVITE" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idposte" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idposte" foreignKey="CAT_ACTIVITE_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="POSTE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="idcategorie" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idcategorie" foreignKey="CAT_ACTIVITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE"/>
+         </column>
+         <primaryKey column="idposte" sequenceNumberInPK="1"/>
+         <primaryKey column="idcategorie" sequenceNumberInPK="2"/>
+         <index name="pk_cat_activite" unique="true">
+            <column ascending="true" name="idposte"/>
+            <column ascending="true" name="idcategorie"/>
+         </index>
+      </table>
+      <table name="CATEGORIE" numRows="3" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;CATEGORIE_idcategorie_seq&quot;'::regclass)" digits="0" id="0" name="idcategorie" nullable="false" remarks="" size="10" type="serial">
-            <child column="idcategorie" foreignKey="MODALITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
+            <child column="idcategorie" foreignKey="CAT_ACTIVITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CAT_ACTIVITE"/>
+            <child column="idcategorie" foreignKey="CATEGORIE_MODULE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE_MODULE"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="libellecategorie" nullable="true" remarks="" size="20" type="varchar"/>
          <primaryKey column="idcategorie" sequenceNumberInPK="1"/>
          <index name="CATEGORIE_pkey" unique="true">
+            <column ascending="true" name="idcategorie"/>
+         </index>
+      </table>
+      <table name="CATEGORIE_MODULE" numRows="1" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idmodule" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idmodule" foreignKey="CATEGORIE_MODULE_idmodule_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODULE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="idcategorie" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idcategorie" foreignKey="CATEGORIE_MODULE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE"/>
+         </column>
+         <primaryKey column="idmodule" sequenceNumberInPK="1"/>
+         <primaryKey column="idcategorie" sequenceNumberInPK="2"/>
+         <index name="pk_categorie_module" unique="true">
+            <column ascending="true" name="idmodule"/>
             <column ascending="true" name="idcategorie"/>
          </index>
       </table>
@@ -91,8 +120,9 @@
             <child column="idclient" foreignKey="CONTACT_CLIENT_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_CLIENT"/>
             <child column="idclient" foreignKey="CONTRAT_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT"/>
             <child column="idclient" foreignKey="ENTREPRISE_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE"/>
+            <child column="idclient" foreignKey="HISTORIQUE_TAUX_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="HISTORIQUE_TAUX"/>
             <child column="idclient" foreignKey="RELATION_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="RELATION"/>
-            <child column="idclient" foreignKey="INVITE_idclient_fkey" implied="false" onDeleteCascade="false" schema="users" table="INVITE"/>
+            <child column="idclient" foreignKey="REMUNERATION_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="REMUNERATION"/>
             <child column="idclient" foreignKey="MODIFICATION_CLIENT_idclient_fkey" implied="false" onDeleteCascade="false" schema="users" table="MODIFICATION_CLIENT"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="idetat" nullable="true" remarks="" size="10" type="int4">
@@ -120,6 +150,24 @@
          <index name="pk_client_individuel" unique="true">
             <column ascending="true" name="idclient"/>
             <column ascending="true" name="idpersonne"/>
+         </index>
+      </table>
+      <table name="CONDITION" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idfournisseur" foreignKey="CONDITION_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="idmodalite" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idmodalite" foreignKey="CONDITION_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="idtype" nullable="true" remarks="" size="10" type="int4">
+            <parent column="idtype" foreignKey="CONDITION_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="TYPE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="valeur" nullable="true" remarks="" size="20" type="varchar"/>
+         <primaryKey column="idfournisseur" sequenceNumberInPK="1"/>
+         <primaryKey column="idmodalite" sequenceNumberInPK="2"/>
+         <index name="pk_condition" unique="true">
+            <column ascending="true" name="idfournisseur"/>
+            <column ascending="true" name="idmodalite"/>
          </index>
       </table>
       <table name="CONTACT_CLIENT" numRows="3" remarks="" schema="public" type="TABLE">
@@ -175,7 +223,7 @@
             <parent column="idchambrecommerce" foreignKey="CONTRAT_idchambrecommerce_fkey" implied="false" onDeleteCascade="false" schema="public" table="CHAMBRE_COMMERCE"/>
          </column>
          <column autoUpdated="false" digits="0" id="4" name="idrepresentant" nullable="true" remarks="" size="10" type="int4">
-            <parent column="idpersonne" foreignKey="CONTRAT_idrepresentant_fkey" implied="false" onDeleteCascade="false" schema="public" table="PERSONNE"/>
+            <parent column="idemploye" foreignKey="CONTRAT_idrepresentant_fkey" implied="false" onDeleteCascade="false" schema="users" table="EMPLOYE_INT"/>
          </column>
          <column autoUpdated="false" digits="0" id="5" name="date_signature" nullable="true" remarks="" size="13" type="date"/>
          <column autoUpdated="false" digits="0" id="6" name="mois_renouvellement" nullable="true" remarks="" size="10" type="int4"/>
@@ -211,7 +259,7 @@
             <column ascending="true" name="idcontrat"/>
          </index>
       </table>
-      <table name="CONTRAT_COLLECTIF_ATTR" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="CONTRAT_COLLECTIF_ATTR" numRows="3" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;CONTRAT_COLLECTIF_ATTR_idattrcontratcoll_seq&quot;'::regclass)" digits="0" id="0" name="idattrcontratcoll" nullable="false" remarks="" size="10" type="serial">
             <child column="idattrcontratcoll" foreignKey="CONTRAT_COLLECTIF_FACUL_idattrcontratcoll_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF_FACUL"/>
             <child column="idattrcontratcoll" foreignKey="CONTRAT_COLLECTIF_AFFICHAGE_idattrcontratcoll_fkey" implied="false" onDeleteCascade="false" schema="users" table="CONTRAT_COLLECTIF_AFFICHAGE"/>
@@ -225,6 +273,7 @@
          <column autoUpdated="false" digits="0" id="3" name="description" nullable="true" remarks="" size="50" type="varchar"/>
          <column autoUpdated="false" digits="0" id="4" name="forme" nullable="true" remarks="" size="100" type="varchar"/>
          <column autoUpdated="false" digits="0" id="5" name="valeur_defaut" nullable="true" remarks="" size="40" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="6" name="ext" nullable="true" remarks="" size="20" type="varchar"/>
          <primaryKey column="idattrcontratcoll" sequenceNumberInPK="1"/>
          <index name="CONTRAT_COLLECTIF_ATTR_pkey" unique="true">
             <column ascending="true" name="idattrcontratcoll"/>
@@ -254,12 +303,12 @@
             <column ascending="true" name="idcontrat"/>
          </index>
       </table>
-      <table name="DOMAINE_ASSURANCE" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="DOMAINE_ASSURANCE" numRows="9" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;DOMAINE_ASSURANCE_iddomaineass_seq&quot;'::regclass)" digits="0" id="0" name="iddomaineass" nullable="false" remarks="" size="10" type="serial">
             <child column="iddomaineass" foreignKey="MODALITE_iddomaineass_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
             <child column="iddomaineass" foreignKey="MODULE_iddomaineass_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODULE"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="libelledomaine" nullable="true" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="libelledomaine" nullable="true" remarks="" size="255" type="varchar"/>
          <primaryKey column="iddomaineass" sequenceNumberInPK="1"/>
          <index name="DOMAINE_ASSURANCE_pkey" unique="true">
             <column ascending="true" name="iddomaineass"/>
@@ -289,7 +338,7 @@
             <column ascending="true" name="idclient"/>
          </index>
       </table>
-      <table name="ENTREPRISE_ATTR" numRows="5" remarks="" schema="public" type="TABLE">
+      <table name="ENTREPRISE_ATTR" numRows="6" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;ENTREPRISE_ATTR_idattrentreprise_seq&quot;'::regclass)" digits="0" id="0" name="idattrentreprise" nullable="false" remarks="" size="10" type="serial">
             <child column="idattrentreprise" foreignKey="ENTREPRISE_FACUL_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_FACUL"/>
             <child column="idattrentreprise" foreignKey="ENTREPRISE_AFFICHAGE_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="users" table="ENTREPRISE_AFFICHAGE"/>
@@ -309,7 +358,7 @@
             <column ascending="true" name="idattrentreprise"/>
          </index>
       </table>
-      <table name="ENTREPRISE_FACUL" numRows="10" remarks="" schema="public" type="TABLE">
+      <table name="ENTREPRISE_FACUL" numRows="12" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="idattrentreprise" nullable="false" remarks="" size="10" type="int4">
             <parent column="idattrentreprise" foreignKey="ENTREPRISE_FACUL_idattrentreprise_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_ATTR"/>
          </column>
@@ -336,10 +385,12 @@
       </table>
       <table name="FOURNISSEUR" numRows="17" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;FOURNISSEUR_idfournisseur_seq&quot;'::regclass)" digits="0" id="0" name="idfournisseur" nullable="false" remarks="" size="10" type="serial">
+            <child column="idfournisseur" foreignKey="CONDITION_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONDITION"/>
             <child column="idfournisseur" foreignKey="CONTACT_FOURNISSEUR_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_FOURNISSEUR"/>
             <child column="idfournisseur" foreignKey="CONTRAT_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT"/>
             <child column="idfournisseur" foreignKey="FOURNISSEUR_FACUL_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR_FACUL"/>
-            <child column="idfournisseur" foreignKey="MODULE_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODULE"/>
+            <child column="idfournisseur" foreignKey="HISTORIQUE_TAUX_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="HISTORIQUE_TAUX"/>
+            <child column="idfournisseur" foreignKey="REMUNERATION_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="REMUNERATION"/>
             <child column="idfournisseur" foreignKey="RELATION_FOURNISSEUR_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="users" table="RELATION_FOURNISSEUR"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="idadresse" nullable="true" remarks="" size="10" type="int4">
@@ -390,28 +441,78 @@
             <column ascending="true" name="idfournisseur"/>
          </index>
       </table>
-      <table name="MODALITE" numRows="0" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('&quot;MODALITE_idmodalite_seq&quot;'::regclass)" digits="0" id="0" name="idmodalite" nullable="false" remarks="" size="10" type="serial">
-            <child column="idmodalite" foreignKey="SOUSCRIPTIONS_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="SOUSCRIPTIONS"/>
+      <table name="HISTORIQUE_TAUX" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idclient" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idclient" foreignKey="HISTORIQUE_TAUX_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT"/>
          </column>
-         <column autoUpdated="false" digits="0" id="1" name="libelleavantage" nullable="true" remarks="" size="50" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="idfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idfournisseur" foreignKey="HISTORIQUE_TAUX_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="annee_dep" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="annee_fin" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="nb_employe" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="2" id="5" name="diff" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="6" name="vie" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="7" name="dma" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="8" name="pac" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="9" name="ct" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="10" name="lt" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="11" name="amc_ind" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="12" name="amc_mono" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="13" name="amc_couple" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="14" name="amc_fam" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="15" name="dent_ind" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="16" name="dent_mono" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="17" name="dent_couple" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="18" name="dent_fam" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="19" name="mg_ind" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="20" name="mg_mono" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="21" name="mg_couple" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="22" name="mg_fam" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="23" name="pae" nullable="true" remarks="" size="7" type="numeric"/>
+         <primaryKey column="idclient" sequenceNumberInPK="1"/>
+         <primaryKey column="idfournisseur" sequenceNumberInPK="2"/>
+         <index name="pk_historique_taux" unique="true">
+            <column ascending="true" name="idclient"/>
+            <column ascending="true" name="idfournisseur"/>
+         </index>
+      </table>
+      <table name="MODALITE" numRows="80" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('&quot;MODALITE_idmodalite_seq&quot;'::regclass)" digits="0" id="0" name="idmodalite" nullable="false" remarks="" size="10" type="serial">
+            <child column="idmodalite" foreignKey="CONDITION_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONDITION"/>
+            <child column="idmodalite" foreignKey="SOUSCRIPTIONS_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="SOUSCRIPTIONS"/>
+            <child column="idmodalite" foreignKey="VALEUR_MODALITE_CONTRAT_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="VALEUR_MODALITE_CONTRAT"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="libelleavantage" nullable="true" remarks="" size="255" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="iddomaineass" nullable="true" remarks="" size="10" type="int4">
             <parent column="iddomaineass" foreignKey="MODALITE_iddomaineass_fkey" implied="false" onDeleteCascade="false" schema="public" table="DOMAINE_ASSURANCE"/>
          </column>
-         <column autoUpdated="false" digits="0" id="3" name="idcategorie" nullable="true" remarks="" size="10" type="int4">
-            <parent column="idcategorie" foreignKey="MODALITE_idcategorie_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE"/>
-         </column>
-         <column autoUpdated="false" digits="0" id="4" name="idtype" nullable="true" remarks="" size="10" type="int4">
+         <column autoUpdated="false" digits="0" id="3" name="idtype" nullable="true" remarks="" size="10" type="int4">
             <parent column="idtype" foreignKey="MODALITE_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="TYPE"/>
          </column>
+         <column autoUpdated="false" digits="0" id="4" name="multi" nullable="true" remarks="" size="1" type="bool"/>
          <primaryKey column="idmodalite" sequenceNumberInPK="1"/>
          <index name="MODALITE_pkey" unique="true">
             <column ascending="true" name="idmodalite"/>
          </index>
       </table>
-      <table name="MODULE" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="MODALITES_VALEUR" numRows="65" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('&quot;MODALITES_VALEUR_idmodvaleur_seq&quot;'::regclass)" digits="0" id="0" name="idmodvaleur" nullable="false" remarks="" size="10" type="serial">
+            <child column="idmodvaleur" foreignKey="VALEUR_MODALITE_CONTRAT_idmodvaleur_fkey" implied="false" onDeleteCascade="false" schema="public" table="VALEUR_MODALITE_CONTRAT"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="valeur" nullable="true" remarks="" size="50" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="idtype" nullable="true" remarks="" size="10" type="int4">
+            <parent column="idtype" foreignKey="MODALITES_VALEUR_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="TYPE"/>
+         </column>
+         <primaryKey column="idmodvaleur" sequenceNumberInPK="1"/>
+         <index name="MODALITES_VALEUR_pkey" unique="true">
+            <column ascending="true" name="idmodvaleur"/>
+         </index>
+      </table>
+      <table name="MODULE" numRows="1" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;MODULE_idmodule_seq&quot;'::regclass)" digits="0" id="0" name="idmodule" nullable="false" remarks="" size="10" type="serial">
             <child column="idmodule" foreignKey="BENEFICIAIRES_idmodule_fkey" implied="false" onDeleteCascade="false" schema="public" table="BENEFICIAIRES"/>
+            <child column="idmodule" foreignKey="CATEGORIE_MODULE_idmodule_fkey" implied="false" onDeleteCascade="false" schema="public" table="CATEGORIE_MODULE"/>
             <child column="idmodule" foreignKey="SOUSCRIPTIONS_idmodule_fkey" implied="false" onDeleteCascade="false" schema="public" table="SOUSCRIPTIONS"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="iddomaineass" nullable="true" remarks="" size="10" type="int4">
@@ -419,9 +520,6 @@
          </column>
          <column autoUpdated="false" digits="0" id="2" name="idcontrat" nullable="true" remarks="" size="10" type="int4">
             <parent column="idcontrat" foreignKey="MODULE_idcontrat_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT"/>
-         </column>
-         <column autoUpdated="false" digits="0" id="3" name="idfournisseur" nullable="true" remarks="" size="10" type="int4">
-            <parent column="idfournisseur" foreignKey="MODULE_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR"/>
          </column>
          <primaryKey column="idmodule" sequenceNumberInPK="1"/>
          <index name="MODULE_pkey" unique="true">
@@ -434,11 +532,9 @@
             <child column="idpersonne" foreignKey="CLIENT_INDIVIDUEL_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT_INDIVIDUEL"/>
             <child column="idpersonne" foreignKey="CONTACT_CLIENT_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_CLIENT"/>
             <child column="idpersonne" foreignKey="CONTACT_FOURNISSEUR_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_FOURNISSEUR"/>
-            <child column="idrepresentant" foreignKey="CONTRAT_idrepresentant_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT"/>
             <child column="idautrevendeur" foreignKey="CONTRAT_COLLECTIF_idautrevendeur_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF"/>
             <child column="idpersonne" foreignKey="RELATION_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="public" table="RELATION"/>
             <child column="idpersonne" foreignKey="EMPLOYE_INT_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="users" table="EMPLOYE_INT"/>
-            <child column="idpersonne" foreignKey="INVITE_idpersonne_fkey" implied="false" onDeleteCascade="false" schema="users" table="INVITE"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="nom" nullable="false" remarks="" size="20" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="prenom" nullable="false" remarks="" size="50" type="varchar"/>
@@ -461,6 +557,7 @@
       </table>
       <table name="POSTE" numRows="13" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;POSTE_idposte_seq&quot;'::regclass)" digits="0" id="0" name="idposte" nullable="false" remarks="" size="10" type="serial">
+            <child column="idposte" foreignKey="CAT_ACTIVITE_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="CAT_ACTIVITE"/>
             <child column="idposte" foreignKey="CONTACT_CLIENT_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_CLIENT"/>
             <child column="idposte" foreignKey="CONTACT_FOURNISSEUR_idposte_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTACT_FOURNISSEUR"/>
          </column>
@@ -509,6 +606,39 @@
             <column ascending="true" name="idreleve"/>
          </index>
       </table>
+      <table name="REMUNERATION" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idclient" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idclient" foreignKey="REMUNERATION_idclient_fkey" implied="false" onDeleteCascade="false" schema="public" table="CLIENT"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="idfournisseur" nullable="false" remarks="" size="10" type="int4">
+            <parent column="idfournisseur" foreignKey="REMUNERATION_idfournisseur_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="annee_dep" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="annee_fin" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="vie" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="2" id="5" name="ct" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="6" name="lt" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="7" name="amc" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="8" name="dent" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="9" name="mg" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="10" name="pae" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="11" name="recu" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="12" name="base" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="13" name="boni" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="14" name="conseiller" nullable="true" remarks="" size="10" type="int4">
+            <parent column="idemploye" foreignKey="REMUNERATION_conseiller_fkey" implied="false" onDeleteCascade="false" schema="users" table="EMPLOYE_INT"/>
+         </column>
+         <column autoUpdated="false" digits="2" id="15" name="split" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="16" name="bdu" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="2" id="17" name="paye" nullable="true" remarks="" size="7" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="18" name="dpaye" nullable="true" remarks="" size="13" type="date"/>
+         <primaryKey column="idclient" sequenceNumberInPK="1"/>
+         <primaryKey column="idfournisseur" sequenceNumberInPK="2"/>
+         <index name="pk_remuneration" unique="true">
+            <column ascending="true" name="idclient"/>
+            <column ascending="true" name="idfournisseur"/>
+         </index>
+      </table>
       <table name="ROLE" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;ROLE_idrole_seq&quot;'::regclass)" digits="0" id="0" name="idrole" nullable="false" remarks="" size="10" type="serial">
             <child column="idrole" foreignKey="RELATION_idrole_fkey" implied="false" onDeleteCascade="false" schema="public" table="RELATION"/>
@@ -519,14 +649,14 @@
             <column ascending="true" name="idrole"/>
          </index>
       </table>
-      <table name="SOUSCRIPTIONS" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="SOUSCRIPTIONS" numRows="1" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="idmodule" nullable="false" remarks="" size="10" type="int4">
             <parent column="idmodule" foreignKey="SOUSCRIPTIONS_idmodule_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODULE"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="idmodalite" nullable="false" remarks="" size="10" type="int4">
             <parent column="idmodalite" foreignKey="SOUSCRIPTIONS_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
          </column>
-         <column autoUpdated="false" digits="0" id="2" name="valeur" nullable="true" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="valeur" nullable="true" remarks="" size="255" type="varchar"/>
          <primaryKey column="idmodule" sequenceNumberInPK="1"/>
          <primaryKey column="idmodalite" sequenceNumberInPK="2"/>
          <index name="pk_souscriptions" unique="true">
@@ -546,10 +676,12 @@
       </table>
       <table name="TYPE" numRows="4" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;TYPE_idtype_seq&quot;'::regclass)" digits="0" id="0" name="idtype" nullable="false" remarks="" size="10" type="serial">
+            <child column="idtype" foreignKey="CONDITION_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONDITION"/>
             <child column="idtype" foreignKey="CONTRAT_COLLECTIF_ATTR_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="CONTRAT_COLLECTIF_ATTR"/>
             <child column="idtype" foreignKey="ENTREPRISE_ATTR_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="ENTREPRISE_ATTR"/>
             <child column="idtype" foreignKey="FOURNISSEUR_ATTR_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="FOURNISSEUR_ATTR"/>
             <child column="idtype" foreignKey="MODALITE_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
+            <child column="idtype" foreignKey="MODALITES_VALEUR_idtype_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITES_VALEUR"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="libelletype" nullable="true" remarks="" size="10" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="forme" nullable="true" remarks="" size="100" type="varchar"/>
@@ -557,6 +689,14 @@
          <index name="TYPE_pkey" unique="true">
             <column ascending="true" name="idtype"/>
          </index>
+      </table>
+      <table name="VALEUR_MODALITE_CONTRAT" numRows="1" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="idmodalite" nullable="true" remarks="" size="10" type="int4">
+            <parent column="idmodalite" foreignKey="VALEUR_MODALITE_CONTRAT_idmodalite_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="idmodvaleur" nullable="true" remarks="" size="10" type="int4">
+            <parent column="idmodvaleur" foreignKey="VALEUR_MODALITE_CONTRAT_idmodvaleur_fkey" implied="false" onDeleteCascade="false" schema="public" table="MODALITES_VALEUR"/>
+         </column>
       </table>
    </tables>
 </database>

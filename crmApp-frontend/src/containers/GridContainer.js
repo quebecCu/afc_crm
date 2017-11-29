@@ -6,7 +6,6 @@ import {
 	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
-import {GridCustomerFile} from "../components/form/GridCustomerFile";
 import {changeLoading} from "../actions/crmDashboard";
 
 class CreationClient extends Component {
@@ -70,9 +69,9 @@ class CreationClient extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du client)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
-		let {grid, requiredFields} = this.props.crmGridLayout;
+		let {grid, requiredFields, idToDisplay} = this.props.crmGridLayout;
 		this._handleStatic();
-		this.props.updateCustomerFile({grid, requiredFields});
+		this.props.updateCustomerFile({grid, requiredFields, idToDisplay});
 		console.log("submit file");
 	}
 

@@ -9,9 +9,9 @@ class ContractInfoPart extends React.Component {
 
 	render(){
 		return <div>
-			<h3>Renseignement généraux sur le contrat</h3>
+			<h4>Renseignement généraux sur le contrat</h4>
 			<div className="form-group row">
-				<label id="nomAssureurLabel" className="col-sm-3 col-form-label">Nom assureur : </label>
+				<label id="nomAssureurLabel" className="col-sm-3 col-form-label">Nom assureur</label>
 				<select
 					id="nomAssureur"
 					name="nomAssureur"
@@ -22,7 +22,7 @@ class ContractInfoPart extends React.Component {
 				</select>
 			</div>
 			<div className="form-group row">
-				<label id="AGALabel" className="col-sm-3 col-form-label">AGA : </label>
+				<label id="AGALabel" className="col-sm-3 col-form-label">AGA</label>
 				<select
 					id="AGA"
 					name="AGA"
@@ -33,7 +33,7 @@ class ContractInfoPart extends React.Component {
 				</select>
 			</div>
 			<div className="form-group row">
-				<label id="numPoliceLabel" className="col-sm-3 col-form-label">Numéro de police : </label>
+				<label id="numPoliceLabel" className="col-sm-3 col-form-label">Numéro de police</label>
 				<input
 					type="textField"
 					className="form-control col-sm-8"
@@ -42,7 +42,7 @@ class ContractInfoPart extends React.Component {
 				/>
 			</div>
 			<div className="form-group row">
-				<label id="dateEmission" className="col-sm-3 col-form-label">Date d'émission : </label>
+				<label id="dateEmission" className="col-sm-3 col-form-label">Date d'émission</label>
 				<input
 					type="textField"
 					className="form-control col-sm-8"
@@ -51,12 +51,20 @@ class ContractInfoPart extends React.Component {
 				/>
 			</div>
 			<div className="form-group row">
-				<label id="moisRenouv" className="col-sm-3 col-form-label">Mois de renouvellement : </label>
+				<label id="moisRenouv" className="col-sm-3 col-form-label">Mois de renouvellement</label>
 				<input
 					type="textField"
 					className="form-control col-sm-8"
 					placeholder="MM"
 					id="moisRenouv"
+				/>
+			</div>
+			<div className="form-group row">
+				<label id="notesLabel" className="col-sm-3 col-form-label">Notes</label>
+				<textarea
+					className="form-control col-sm-8"
+					placeholder="MM"
+					id="notes"
 				/>
 			</div>
 		</div>
