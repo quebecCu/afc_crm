@@ -9,6 +9,7 @@ import {
 let initialState = {
 	view: '',
 	formState: {
+		intModulesToDisplay: 1,
 		AGA: [],
 		employesAFC:[],
 		listAssureurs:[],
@@ -23,9 +24,8 @@ let initialState = {
 						description: "",
 						type: "select",
 						valeurs: [
-							{idValeur: 0, label: "employes"},
-							{idValeur: 1, label: "cadres"},
-							{idValeur:2, label:"autre"}]
+							{idValeur: 0, label: "Autres"}
+							]
 					},
 					{
 						nom: "Vie conj",
@@ -35,7 +35,8 @@ let initialState = {
 						valeurs: [
 							{idValeur: 0, label: "5000$"},
 							{idValeur: 1, label: "10000$"},
-							{idValeur:2, label:"15000$"}]
+							{idValeur:2, label:"15000$"},
+							{idValeur:5, label:"Autres"}]
 					},
 				]
 			},
@@ -50,8 +51,9 @@ let initialState = {
 						type: "select",
 						valeurs: [
 							{idValeur: 0, label: "employes"},
-							{idValeur: 1, label: "cadres"},
-							{idValeur:2, label:"autre"}]
+							{idValeur: 4, label: "cadres"},
+							{idValeur:1, label:"Autres"}
+							]
 					},
 					{
 						nom: "Vie enfant",
@@ -60,8 +62,9 @@ let initialState = {
 						type: "select",
 						valeurs: [
 							{idValeur: 0, label: "5000$"},
-							{idValeur: 1, label: "10000$"},
-							{idValeur:2, label:"15000$"}]
+							{idValeur: 6, label: "10000$"},
+							{idValeur:2, label:"15000$"},
+							{idValeur:1, label:"Autres"}]
 					},
 				]
 			}
