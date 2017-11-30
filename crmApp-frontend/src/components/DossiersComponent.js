@@ -63,11 +63,14 @@ class DossiersComponent extends Component {
 				<tbody>
 				{this.props.collective.map(element => {
 					return (
-						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={element.id}>
+						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={element.no_police}>
 							<td>{element.nom_groupe}</td>
 							<td>{element.responsable}</td>
 							<td>{element.etat}</td>
 							<td>{element.prospect}</td>
+							<td>{element.mois_renouvellement}</td>
+							<td>{element.no_police}</td>
+							<td>{element.fournisseur}</td>
 						</tr>
 					);
 				})}

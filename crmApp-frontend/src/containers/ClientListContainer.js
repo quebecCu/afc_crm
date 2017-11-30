@@ -13,6 +13,9 @@ class ClientListContainer extends Component {
 		this.handleClick1 = this.handleClick1.bind(this);
 		this.handleClick2 = this.handleClick2.bind(this);
 		this.handleClick3 = this.handleClick3.bind(this);
+		this.handleClick4 = this.handleClick4.bind(this);
+		this.handleClick5 = this.handleClick5.bind(this);
+		this.handleClick6 = this.handleClick6.bind(this);
 		this._handleClientClick = this._handleClientClick.bind(this);
 		//this.props.changeLoading(true);
 	}
@@ -39,6 +42,21 @@ class ClientListContainer extends Component {
 	handleClick3() {
 		var table = document.getElementById("PageCollectivesClientsTable");
 		this._handleClick(3, table);
+	}
+
+	handleClick4() {
+		var table = document.getElementById("PageCollectivesClientsTable");
+		this._handleClick(4, table);
+	}
+
+	handleClick5() {
+		var table = document.getElementById("PageCollectivesClientsTable");
+		this._handleClick(5, table);
+	}
+
+	handleClick6() {
+		var table = document.getElementById("PageCollectivesClientsTable");
+		this._handleClick(6, table);
 	}
 
 	_handleClick(n, table) {
@@ -89,6 +107,9 @@ class ClientListContainer extends Component {
 						<th onClick={this.handleClick1}>Décideur</th>
 						<th onClick={this.handleClick2}>Statut</th>
 						<th onClick={this.handleClick3}>Prospect</th>
+						<th onClick={this.handleClick4}>Mois de renouvellement</th>
+						<th onClick={this.handleClick5}>No police</th>
+						<th onClick={this.handleClick6}>Assureur</th>
 					</tr>
 					</thead>
 					<DossiersComponent collective={this.props.dossiersState}

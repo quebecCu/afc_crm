@@ -107,9 +107,14 @@ class RechercheComponent extends Component {
 			td1 = tr[i].getElementsByTagName("td")[1];
 			td2 = tr[i].getElementsByTagName("td")[2];
 			td3 = tr[i].getElementsByTagName("td")[3];
-			if (td0 || td1 || td2 || td3) {
+			td4 = tr[i].getElementsByTagName("td")[4];
+			td5 = tr[i].getElementsByTagName("td")[5];
+			td6 = tr[i].getElementsByTagName("td")[6];
+			if (td0 || td1 || td2 || td3 || td4 || td5 || td6) {
 				if (td3.innerHTML.toUpperCase().indexOf(inputProspect) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNomEntreprise) > -1
-					&& td2.innerHTML.toUpperCase().indexOf(inputSelectedStatut) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomEmploye) > -1) {
+					&& td2.innerHTML.toUpperCase().indexOf(inputSelectedStatut) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomEmploye) > -1
+					&& td4.innerHTML.toUpperCase().indexOf(inputMoisRenouvellement) > -1 && td5.innerHTML.toUpperCase().indexOf(inputNumeroPolice) > -1
+					&& td6.innerHTML.toUpperCase().indexOf(inputNomAssureur) > -1) {
 					tr[i].style.display = "";
 				} else {
 					tr[i].style.display = "none";
