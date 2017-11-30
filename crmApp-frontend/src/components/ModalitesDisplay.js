@@ -1,25 +1,41 @@
 import React from 'react';
+import DisplayOneModalite from './DisplayOneModalite';
 
 class ModalitesDisplay extends React.Component{
 	constructor(props){
 		super(props);
+
 	}
 
+	componentDidMount(){
+		/*this.state.modalites.forEach(element=>{
+			console.log("valeur"+element.idModalite+this.props.idModule);
+			document.getElementById("valeur"+element.idModalite+this.props.idModule).style.display = "none";
+		});*/
+	}
+
+	componentDidUpdate(){
+		/*this.state.modalites.forEach(element=>{
+			console.log("valeur"+element.idModalite+this.props.idModule);
+			document.getElementById("valeur"+element.idModalite+this.props.idModule).style.display = "none";
+		});*/
+	}
 
 	//loop dans formState.modules pour trouver les bonnes modalités
 
 	render(){
-		let modalites = [];
 		this.props.formState.modules.forEach(element=>{
 			if(element.idModule===parseInt(this.props.idModule)){
-				modalites = element.modalites;
+				this.state = {modalites: element.modalites};
+				//this.state.modalites = element.modalites;
 			}
-			console.log(modalites);
 		});
 		return <div className="d-flex flex-row">
 			{
-				modalites.map(element=>{
-					return <h3 className="p2" key={element.idModalite}>{element.nom}</h3>
+				this.state.modalites.map(element=>{
+					return <DisplayOneModalite key={element.idModalite} modalite={element} modalites={this.state.modalites}
+												idModule={this.props.idModule} formState={this.props.formState}
+											   changeForm={this.props.changeForm}/>
 				})
 			}
 

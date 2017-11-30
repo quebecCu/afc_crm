@@ -5,6 +5,7 @@ class ModuleCreation extends React.Component{
 	constructor(props){
 		super(props);
 		this._onChangeModule=this._onChangeModule.bind(this);
+
 	}
 
 	_onChangeModule(event){
@@ -45,19 +46,22 @@ class ModuleCreation extends React.Component{
 		//modulesContrat.push({idModule: event.target.value, modalites:[]});
 		this.idModule=event.target.value;
 		this.isSelected=true;
-		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, modulesChoisis:modulesContrat} })
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, modulesChoisis:modulesContrat} });
+
+
+
 	}
 
 	//select list sur les types de module. Une fois le module sélec, ca va loop dans ses modalités
 	render(){
 		return <div className="d-flex flex-column">
 			<div className="p-2"><select
-					id="module"
+					id={"module"+this.props.idComponent}
 					name="module"
 					className="form-control"
 					onChange={this._onChangeModule}
 					>
-					<option disabled value=""> -- select an option -- </option>
+					<option value=""> -- select an option -- </option>
 					{
 						this.props.formState.modules.map((element) => {
 							return (<option

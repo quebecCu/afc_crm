@@ -303,6 +303,265 @@ router.delete('/customer/:id', expressJwtIp.ip(), function (req, res) {
 	//}
 });
 
+let getProviderAttributes = () =>
+squel.select()
+.from('users."FOURNISSEUR_AFFICHAGE"', 'aff')
+.field("aff.idattrfournisseur")
+.field("posx")
+.field("posy")
+.field("height")
+.field("width")
+.field("minwidth")
+.field("libelletype")
+//.field("type.forme", "secpattern")
+.field("label")
+.field("description")
+.field("valeur_defaut")
+.field("ext")
+.left_join('public."FOURNISSEUR_ATTR"', "att", "aff.idattrfournisseur = att.idattrfournisseur")
+.left_join('public."TYPE"', "type", "att.idtype = type.idtype")
+.where("affichage = true")
+.toString();
+
+
+let createProviderAttribute = (attribute) =>
+squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.into('public."FOURNISSEUR_ATTR"')
+.set("idtype", attribute.idtype)
+.set("label", attribute.label)
+.set("description", attribute.description)
+.set("forme", attribute.forme)
+.set("valeur_defaut", attribute.valeur_defaut)
+.set("ext", attribute.ext)
+.returning('*')
+.toParam();
+
+let createProviderDis = (attribute) =>
+squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.into('users."FOURNISSEUR_AFFICHAGE"')
+.set("idattrfournisseur", attribute.idattrfournisseur)
+.set("posx", attribute.posx)
+.set("posy", attribute.posy)
+.set("height", attribute.height)
+.set("width", attribute.width)
+.set("minwidth", attribute.minwidth)
+.set("affichage", true)
+.toParam();
+
+let hideProviderAttribute = (idattribute) =>
+squel.update()
+.table('users."FOURNISSEUR_AFFICHAGE"')
+.set("affichage", false)
+.where("idattrfournisseur = ?", idattribute)
+.toParam();
+
+let updateProviderAttribute = (attribute) =>
+squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
+.table('public."FOURNISSEUR_ATTR"')
+.set("label", attribute.label)
+.set("description", attribute.description)
+.set("forme", attribute.forme)
+.set("valeur_defaut", attribute.valeur_defaut)
+.set("ext", attribute.ext)
+.where("idattrfournisseur = ?", attribute.idattrfournisseur)
+.toParam();
+
+let updateProviderAttributeDis = (attribute) =>
+squel.update()
+.table('users."FOURNISSEUR_AFFICHAGE"')
+.set("posx", attribute.posx)
+.set("posy", attribute.posy)
+.set("height", attribute.height)
+.set("width", attribute.width)
+.set("minwidth", attribute.minwidth)
+.where("idattrfournisseur = ?", attribute.idattrfournisseur)
+.toParam();
+
+router.get('/provider', expressJwtIp.ip(), function (req, res) {
+console.log('route GET /positions/provider');
+/*var tokenReceived = req.get("authorization");
+var secret = 'aplsszjknbndsj';
+// decode
+var decoded = jwt.decode(tokenReceived, secret);
+var _ipReceived = decoded.ip;
+var _ip = res.locals.ip;*/
+
+//if (!!decoded && (_ip === _ipReceived)) {
+
+	db.any(getProviderAttributes())
+		.then((attributes) => {
+			console.log(JSON.stringify(attributes));
+			res.send({
+				status: 'success',
+				message: attributes
+			});
+		})
+		.catch(error => {
+			res.send({
+				status: 'fail',
+				message: error.toString() //'Les attributs du fournisseur n\'ont pas pu être récupérés'
+			});
+		})
+//}
+});
+
+router.post('/create/provider', expressJwtIp.ip(), function (req, res) {
+console.log('route POST positions/create/provider');
+/*var tokenReceived = req.get("authorization");
+var secret = 'aplsszjknbndsj';
+// decode
+var decoded = jwt.decode(tokenReceived, secret);
+var _ipReceived = decoded.ip;
+var _ip = res.locals.ip;*/
+
+//if (!!decoded && (_ip === _ipReceived)) {
+	var attribute = {
+		label: req.body.label,
+		idtype: req.body.idtype,
+		description: req.body.description,
+		forme: req.body.forme,
+		valeur_defaut: req.body.valeur_defaut,
+		ext: req.body.ext,
+		posx: req.body.posx,
+		posy: req.body.posy,
+		height: req.body.height,
+		minwidth: req.body.minwidth,
+		width: req.body.width
+	};
+
+	db.tx(function (t) {
+		return t.one(createProviderAttribute(attribute))
+		.then((newAttribute) => {
+			console.log(JSON.stringify(attribute));
+			attribute.idattrfournisseur = newAttribute.idattrfournisseur;
+			return t.none(createProviderDis(attribute))
+			.then(() => {
+				res.send({
+					status: 'success',
+					message:  null
+				});
+			})
+		})
+	})
+	.catch(error => {
+			res.send({
+				status: 'fail',
+				message: error.toString() //'Le nouvel attribut de l\'entreprise n\'a pas pu être créé'
+			});
+	});
+
+//}
+});
+
+router.post('/update/provider', expressJwtIp.ip(), function (req, res) {
+console.log('route POST positions/update/provider');
+/*var tokenReceived = req.get("authorization");
+var secret = 'aplsszjknbndsj';
+// decode
+var decoded = jwt.decode(tokenReceived, secret);
+var _ipReceived = decoded.ip;
+var _ip = res.locals.ip;*/
+
+//if (!!decoded && (_ip === _ipReceived)) {
+
+	var attribute = {
+		idattrfournisseur: req.body.id,
+		label: req.body.label,
+		description: req.body.description,
+		forme: req.body.forme,
+		valeur_defaut: req.body.valeur_defaut,
+		ext: req.body.ext
+	};
+console.log(attribute);
+console.log(updateProviderAttribute(attribute));
+	db.none(updateProviderAttribute(attribute))
+	.then(() => {
+		res.send({
+			status: 'success',
+			message:  null
+		});
+	})
+	.catch(error => {
+			res.send({
+				status: 'fail',
+				message: error.toString() //'L'attribut n\'a pas pu être mis à jour'
+			});
+	});
+
+//}
+});
+
+router.post('/update/provider/display', expressJwtIp.ip(), function (req, res) {
+console.log('route POST positions/update/provider/display');
+/*var tokenReceived = req.get("authorization");
+var secret = 'aplsszjknbndsj';
+// decode
+var decoded = jwt.decode(tokenReceived, secret);
+var _ipReceived = decoded.ip;
+var _ip = res.locals.ip;*/
+
+//if (!!decoded && (_ip === _ipReceived)) {
+	var attributes = req.body.layout;
+	db.tx(t => {
+	    const queries = attributes.map(attribute => {
+			let newAttribute = {
+				idattrfournisseur: attribute.i,
+				posx: attribute.x,
+				posy: attribute.y,
+				height: attribute.h,
+				minwidth: attribute.minW,
+				width: attribute.w
+			};
+	        return t.none(updateProviderAttributeDis(newAttribute));
+	    });
+	    return t.batch(queries);
+	})
+	    .then(() => {
+	    		res.send({
+				status: 'success',
+				message:  null
+			});
+	    })
+	    .catch(error => {
+	    		res.send({
+				status: 'fail',
+				message: error.toString() //'La position des attributs n\'a pas pu être mise à jour'
+			});
+	    });
+
+//}
+});
+
+
+router.delete('/provider/:id', expressJwtIp.ip(), function (req, res) {
+console.log('route DELETE positions/provider');
+/*var tokenReceived = req.get("authorization");
+var secret = 'aplsszjknbndsj';
+// decode
+var decoded = jwt.decode(tokenReceived, secret);
+var _ipReceived = decoded.ip;
+var _ip = res.locals.ip;*/
+
+//if (!!decoded && (_ip === _ipReceived)) {
+	let id = req.params.id;
+
+	db.none(hideProviderAttribute(id))
+			.then(() => {
+				res.send({
+					status: 'success',
+					message:  null
+				});
+			})
+			.catch(error => {
+					res.send({
+						status: 'fail',
+						message: error.toString() //'L'attribut n\'a pas pu être supprimé'
+					});
+			});
+
+//}
+});
+
 /*db.multi(getUserById(id) + ";" + getEntitiesDisplayed())
 	.spread((attributes) => {
 		console.log(JSON.stringify(userRetrieved));
