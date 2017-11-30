@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../style/RechercheComponent.css';
 
 class RechercheComponent extends Component {
@@ -15,20 +15,21 @@ class RechercheComponent extends Component {
 		this._filtre = this._filtre.bind(this);
 		this._hardReset = this._hardReset.bind(this);
 	}
-	_changeNomEntreprise (event){
-		this._emitChange({...this.props.formState , nomEntreprise: event.target.value});
-		this._filtre ();
+
+	_changeNomEntreprise(event) {
+		this._emitChange({...this.props.formState, nomEntreprise: event.target.value});
+		this._filtre();
 	}
 
 	_reset() {
-		let newFormState={
-					nomEntreprise:'',
-					nomEmploye: '',
-					numeroPolice:'',
-					nomAssureur:'',
-					moisRenouvellement:'',
-					clientActif: 'actif',
-					statutProspect: 'false'
+		let newFormState = {
+			nomEntreprise: '',
+			nomEmploye: '',
+			numeroPolice: '',
+			nomAssureur: '',
+			moisRenouvellement: '',
+			clientActif: 'actif',
+			statutProspect: 'false'
 		};
 		document.getElementById("nomEmploye").value = "";
 		document.getElementById("nomAssureur").value = "";
@@ -37,18 +38,18 @@ class RechercheComponent extends Component {
 		document.getElementById("nomEntreprise").value = "";
 		document.getElementById("prospects").value = "";
 		this.props.changeFormColl(newFormState);
-		this._filtre ();
+		this._filtre();
 	}
 
 	_hardReset() {
-		let newFormState={
-					nomEntreprise:'',
-					nomEmploye: '',
-					numeroPolice:'',
-					nomAssureur:'',
-					moisRenouvellement:'',
-					clientActif: 'actif',
-					statutProspect: 'false'
+		let newFormState = {
+			nomEntreprise: '',
+			nomEmploye: '',
+			numeroPolice: '',
+			nomAssureur: '',
+			moisRenouvellement: '',
+			clientActif: 'actif',
+			statutProspect: 'false'
 		};
 		document.getElementById("nomEmploye").value = "";
 		document.getElementById("nomAssureur").value = "";
@@ -58,40 +59,45 @@ class RechercheComponent extends Component {
 		document.getElementById("selectedStatut").value = "";
 		document.getElementById("prospects").value = "";
 		this.props.changeFormColl(newFormState);
-		this._filtre ();
+		this._filtre();
 	}
 
-	 componentDidMount() {
-		 this._reset();
-	    }
-	_changeNomEmploye (event){
-		this._emitChange({...this.props.formState , nomEmploye: event.target.value});
-		this._filtre ();
-	}
-	_changeMoisRenouvellement (event){
-		this._emitChange({...this.props.formState , moisRenouvellement: event.target.value});
-		this._filtre ();
-	}
-	_changeNomAssureur (event){
-		this._emitChange({...this.props.formState , nomAssureur: event.target.value});
-		this._filtre ();
-	}
-	_changeNumeroPolice(event){
-		this._emitChange({...this.props.formState , numeroPolice: event.target.value});
-		this._filtre ();
+	componentDidMount() {
+		this._reset();
 	}
 
-	_filtre (){
-		var inputNumeroPolice,inputNomEmploye,inputNomAssureur,inputNomEntreprise,inputMoisRenouvellement, inputSelectedStatut,
-			inputProspect, table, tr,td0,td1, td2,td3, td4, td5,td6, i;
+	_changeNomEmploye(event) {
+		this._emitChange({...this.props.formState, nomEmploye: event.target.value});
+		this._filtre();
+	}
 
-		inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
-		inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
-		inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
+	_changeMoisRenouvellement(event) {
+		this._emitChange({...this.props.formState, moisRenouvellement: event.target.value});
+		this._filtre();
+	}
+
+	_changeNomAssureur(event) {
+		this._emitChange({...this.props.formState, nomAssureur: event.target.value});
+		this._filtre();
+	}
+
+	_changeNumeroPolice(event) {
+		this._emitChange({...this.props.formState, numeroPolice: event.target.value});
+		this._filtre();
+	}
+
+	_filtre() {
+		var inputNumeroPolice, inputNomEmploye, inputNomAssureur, inputNomEntreprise, inputMoisRenouvellement,
+			inputSelectedStatut,
+			inputProspect, table, tr, td0, td1, td2, td3, td4, td5, td6, i;
+
 		inputNomEntreprise = document.getElementById("nomEntreprise").value.toUpperCase();
-		inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
+		inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
 		inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
 		inputProspect = document.getElementById("prospects").value.toUpperCase();
+		inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
+		inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
+		inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 
 		table = document.getElementById("PageCollectivesClientsTable");
 		tr = table.getElementsByTagName("tr");
@@ -101,9 +107,9 @@ class RechercheComponent extends Component {
 			td1 = tr[i].getElementsByTagName("td")[1];
 			td2 = tr[i].getElementsByTagName("td")[2];
 			td3 = tr[i].getElementsByTagName("td")[3];
-			if (td0 || td1 || td2 || td3 ) {
-				if ( td3.innerHTML.toUpperCase().indexOf(inputMoisRenouvellement) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNomEntreprise) > -1 > -1
-						&& td2.innerHTML.toUpperCase().indexOf(inputNumeroPolice) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomEmploye) > -1) {
+			if (td0 || td1 || td2 || td3) {
+				if (td3.innerHTML.toUpperCase().indexOf(inputProspect) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNomEntreprise) > -1
+					&& td2.innerHTML.toUpperCase().indexOf(inputSelectedStatut) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomEmploye) > -1) {
 					tr[i].style.display = "";
 				} else {
 					tr[i].style.display = "none";
@@ -112,35 +118,40 @@ class RechercheComponent extends Component {
 		}
 	}
 
-	_emitChange (newFormState){
+	_emitChange(newFormState) {
 		this.props.changeFormColl(newFormState);
 	}
 
 	render() {
 
-		return(
-				<form action="" id="recherche" className="container-fluid">
-				<input type="text" id ="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise} />
-				<input type="text" id ="nomEmploye" placeholder="Nom employé" onChange={this._changeNomEmploye}  value={this.props.formState.nomEmploye} />
-				<input type="text" id ="numeroPolice" placeholder="N° police" onChange={this._changeNumeroPolice} value={this.props.formState.numeroPolice}/>
-				<input type="text" id ="moisRenouvellement" placeholder="Mois renouvellement" onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement} />
-				<input type="text" id ="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}  value={this.props.formState.nomAssureur}/>
+		return (
+			<form action="" id="recherche" className="container-fluid">
+				<input type="text" id="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise}
+					   value={this.props.formState.nomEntreprise}/>
+				<input type="text" id="nomEmploye" placeholder="Nom employé" onChange={this._changeNomEmploye}
+					   value={this.props.formState.nomEmploye}/>
+				<input type="text" id="numeroPolice" placeholder="N° police" onChange={this._changeNumeroPolice}
+					   value={this.props.formState.numeroPolice}/>
+				<input type="text" id="moisRenouvellement" placeholder="Mois renouvellement"
+					   onChange={this._changeMoisRenouvellement} value={this.props.formState.moisRenouvellement}/>
+				<input type="text" id="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}
+					   value={this.props.formState.nomAssureur}/>
 
-				<select  required id = "selectedStatut" onChange={this._filtre} >
-				<option value=""  >-- Choisir le statut --</option>
-				<option value="actif" selected="selected" >Actif</option>
-				<option value="annulé">Annulé</option>
+				<select required id="selectedStatut" onChange={this._filtre}>
+					<option value="">-- Choisir le statut --</option>
+					<option value="actif" selected="selected">Actif</option>
+					<option value="annulé">Annulé</option>
 				</select>
 
-				<select  required name="prospects" id = "prospects" onChange={this._filtre} >
-				<option value=""  selected="selected">-- Type prospect --</option>
-				<option value="oui">Prospect</option>
-				<option value="non"> Non prospect </option>
+				<select required name="prospects" id="prospects" onChange={this._filtre}>
+					<option value="" selected="selected">-- Type prospect --</option>
+					<option value="oui">Prospect</option>
+					<option value="non"> Non prospect</option>
 				</select>
-					<input type="reset" value="Reset" id="reset"  onClick= {this._hardReset}/>
-					</form>
+				<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
+			</form>
 		);
 	}
 }
 
-export default (RechercheComponent   )
+export default (RechercheComponent)
