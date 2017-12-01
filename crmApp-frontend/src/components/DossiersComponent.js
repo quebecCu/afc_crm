@@ -7,8 +7,26 @@ class DossiersComponent extends Component {
 	}
 
 	handleClick(client, event) {
-		if (this.props.collective)
+		if (this.props.collective) {
+			this.props.displaySub(true);
+			let links = this.props.links;
+			let check = true;
+			links.forEach(link => {
+				if(link.idCustomer === client.id) {
+					check = false;
+				}
+			});
+			if(check) {
+				this.props.collective.forEach(element => {
+					if(client.id === element.id) {
+						links.push({name: element.nom_groupe, view: 'customer', idCustomer: client.id});
+					}
+				});
+				this.props.addSub(links);
+			}
+			this.props.changeLoading(true);
 			this.props.handleClick(client, event);
+		}
 	}
 
 	componentDidUpdate() {

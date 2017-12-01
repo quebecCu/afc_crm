@@ -3,8 +3,7 @@ import {
 } from "../actions/crmClientList";
 
 let initialState = {
-	currentClient: {},
-	clientOptionnalRows: {
+	client: {
 		facultatif: []
 	},
 	errors: '',
@@ -17,8 +16,7 @@ export default function reducer(state = initialState, action) {
 		case BIND_CLIENT_DATA:
 			return {
 				...state,
-				currentClient: action.clientData,
-				clientOptionnalRows: action.clientOptionnalRows,
+				client: action.clientOptionnalRows,
 				errors: ''
 			};
 			break;

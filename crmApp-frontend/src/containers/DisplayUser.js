@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/CreationUser.css';
+import LoadingAnimation from "../components/LoadingAnimation";
 
 class DisplayUser extends React.Component{
 
@@ -28,9 +29,15 @@ class DisplayUser extends React.Component{
 	render(){
 
 		return (
-		<div className="container">
-			<div className="page-header" style={{paddingBottom:20}}>
-				<h1>Consultation de l'utilisateur {this.props.user.titre} {this.props.user.name} {this.props.user.lastname}</h1></div>
+			<div>
+				{
+					this.props.loading && <LoadingAnimation/>
+				}
+				{
+					!this.props.loading &&
+					<div className="container">
+						<div className="page-header" style={{paddingBottom:20}}>
+							<h1>Consultation de l'utilisateur {this.props.user.titre} {this.props.user.name} {this.props.user.lastname}</h1></div>
 						<div className="row" style={{textAlign:"left", paddingBottom:10}}>
 							<div className="col-sm">
 								<span className="titre">Nom :</span>
@@ -61,19 +68,22 @@ class DisplayUser extends React.Component{
 							<div className="col-sm"><span className="titre">Permissions :</span></div>
 						</div>
 						<ul>
-						 {
+							{
 
-							this.props.user.userPerms.map(element=>{
-								return(<div className="row col-sm " style={{textAlign:"left"}} key={element.id}><li><span className="valeur">Droit de {this._getPermission(element.level)} sur la partie {element.group}</span></li></div>);
+								this.props.user.userPerms.map(element=>{
+									return(<div className="row col-sm " style={{textAlign:"left"}} key={element.id}><li><span className="valeur">Droit de {this._getPermission(element.level)} sur la partie {element.group}</span></li></div>);
 
-						})}
+								})}
 						</ul>
-			<div className="row">
-				<div className="col-sm" style={{textAlign:"left"}}><button onClick={()=>this.props.changeView("UpdateUser")}>Modifier </button></div>
-				<div className="col-sm" style={{textAlign:"left"}}><button className="delete" onClick={this._handleClickDelete}>Supprimer</button></div>
-			</div>
+						<div className="row">
+							<div className="col-sm" style={{textAlign:"left"}}><button onClick={()=>this.props.changeView("UpdateUser")}>Modifier </button></div>
+							<div className="col-sm" style={{textAlign:"left"}}><button className="delete" onClick={this._handleClickDelete}>Supprimer</button></div>
+						</div>
 
-		</div>
+					</div>
+				}
+
+			</div>
 		);
 	}
 }

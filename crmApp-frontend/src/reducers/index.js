@@ -16,6 +16,7 @@ import crmNavBar from './crmNavBar';
 import crmSuppliersContainer from './crmSuppliersContainer';
 import crmGridSuppliersLayout from './crmGridSuppliersLayout';
 import crmContract from './crmContract';
+import crmContacts from './crmContacts';
 // TODO les autres reducers a rajouter ici
 
 
@@ -35,7 +36,8 @@ const appReducer = combineReducers({
 	crmNavBar,
 	crmSuppliersContainer,
 	crmGridSuppliersLayout,
-	crmContract
+	crmContract,
+	crmContacts
 });
 
 const rootReducer = (state, action) => {

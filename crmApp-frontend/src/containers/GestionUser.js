@@ -7,6 +7,7 @@ import DisplayUser from './DisplayUser';
 import {changeViewUserManagement, getListUser, requestUserById, deleteUser} from "../actions/crmUserManagement";
 import {getOperations} from "../actions/crmCreateUser";
 import {addSubUserNav, displaySubUserNav} from "../actions/crmNavBar";
+import {changeLoading} from "../actions/crmDashboard";
 
 class GestionUser extends React.Component {
 
@@ -19,13 +20,15 @@ class GestionUser extends React.Component {
 	render() {
 		let {view, formState} = this.props.crmUserManagement;
 		let {linksSubUser} = this.props.crmNavBar;
+		let {loading} = this.props.crmDashboard;
 		return <div id="UserManagement" >
-		
+
 		<div className="view text-center" >
 					<h1>Liste des utilisateurs: </h1>
 				{
 					view === "" && <ListUsers formState={formState} handleClick={this.props.changeViewUserManagement}
 											  displayUser={this.props.requestUserById} addSub={this.props.addSubUserNav}
+											  changeLoading={this.props.changeLoading}
 											  displaySub={this.props.displaySubUserNav} linksSubUser={linksSubUser}/>
 				}
 				{
@@ -38,6 +41,7 @@ class GestionUser extends React.Component {
 					view === "DisplayUser"  && <DisplayUser formState={formState} user={formState.userToDisplay}
 															changeView={this.props.changeViewUserManagement}
 															getOperations={this.props.getOperations}
+															loading={loading}
 															deleteUser={this.props.deleteUser}/>
 				}
 				{
@@ -58,7 +62,8 @@ function mapStateToProps (state) {
 
     return{
         crmUserManagement: state.crmUserManagement,
-		crmNavBar: state.crmNavBar
+		crmNavBar: state.crmNavBar,
+		crmDashboard: state.crmDashboard
     }
 }
 
@@ -86,6 +91,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		displaySubUserNav: (display) => {
         	dispatch(displaySubUserNav(display));
+		},
+		changeLoading: (newLoading) => {
+        	dispatch(changeLoading(newLoading));
 		}
     }
 };

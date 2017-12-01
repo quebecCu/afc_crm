@@ -64,7 +64,6 @@ export function * getGridLayout (){
 							codePostal: '',
 							telephone: '',
 							extension: '',
-							date: '',
 							activite: '1',
 							etat: '1',
 							provenance: '1',
@@ -450,7 +449,11 @@ export function * sendUpdateField() {
 						descField: ''
 					}));
 					store.dispatch(requestGrid());
-				} else {
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
 					alert('Erreur lors de la modification des positions');
 				}
 			})
@@ -536,7 +539,6 @@ export function * getGridLayoutToModify() {
 						codePostal: champs.codepostal,
 						telephone: champs.tel_principal,
 						extension: champs.ext_tel_principal,
-						date: champs.date_creation,
 						activite: activite,
 						etat: etat,
 						provenance: provenance,

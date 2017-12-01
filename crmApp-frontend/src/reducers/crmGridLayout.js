@@ -25,7 +25,6 @@ let initialState = {
 		codePostal: '',
 		telephone: '',
 		extension: '',
-		date: '',
 		activite: '1',
 		etat: '1',
 		provenance: '1',

@@ -11,6 +11,7 @@ import {
 
 import axios from 'axios';
 import {store} from '../store';
+import {changeLoading} from "../actions/crmDashboard";
 
 
 export function* createUser() {
@@ -198,8 +199,6 @@ export function* getDefaultPerms() {
 
 		yield take(GET_DEFAULTPERMS);
 
-		console.log("on passe par getDefaultPerms middleware");
-
 		var tokenToSend = localStorage.getItem("cookieSession");
 
 		if (tokenToSend === undefined)
@@ -231,8 +230,6 @@ export function* getDefaultPerms() {
 export function* getRoles() {
 	while (true) {
 		yield take(GET_ROLES);
-
-		console.log('loading user roles from middleware');
 
 		//communication avec server
 		var server = "http://localhost:3002/users/getRoles";
@@ -266,8 +263,6 @@ export function* getListUsers() {
 	while (true) {
 		yield take(GET_LIST_USERS);
 
-		console.log('loading users from back-end');
-
 		var server = "http://localhost:3002/users/list";
 		var backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/list';
@@ -299,8 +294,6 @@ export function* requestUserToDisplay() {
 	while (true) {
 		let user = yield take(REQUEST_USER_BY_ID);
 
-		console.log('loading user to display from back-end' + user.id);
-
 		let tokenToSend = localStorage.getItem("cookieSession");
 		if (tokenToSend === undefined)
 			tokenToSend = "";
@@ -317,9 +310,8 @@ export function* requestUserToDisplay() {
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					console.log('user' + response.data.message);
-
 					store.dispatch(updateUserToDisplay(response.data.message));
+					store.dispatch(changeLoading(false));
 				} else {
 					alert('Erreur lors du chargement des utilisateurs');
 				}
