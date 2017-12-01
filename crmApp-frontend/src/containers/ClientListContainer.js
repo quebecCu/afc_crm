@@ -3,6 +3,8 @@ import DossiersComponent from "../components/DossiersComponent";
 import {getClientRequest} from "../actions/crmClientList";
 import '../style/PageAccueil.css';
 import {connect} from "react-redux";
+import {addSubCustomerNav, displaySubCustomerNav} from "../actions/crmNavBar";
+import {changeLoading} from "../actions/crmDashboard";
 
 class ClientListContainer extends Component {
 
@@ -21,7 +23,7 @@ class ClientListContainer extends Component {
 	}
 
 	_handleClientClick(client, event) {
-		(this.props.getClientRequest(client), this.props.handleClick(event));
+		(this.props.getClientRequest(client.id), this.props.handleClick(event));
 	}
 
 	handleClick0() {
@@ -97,7 +99,7 @@ class ClientListContainer extends Component {
 	}
 
 	render() {
-
+		let {linksSubCustomer} = this.props.crmNavBar;
 		this.table = (
 			<div style={{overflow: 'auto', height: '300px',}}>
 				<table id="PageCollectivesClientsTable" className="table">
@@ -113,7 +115,11 @@ class ClientListContainer extends Component {
 					</tr>
 					</thead>
 					<DossiersComponent collective={this.props.dossiersState}
-									   handleClick={this._handleClientClick}/>
+									   handleClick={this._handleClientClick}
+									   displaySub={this.props.displaySubCustomerNav}
+									   addSub={this.props.addSubCustomerNav}
+									   links={linksSubCustomer}
+									   changeLoading={this.props.changeLoading}/>
 				</table>
 			</div>
 		);
@@ -124,7 +130,8 @@ class ClientListContainer extends Component {
 function mapStateToProps(state) {
 
 	return {
-		crmClientList: state.crmClientList
+		crmClientList: state.crmClientList,
+		crmNavBar: state.crmNavBar
 	}
 }
 
@@ -132,6 +139,15 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getClientRequest: (idClient) => {
 			dispatch(getClientRequest(idClient));
+		},
+		displaySubCustomerNav: (display) => {
+			dispatch(displaySubCustomerNav(display));
+		},
+		addSubCustomerNav: (newSubCustomer) => {
+			dispatch(addSubCustomerNav(newSubCustomer))
+		},
+		changeLoading: (newLoading) => {
+			dispatch(changeLoading(newLoading))
 		}
 	}
 };

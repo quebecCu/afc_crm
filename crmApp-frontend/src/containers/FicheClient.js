@@ -1,6 +1,8 @@
 import React from 'react';
 import TitreValeur from "../components/TitreValeur";
 //import '../style/FicheClient.css';
+import {Responsive, WidthProvider} from 'react-grid-layout';
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class FicheClient extends React.Component {
 	constructor(props) {
@@ -57,31 +59,55 @@ class FicheClient extends React.Component {
 	}
 
 	render() {
-		var client = this.props.client;
+		let client = this.props.client;
 		return (
 			<div className="container">
 				<h1>Assurances collectives</h1>
 				<h2>Fiche client</h2>
 				<div className="grandTitre">
-					<TitreValeur titre="Nom du groupe" valeur={client.nom_groupe}/>
+					<TitreValeur titre="Nom du groupe" valeur={client.nom}/>
 				</div>
 				<div className="unePartie">
 					<TitreValeur titre="Date" valeur={client.date_creation}/>
 					<TitreValeur titre="Responsable" valeur={client.responsable}/>
-					<TitreValeur titre="Activité" valeur={client.activite}/>
+					<TitreValeur titre="Activité" valeur={client.forme_type}/>
 					<TitreValeur titre="Etat" valeur={client.etat}/>
-					<TitreValeur titre="Est un prospect" valeur={client.prospect}/>
-					<TitreValeur titre="Rue" valeur=''/>
-					<TitreValeur titre="Ville" valeur=''/>
-					<TitreValeur titre="Province" valeur=''/>
-					<TitreValeur titre="Code postal" valeur=''/>
-
-					{this.props.optionnalFields.map(element => {
-						return (
-							<TitreValeur key={element.idRow} titre={Object.keys(element)[1]} valeur={element[Object.keys(element)[1]]}/>
-						);
-					})}
+					{
+						client.prospect && <TitreValeur titre="Est un prospect" valeur="Oui"/>
+					}
+					{
+						!client.prospect && <TitreValeur titre="Est un prospect" valeur="Non"/>
+					}
+					<TitreValeur titre="Relevés" valeur={client.releve}/>
 				</div>
+				<div className="unePartie">
+					<TitreValeur titre="Téléphone principal" valeur={client.tel_principal}/>
+					<TitreValeur titre="Extension" valeur={client.ext_tel_principal}/>
+					<TitreValeur titre="Rue" valeur={client.rue}/>
+					<TitreValeur titre="Ville" valeur={client.ville}/>
+					<TitreValeur titre="Province" valeur={client.province}/>
+					<TitreValeur titre="Code postal" valeur={client.codepostal}/>
+				</div>
+				<div className="unePartie">
+					<TitreValeur titre="Notes" valeur={client.notes}/>
+				</div>
+
+					<ResponsiveReactGridLayout className="layout" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+											   breakpoints={{lg: 800, md: 600, sm: 468, xs: 380, xxs: 0}} autoSize={true}
+											   compactType={null}>
+						{
+							this.props.optionnalFields.map(element => {
+								return (
+									<div key={element.idRow} className="form-group">
+										<TitreValeur key={element.idRow} titre={element.nom} valeur={element.valeur}/>
+									</div>
+								);
+							})
+						}
+
+					</ResponsiveReactGridLayout>
+
+
 				<div className="grandTitre">
 					<TitreValeur valeur="Contacts"/>
 				</div>
@@ -101,12 +127,14 @@ class FicheClient extends React.Component {
 					<TitreValeur titre="Infos complémentaires"/>
 				</div>
 				<div className="form-group"> 
-					<button type="button" className="btn btn-danger"
-							onClick={this._handleDelete} value={this.props.client.id}>
-						Supprimer la fiche client
-					</button> 
+					{
+						this.props.isAdmin && <button type="button" className="btn btn-danger"
+													  onClick={this._handleDelete} value={this.props.client.idclient}>
+													Passer la fiche client en annulé
+												</button>
+					}
 					<button type="button" className="btn btn-primary" 
-							onClick={this._handleModify} value={this.props.client.id}> 
+							onClick={this._handleModify} value={this.props.client.idclient}> 
 						Modifier la fiche client 
 					</button> 
 				</div>

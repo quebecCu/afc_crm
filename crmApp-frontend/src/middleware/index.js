@@ -7,9 +7,10 @@ import {FournisseursFlow} from "./FournisseurSaga";
 import{gestionUserFlow} from "./GestionUserSaga";
 import {GridFlow} from './GridLayoutSaga'
 import {ClientListFlow} from "./ClientListSaga";
+import {ContactsFlow} from "./ContactsSaga";
 
 
 export default function * root(){
 
-	yield all ([AuthFlow(), ResetEmailFlow(), SearchCollectiveFlow(), FournisseursFlow(), ResetPasswordFlow(), gestionUserFlow(), GridFlow(), ClientListFlow()])
+	yield all ([AuthFlow(), ResetEmailFlow(), SearchCollectiveFlow(), FournisseursFlow(), ResetPasswordFlow(), gestionUserFlow(), GridFlow(), ClientListFlow(), ContactsFlow()])
 }

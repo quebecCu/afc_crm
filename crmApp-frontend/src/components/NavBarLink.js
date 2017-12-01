@@ -13,12 +13,20 @@ class NavBarLink extends Component {
             this.props.resetView(this.props.reset);
         }
         if(this.props.idUser) {
+        	this.props.changeLoading(true);
         	this.props.displayUser(this.props.idUser);
+		}
+		if(this.props.idCustomer) {
+        	this.props.changeLoading(true);
+			this.props.displayUser(this.props.idCustomer);
 		}
     }
 
     _handleDelete() {
-    	this.props.deleteSub(this.props.idUser);
+		if(this.props.idUser) {
+			this.props.deleteSub(this.props.idUser);		}
+		if(this.props.idCustomer) {
+			this.props.deleteSub(this.props.idCustomer);		}
 	}
 
     render() {
