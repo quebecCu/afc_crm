@@ -715,7 +715,8 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 				idprovenance: req.body.idprovenance,
 				prospect: req.body.prospect,
 				notes: req.body.notes,
-				facul: req.body.facultatif
+				facul: req.body.facultatif,
+				newcontacts: req.body.newcontacts
 			};
 
 		db.tx(t => {
@@ -730,7 +731,33 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 							const queries = client.facul.map(attribute => {
 						        return t.none(createClientFacul(client.idclient, attribute.id, attribute.value));
 							});
-						    return t.batch(queries);
+						    return t.batch(queries)
+						    		.then(() => {
+						    			const queriesContactNew = client.newcontacts.map(contact => {
+						    				let person = {
+						    						idclient: client.idclient,
+						    						prenom: contact.prenom,
+						    						nom: contact.nom,
+						    						idposte: contact.idposte,
+						    						titre: contact.titre,
+						    						num_tel_principal: contact.num_tel_principal,
+						    						ext_tel_principal: contact.ext_tel_principal,
+						    						mail: contact.mail,
+						    						estdecideur: contact.estdecideur
+						    					}
+						    					
+					    					return t.one(getIdTitre(person.titre))
+					    						.then(titre => {
+					    							person.idtitre = titre.idtitre;
+					    							return t.one(createPerson(person))
+					    								.then(personCreated => {
+					    									person.idpersonne = personCreated.idpersonne;
+					    									return t.none(createContact(person));
+					    								})
+					    					})
+					    				});
+						    			return t.batch(queriesContactNew);
+						    		})
 						})
 					})
 				})
@@ -822,26 +849,81 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 				idprovenance: req.body.idprovenance,
 				prospect: req.body.prospect,
 				notes: req.body.notes,
-				facul: req.body.facultatif
+				facul: req.body.facultatif,
+				updtcontacts: req.body.updtcontacts,
+				newcontacts: req.body.newcontacts,
+				delcontacts: req.body.delcontacts
 			};
 
 		db.tx(t => {
 			return t.none(updateAdresse(client))
 			.then(() => {	
-				console.log("1");
 				return t.none(updateClientOblig(client))
 				.then(() => {
-					console.log("2");
 					return t.none(updateEntrepriseOblig(client))
 					.then(() => {
-						console.log("3");
 						return t.none(deleteClientFacul(client.idclient))
 						.then(() => {
-							console.log("4");
 							const queries = client.facul.map(attribute => {
 						        return t.none(createClientFacul(client.idclient, attribute.id, attribute.value));
 							});
-						    return t.batch(queries);
+						    return t.batch(queries)
+					    			.then(() => {
+					    				const queriesContactNew = client.newcontacts.map(contact => {
+						    				let person = {
+						    						idclient: client.idclient,
+						    						prenom: contact.prenom,
+						    						nom: contact.nom,
+						    						idposte: contact.idposte,
+						    						titre: contact.titre,
+						    						num_tel_principal: contact.num_tel_principal,
+						    						ext_tel_principal: contact.ext_tel_principal,
+						    						mail: contact.mail,
+						    						estdecideur: contact.estdecideur
+						    					}
+						    					
+					    					return t.one(getIdTitre(person.titre))
+					    						.then(titre => {
+					    							person.idtitre = titre.idtitre;
+					    							return t.one(createPerson(person))
+					    								.then(personCreated => {
+					    									person.idpersonne = personCreated.idpersonne;
+					    									return t.none(createContact(person));
+					    								})
+					    					})
+					    				});
+					    				
+					    				const queriesContactUpdt = client.updtcontacts.map(contact => {
+						    				let person = {
+						    						idclient: client.idclient,
+						    						idpersonne: contact.idpersonne,
+						    						prenom: contact.prenom,
+						    						nom: contact.nom,
+						    						idposte: contact.idposte,
+						    						titre: contact.titre,
+						    						num_tel_principal: contact.num_tel_principal,
+						    						ext_tel_principal: contact.ext_tel_principal,
+						    						mail: contact.mail,
+						    						estdecideur: contact.estdecideur
+						    					}
+				    						return t.one(getIdTitre(person.titre))
+				    						.then(titre => {
+				    							person.idtitre = titre.idtitre;
+				    							return t.none(updatePerson(person))
+				    								.then(() => {
+				    									return t.none(updateContact(person));
+				    								})
+					    					})
+					    				});
+					    				
+					    				const queriesContactDel = client.delcontacts.map(contact => {
+					    				return t.none(deleteContact(contact.idpersonne, client.idclient))
+						    				.then(() => {
+						    					return t.none(deletePerson(contact.idpersonne));
+						    				})
+					    				})
+					    				return t.batch(queriesContactNew.concat(queriesContactUpdt.concat(queriesContactDel)));
+					    			});
 						})
 					})
 				})
