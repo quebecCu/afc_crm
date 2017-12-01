@@ -23,7 +23,8 @@ class ClientListContainer extends Component {
 	}
 
 	_handleClientClick(client, event) {
-		(this.props.getClientRequest(client.id), this.props.handleClick(event));
+		this.props.getClientRequest(client.id);
+		this.props.handleClick(event);
 	}
 
 	handleClick0() {
@@ -73,12 +74,12 @@ class ClientListContainer extends Component {
 				shouldSwitch = false;
 				x = rows[i].getElementsByTagName("TD")[n];
 				y = rows[i + 1].getElementsByTagName("TD")[n];
-				if (dir == "asc") {
+				if (dir === "asc") {
 					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
 						shouldSwitch = true;
 						break;
 					}
-				} else if (dir == "desc") {
+				} else if (dir === "desc") {
 					if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
 						shouldSwitch = true;
 						break;
@@ -90,7 +91,7 @@ class ClientListContainer extends Component {
 				switching = true;
 				switchcount++;
 			} else {
-				if (switchcount == 0 && dir == "asc") {
+				if (switchcount === 0 && dir === "asc") {
 					dir = "desc";
 					switching = true;
 				}

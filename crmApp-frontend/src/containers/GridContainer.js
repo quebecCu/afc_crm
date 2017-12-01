@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {GridCreationClient} from "../components/form/GridCreationCustomer/GridCreationClient";
 import {connect} from "react-redux";
 import {
-	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
+	changeGrid, changeLayout, createCustomerFile, createNewField, requestGrid,
 	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
@@ -79,7 +79,7 @@ class CreationClient extends Component {
     _handleChangeInput(event) {
     	let {grid} = this.props.crmGridLayout;
     	for (let champ = 0 ; champ < grid.length ; champ++) {
-    		if(parseInt(event.target.id) === grid[champ].idattrentreprise) {
+    		if(parseInt(event.target.id, 10) === grid[champ].idattrentreprise) {
 				grid[champ]= {...grid[champ] , value: event.target.value}
 			}
 		}

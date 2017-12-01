@@ -3,7 +3,7 @@ import axios from 'axios';
 import {store} from '../store';
 import {changeLoading} from "../actions/crmDashboard";
 import {
-	GET_CONTACTS, GET_POSTES_CONTACTS, getPostesContacts, updateContacts,
+	GET_CONTACTS, GET_POSTES_CONTACTS, updateContacts,
 	updatePostesContacts
 } from "../actions/crmContacts";
 

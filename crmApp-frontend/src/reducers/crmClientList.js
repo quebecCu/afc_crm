@@ -19,7 +19,6 @@ export default function reducer(state = initialState, action) {
 				client: action.clientOptionnalRows,
 				errors: ''
 			};
-			break;
 		default:
 			return state
 

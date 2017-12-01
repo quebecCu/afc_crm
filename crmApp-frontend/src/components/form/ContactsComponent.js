@@ -82,7 +82,7 @@ class ContactsComponent extends Component   {
 	render() {
 		return(
 			<div>
-				<h4>Contact {this.props.idContact}<span className="fa fa-plus-square" onClick={this._addContact}/> <span className="fa fa-minus-square" onClick={this._deleteContact}/></h4>
+				<h4>Contact {this.props.idContact + 1}<span className="fa fa-plus-square" onClick={this._addContact}/> <span className="fa fa-minus-square" onClick={this._deleteContact}/></h4>
 				<div className="form-group row">
 					<div className="col-4">
 						<label htmlFor="prenom" className="control-label">Prénom</label>

@@ -8,11 +8,11 @@ export function* getClient() {
 
 	while (true) {
 
-		var tokenToSend = localStorage.getItem("cookieSession");
-		if (tokenToSend == undefined)
+		let tokenToSend = localStorage.getItem("cookieSession");
+		if (tokenToSend === undefined)
 			tokenToSend = "";
 
-		var config = {
+		let config = {
 			headers: {
 				"Authorization": tokenToSend
 			}
@@ -21,7 +21,7 @@ export function* getClient() {
 		let clientReq = yield take(GET_CLIENT_REQ);
 		let id = clientReq.idClient;
 
-		var server = "http://localhost:3002/clients/" + id;
+		let server = "http://localhost:3002/clients/" + id;
 
 		axios.get(server, config)
 			.then(function (response) {

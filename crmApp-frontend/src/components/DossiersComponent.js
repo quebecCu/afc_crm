@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 
 class DossiersComponent extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	handleClick(client, event) {
 		if (this.props.collective) {
 			this.props.displaySub(true);
@@ -30,10 +26,12 @@ class DossiersComponent extends Component {
 	}
 
 	componentDidUpdate() {
-		var inputNumeroPolice, inputNomEmploye, inputNomAssureur, inputNomEntreprise, inputMoisRenouvellement,
+		/*let inputNumeroPolice, inputNomEmploye, inputNomAssureur, inputNomEntreprise, inputMoisRenouvellement,
 			inputSelectedStatut,
-			inputProspect, table, tr, td0, td1, td2, td3, i;
+			inputProspect;*/
+		let	table, tr, td0, td1, td2, td3, i;
 		if (document.getElementById("numeroPolice")) {
+			/*
 			inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
 			inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
 			inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
@@ -41,7 +39,7 @@ class DossiersComponent extends Component {
 			inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 			inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
 			inputProspect = document.getElementById("prospects").value.toUpperCase();
-
+			*/
 			table = document.getElementById("PageCollectivesClientsTable");
 			tr = table.getElementsByTagName("tr");
 			// Loop through all table rows, and hide those who don't match the search query

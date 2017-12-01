@@ -29,6 +29,7 @@ class ContactsContainer extends Component   {
 				{
 					arrayContacts.map((contact, index) => {
 						return <ContactsComponent postes={postes}
+												  key={index}
 												  formState={contact}
 												  contacts={arrayContacts}
 												  idContact={index}
