@@ -22,6 +22,8 @@ class Login extends Component   {
 		this._login = this._login.bind(this);
 	}
 
+	
+	
 	_login(e) {
 		e.preventDefault();
 		this.props.onSubmit(this.props.formState);
@@ -58,9 +60,9 @@ class Login extends Component   {
 						<div className="col text-center">
 							<div className="loginmodal-container">
 								<h1> Connexion </h1><br/>
-								<form method="POST" onSubmit = {this._login}>
-									<input className= "form-control" type='text' name="username" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
-									<input className= "form-control" type='password' name="password"  placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
+								<form method="POST" onSubmit = {this._login} id="login-form"  >
+									<input className= "form-control" type='text' name="username" id="usernameLogin" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
+									<input className= "form-control" type='password' name="password" id="passwordLogin" placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
 									<div className="form-group"><button type= "submit" className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
 								</form>
 								<div className="login-help">

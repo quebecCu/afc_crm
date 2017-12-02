@@ -1,6 +1,6 @@
 import {take, fork, put} from 'redux-saga/effects';
 import {
-	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN
+	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, logout
 } from '../actions/crmLogin';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
@@ -51,13 +51,18 @@ export function * loginFlow (){
 export function * logoutFlow() {
 	while(true){
 		yield take (LOGOUT);
+
 		yield put({ type: SET_AUTH, newAuthState: false });
 		yield put({ type: CLEAR_SESSION});
-
 		localStorage.removeItem("cookieSession");
-
-		yield put(push("/"))
-
+		let formStateLogout ={
+					username:'',
+					password: '',
+					email:''
+		};	
+		store.dispatch(logout(formStateLogout));
+		 yield put(push("/"))
+		
 
 	}
 }
