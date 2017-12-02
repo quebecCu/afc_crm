@@ -1,5 +1,6 @@
-div {
 
+
+div {
 
     box-sizing: border-box;
 }
@@ -65,4 +66,9 @@ div.titreValeur{
     color: lightslategrey;
     margin-left:2px;
 }
+
+#nomGroupe {
+	background-color: #add8e6;
+}
+
 

@@ -12,12 +12,26 @@ class FicheClient extends React.Component {
 		this.getPosition = this.getPosition.bind(this);
 		this._handleModify = this._handleModify.bind(this);
 		this._handleDelete = this._handleDelete.bind(this);
+		this.dropDownClient = this.dropDownClient.bind(this);
 	}
 
 	componentWillMount() {
 		this.setContactsState();
 	}
 
+	
+	dropDownClient(event){
+		    var x = document.getElementById("wrapperClient");
+		    if (x.className.indexOf("show") == -1) {
+		    	 x.className += "show";
+		    	document.getElementById("wrapperClient").style.display = "";	
+		        
+		    } else { 
+		        x.className = x.className.replace("show", "");
+		        document.getElementById("wrapperClient").style.display = "none";		  
+		        }
+		
+	}
 	// appelé avant de monter l'élément. Crée l'array state pour savoir quels contacts doivent etre cachés
 	// si 4 contacts, ca va créer un array de length 4 [true,true,true,true] --> on cache tout au début
 	setContactsState() {
@@ -64,10 +78,10 @@ class FicheClient extends React.Component {
 			<div className="container">
 				<h1>Assurances collectives</h1>
 				<h2>Fiche client</h2>
-				<div className="grandTitre">
-					<TitreValeur titre="Nom du groupe" valeur={client.nom}/>
-				</div>
-				<div className="unePartie">
+				<button  className="grandTitreClient" id="nomGroupe"  onClick={this.dropDownClient}  > 
+					<TitreValeur titre="Nom du groupe" valeur={client.nom} /></button>
+			<div id="wrapperClient"  className=" wrapper show  " >
+				<div className="unePartie w3-animate-zoom" >
 					<TitreValeur titre="Date" valeur={client.date_creation}/>
 					<TitreValeur titre="Responsable" valeur={client.responsable}/>
 					<TitreValeur titre="Activité" valeur={client.forme_type}/>
@@ -80,7 +94,7 @@ class FicheClient extends React.Component {
 					}
 					<TitreValeur titre="Relevés" valeur={client.releve}/>
 				</div>
-				<div className="unePartie">
+				<div className="unePartie w3-animate-zoom">
 					<TitreValeur titre="Téléphone principal" valeur={client.tel_principal}/>
 					<TitreValeur titre="Extension" valeur={client.ext_tel_principal}/>
 					<TitreValeur titre="Rue" valeur={client.rue}/>
@@ -88,11 +102,11 @@ class FicheClient extends React.Component {
 					<TitreValeur titre="Province" valeur={client.province}/>
 					<TitreValeur titre="Code postal" valeur={client.codepostal}/>
 				</div>
-				<div className="unePartie">
+				<div className="unePartie w3-animate-zoom">
 					<TitreValeur titre="Notes" valeur={client.notes}/>
 				</div>
 
-					<ResponsiveReactGridLayout className="layout" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+					<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
 											   breakpoints={{lg: 800, md: 600, sm: 468, xs: 380, xxs: 0}} autoSize={true}
 											   compactType={null}>
 						{
@@ -106,8 +120,7 @@ class FicheClient extends React.Component {
 						}
 
 					</ResponsiveReactGridLayout>
-
-
+					</div>
 				<div className="grandTitre">
 					<TitreValeur valeur="Contacts"/>
 				</div>
