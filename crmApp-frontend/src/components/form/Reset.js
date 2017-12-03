@@ -20,7 +20,7 @@ class Reset extends Component   {
 	}
 	_back(e) {
 		e.preventDefault();
-		store.dispatch(push('/'));
+		window.location.href='/';
 	}
 	
 	_changeEmail (event){
@@ -42,12 +42,19 @@ class Reset extends Component   {
 							<h1>Mot de passe oublié</h1>
 							<p> Entrez le courriel courrespondant a votre dossier</p>
 							<form method="POST" onSubmit = {this._submit}>
-								<input  type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} required/>
+								<input  id="courriel" type="email" placeholder="Votre adresse courriel"  onChange={this._changeEmail} value={this.props.formState.email} required/>
 								<div className="form-group" ><button className="btn btn-primary btn-lg" id ="reset" disabled={this.props.isloading ? true : false }>Valider</button></div>
-								<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset">Retour</button>
+								<div className="form-group" onClick = {this._back} ><button className="btn btn-primary btn-lg"  id ="reset" >Retour</button>
 								</div>
 							</form>
-
+							<div id="resetPasswordMsg" className=" w3-container w3-panel w3-green "   style={{display: 'none'}}>
+						    <h3>Veuillez consulter vos courriels</h3>
+						    <p>un lien de réinitialisation vous a été envoyé.</p>
+						  </div>
+						  <div id="resetPasswordMsgFail" className=" w3-container w3-panel w3-red "   style={{display: 'none'}}>
+						    <h3>Le courriel entré est introuvable dans nos dossiers</h3>
+						    <p>Veuillez réessayer ou contacter votre administrateur.</p>
+						  </div>
 						</div>
 					</div>
 					<div className="copy-right row ">

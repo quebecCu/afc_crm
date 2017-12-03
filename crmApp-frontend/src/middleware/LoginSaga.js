@@ -36,10 +36,10 @@ export function * loginFlow (){
 				}};
 				localStorage.setItem("cookieSession" ,_cookie);
 				store.dispatch(login(formStateAdm));
+				document.getElementById("errorPassword").style.display = "none";	
 			}
 			else {
-				alert ("identifiant ou mot de passe incorrects");
-			}
+				document.getElementById("errorPassword").style.display = "";			}
 		})
 		.catch(function (error) {
 			console.log(error);
