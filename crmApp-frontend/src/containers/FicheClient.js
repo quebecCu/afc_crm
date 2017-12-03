@@ -151,12 +151,12 @@ class FicheClient extends React.Component {
 								decideur = <TitreValeur titre="Décideur" valeur="Non"/> 
 							}                      return ( 
 								<div key={contact.idpersonne}> 
-									<div className="unePartie"> 
+									<div className="unePartie w3-animate-zoom"> 
 										<TitreValeur titre="Titre" valeur={contact.libelletitre}/> 
 										<TitreValeur titre="Prénom" valeur={contact.prenom}/> 
 										<TitreValeur titre="Nom" valeur={contact.nom}/> 
 										<TitreValeur titre="Poste" valeur={contact.libelleposte}/> 
-									</div>                            <div className="unePartie"> 
+									</div>                            <div className="unePartie w3-animate-zoom"> 
 									<TitreValeur titre="N° de Téléphone" valeur={contact.num_tel_principal}/> 
 									<TitreValeur titre="Extension" valeur={contact.ext_tel_principal}/> 
 									<TitreValeur titre="Mail" valeur={contact.mail}/> 

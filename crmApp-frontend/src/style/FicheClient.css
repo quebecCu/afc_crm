@@ -8,10 +8,10 @@ div {
  .grandTitreContacts {
 	width: -webkit-fill-available !important;
 	background-color:#add8e6 !important;
-	
 }
-
-
+#wrapperContacts{
+	background-color:white;
+}
 div.container{
     display: flex;
     height: 100%;
