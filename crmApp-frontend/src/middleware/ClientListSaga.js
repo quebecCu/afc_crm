@@ -3,6 +3,7 @@ import axios from 'axios';
 import {store} from '../store';
 import {bindClientData, GET_CLIENT_REQ} from "../actions/crmClientList";
 import {changeLoading} from "../actions/crmDashboard";
+import {getContacts} from "../actions/crmContacts";
 
 export function* getClient() {
 
@@ -27,7 +28,7 @@ export function* getClient() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(bindClientData(response.data.message));
-					store.dispatch(changeLoading(false));
+					store.dispatch(getContacts(id));
 				} else {
 					alert('Erreur lors du chargement du client');
 				}

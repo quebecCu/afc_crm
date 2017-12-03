@@ -14,6 +14,7 @@ class PageClient extends Component {
 		let {isAdmin} = this.props.crmLogin;
 		let {loading} = this.props.crmDashboard;
 		let {layouts} = this.props.crmGridLayout;
+		let {contacts} = this.props.crmContacts;
 		return (
 			<div>
 				{
@@ -24,7 +25,7 @@ class PageClient extends Component {
 					<FicheClient client={this.props.crmClientList.client}
 								 handleClick={this.props.handleClick} changeIdDisplay={this.props.changeIdDisplay}
 								 deleteCustomer={this.props.deleteCustomer} isAdmin={isAdmin}
-								 layouts={layouts}
+								 layouts={layouts} contacts={contacts}
 								 optionnalFields={this.props.crmClientList.client.facultatif}/>
 				}
 			</div>
@@ -38,7 +39,8 @@ function mapStateToProps(state) {
 		crmClientList: state.crmClientList,
 		crmLogin: state.crmLogin,
 		crmDashboard: state.crmDashboard,
-		crmGridLayout: state.crmGridLayout
+		crmGridLayout: state.crmGridLayout,
+		crmContacts: state.crmContacts
 	}
 }
 

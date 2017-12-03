@@ -77,9 +77,9 @@ class DossiersComponent extends Component {
 		} else if (this.props.collective) {
 			this.rows = (
 				<tbody>
-				{this.props.collective.map(element => {
+				{this.props.collective.map((element, index) => {
 					return (
-						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={element.no_police}>
+						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={index}>
 							<td>{element.nom_groupe}</td>
 							<td>{element.responsable}</td>
 							<td>{element.etat}</td>

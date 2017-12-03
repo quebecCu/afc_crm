@@ -1,6 +1,8 @@
 
-
-import {ADD_ARRAY_CONTACTS, CHANGE_FORM_STATE, UPDATE_CONTACTS, UPDATE_POSTES_CONTACTS} from "../actions/crmContacts";
+import {
+	ADD_ARRAY_CONTACTS, CHANGE_FORM_STATE, DELETE_CONTACT, UPDATE_CONTACTS,
+	UPDATE_POSTES_CONTACTS
+} from "../actions/crmContacts";
 
 let initialState = {
 	postes: [],
@@ -17,6 +19,7 @@ let initialState = {
 			estdecideur: false
 		}
 	],
+	delcontacts: [],
 	errors: '',
 };
 
@@ -31,6 +34,8 @@ export default function reducer(state = initialState, action) {
 			return {...state, arrayContacts: action.newFormState, errors: ''};
 		case ADD_ARRAY_CONTACTS:
 			return {...state, arrayContacts: action.newArray, errors: ''};
+		case DELETE_CONTACT:
+			return {...state, delcontacts: action.deletedContacts, arrayContacts: action.newFormState, errors: ''};
 		default:
 			return state
 
