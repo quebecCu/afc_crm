@@ -5,6 +5,13 @@ div {
     box-sizing: border-box;
 }
 
+#wrapperClient{
+	width: -webkit-fill-available;
+	color:#add8e6;
+	
+}
+
+
 div.container{
     display: flex;
     height: 100%;

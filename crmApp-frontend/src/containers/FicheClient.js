@@ -32,6 +32,19 @@ class FicheClient extends React.Component {
 		        }
 
 	}
+	
+	dropDownContacts(event){
+	    var x = document.getElementById("wrapperContacts");
+	    if (x.className.indexOf("show") === -1) {
+	    	 x.className += "show";
+	    	document.getElementById("wrapperContacts").style.display = "";
+
+	    } else {
+	        x.className = x.className.replace("show", "");
+	        document.getElementById("wrapperContacts").style.display = "none";
+	        }
+
+}
 	// appelé avant de monter l'élément. Crée l'array state pour savoir quels contacts doivent etre cachés
 	// si 4 contacts, ca va créer un array de length 4 [true,true,true,true] --> on cache tout au début
 	setContactsState() {
@@ -121,8 +134,13 @@ class FicheClient extends React.Component {
 
 					</ResponsiveReactGridLayout>
 					</div>
+					
+
 				<div className="grandTitre">
-					<TitreValeur valeur="Contacts"/>
+				<button  className="grandTitreContacts"   onClick={this.dropDownContacts}  >
+					<TitreValeur valeur="Contacts"  /> </button>
+					<div id="wrapperContacts"  className=" wrapper show  " >
+
 					{ 
 						this.props.contacts.map(contact => { 
 							let decideur; 
@@ -151,6 +169,8 @@ class FicheClient extends React.Component {
 				</div>
 				<div className="unePartie">
 				</div>
+				</div>
+				
 				<div className="grandTitre">
 					<TitreValeur valeur = "Assureur"/>
 				</div>
