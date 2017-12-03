@@ -75,8 +75,16 @@ class ContactsComponent extends Component   {
 
 	_deleteContact() {
 		let array  = this.props.contacts;
-		array.splice(this.props.idContact, 1);
-		this.props.changeForm(array);
+		let deletedContacts = array.splice(this.props.idContact, 1);
+
+		if(deletedContacts[0].idpersonne) {
+			let delcontacts = this.props.delcontacts;
+			delcontacts.push(deletedContacts[0]);
+			this.props.deleteContact(array, delcontacts);
+		}
+		else {
+			this.props.changeForm(array);
+		}
 	}
 
 	render() {

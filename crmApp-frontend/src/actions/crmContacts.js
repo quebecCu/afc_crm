@@ -4,6 +4,7 @@ export const GET_CONTACTS = 'GET_CONTACTS';
 export const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
 export const CHANGE_FORM_STATE = 'CHANGE_FORM_STATE';
 export const ADD_ARRAY_CONTACTS = 'ADD_ARRAY_CONTACTS';
+export const DELETE_CONTACT = 'DELETE_CONTACT';
 
 export function getPostesContacts() {
 	return {type: GET_POSTES_CONTACTS}
@@ -29,3 +30,6 @@ export function addArrayContacts(newArray) {
 	return {type: ADD_ARRAY_CONTACTS, newArray}
 }
 
+export function deleteContact(newFormState, deletedContacts) {
+	return {type: DELETE_CONTACT, newFormState, deletedContacts}
+}

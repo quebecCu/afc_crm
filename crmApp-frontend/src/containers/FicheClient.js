@@ -19,18 +19,18 @@ class FicheClient extends React.Component {
 		this.setContactsState();
 	}
 
-	
+
 	dropDownClient(event){
 		    var x = document.getElementById("wrapperClient");
-		    if (x.className.indexOf("show") == -1) {
+		    if (x.className.indexOf("show") === -1) {
 		    	 x.className += "show";
-		    	document.getElementById("wrapperClient").style.display = "";	
-		        
-		    } else { 
+		    	document.getElementById("wrapperClient").style.display = "";
+
+		    } else {
 		        x.className = x.className.replace("show", "");
-		        document.getElementById("wrapperClient").style.display = "none";		  
+		        document.getElementById("wrapperClient").style.display = "none";
 		        }
-		
+
 	}
 	// appelé avant de monter l'élément. Crée l'array state pour savoir quels contacts doivent etre cachés
 	// si 4 contacts, ca va créer un array de length 4 [true,true,true,true] --> on cache tout au début
@@ -78,7 +78,7 @@ class FicheClient extends React.Component {
 			<div className="container">
 				<h1>Assurances collectives</h1>
 				<h2>Fiche client</h2>
-				<button  className="grandTitreClient" id="nomGroupe"  onClick={this.dropDownClient}  > 
+				<button  className="grandTitreClient" id="nomGroupe"  onClick={this.dropDownClient}  >
 					<TitreValeur titre="Nom du groupe" valeur={client.nom} /></button>
 			<div id="wrapperClient"  className=" wrapper show  " >
 				<div className="unePartie w3-animate-zoom" >
@@ -123,6 +123,31 @@ class FicheClient extends React.Component {
 					</div>
 				<div className="grandTitre">
 					<TitreValeur valeur="Contacts"/>
+					{ 
+						this.props.contacts.map(contact => { 
+							let decideur; 
+							if(contact.estdecideur) { 
+								decideur = <TitreValeur titre="Décideur" valeur="Oui"/> 
+							} 
+							else { 
+								decideur = <TitreValeur titre="Décideur" valeur="Non"/> 
+							}                      return ( 
+								<div key={contact.idpersonne}> 
+									<div className="unePartie"> 
+										<TitreValeur titre="Titre" valeur={contact.libelletitre}/> 
+										<TitreValeur titre="Prénom" valeur={contact.prenom}/> 
+										<TitreValeur titre="Nom" valeur={contact.nom}/> 
+										<TitreValeur titre="Poste" valeur={contact.libelleposte}/> 
+									</div>                            <div className="unePartie"> 
+									<TitreValeur titre="N° de Téléphone" valeur={contact.num_tel_principal}/> 
+									<TitreValeur titre="Extension" valeur={contact.ext_tel_principal}/> 
+									<TitreValeur titre="Mail" valeur={contact.mail}/> 
+									{decideur} 
+									</div> 
+								</div> 
+							); 
+						}) 
+					}
 				</div>
 				<div className="unePartie">
 				</div>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {store} from '../store';
 import {changeLoading} from "../actions/crmDashboard";
 import {
+	addArrayContacts,
 	GET_CONTACTS, GET_POSTES_CONTACTS, updateContacts,
 	updatePostesContacts
 } from "../actions/crmContacts";
@@ -55,6 +56,7 @@ export function* requestContacts() {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateContacts(response.data.message));
 					store.dispatch(changeLoading(false));
+					store.dispatch(addArrayContacts(response.data.message));
 				} else {
 					alert('Erreur lors du chargement des contact');
 				}
