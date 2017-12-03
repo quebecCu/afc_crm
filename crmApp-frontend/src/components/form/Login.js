@@ -82,9 +82,12 @@ class Login extends Component   {
 						<div className="col text-center">
 							<div className="footer-left">
 								<div>
-									<i className="fa fa-map-marker"></i>
-									<p><span>4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
+									<i className="fa fa-map-marker" ></i>
+									<p><span >
+									4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
 								</div>
+								<br/><br/>
+								<a  className="material-icons"> &#xe52e;</a><a href = "http://maps.google.com/?q= 4645 Boul Bourque Sherbrooke, QC J1N 2G6"> Obtenir un intineraire</a>
 							</div>
 
 							<div className="footer-center">
