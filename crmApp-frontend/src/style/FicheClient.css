@@ -5,9 +5,9 @@ div {
     box-sizing: border-box;
 }
 
-#wrapperClient{
-	width: -webkit-fill-available;
-	color:#add8e6;
+ .grandTitreContacts {
+	width: -webkit-fill-available !important;
+	background-color:#add8e6 !important;
 	
 }
 
