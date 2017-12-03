@@ -37,7 +37,7 @@ class PageCollectivesClients extends Component {
 							onSubmit={this.props.searchRequestColl}
 							formState={formState}
 							changeFormColl={this.props.changeFormColl}/>
-						<button onClick={this.props.handleClick} className="newCustomer">Créer une fiche client</button>
+						<button onClick={this.props.handleClick} className="newCustomer" id="createNewCx">Créer une fiche client</button>
 					</div>
 				}
 			</div>

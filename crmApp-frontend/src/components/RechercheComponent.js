@@ -14,6 +14,7 @@ class RechercheComponent extends Component {
 		this._changeMoisRenouvellement = this._changeMoisRenouvellement.bind(this);
 		this._filtre = this._filtre.bind(this);
 		this._hardReset = this._hardReset.bind(this);
+		this._print = this._print.bind(this);
 	}
 
 	_changeNomEntreprise(event) {
@@ -64,6 +65,12 @@ class RechercheComponent extends Component {
 
 	componentDidMount() {
 		this._reset();
+	}
+	
+	_print(event) {
+		document.getElementById("print-content").style.height = "auto";  
+		window.print();
+		 document.getElementById("print-content").style.height = "300px"
 	}
 
 	_changeNomEmploye(event) {
@@ -130,6 +137,7 @@ class RechercheComponent extends Component {
 	render() {
 
 		return (
+				<div>
 			<form action="" id="recherche" className="container-fluid">
 				<input type="text" id="nomEntreprise" placeholder="Nom entreprise" onChange={this._changeNomEntreprise}
 					   value={this.props.formState.nomEntreprise}/>
@@ -154,7 +162,10 @@ class RechercheComponent extends Component {
 					<option value="non"> Non prospect</option>
 				</select>
 				<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
+				
 			</form>
+				<button  type="reset" value="print" id="print" onClick={this._print}> Imprimer la liste </button>
+				</div>
 		);
 	}
 }

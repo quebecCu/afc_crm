@@ -102,8 +102,8 @@ class ClientListContainer extends Component {
 	render() {
 		let {linksSubCustomer} = this.props.crmNavBar;
 		this.table = (
-			<div style={{overflow: 'auto', height: '300px',}}>
-				<table id="PageCollectivesClientsTable" className="table">
+			<div id="print-content" style={{overflow: 'auto', height: '300px',}}>
+				<table id="PageCollectivesClientsTable" className="table" >
 					<thead>
 					<tr>
 						<th onClick={this.handleClick0}>Nom du groupe</th>
