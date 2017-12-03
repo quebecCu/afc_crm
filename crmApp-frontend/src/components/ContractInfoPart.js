@@ -5,67 +5,127 @@ class ContractInfoPart extends React.Component {
 		super(props);
 		this.props.getAGA();
 		this.props.getListAssureurs();
+		this._onChangeAssureur=this._onChangeAssureur.bind(this);
+		this._onChangeAGA=this._onChangeAGA.bind(this);
+		this._onChangeNumPolice=this._onChangeNumPolice.bind(this);
+		this._onChangeDateEmission=this._onChangeDateEmission.bind(this);
+		this._onChangeMoisRenouv=this._onChangeMoisRenouv.bind(this);
+		this._onChangeNotes=this._onChangeNotes.bind(this);
 	}
+
+	_onChangeAssureur(event){
+
+	}
+
+	_onChangeAGA(event){
+
+	}
+
+	_onChangeNumPolice(event){
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, numPolice:event.target.value}});
+	}
+
+	_onChangeDateEmission(event){
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,dateEmission:event.target.value}});
+	}
+
+	_onChangeMoisRenouv(event){
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,moisRenouv:event.target.value}});
+	}
+
+	_onChangeNotes(event){
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,notes:event.target.value}});
+	}
+
+
+
 
 	render(){
 		return <div>
 			<h4>Renseignement généraux sur le contrat</h4>
 			<div className="form-group row">
-				<label id="nomAssureurLabel" className="col-sm-3 col-form-label">Nom assureur</label>
-				<select
-					id="nomAssureur"
-					name="nomAssureur"
-					className="form-control col-sm-8"
-					value=""
-				>
-					<option disabled value=""> -- LA REQUETE BACKENDAAAAAA NOMS ASSUREURS -- </option>
-				</select>
+				<label id="assureurLabel" className="col-sm-3 col-form-label">Nom assureur</label>
+					<div className="col-sm-8">
+					<select
+						id="assureur"
+						name="nomAssureur"
+						className="form-control"
+						value=""
+						onChange={this._onChangeAssureur}
+					>
+						<option disabled value=""> -- LA REQUETE BACKENDAAAAAA NOMS ASSUREURS -- </option>
+					</select>
+					<p id="assureurHelp" className="help-block text-danger">Sélectionner un assureur</p>
+					</div>
 			</div>
 			<div className="form-group row">
 				<label id="AGALabel" className="col-sm-3 col-form-label">AGA</label>
-				<select
-					id="AGA"
-					name="AGA"
-					className="form-control col-sm-8"
-					value=""
-				>
-					<option disabled value=""> -- LA REQUETE BACKEND AGA-- </option>
-				</select>
+					<div className="col-sm-8">
+						<select
+							id="AGA"
+							name="AGA"
+							className=" form-control"
+							value=""
+							onChange={this._onChangeAGA}
+						>
+							<option disabled value=""> -- LA REQUETE BACKEND AGA-- </option>
+						</select>
+						<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
+
+					</div>
 			</div>
 			<div className="form-group row">
 				<label id="numPoliceLabel" className="col-sm-3 col-form-label">Numéro de police</label>
-				<input
-					type="textField"
-					className="form-control col-sm-8"
-					placeholder="Numéro de police"
-					id="numPolice"
-				/>
+					<div className="col-sm-8">
+					<input
+						type="textField"
+						className="form-control"
+						placeholder="Numéro de police"
+						id="numPolice"
+						onChange={this._onChangeNumPolice}
+					/>
+						<p id="numPoliceHelp" className="help-block text-danger">Insérer un numéro de police</p>
+
+					</div>
 			</div>
 			<div className="form-group row">
-				<label id="dateEmission" className="col-sm-3 col-form-label">Date d'émission</label>
-				<input
-					type="textField"
-					className="form-control col-sm-8"
-					placeholder="AAAA-MM"
-					id="dateEmission"
-				/>
+				<label id="dateEmissionLabel" className="col-sm-3 col-form-label">Date d'émission</label>
+					<div className="col-sm-8">
+					<input
+						type="textField"
+						className="form-control"
+						placeholder="AAAA-MM"
+						id="dateEmission"
+						onChange={this._onChangeDateEmission}
+					/>
+						<p id="dateEmissionHelp" className="help-block text-danger">Format de la date AAAA-MM</p>
+
+					</div>
 			</div>
 			<div className="form-group row">
-				<label id="moisRenouv" className="col-sm-3 col-form-label">Mois de renouvellement</label>
-				<input
-					type="textField"
-					className="form-control col-sm-8"
-					placeholder="MM"
-					id="moisRenouv"
-				/>
+				<label id="moisRenouvLabel" className="col-sm-3 col-form-label">Mois de renouvellement</label>
+					<div className="col-sm-8">
+						<input
+							type="textField"
+							className="form-control"
+							placeholder="MM"
+							id="moisRenouv"
+							onChange={this._onChangeMoisRenouv}
+						/>
+						<p id="moisRenouvHelp" className="help-block text-danger">Format MM</p>
+
+					</div>
 			</div>
 			<div className="form-group row">
 				<label id="notesLabel" className="col-sm-3 col-form-label">Notes</label>
-				<textarea
-					className="form-control col-sm-8"
-					placeholder="MM"
-					id="notes"
-				/>
+					<div className="col-sm-8">
+					<textarea
+						className="form-control"
+						placeholder="Informations supplémentaires sur le contrat"
+						id="notes"
+						onChange={this._onChangeNotes}
+					/>
+				</div>
 			</div>
 		</div>
 	}

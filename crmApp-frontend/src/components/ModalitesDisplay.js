@@ -2,10 +2,10 @@ import React from 'react';
 import DisplayOneModalite from './DisplayOneModalite';
 
 class ModalitesDisplay extends React.Component{
-	constructor(props){
+	/*constructor(props){
 		super(props);
 
-	}
+	}*/
 
 	componentDidMount(){
 		/*this.state.modalites.forEach(element=>{
@@ -25,7 +25,7 @@ class ModalitesDisplay extends React.Component{
 
 	render(){
 		this.props.formState.modules.forEach(element=>{
-			if(element.idModule===parseInt(this.props.idModule)){
+			if(element.idModule===parseInt(this.props.idModule, 10)){
 				this.state = {modalites: element.modalites};
 				//this.state.modalites = element.modalites;
 			}

@@ -9,7 +9,8 @@ import {
 let initialState = {
 	view: '',
 	formState: {
-		intModulesToDisplay: 1,
+		intModulesToDisplay:1,
+		modulesToDisplay:[],//Tableau qui gère l'affichage des modules
 		AGA: [],
 		employesAFC:[],
 		listAssureurs:[],
@@ -71,8 +72,13 @@ let initialState = {
 
 		],
 		contrat:{
+			idAssureur: '',
+			idAGA: '',
 			modulesChoisis: [],
-
+			numPolice:'',
+			dateEmission:'',
+			moisRenouv:'',
+			notes:''
 
 		}
 	},

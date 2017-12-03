@@ -26,7 +26,7 @@ class DisplayOneModalite extends React.Component{
 		let containsIdModalite;
 		modalitesChoisies.forEach(element=>{
 
-			if(element.idModalite === parseInt(this.props.modalite.idModalite)){
+			if(element.idModalite === parseInt(this.props.modalite.idModalite, 10)){
 				containsIdModalite = true;
 			}
 		});
@@ -87,8 +87,12 @@ class DisplayOneModalite extends React.Component{
 
 		let idModuleDansContrat;
 		for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
-			if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
-				idModuleDansContrat = i;
+
+			console.log(!this.props.formState.contrat.modulesChoisis[i]);
+			if(this.props.formState.contrat.modulesChoisis[i]){
+				if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
+					idModuleDansContrat = i;
+				}
 			}
 		}
 		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis));
@@ -124,7 +128,7 @@ class DisplayOneModalite extends React.Component{
 			let containsIdModalite;
 			modalitesChoisies.forEach(element=>{
 
-				if(element.idModalite === parseInt(this.props.modalite.idModalite)){
+				if(element.idModalite === parseInt(this.props.modalite.idModalite, 10)){
 					containsIdModalite = true;
 				}
 			});
