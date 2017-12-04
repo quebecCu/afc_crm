@@ -164,7 +164,8 @@ class RechercheComponent extends Component {
 				<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
 				
 			</form>
-				<button  type="reset" value="print" id="print" onClick={this._print}> Imprimer la liste </button>
+				<button type="reset" value="print" id="print" onClick={this._print}>
+				<a className="glyphicon glyphicon-print"> </a> Imprimer la liste </button>
 				</div>
 		);
 	}
