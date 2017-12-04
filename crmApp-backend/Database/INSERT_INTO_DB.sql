@@ -16,7 +16,8 @@ SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
 SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
 SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
 SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
-SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
+SELECT setval('public."POSTE_ENTREPRISE_idposte_ent_seq"', 1, FALSE);
+SELECT setval('public."POSTE_FOURNISSEUR_idposte_fou_seq"', 1, FALSE);
 SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
 SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
 SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
@@ -45,20 +46,26 @@ INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Booléen', '[Oui|Non]');
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
 
---POSTE--
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Président/Vice-Président');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Représentant');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint interne');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint Administratif');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Service de réclamations');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Service aux conseillers');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Services à la clientèle');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Participants du régime');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Ressources humines');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Controleur');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Comptable');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Secrétaire');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Autre');
+--POSTE_ENTREPRISE--
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Président/Vice-Président');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Adjoint Administratif');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Ressources humaines');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Controleur');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Comptable');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Secrétaire');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Autre');
+
+--POSTE_ENTREPRISE--
+
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Représentant');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Soumissions');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Administration');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Adjoint interne');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Service de réclamations');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Service aux conseillers');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Services à la clientèle');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Participants du régime');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Autre');
 
 --PROVENANCE--
 INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Publicité Internet');
@@ -727,9 +734,9 @@ INSERT INTO public."CONTRAT_COLLECTIF_ATTR" (idtype, label, description, forme, 
 
 
 --CONTACT_CLIENT--
-INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(1, 2, 1, true);
-INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 4, 1, true);
-INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 3, 4, false);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecideur) VALUES(1, 2, 1, true);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecideur) VALUES(2, 4, 1, true);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecideur) VALUES(2, 3, 4, false);
 
 -----end public schema -----
 
