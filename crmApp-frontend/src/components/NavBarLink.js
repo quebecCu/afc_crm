@@ -5,11 +5,14 @@ class NavBarLink extends Component {
         super(props);
         this._handleClick = this._handleClick.bind(this);
         this._handleDelete = this._handleDelete.bind(this);
+        this.state = {
+        	deleted: false
+		};
     }
 
     _handleClick() {
         this.props.handleClick(this.props.id);
-        if(this.props.resetView){
+        if(this.props.resetView && !this.state.deleted){
             this.props.resetView(this.props.reset);
         }
         if(this.props.idUser) {
@@ -23,10 +26,14 @@ class NavBarLink extends Component {
     }
 
     _handleDelete() {
-		if(this.props.idUser) {
-			this.props.deleteSub(this.props.idUser);		}
-		if(this.props.idCustomer) {
-			this.props.deleteSub(this.props.idCustomer);		}
+		this.setState({deleted: true}, () => {
+			if(this.props.idUser) {
+				this.props.deleteSub(this.props.idUser);
+			}
+			if(this.props.idCustomer) {
+				this.props.deleteSub(this.props.idCustomer);
+			}
+		});
 	}
 
     render() {

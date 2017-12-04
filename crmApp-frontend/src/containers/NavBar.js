@@ -21,14 +21,14 @@ class NavBar extends Component {
 		let links = this.props.crmNavBar.linksSubUser.filter(link => {
 			return link.idUser !== idUser;
 		});
-		this.props.addSubUserNav(links);
+		this.props.deleteSubUserNav(links, "");
 	}
 
 	_deleteSubCustomer(idCustomer) {
 		let links = this.props.crmNavBar.linksSubCustomer.filter(link => {
 			return link.idCustomer !== idCustomer;
 		});
-		this.props.addSubCustomerNav(links);
+		this.props.deleteSubCustomerNav(links, "customers");
 	}
 
     render() {
@@ -134,11 +134,19 @@ const  mapDispatchToProps = (dispatch) => {
 		addSubUserNav: (newSubUser) => {
         	dispatch(addSubUserNav(newSubUser));
 		},
+		deleteSubUserNav: (newSubUser, newView) => {
+			dispatch(addSubUserNav(newSubUser));
+			dispatch(changeViewUserManagement(newView));
+		},
 		getClientRequest: (idClient) => {
 			dispatch(getClientRequest(idClient));
 		},
 		addSubCustomerNav: (newSubCustomer) => {
     		dispatch(addSubCustomerNav(newSubCustomer));
+		},
+		deleteSubCustomerNav: (newSubCustomer, newView) => {
+    		dispatch(addSubCustomerNav(newSubCustomer));
+			dispatch(changeViewCollective(newView));
 		},
 		changeLoading: (newLoading) => {
     		dispatch(changeLoading(newLoading));
