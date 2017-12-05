@@ -34,7 +34,7 @@ class ContractRemunerationContainer extends React.Component{
 			<ContractInput titre="Notes" unite="" format="Informations supplémentaires" titreChamp="notes"
 						   description="Informations supplémentaires" part="remuneration"
 						   formState={this.props.formState} changeForm={this.props.changeForm}/>
-			<ContractInput titre="Reçu" unite="" format="AAAAMMJJ" titreChamp="recu"
+			<ContractInput titre="Reçu" unite="" format="AAAA-MM-JJ" titreChamp="recu"
 						   description="Date payée: base" part="remuneration"
 						   formState={this.props.formState} changeForm={this.props.changeForm}/>
 			<ContractInput titre="Base" unite="$" format="XXX XXX,XX" titreChamp="base"
@@ -57,7 +57,7 @@ class ContractRemunerationContainer extends React.Component{
 			<ContractInput titre="Montant payé" unite="$" format="XX XXX,XX" titreChamp="paye"
 						   description="Indiquer le montant payé"
 						   formState={this.props.formState} changeForm={this.props.changeForm}/>
-			<ContractInput titre="Date payée" unite="" format="AAAAMMJJ" titreChamp="dpaye"
+			<ContractInput titre="Date payée" unite="" format="AAAA-MM-JJ" titreChamp="dpaye"
 						   description="Date payée" part="remuneration"
 						   formState={this.props.formState} changeForm={this.props.changeForm}/>
 			Solde = calcul (montant du - montant payé)
