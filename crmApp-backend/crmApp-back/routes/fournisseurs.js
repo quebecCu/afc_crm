@@ -80,8 +80,7 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 				.from('public."FOURNISSEUR"', "fournisseur")
 				.field('fournisseur.nom')
 				.field('fournisseur.code')
-				.field('fournisseur.idfournisseur')
-				.field('contact_fournisseur.idfournisseur')
+				.field('fournisseur.idfournisseur', 'idfournisseur')
 				.field('personne.idpersonne')
 				.field('personne.nom', 'p_nom')
 				.field('personne.prenom', 'p_prenom')
@@ -111,7 +110,7 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 					_prenomPersonne = (!!fournisseurs[i].p_prenom ? fournisseurs[i].p_prenom : null)
 					_fullName = (!!_nomPersonne ?  _nomPersonne : "") + (!!_prenomPersonne ? " " + _prenomPersonne : "")
 
-					suppliersJSON = {nom: _nomFournisseur, min_emp1: _minEmploye, contact: _fullName, code: _code}
+					suppliersJSON = {id : _idFournisseur, nom: _nomFournisseur, min_emp1: _minEmploye, contact: _fullName, code: _code}
 					supplierToSend.push(suppliersJSON);
 
 					//debugg
