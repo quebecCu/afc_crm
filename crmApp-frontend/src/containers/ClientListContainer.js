@@ -102,7 +102,7 @@ class ClientListContainer extends Component {
 	render() {
 		let {linksSubCustomer} = this.props.crmNavBar;
 		this.table = (
-			<div id="print-content" style={{overflow: 'auto', height: '300px',}}>
+			<div id="print-content" style={{overflow: 'auto', height: '450px',}}>
 				<table id="PageCollectivesClientsTable" className="table" >
 					<thead>
 					<tr>

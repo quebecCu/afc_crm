@@ -70,7 +70,7 @@ class RechercheComponent extends Component {
 	_print(event) {
 		document.getElementById("print-content").style.height = "auto";  
 		window.print();
-		 document.getElementById("print-content").style.height = "300px"
+		 document.getElementById("print-content").style.height = "450px"
 	}
 
 	_changeNomEmploye(event) {
