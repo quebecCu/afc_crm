@@ -25,8 +25,6 @@ class ContractInput extends React.Component{
 				remuneration:remuneration}});
 			this._checkValues(remuneration[titreChamp]);
 		}
-
-
 	}
 
 	_checkValues(valeurDuForm){
@@ -40,7 +38,7 @@ class ContractInput extends React.Component{
 				document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
 			}
 		}
-		else{
+		else if(this.props.unite === "$" && valeurDuForm !== ""){
 			if(!/^\d{1,7}\.[0-9]{1,2}$/.test(valeurDuForm) &&
 				!/^\d{1,7}$/.test(valeurDuForm)){
 				document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "block";
@@ -50,11 +48,22 @@ class ContractInput extends React.Component{
 				document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
 			}
 		}
+		else{
+			if(this.props.format === "AAAA-MM-JJ" && valeurDuForm !== ""){
+				if(!/^((?:19|20)\d{2})-(0?\d|1[012])-(0?\d|[12]\d|3[01])$/.test(valeurDuForm )){
+					document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "block";
+
+				}
+				else{
+					document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
+
+				}
+			}
+		}
 		if(valeurDuForm === ""){
 			document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
 
 		}
-
 	}
 
 
@@ -63,8 +72,8 @@ class ContractInput extends React.Component{
 
 	render(){
 		return <div className="form-group row">
-				<label className="col-form-label col-sm-3">{this.props.titre + " "}</label>
-				<div className="col-sm-8">
+				<label className="col-form-label col-3">{this.props.titre + " "}</label>
+				<div className="col-8">
 					<input type="text" placeholder={this.props.format} className="form-control"
 						onChange={this._onChangeField}/>
 					<p id={"verif"+this.props.part+this.props.titreChamp}
@@ -72,7 +81,7 @@ class ContractInput extends React.Component{
 						Format {this.props.format}
 					</p>
 				</div>
-				<div className="col-sm-1">{this.props.unite}</div>
+				<div className="col-1" style={{paddingLeft:'5px'}}>{this.props.unite}</div>
 			</div>
 	}
 
