@@ -169,7 +169,7 @@ class HistoriqueContainer extends Component {
 								<th onClick={this.handleClickF3}>Code</th>
 							</tr>
 							</thead>
-							<DossiersComponent fournisseur={this.props.dossiersState} history={this.props.history}
+							<DossiersComponent fournisseur={this.props.dossiersState}
 											   handleClick={this.props.changeViewDashboard}/>
 						</table>
 					</div>

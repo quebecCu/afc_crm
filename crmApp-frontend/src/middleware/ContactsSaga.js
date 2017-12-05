@@ -4,8 +4,8 @@ import {store} from '../store';
 import {changeLoading} from "../actions/crmDashboard";
 import {
 	addArrayContacts,
-	GET_CONTACTS, GET_POSTES_CONTACTS, updateContacts,
-	updatePostesContacts
+	GET_CONTACTS, GET_POSTES_CONTACTS, GET_POSTES_CONTACTS_SUP, updateContacts,
+	updatePostesContacts, updatePostesContactsSup
 } from "../actions/crmContacts";
 
 let tokenToSend = localStorage.getItem("cookieSession");
@@ -31,6 +31,30 @@ export function* requestPostesContacts() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updatePostesContacts(response.data.message));
+					store.dispatch(changeLoading(false));
+				} else {
+					alert('Erreur lors du chargement des postes d\'un contact');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function* requestPostesContactsFournisseurs() {
+
+	while (true) {
+
+		yield take(GET_POSTES_CONTACTS_SUP);
+
+
+		let server = "http://localhost:3002/providers/jobs";
+
+		axios.get(server, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(updatePostesContactsSup(response.data.message));
 					store.dispatch(changeLoading(false));
 				} else {
 					alert('Erreur lors du chargement des postes d\'un contact');
@@ -71,4 +95,5 @@ export function* requestContacts() {
 export function * ContactsFlow() {
 	yield fork(requestPostesContacts);
 	yield fork(requestContacts);
+	yield fork(requestPostesContactsFournisseurs);
 }

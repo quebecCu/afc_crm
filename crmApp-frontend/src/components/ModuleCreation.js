@@ -30,6 +30,7 @@ class ModuleCreation extends React.Component{
 
 		this.idModule=event.target.value;
 		this.isSelected=true;
+		document.getElementById("optionNull"+this.props.idComponent).setAttribute('disabled',true);
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, modulesChoisis:modulesContrat},
 					modulesToDisplay:arrayDaffichage});
 
@@ -63,7 +64,7 @@ class ModuleCreation extends React.Component{
 					className="form-control"
 					onChange={this._onChangeModule}
 					>
-					<option value=""> -- select an option -- </option>
+					<option id={"optionNull"+this.props.idComponent} value=""> -- select an option -- </option>
 					{
 						//Si l'id de la modalité est dans le formState.modulesToDisplay, set disabled
 						this.props.formState.modules.map((element) => {

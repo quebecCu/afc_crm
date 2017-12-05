@@ -2,6 +2,8 @@ import React from 'react';
 import ContractClientPart from '../components/ContractClientPart.js';
 import ContractInfoPart from '../components/ContractInfoPart';
 import ContractModulesPart from '../components/ContractModulesPart';
+import ContractTauxContainer from './ContractTauxContainer';
+import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {connect} from "react-redux";
 import {changeFormContract, getAGA, getEmployesAFC, getListAssureurs} from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
@@ -14,6 +16,58 @@ class CreateContractContainer extends React.Component {
 		this._resetStyle=this._resetStyle.bind(this);
 		this._onClickValidate=this._onClickValidate.bind(this);
 		this._validateForm=this._validateForm.bind(this);
+		let {formState} = this.props.crmContract;
+		this.props.changeForm({...formState, intModulesToDisplay:1, modulesToDisplay:[], contrat:{...formState.contrat,
+			idAssureur: '',
+			idAGA: '',
+			modulesChoisis: [],
+			numPolice:'',
+			dateEmission:'',
+			moisRenouv:'',
+			notes:'',
+			historiqueTaux:{diff: '',
+				vie: '',
+				dma: '',
+				pac: '',
+				ct: '',
+				lt: '',
+				amc_ind: '',
+				amc_mono: '',
+				amc_couple: '',
+				amc_fam: '',
+				dent_ind: '',
+				dent_mono: '',
+				dent_couple: '',
+				dent_fam: '',
+				mg_ind: '',
+				mg_mono: '',
+				mg_couple: '',
+				mg_fam: '',
+				pae: '',
+				prime_ms: '',
+				prime_an: ''
+			},
+			remuneration:{
+				vie:'',
+				ct:'',
+				lt:'',
+				amc:'',
+				dent:'',
+				mg:'',
+				pae:'',
+				notes:'',
+				recu:'',
+				base:'',
+				boni:'',
+				total:'',
+				gtotal:'',
+				idConseiller:'',
+				split:'',
+				bdu:'',
+				paye:'',
+				dpaye:'',
+			}
+		}});
 	}
 
 	_resetStyle(){
@@ -114,6 +168,9 @@ class CreateContractContainer extends React.Component {
 				<div key="3"><ContractModulesPart formState={formState} changeForm = {this.props.changeForm}/></div>
 
 			</ResponsiveReactGridLayout>
+
+			<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
+			<ContractRemunerationContainer formState={formState} changeForm={this.props.changeForm} />
 
 			<button id="validateForm" onClick={this._onClickValidate}>Créer le contrat</button>
 		</div>;

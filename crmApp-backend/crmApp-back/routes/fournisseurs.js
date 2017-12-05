@@ -11,7 +11,7 @@ const expressJwtIp = require('express-jwt-ip');
 //Squel request for getting the jobs available
 let getJobs = () =>
 squel.select()
-	.from('public."POSTE_FOURNISSEUR"')	
+	.from('public."POSTE_FOURNISSEUR"')
 	.field("idposte_fou", "idposte")
 	.field("libelleposte")
 	.toString();
@@ -34,7 +34,7 @@ router.get('/jobs', expressJwtIp.ip(), function (req, res) {
 	var _ip = res.locals.ip;*/
 
 	//if (!!decoded && (_ip === _ipReceived)) {
-		
+
 		db.any(getJobs())
 			.then((jobs) => {
 				console.log(JSON.stringify(jobs));
@@ -118,7 +118,10 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 
 				}
 
-				res.send({fournisseur: supplierToSend});
+				res.send({
+					status: 'success',
+					message: supplierToSend
+				});
 			});
 
 		// TODO: Error handler (fail state response?)
@@ -231,7 +234,7 @@ squel.delete()
  * @method GET
  * @URL /providers/contacts/:id
  * @param expressJwtIp.ip() server IP address
- * @SuccessResponse { status: success, message: [{ idpersonne, prenom, nom, libelletitre, 
+ * @SuccessResponse { status: success, message: [{ idpersonne, prenom, nom, libelletitre,
  * libelleposte, num_tel_principal, ext_tel_principal, mail}] }
  * @ErrorResponse { status: 'fail', message: error }
  * **/
@@ -295,7 +298,7 @@ router.post('/contact/create', expressJwtIp.ip(), function (req, res) {
 		ext_tel_principal: req.body.ext_tel_principal,
 		mail: req.body.mail
 	}
-	
+
 	db.tx(t => {
 		return t.one(getIdTitre(person.titre))
 		.then(titre => {
@@ -319,7 +322,7 @@ router.post('/contact/create', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Le contact client n'a pas pu être créé'
 				});
 	})
-			
+
 	/*} else {
 		res.status(403);
 		sendResponse('Acces refusé', res, 'fail')
@@ -356,7 +359,7 @@ router.post('/contact/update', expressJwtIp.ip(), function (req, res) {
 		ext_tel_principal: req.body.ext_tel_principal,
 		mail: req.body.mail
 	}
-	
+
 	db.tx(t => {
 		return t.one(getIdTitre(person.titre))
 		.then(titre => {
@@ -379,7 +382,7 @@ router.post('/contact/update', expressJwtIp.ip(), function (req, res) {
 					message: error.toString() //'Le contact client n'a pas pu être créé'
 				});
 	})
-			
+
 	/*} else {
 		res.status(403);
 		sendResponse('Acces refusé', res, 'fail')
@@ -406,7 +409,7 @@ router.delete('/contact/:idfournisseur/:idpersonne', expressJwtIp.ip(), function
 	//if (!!decoded && (_ip === _ipReceived)) {
 	let idfournisseur = req.params.idfournisseur;
 	let idpersonne = req.params.idpersonne;
-	
+
 	db.tx(t => {
 		return t.none(deleteContact(idpersonne, idfournisseur))
 			.then(() => {
@@ -425,7 +428,7 @@ router.delete('/contact/:idfournisseur/:idpersonne', expressJwtIp.ip(), function
 					message: error.toString() //'Le contact client n'a pas pu être créé'
 				});
 	})
-			
+
 	/*} else {
 		res.status(403);
 		sendResponse('Acces refusé', res, 'fail')
@@ -523,14 +526,14 @@ const getProviderById = (idProvider) => {
 const getOptionnalProviderRowsById = (idFournisseur) => {
 	return squel.select()
 		.field('label')
-		.field('valeur')	
+		.field('valeur')
 		.field('attr.description', 'description')
 		.field('type.libelletype', 'type')
 		.field('type.forme', 'forme_type')
 		.field('facul.idattrfournisseur', 'idattr')
 		.from('"FOURNISSEUR"', 'fourn')
 		.left_join('"FOURNISSEUR_FACUL"', 'facul', 'fourn.idfournisseur = facul.idfournisseur')
-		.left_join('"FOURNISSEUR_ATTR"', 'attr', 'attr.idattrfournisseur = facul.idattrfournisseur')	
+		.left_join('"FOURNISSEUR_ATTR"', 'attr', 'attr.idattrfournisseur = facul.idattrfournisseur')
 		.left_join('"TYPE"', 'type', 'type.idtype = attr.idtype')
 		.where('fourn.idfournisseur = ?', idFournisseur)
 		.toString();
@@ -547,7 +550,7 @@ const getObligatoryProviderRowsById = (idFournisseur) => {
 		.field('date_creation')
 		.field('rue')
 		.field('province')
-		.field('codepostal')	
+		.field('codepostal')
 		.field('ville')
 		.from('"FOURNISSEUR"', 'fourn')
 		.left_join('"ADRESSE"', 'adr', 'adr.idadresse = fourn.idadresse')
@@ -605,7 +608,7 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
  * @method POST
  * @URL /providers/create
  * @param expressJwtIp.ip() server IP address
- * @DataParams {nom, tel_princ, ext_tel_princ, code, ville, province, 
+ * @DataParams {nom, tel_princ, ext_tel_princ, code, ville, province,
  * codepostal, facul, newcontacts} Client to be created
  * @SuccessResponse { status: 'success', message: null }
  * @ErrorResponse { status: 'fail', message: error }
@@ -622,7 +625,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 	if (!!decoded && (_ip === _ipReceived)) {*/
 
 		console.log("Starting /providers/create");
-		
+
 		var provider = {
 				nom: req.body.nom,
 				code: req.body.code,
@@ -659,7 +662,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 					    						ext_tel_principal: contact.ext_tel_principal,
 					    						mail: contact.mail
 					    					}
-					    					
+
 				    					return t.one(getIdTitre(person.titre))
 				    						.then(titre => {
 				    							person.idtitre = titre.idtitre;
@@ -731,7 +734,7 @@ squel.delete({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
  * @method POST
  * @URL /providers/update
  * @param expressJwtIp.ip() server IP address
- * @DataParams {idfournisseur, code, nom, tel_princ, ext_tel_princ, ville, province, 
+ * @DataParams {idfournisseur, code, nom, tel_princ, ext_tel_princ, ville, province,
  * codepostal, facul, newcontacts, updtcontacts, delcontacts} Provider to be created
  * @SuccessResponse { status: 'success', message: null }
  * @ErrorResponse { status: 'fail', message: error }
@@ -748,7 +751,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 	if (!!decoded && (_ip === _ipReceived)) {*/
 
 		console.log("Starting /providers/update");
-		
+
 		var provider = {
 				idfournisseur: req.body.idfournisseur,
 				code: req.body.code,
@@ -767,7 +770,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 
 		db.tx(t => {
 			return t.none(updateAdresse(provider))
-			.then(() => {	
+			.then(() => {
 				return t.none(updateProviderOblig(provider))
 				.then(() => {
 					return t.none(deleteProviderFacul(provider.idfournisseur))
@@ -788,7 +791,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 					    						ext_tel_principal: contact.ext_tel_principal,
 					    						mail: contact.mail
 					    					}
-					    					
+
 				    					return t.one(getIdTitre(person.titre))
 				    						.then(titre => {
 				    							person.idtitre = titre.idtitre;
@@ -799,7 +802,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 				    								})
 				    					})
 				    				});
-				    				
+
 				    				const queriesContactUpdt = provider.updtcontacts.map(contact => {
 					    				let person = {
 					    						idfournisseur: provider.idfournisseur,
@@ -821,7 +824,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 			    								})
 				    					})
 				    				});
-				    				
+
 				    				const queriesContactDel = provider.delcontacts.map(contact => {
 				    				return t.none(deleteContact(contact.idpersonne, provider.idfournisseur))
 					    				.then(() => {

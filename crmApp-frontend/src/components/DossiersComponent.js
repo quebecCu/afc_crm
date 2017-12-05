@@ -31,15 +31,15 @@ class DossiersComponent extends Component {
 			inputProspect;*/
 		let	table, tr, td0, td1, td2, td3, i;
 		if (document.getElementById("numeroPolice")) {
-			/*
-			inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
+
+			/*inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
 			inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
 			inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
 			inputNomEntreprise = document.getElementById("nomEntreprise").value.toUpperCase();
 			inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 			inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
-			inputProspect = document.getElementById("prospects").value.toUpperCase();
-			*/
+			inputProspect = document.getElementById("prospects").value.toUpperCase();   */
+
 			table = document.getElementById("PageCollectivesClientsTable");
 			tr = table.getElementsByTagName("tr");
 			// Loop through all table rows, and hide those who don't match the search query
@@ -96,9 +96,9 @@ class DossiersComponent extends Component {
 			this.rows = (
 				<tbody>
 
-				{this.props.fournisseur.map(element => {
+				{this.props.fournisseur.map( (element, index) => {
 					return (
-						<tr onClick={this.handleClick.bind(this)} key={element.nom}>
+						<tr onClick={this.handleClick.bind(this)} key={index}>
 							<td>{element.nom}</td>
 							<td>{element.min_emp1}</td>
 							<td>{element.contact}</td>
@@ -109,6 +109,7 @@ class DossiersComponent extends Component {
 				</tbody>
 			);
 		}
+		console.log(this.rows);
 		return this.rows;
 	}
 }

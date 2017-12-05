@@ -1,7 +1,7 @@
 
 import {
 	ADD_ARRAY_CONTACTS, CHANGE_FORM_STATE, DELETE_CONTACT, UPDATE_CONTACTS,
-	UPDATE_POSTES_CONTACTS
+	UPDATE_POSTES_CONTACTS, UPDATE_POSTES_CONTACTS_SUP
 } from "../actions/crmContacts";
 
 let initialState = {
@@ -27,6 +27,8 @@ export default function reducer(state = initialState, action) {
 
 	switch (action.type) {
 		case UPDATE_POSTES_CONTACTS:
+			return {...state, postes: action.postes, errors:''};
+		case UPDATE_POSTES_CONTACTS_SUP:
 			return {...state, postes: action.postes, errors:''};
 		case UPDATE_CONTACTS:
 			return {...state, contacts: action.contacts, errors:''};

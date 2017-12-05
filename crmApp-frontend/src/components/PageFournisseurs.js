@@ -13,7 +13,7 @@ class PageFournisseurs extends Component {
         return(
             <div className="container-fluid text-center">
                 <h1>Fournisseurs</h1>
-                <HistoriqueContainer page="PageFournisseurs" history={this.props.history} dossiersState={dossiersState}/>
+                <HistoriqueContainer page="PageFournisseurs" dossiersState={dossiersState}/>
                 <SearchCompSuppliers
                     formState = {formState}
                     searchList = {searchList}
