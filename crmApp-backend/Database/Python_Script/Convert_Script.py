@@ -23,7 +23,7 @@ def import_data_htm():
     header_listed = False
     headers = list()
 
-    sql_file.write("BEGIN;\n")
+    # sql_file.write("BEGIN;\n")
 
     for row in rows:
         column_index = 0
@@ -51,7 +51,7 @@ def import_data_htm():
             headers.append([c.text for c in row.getchildren()])
             header_listed = True
 
-    sql_file.write("COMMIT;\n")
+    # sql_file.write("COMMIT;\n")
 
 
 # Create Client
@@ -159,18 +159,15 @@ def insert_entreprise(sql_file, line):
                  'ORDER BY idadresse ' \
                  'DESC LIMIT 1' + ')'
     id_activite = 'NULL'
-    chambre_commerce = ("'" + htmlparser.unescape(line[16].replace("'", "\'\'")) + "'") if line[
-                                                                                               16] is not None else 'NULL'
-    tel_principal = (standardize_phone_number(htmlparser.unescape(line[8].replace("'", "\'\'")))) if line[
-                                                                                                                     8] is not None else 'NULL'
-    ext_tel_principal = ("'" + htmlparser.unescape(line[9].replace("'", "\'\'")) + "'") if line[
-                                                                                               9] is not None else 'NULL'
+    # chambre_commerce = ("'" + htmlparser.unescape(line[16].replace("'", "\'\'")) + "'") if line[16] is not None else 'NULL'
+    tel_principal = (standardize_phone_number(htmlparser.unescape(line[8].replace("'", "\'\'")))) if line[8] is not None else 'NULL'
+    ext_tel_principal = ("'" + htmlparser.unescape(line[9].replace("'", "\'\'")) + "'") if line[9] is not None else 'NULL'
     date_creation = ("to_date('" + htmlparser.unescape(line[81].replace("'", "\'\'")) + "-01-01', 'YYYY-MM-DD')") if line[81] is not None else 'NULL'
-    id_chambre_commerce = '(' + \
-                          'SELECT idchambrecommerce ' \
-                          'FROM public."CHAMBRE_COMMERCE" ' \
-                          'WHERE lower(libellechambrecommerce) ' \
-                          'LIKE lower({0})'.format(chambre_commerce) + ')'
+    # id_chambre_commerce = '(' + \
+    #                       'SELECT idchambrecommerce ' \
+    #                       'FROM public."CHAMBRE_COMMERCE" ' \
+    #                       'WHERE lower(libellechambrecommerce) ' \
+    #                       'LIKE lower({0})'.format(chambre_commerce) + ')'
     nom = ("'" + htmlparser.unescape(line[0].replace("'", "\'\'")) + "'") if line[0] is not None else 'NULL'
 
     query = 'INSERT INTO ' \
@@ -178,17 +175,15 @@ def insert_entreprise(sql_file, line):
             'idclient, ' \
             'idadresse, ' \
             'idactivite, ' \
-            'idchambrecommerce, ' \
             'nom, ' \
             'tel_principal, ' \
             'ext_tel_principal, ' \
             'date_creation) ' \
             'VALUES ' \
-            '({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})' \
+            '({0}, {1}, {2}, {3}, {4}, {5}, {6}) ' \
         .format(id_client,
                 id_adresse,
                 id_activite,
-                id_chambre_commerce,
                 nom,
                 tel_principal,
                 ext_tel_principal,
