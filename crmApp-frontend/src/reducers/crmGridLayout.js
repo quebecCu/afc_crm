@@ -1,8 +1,6 @@
 import {
 	CHANGE_GRID, CHANGE_ID_DISPLAY, CHANGE_LAYOUT, CHANGE_NEW_FIELD, CHANGE_REQUIRED_FIELDS, CHANGE_UPDATE_FIELD,
-	CHANGE_VIEW_GRID,
 	UPDATE_ACTIVITES,
-	UPDATE_CHAMBRE_COMMERCE,
 	UPDATE_CHAMP_TYPES,
 	UPDATE_ETATS, UPDATE_PROVENANCES,
 	UPDATE_RELEVES
@@ -25,7 +23,6 @@ let initialState = {
 		codePostal: '',
 		telephone: '',
 		extension: '',
-		date: '',
 		activite: '1',
 		etat: '1',
 		provenance: '1',

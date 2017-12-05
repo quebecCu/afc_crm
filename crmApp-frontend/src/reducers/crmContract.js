@@ -9,6 +9,8 @@ import {
 let initialState = {
 	view: '',
 	formState: {
+		intModulesToDisplay:1,
+		modulesToDisplay:[],//Tableau qui gère l'affichage des modules
 		AGA: [],
 		employesAFC:[],
 		listAssureurs:[],
@@ -23,9 +25,8 @@ let initialState = {
 						description: "",
 						type: "select",
 						valeurs: [
-							{idValeur: 0, label: "employes"},
-							{idValeur: 1, label: "cadres"},
-							{idValeur:2, label:"autre"}]
+							{idValeur: 0, label: "Autres"}
+							]
 					},
 					{
 						nom: "Vie conj",
@@ -35,7 +36,8 @@ let initialState = {
 						valeurs: [
 							{idValeur: 0, label: "5000$"},
 							{idValeur: 1, label: "10000$"},
-							{idValeur:2, label:"15000$"}]
+							{idValeur:2, label:"15000$"},
+							{idValeur:5, label:"Autres"}]
 					},
 				]
 			},
@@ -50,8 +52,9 @@ let initialState = {
 						type: "select",
 						valeurs: [
 							{idValeur: 0, label: "employes"},
-							{idValeur: 1, label: "cadres"},
-							{idValeur:2, label:"autre"}]
+							{idValeur: 4, label: "cadres"},
+							{idValeur:1, label:"Autres"}
+							]
 					},
 					{
 						nom: "Vie enfant",
@@ -60,16 +63,65 @@ let initialState = {
 						type: "select",
 						valeurs: [
 							{idValeur: 0, label: "5000$"},
-							{idValeur: 1, label: "10000$"},
-							{idValeur:2, label:"15000$"}]
+							{idValeur: 6, label: "10000$"},
+							{idValeur:2, label:"15000$"},
+							{idValeur:1, label:"Autres"}]
 					},
 				]
 			}
 
 		],
 		contrat:{
+			idAssureur: '',
+			idAGA: '',
 			modulesChoisis: [],
-
+			numPolice:'',
+			dateEmission:'',
+			moisRenouv:'',
+			notes:'',
+			historiqueTaux: {
+				diff: '',
+				vie: '',
+				dma: '',
+				pac: '',
+				ct: '',
+				lt: '',
+				amc_ind: '',
+				amc_mono: '',
+				amc_couple: '',
+				amc_fam: '',
+				dent_ind: '',
+				dent_mono: '',
+				dent_couple: '',
+				dent_fam: '',
+				mg_ind: '',
+				mg_mono: '',
+				mg_couple: '',
+				mg_fam: '',
+				pae: '',
+				prime_ms: '',
+				prime_an: ''
+			},
+		remuneration:{
+			vie:'',
+			ct:'',
+			lt:'',
+			amc:'',
+			dent:'',
+			mg:'',
+			pae:'',
+			notes:'',
+			recu:'',
+			base:'',
+			boni:'',
+			total:'',
+			gtotal:'',
+			idConseiller:'',
+			split:'',
+			bdu:'',
+			paye:'',
+			dpaye:'',
+			}
 
 		}
 	},

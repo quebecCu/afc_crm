@@ -1,6 +1,5 @@
 import React from 'react';
 import '../style/FicheClient.css';
-import {connect} from "react-redux";
 
 class TitreValeur extends React.Component {
 	constructor(props) {

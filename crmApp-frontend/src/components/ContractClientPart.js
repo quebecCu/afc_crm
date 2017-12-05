@@ -6,6 +6,8 @@ class ContractClientPart extends React.Component{
 		this.props.getEmployesAFC();
 	}
 
+
+
 	render(){
 		return <div>
 			<h4>Informations sur le client</h4>

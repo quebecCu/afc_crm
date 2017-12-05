@@ -31,3 +31,32 @@ select:required:invalid {
 	#recherche {
 	padding-top:28%;
 	}
+	@media print {
+  #recherche {
+    visibility: hidden;
+  }
+  
+   #createNewCx {
+    visibility: hidden;
+  }
+    #print {
+    visibility: hidden;
+  }
+     #nav-side-menu {
+    visibility: hidden;
+  }
+    #toggle-btn {
+    visibility: hidden;
+  }
+  
+  #print-content {
+    visibility: visible;
+  }
+  
+  
+  #print-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

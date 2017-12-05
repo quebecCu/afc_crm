@@ -278,7 +278,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 								let salt = genSaltSync(10);
 								let hash = hashSync(mdpText, salt);
 
-								var addUser = squel.insert()
+								var addUser = squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 									.into('users."UTILISATEUR"')
 									.set("login", user.login)
 									.set("password", hash)
@@ -304,7 +304,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 											});
 
 											if (newRights.length !== 0) {
-												var addRights = squel.insert()
+												var addRights = squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 													.into('users."PERMISSIONUTIL_GLOB"')
 													.setFieldsRows(newRights)
 													.returning('*')
@@ -451,7 +451,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 									.from('users."PERMISSIONUTIL_GLOB"')
 									.where("iduser = " + user.id);
 
-								var addRights = squel.insert()
+								var addRights = squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 									.into('users."PERMISSIONUTIL_GLOB"')
 									.setFieldsRows(newRights)
 									.returning('*')
@@ -747,7 +747,7 @@ router.get('/getRoles', expressJwtIp.ip(), function (req, res) {
 function createEmployee(userInformations, userCreated, t, res) {
 	return t.one(getIdTitre(userInformations.titre))
 		.then(titre => {
-			var addPersonne = squel.insert()
+			var addPersonne = squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 				.into('public."PERSONNE"')
 				.set("nom", userInformations.nom)
 				.set("prenom", userInformations.prenom)
@@ -756,7 +756,7 @@ function createEmployee(userInformations, userCreated, t, res) {
 
 			return t.one(addPersonne.toString())
 				.then(personCreated => {
-					var addEmployee = squel.insert()
+					var addEmployee = squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 						.into('users."EMPLOYE_INT"')
 						.set("iduser", userCreated.iduser)
 						.set("idpersonne", personCreated.idpersonne)

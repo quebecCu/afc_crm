@@ -1,12 +1,12 @@
 import {take, fork} from 'redux-saga/effects';
 import {
-	REQUEST_GRID_FOUR, changeGrid, changeLayout, CREATE_FOURNISSEUR_FILE, changeViewGrid,
-	UPDATE_FOURNISSEUR_FILE /*, GET_RELEVES, updateReleves, GET_CHAMBRE_COMMERCE, updateChambreCommerce*/
+	REQUEST_GRID_FOUR, CREATE_FOURNISSEUR_FILE,
+	UPDATE_FOURNISSEUR_FILE, changeGridFour, changeLayoutFour, UPDATE_POSITIONS_SUP, changeNewFieldSup,
+	CREATE_NEW_FIELD_SUP, getChampTypesSup, GET_CHAMP_TYPES_SUP, updateChampTypesSup, DELETE_FIELD_SUP, requestGridFour,
+	UPDATE_FIELD_SUP, changeUpdateFieldSup
 } from '../actions/crmGridLayoutSuppliers';
 import axios from 'axios';
 import {store} from '../store';
-import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
-
 
 let tokenToSend= localStorage.getItem("cookieSession");
 if(tokenToSend === undefined)
@@ -23,48 +23,30 @@ export function * getGridLayout (){
 	while(true){
 
 		yield take(REQUEST_GRID_FOUR);
-
 		//communication avec server
-		let server = "http://localhost:3002/getSuppliersGrid";
+		let server = "http://localhost:3002/attributesManagement/provider";
 
-		axios.post(server, {
-		},config)
+		axios.get(server,config)
 			.then(function (response) {
-				if(!!response.data.grid ){
-					store.dispatch(changeGrid(response.data.grid));
-					let layout = [];
-					let y = 0;
-					for (let i=0 ; i < response.data.grid.length ; i++){
-						let key = (i+1).toString();
-						let x = (i % 4)*3;
-						if(i % 4 === 0 && i !== 0) {
-							y++;
-						}
-						layout.push({i: key, x: x, y: y, w: 3, h: 1, minW: 3})
-					}
-					store.dispatch(changeLayout({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
-}
-/*
-//Récupère les valeurs de la liste des relevés
-export function * getReleves (){
-	while(true){
 
-		yield take(GET_RELEVES);
-
-		//communication avec server
-		let server = "http://localhost:3002/getReleves";
-
-		axios.post(server, {
-		},config)
-			.then(function (response) {
-				if(!!response.data.releves ){
-					store.dispatch(updateReleves(response.data.releves));
+				if(!!response.data.message && response.data.status === "success"){
+					let grid = response.data.message.map( champ => {
+						return {...champ, value: ''};
+					});
+					store.dispatch(changeGridFour(grid));
+					let layout = response.data.message.map(champ => {
+						return {
+							i: champ.idattrfournisseur.toString(),
+							x: champ.posx,
+							y: champ.posy,
+							w: champ.width,
+							h: champ.height,
+							minW: champ.minwidth,
+							static: true
+						};
+					});
+					store.dispatch(changeLayoutFour({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
+					store.dispatch(getChampTypesSup());
 				}
 			})
 			.catch(function (error) {
@@ -73,52 +55,42 @@ export function * getReleves (){
 	}
 }
 
-//Récupère les valeurs de la liste des chambres de commerce
-export function * getChambreCommerce (){
-	while(true){
-
-		yield take(GET_CHAMBRE_COMMERCE);
-
-		//communication avec server
-		let server = "http://localhost:3002/getChambreCommerce";
-
-		axios.post(server, {
-		},config)
-			.then(function (response) {
-				if(!!response.data.chambreCommerce ){
-					store.dispatch(updateChambreCommerce(response.data.chambreCommerce));
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
-}
-*/
-//Envoie les champs et leurs positions au back-end (Création d'un client)
+//Envoie les champs au back-end (Création d'un fournisseur)
 export function * sendFile() {
 	while(true) {
-		let file = yield take(CREATE_CUSTOMER_FILE);
+		let file = yield take(CREATE_FOURNISSEUR_FILE);
 		let {
 			grid,
-			layouts
+			requiredFields,
+			arrayContacts
 		} = file.file;
-		console.log("send file");
-		let layout = layouts.lg;
+		let facultatif = grid.map(champ => {
+			return {id: champ.idattrfournisseur, value: champ.value}
+		});
+		let server = "http://localhost:3002/providers/create";
 
-		let server = "http://localhost:3002/createSupplier";
-		console.log(grid);
-		console.log(layout);
 		axios.post(server, {
-			grid: grid,
-			layout: layout,
+			nom: requiredFields.nomEntreprise,
+			tel_princ: requiredFields.telephone,
+			ext_tel_princ: requiredFields.extension,
+			rue: requiredFields.rue,
+			ville: requiredFields.ville,
+			province: requiredFields.province,
+			codepostal: requiredFields.codePostal,
+			code: requiredFields.code,
+			facultatif: facultatif,
+			newcontacts: arrayContacts
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche fournisseur a été créée avec succès');
-					store.dispatch(changeViewSuppliers('supplierFile'));
-					store.dispatch(changeViewGrid('read'))
-				} else {
+					//store.dispatch(changeViewCollective('customerFile'));
+					//store.dispatch(changeViewGrid('read'))
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
 					alert('Erreur lors de la création de la fiche fournisseur');
 				}
 			})
@@ -130,7 +102,7 @@ export function * sendFile() {
 
 //Envoie les champs et leurs positions au back-end (Modification d'un fournisseur)
 export function * updateFile() {
-	while(true) {
+	/*while(true) {
 		let file = yield take(UPDATE_FOURNISSEUR_FILE);
 		let {
 			grid,
@@ -148,10 +120,31 @@ export function * updateFile() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche fournisseur a été modifiée avec succès');
-					store.dispatch(changeViewSuppliers('supplierFile'));
-					store.dispatch(changeViewGrid('read'));
 				} else {
 					alert('Erreur lors de la modification de la fiche fournisseur');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}*/
+}
+
+//on envoie la position des champs
+export function * updatePositions() {
+	while(true) {
+		let positions = yield take(UPDATE_POSITIONS_SUP);
+		let {
+			newItem,
+		} = positions.positions;
+		let server = "http://localhost:3002/attributesManagement/update/provider/display";
+		axios.post(server, {
+			layout: newItem,
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+				} else {
+					alert('Erreur lors de la modification des positions');
 				}
 			})
 			.catch(function (error) {
@@ -160,10 +153,144 @@ export function * updateFile() {
 	}
 }
 
-export function * GridFlow () {
+//Envoie le nouveau champ crée au back-end
+export function * createNewField() {
+	while(true) {
+		let champ = yield take(CREATE_NEW_FIELD_SUP);
+		let {
+			form,
+			posx,
+			posy
+		} = champ.newField;
+
+		let server = "http://localhost:3002/attributesManagement/create/provider";
+
+		axios.post(server, {
+			description: form.description,
+			label: form.label,
+			idtype: form.type,
+			forme: null,
+			valeur_defaut: null,
+			ext: null,
+			posx: posx,
+			posy: posy,
+			height: 1,
+			minwidth: 3,
+			width: 3
+
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(changeNewFieldSup(
+						{
+							description: '',
+							label: '',
+							type: "1"
+						}
+					));
+					store.dispatch(requestGridFour());
+					alert('Nouveau champ crée avec succès');
+				} else {
+					alert('Erreur lors de la création d\'un nouveau champ');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//on envoie les infos d'un champ à modifier
+export function * sendUpdateField() {
+	while(true) {
+		let field = yield take(UPDATE_FIELD_SUP);
+		let {
+			descField,
+			nameField,
+			id
+		} = field.field;
+		let server = "http://localhost:3002/attributesManagement/update/provider";
+
+		axios.post(server, {
+			id: id,
+			label: nameField,
+			description: descField,
+			forme: null,
+			valeur_defaut: null,
+			ext: null
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					alert("La modification du champ est un succès");
+					store.dispatch(changeUpdateFieldSup({
+						nameField: '',
+						descField: ''
+					}));
+					store.dispatch(requestGridFour());
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
+					alert('Erreur lors de la modification des positions');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//on supprime un champ
+export function * sendDeleteField() {
+	while(true) {
+		let field = yield take(DELETE_FIELD_SUP);
+		let id = field.field;
+
+		let server = "http://localhost:3002/attributesManagement/provider/"+id;
+
+		axios.delete(server,config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(requestGridFour());
+					alert("Champ supprimé avec succès");
+				} else {
+					alert('Erreur lors de la supression d\'un champ');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//Récupère les types de champ que l'administrateur peut créer
+export function * requestChampTypes (){
+	while(true){
+
+		 yield take(GET_CHAMP_TYPES_SUP);
+		//communication avec server
+		let server = "http://localhost:3002/attributesManagement/types";
+
+		axios.get(server,config)
+			.then(function (response) {
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateChampTypesSup(response.data.message));
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function * GridFlowSup () {
 	yield fork (getGridLayout);
 	yield fork (sendFile);
 	yield fork (updateFile);
-//	yield fork (getReleves);
-//	yield fork (getChambreCommerce);
+	yield fork (updatePositions);
+	yield fork (createNewField);
+	yield fork (requestChampTypes);
+	yield fork (sendDeleteField);
+	yield fork (sendUpdateField);
 }

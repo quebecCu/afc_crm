@@ -2,7 +2,8 @@ import {
 	CHANGE_FORM,
 	SET_AUTH,
 	SENDING_REQUEST,
-	LOGIN
+	LOGIN,
+	LOGOUT 
 }  from '../actions/crmLogin';
 
 //ajouter le reste dans l'import 
@@ -31,7 +32,8 @@ export default function reducer (state = initialState, action ){
 	
 	case LOGIN:
 		return {...state , isAdmin: action.isAdminState._auth.isAdmin ,cookie: action.isAdminState._auth.cookie, error:''};
-		
+	case LOGOUT:
+		return {...state ,formState: action.newFormState ,isAdmin: false ,cookie: ''};
 	case SET_AUTH:
 		return {...state, loggedIn: action.newAuthState, error:''};
 	case SENDING_REQUEST:

@@ -64,7 +64,6 @@ export function * getGridLayout (){
 							codePostal: '',
 							telephone: '',
 							extension: '',
-							date: '',
 							activite: '1',
 							etat: '1',
 							provenance: '1',
@@ -239,9 +238,9 @@ export function * sendFile() {
 		let file = yield take(CREATE_CUSTOMER_FILE);
 		let {
 			grid,
-			requiredFields
+			requiredFields,
+			arrayContacts
 		} = file.file;
-
 		let facultatif = grid.map(champ => {
 			return {id: champ.idattrentreprise, value: champ.value}
 		});
@@ -261,7 +260,8 @@ export function * sendFile() {
 			idprovenance: requiredFields.provenance,
 			prospect: requiredFields.prospect,
 			notes: requiredFields.notes,
-			facultatif: facultatif
+			facultatif: facultatif,
+			newcontacts: arrayContacts
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -289,7 +289,10 @@ export function * updateFile() {
 		let {
 			grid,
 			requiredFields,
-			idToDisplay
+			idToDisplay,
+			newcontacts,
+			delcontacts,
+			updatedContacts
 		} = file.file;
 		console.log("update file");
 
@@ -314,13 +317,20 @@ export function * updateFile() {
 			idprovenance: requiredFields.provenance,
 			prospect: requiredFields.prospect,
 			notes: requiredFields.notes,
-			facultatif: facultatif
+			facultatif: facultatif,
+			updtcontacts: updatedContacts,
+			newcontacts: newcontacts,
+			delcontacts: delcontacts,
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');
 					//store.dispatch(changeViewCollective('customerFile'));
-				} else {
+				}
+				else if(response.data.status === 'fail') {
+					alert(response.data.message);
+				}
+				else {
 					alert('Erreur lors de la modification de la fiche client');
 				}
 			})
@@ -450,7 +460,11 @@ export function * sendUpdateField() {
 						descField: ''
 					}));
 					store.dispatch(requestGrid());
-				} else {
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
 					alert('Erreur lors de la modification des positions');
 				}
 			})
@@ -490,15 +504,12 @@ export function * getGridLayoutToModify() {
 		let {id, releves, activites, etats, provenances, grid} = client.data;
 		let releve, activite, etat, provenance = '';
 		let gridModified = [];
-		console.log(grid);
 		let server = "http://localhost:3002/clients/"+id;
 
 		axios.get(server,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let champs = response.data.message;
-					console.log(champs);
-
 					for(let i = 0 ; i < grid.length ; i++) {
 						gridModified.push({...grid[i], value: champs.facultatif[i].valeur});
 					}
@@ -536,7 +547,6 @@ export function * getGridLayoutToModify() {
 						codePostal: champs.codepostal,
 						telephone: champs.tel_principal,
 						extension: champs.ext_tel_principal,
-						date: champs.date_creation,
 						activite: activite,
 						etat: etat,
 						provenance: provenance,

@@ -26,12 +26,13 @@ export function * resetFlow (){
 		})
 		.then(function (response) {
 			if(!!response.data && response.data.status === "success"){
-				alert("Veuillez consulter vos courriels svp");
-				store.dispatch(push('/'));
+				document.getElementById("resetPasswordMsg").style.display = "";	
+				document.getElementById("resetPasswordMsgFail").style.display = "none";
+				document.getElementById("courriel").value = "";
 			}
 			else {
 				// rajouter une alert 
-				alert("Ce courriel n'est pas present dans nos dossiers ");
+				document.getElementById("resetPasswordMsgFail").style.display = "";	
 			}
 		})
 		.catch(function (error) {

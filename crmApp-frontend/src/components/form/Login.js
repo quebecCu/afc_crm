@@ -22,6 +22,8 @@ class Login extends Component   {
 		this._login = this._login.bind(this);
 	}
 
+	
+	
 	_login(e) {
 		e.preventDefault();
 		this.props.onSubmit(this.props.formState);
@@ -58,15 +60,20 @@ class Login extends Component   {
 						<div className="col text-center">
 							<div className="loginmodal-container">
 								<h1> Connexion </h1><br/>
-								<form method="POST" onSubmit = {this._login}>
-									<input className= "form-control" type='text' name="username" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
-									<input className= "form-control" type='password' name="password"  placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
+								<form method="POST" onSubmit = {this._login} id="login-form"  >
+									<input className= "form-control" type='text' name="username" id="usernameLogin" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
+									<input className= "form-control" type='password' name="password" id="passwordLogin" placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
 									<div className="form-group"><button type= "submit" className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
 								</form>
 								<div className="login-help">
 									<br/>
 									<button className="btn btn-primary btn-lg" onClick = {this._forgotten} id="loginButton" > Mot de passe oublié?</button>
 								</div>
+								<div id="errorPassword" className=" w3-container w3-panel w3-red "   style={{display: 'none'}}>
+							    <h3>Nom d'utilisateur ou mot de passe erroné</h3>
+							    <p>En cas de problemes, utilisez "Mots de passe oublié?".</p>
+							  </div>
+							  
 							</div>
 						</div>
 					</div>
@@ -75,9 +82,12 @@ class Login extends Component   {
 						<div className="col text-center">
 							<div className="footer-left">
 								<div>
-									<i className="fa fa-map-marker"></i>
-									<p><span>4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
+									<i className="fa fa-map-marker" ></i>
+									<p><span >
+									4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
 								</div>
+								<br/><br/>
+								<a  className="material-icons"> &#xe52e;</a><a href = "http://maps.google.com/?q= 4645 Boul Bourque Sherbrooke, QC J1N 2G6"> Obtenir un intineraire</a>
 							</div>
 
 							<div className="footer-center">

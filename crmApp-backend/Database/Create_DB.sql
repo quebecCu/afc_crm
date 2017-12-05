@@ -31,6 +31,8 @@ DROP TABLE IF EXISTS "ENTREPRISE" CASCADE;
 DROP TABLE IF EXISTS "ENTREPRISE_FACUL" CASCADE;
 DROP TABLE IF EXISTS "ENTREPRISE_ATTR" CASCADE;
 DROP TABLE IF EXISTS "POSTE" CASCADE;
+DROP TABLE IF EXISTS "POSTE_ENTREPRISE" CASCADE;
+DROP TABLE IF EXISTS "POSTE_FOURNISSEUR" CASCADE;
 DROP TABLE IF EXISTS "CLIENT" CASCADE;
 DROP TABLE IF EXISTS "ETAT" CASCADE;
 DROP TABLE IF EXISTS "CONTRAT" CASCADE;
@@ -128,7 +130,7 @@ CREATE TABLE public."FOURNISSEUR" (
   idadresse integer  REFERENCES  "ADRESSE" (idadresse),
   nom  varchar(50) NOT NULL,
   code  varchar(20),
-  date_creation date,
+  date_creation date DEFAULT  current_date,
   --carte_noel boolean,
   --tag boolean,
   tel_principal varchar(10),
@@ -159,8 +161,13 @@ CREATE TABLE public."CATEGORIE"(
   libellecategorie  varchar(20)
 );
 
-CREATE TABLE public."POSTE" (
-  idposte serial PRIMARY KEY,
+CREATE TABLE public."POSTE_ENTREPRISE" (
+  idposte_ent serial PRIMARY KEY,
+  libelleposte  varchar(40)
+);
+
+CREATE TABLE public."POSTE_FOURNISSEUR" (
+  idposte_fou serial PRIMARY KEY,
   libelleposte  varchar(40)
 );
 
@@ -192,7 +199,8 @@ CREATE TABLE public."MODALITE" (
   libelleavantage  varchar(255),
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
   idtype  integer  REFERENCES "TYPE" (idtype),
-  multi boolean
+  multi boolean,
+  ext char(1)
 );
 
 CREATE TABLE public."RELATION" (
@@ -295,8 +303,8 @@ CREATE TABLE public."HISTORIQUE_TAUX" (
   mg_couple numeric(7,2),
   mg_fam numeric(7,2),
   pae numeric(7,2),
- -- prime_ms a calculer
- -- prime_an a calculer
+  prime_ms numeric(7,2),
+  prime_an numeric(7,2),
   CONSTRAINT  pk_HISTORIQUE_TAUX  PRIMARY KEY (idclient, idfournisseur)
 );
 
@@ -319,8 +327,9 @@ CREATE TABLE public."REMUNERATION" (
   split numeric(7,2),
   bdu numeric(7,2),
   paye numeric(7,2),
+  total numeric(7,2),
   dpaye date,
-  --sol a calculer
+  notes varchar(100),
   CONSTRAINT  pk_REMUNERATION  PRIMARY KEY (idclient, idfournisseur)
 );
 
@@ -415,7 +424,7 @@ CREATE TABLE public."ENTREPRISE_FACUL" (
 CREATE TABLE public."CONTACT_CLIENT" (
   idclient  integer  REFERENCES "CLIENT" (idclient),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
-  idposte  integer  REFERENCES  "POSTE" (idposte),
+  idposte_ent  integer  REFERENCES  "POSTE_ENTREPRISE" (idposte_ent),
   estDecideur  boolean,
   CONSTRAINT  pk_CONTACT_CLIENT  PRIMARY KEY (idclient, idpersonne)
 );
@@ -423,8 +432,8 @@ CREATE TABLE public."CONTACT_CLIENT" (
 CREATE TABLE public."CONTACT_FOURNISSEUR" (
   idfournisseur  integer  REFERENCES "FOURNISSEUR" (idfournisseur),
   idpersonne  integer  REFERENCES "PERSONNE" (idpersonne),
-  idposte  integer  REFERENCES  "POSTE" (idposte),
-  CONSTRAINT  pk_CONTACT_FOURNISSEUR  PRIMARY KEY (idfournisseur, idpersonne, idposte)
+  idposte_fou  integer  REFERENCES  "POSTE_FOURNISSEUR" (idposte_fou),
+  CONSTRAINT  pk_CONTACT_FOURNISSEUR  PRIMARY KEY (idfournisseur, idpersonne)
 );
 
 CREATE TABLE public."CADEAU_ENVOYE" (
@@ -440,12 +449,6 @@ CREATE TABLE public."CONDITION" (
   CONSTRAINT  pk_CONDITION  PRIMARY KEY (idfournisseur, idmodalite),
   idtype  integer  REFERENCES "TYPE" (idtype),
   valeur varchar(20)
-);
-
-CREATE TABLE public."CAT_ACTIVITE" (
-  idposte integer REFERENCES "POSTE" (idposte),
-  idcategorie integer REFERENCES "CATEGORIE" (idcategorie),
-  CONSTRAINT  pk_CAT_ACTIVITE  PRIMARY KEY (idposte, idcategorie)
 );
 
 CREATE TABLE public."MODALITES_VALEUR" (

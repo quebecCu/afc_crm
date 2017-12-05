@@ -2,27 +2,43 @@ import React, {Component} from 'react';
 
 class DossiersComponent extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	handleClick(client, event) {
-		if (this.props.collective)
+		if (this.props.collective) {
+			this.props.displaySub(true);
+			let links = this.props.links;
+			let check = true;
+			links.forEach(link => {
+				if(link.idCustomer === client.id) {
+					check = false;
+				}
+			});
+			if(check) {
+				this.props.collective.forEach(element => {
+					if(client.id === element.id) {
+						links.push({name: element.nom_groupe, view: 'customer', idCustomer: client.id});
+					}
+				});
+				this.props.addSub(links);
+			}
+			this.props.changeLoading(true);
 			this.props.handleClick(client, event);
+		}
 	}
 
 	componentDidUpdate() {
-		var inputNumeroPolice, inputNomEmploye, inputNomAssureur, inputNomEntreprise, inputMoisRenouvellement,
+		/*let inputNumeroPolice, inputNomEmploye, inputNomAssureur, inputNomEntreprise, inputMoisRenouvellement,
 			inputSelectedStatut,
-			inputProspect, table, tr, td0, td1, td2, td3, i;
+			inputProspect;*/
+		let	table, tr, td0, td1, td2, td3, i;
 		if (document.getElementById("numeroPolice")) {
-			inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
+
+			/*inputNumeroPolice = document.getElementById("numeroPolice").value.toUpperCase();
 			inputNomEmploye = document.getElementById("nomEmploye").value.toUpperCase();
 			inputNomAssureur = document.getElementById("nomAssureur").value.toUpperCase();
 			inputNomEntreprise = document.getElementById("nomEntreprise").value.toUpperCase();
 			inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 			inputSelectedStatut = document.getElementById("selectedStatut").value.toUpperCase();
-			inputProspect = document.getElementById("prospects").value.toUpperCase();
+			inputProspect = document.getElementById("prospects").value.toUpperCase();   */
 
 			table = document.getElementById("PageCollectivesClientsTable");
 			tr = table.getElementsByTagName("tr");
@@ -61,13 +77,16 @@ class DossiersComponent extends Component {
 		} else if (this.props.collective) {
 			this.rows = (
 				<tbody>
-				{this.props.collective.map(element => {
+				{this.props.collective.map((element, index) => {
 					return (
-						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={element.id}>
+						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={index}>
 							<td>{element.nom_groupe}</td>
 							<td>{element.responsable}</td>
 							<td>{element.etat}</td>
 							<td>{element.prospect}</td>
+							<td>{element.mois_renouvellement}</td>
+							<td>{element.no_police}</td>
+							<td>{element.fournisseur}</td>
 						</tr>
 					);
 				})}
@@ -77,9 +96,9 @@ class DossiersComponent extends Component {
 			this.rows = (
 				<tbody>
 
-				{this.props.fournisseur.map(element => {
+				{this.props.fournisseur.map( (element, index) => {
 					return (
-						<tr onClick={this.handleClick.bind(this)} key={element.nom}>
+						<tr onClick={this.handleClick.bind(this)} key={index}>
 							<td>{element.nom}</td>
 							<td>{element.min_emp1}</td>
 							<td>{element.contact}</td>
@@ -90,6 +109,7 @@ class DossiersComponent extends Component {
 				</tbody>
 			);
 		}
+		console.log(this.rows);
 		return this.rows;
 	}
 }

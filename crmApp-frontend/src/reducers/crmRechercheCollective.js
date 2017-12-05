@@ -28,13 +28,10 @@ export default function reducer(state = initialState, action) {
 
 		case CHANGE_FORM_COLL:
 			return {...state, formState: action.newFormState, errors: ''}
-			break;
 		case GET_REQUEST_CLIENT_COLL:
 			return {...state, dossiersState: action.newDossiersState, errors: ''}
-			break;
 		case SEARCH_REQUEST_COLL:
 			return {...state, formState: action.newFormState, errors: ''}
-			break;
 		default:
 			return state
 

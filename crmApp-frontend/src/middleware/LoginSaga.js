@@ -1,6 +1,6 @@
 import {take, fork, put} from 'redux-saga/effects';
 import {
-	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, isAdmin
+	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, logout
 } from '../actions/crmLogin';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
@@ -16,48 +16,53 @@ export function * loginFlow (){
 
 
 		//communication avec server
-		var server = "http://localhost:3002/login";
-		//changer la location de la variable server pour plus de securite 
-		var backendUrl = window.location.host;
+		let server = "http://localhost:3002/login";
+		//changer la location de la variable server pour plus de securite
+		let backendUrl = window.location.host;
 		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/login';
-	
-		
+
+
 		axios.post(backendUrl, {
 			username: username,
 			password: password
 		})
 		.then(function (response) {
 			if(!!response.data.status && response.data.status=== "success"){
-				var _isAdmin =response.data.message.isAdmin;
-				var _cookie = response.data.message.cookie;
+				let _isAdmin =response.data.message.isAdmin;
+				let _cookie = response.data.message.cookie;
 				let formStateAdm ={_auth:{
 					cookie:_cookie,
 					isAdmin: _isAdmin
-				}}
+				}};
 				localStorage.setItem("cookieSession" ,_cookie);
 				store.dispatch(login(formStateAdm));
+				document.getElementById("errorPassword").style.display = "none";	
 			}
 			else {
-				alert ("identifiant ou mot de passe incorrects");
-			}
+				document.getElementById("errorPassword").style.display = "";			}
 		})
 		.catch(function (error) {
 			console.log(error);
 		});
 
 	}
-}  
+}
 
 export function * logoutFlow() {
 	while(true){
 		yield take (LOGOUT);
+
 		yield put({ type: SET_AUTH, newAuthState: false });
 		yield put({ type: CLEAR_SESSION});
-
 		localStorage.removeItem("cookieSession");
-
-		yield put(push("/"))
-
+		let formStateLogout ={
+					username:'',
+					password: '',
+					email:''
+		};	
+		store.dispatch(logout(formStateLogout));
+		 yield put(push("/"))
+		
 
 	}
 }

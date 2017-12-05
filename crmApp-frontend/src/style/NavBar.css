@@ -149,3 +149,14 @@ body {
     margin: 0px;
     padding: 0px;
 }
+
+#subUser .text-center{
+	    background-color: grey;
+}
+.fa-minus-circle{
+		color:red;
+}
+
+#subCustomer .text-center{
+	    background-color: grey;
+}

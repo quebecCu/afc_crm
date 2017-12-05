@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {GridCreationClient} from "../components/form/GridCreationCustomer/GridCreationClient";
 import {connect} from "react-redux";
 import {
-	changeGrid, changeLayout, changeViewGrid, createCustomerFile, createNewField, requestGrid,
+	changeGrid, changeLayout, createCustomerFile, createNewField, requestGrid,
 	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
@@ -61,8 +61,9 @@ class CreationClient extends Component {
     _handleSubmitCreate(event) {
        event.preventDefault();
        let {grid, requiredFields} = this.props.crmGridLayout;
+       let {arrayContacts} = this.props.crmContacts;
        this._handleStatic();
-       this.props.createCustomerFile({grid, requiredFields});
+       this.props.createCustomerFile({grid, requiredFields, arrayContacts});
        console.log("submit file");
     }
 
@@ -70,16 +71,39 @@ class CreationClient extends Component {
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
 		let {grid, requiredFields, idToDisplay} = this.props.crmGridLayout;
+		let {arrayContacts, delcontacts, postes} = this.props.crmContacts;
+		//On récupère les contacts à modifier
+		let updatedContacts = [];
+		 arrayContacts.forEach(contact => {
+			if(contact.libelletitre) {
+				let poste = 1;
+				postes.forEach(element => {
+					if(element.libelleposte === contact.libelleposte) {
+						poste = element.idposte;
+					}
+				});
+				updatedContacts.push( {
+					...contact,
+					idposte: poste,
+					titre: contact.libelletitre
+				})
+			}
+		});
+		//on récupère les contacts à ajouter
+		let newcontacts = arrayContacts.filter( contact => {
+			return !contact.idpersonne;
+		});
+
 		this._handleStatic();
-		this.props.updateCustomerFile({grid, requiredFields, idToDisplay});
+		this.props.updateCustomerFile({grid, requiredFields, idToDisplay, newcontacts, delcontacts, updatedContacts});
 		console.log("submit file");
 	}
 
 	//Change le state : Sauvegarde la valeur des champs
     _handleChangeInput(event) {
     	let {grid} = this.props.crmGridLayout;
-    	for (let champ = 0 ; champ < grid.length ; champ++) {
-    		if(parseInt(event.target.id) === grid[champ].idattrentreprise) {
+		for (let champ = 0 ; champ < grid.length ; champ++) {
+    		if(parseInt(event.target.id, 10) === grid[champ].idattrentreprise) {
 				grid[champ]= {...grid[champ] , value: event.target.value}
 			}
 		}
@@ -154,7 +178,8 @@ function mapStateToProps (state) {
 	return{
 		crmGridLayout: state.crmGridLayout,
 		crmLogin: state.crmLogin,
-		crmDashboard: state.crmDashboard
+		crmDashboard: state.crmDashboard,
+		crmContacts: state.crmContacts
 	}
 }
 

@@ -1,22 +1,46 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import FicheClient from "./FicheClient";
-import {changeIdDisplay, deleteCustomer} from "../actions/crmGridLayout";
+import {changeIdDisplay, deleteCustomer, requestGrid} from "../actions/crmGridLayout";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 class PageClient extends Component {
+	constructor(props) {
+		super(props);
+		this.props.requestGrid(this.props.crmClientList.client.idclient);
+	}
 
 	render() {
-		return <FicheClient client={this.props.crmClientList.currentClient}
-							handleClick={this.props.handleClick} changeIdDisplay={this.props.changeIdDisplay}
-							deleteCustomer={this.props.deleteCustomer}
-							optionnalFields={this.props.crmClientList.clientOptionnalRows.facultatif}/>;
+		let {isAdmin} = this.props.crmLogin;
+		let {loading} = this.props.crmDashboard;
+		let {layouts} = this.props.crmGridLayout;
+		let {contacts} = this.props.crmContacts;
+		return (
+			<div>
+				{
+					loading && <LoadingAnimation/>
+				}
+				{
+					!loading &&
+					<FicheClient client={this.props.crmClientList.client}
+								 handleClick={this.props.handleClick} changeIdDisplay={this.props.changeIdDisplay}
+								 deleteCustomer={this.props.deleteCustomer} isAdmin={isAdmin}
+								 layouts={layouts} contacts={contacts}
+								 optionnalFields={this.props.crmClientList.client.facultatif}/>
+				}
+			</div>
+		);
 	}
 }
 
 function mapStateToProps(state) {
 
 	return {
-		crmClientList: state.crmClientList
+		crmClientList: state.crmClientList,
+		crmLogin: state.crmLogin,
+		crmDashboard: state.crmDashboard,
+		crmGridLayout: state.crmGridLayout,
+		crmContacts: state.crmContacts
 	}
 }
 
@@ -28,6 +52,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		deleteCustomer: (id) => {
 			dispatch(deleteCustomer(id));
+		},
+		requestGrid: (id) => {
+			dispatch(requestGrid(id));
 		}
 	}
 };

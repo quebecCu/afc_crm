@@ -29,24 +29,7 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function (req, res) {
 	if (!!decoded && (_ip === _ipReceived)) {
 
 		// TODO: Refactor query
-		db.query(squel.select()
-			.from('public."ENTREPRISE"', "entreprise")
-			.field('client.idclient')
-			.field('entreprise.nom', 'nomentp')
-			.field('entreprise.date_creation')
-			.field('activite.libelleactivite')
-			.field('client.prospect')
-			.field('etat.libelleetat')
-			.field('p.nom', 'nomresp')
-			.field('p.prenom', 'prenomresp')
-			.left_join('public."ACTIVITE"', "activite", "activite.idactivite = entreprise.idactivite")
-			.left_join('public."CLIENT"', "client", "client.idclient = entreprise.idclient")
-			.left_join('public."ETAT"', "etat", "etat.idetat = client.idetat")
-			.left_join('public."CONTACT_CLIENT"', 'ccli', 'client.idclient = ccli.idclient')
-			.left_join('public."PERSONNE"', 'p', 'p.idpersonne = ccli.idpersonne')
-			.left_join('public."CONTRAT"', 'ctt', 'ctt.idclient = client.idclient')
-			//.where('estDecideur = true')
-			.toString())
+		db.query(getClientsListRequest())
 			.then(function (entreprise) {
 
 				clients = buildClientsArray(entreprise);
@@ -74,7 +57,6 @@ router.post('/assurancesCollectives', expressJwtIp.ip(), function (req, res) {
  * @param entrepriseFromDB - DB response
  * @returns {Array} - Clients list (Shaped according to Front-end supported format)
  */
-
 const buildClientsArray = (entrepriseFromDB) => {
 	let clientsToSend = [];
 	let client;
@@ -92,15 +74,56 @@ const buildClientsArray = (entrepriseFromDB) => {
 			date_creation: entreprise.date_creation,
 			activite: entreprise.libelleactivite,
 			mois_renouvellement: entreprise.renouvellement,
-			no_police: entreprise.no_police,
+			no_police: entreprise.police,
 			etat: etat,
-			prospect: isProspect
+			prospect: isProspect,
+			fournisseur: entreprise.fnom
 		};
 
 		clientsToSend.push(client);
 	});
 
 	return clientsToSend;
-}
+};
+
+/**
+ * Returns SQL String to getClientsList
+ *
+ * @returns {String} - SQL Query
+ */
+const getClientsListRequest = () => {
+	return squel.select()
+		.from('public."ENTREPRISE"', "entreprise")
+		.field('client.idclient')
+		.field('entreprise.nom', 'nomentp')
+		.field('entreprise.date_creation')
+		.field('activite.libelleactivite')
+		.field('client.prospect')
+		.field('etat.libelleetat')
+		.field('p.nom', 'nomresp')
+		.field('p.prenom', 'prenomresp')
+		.field('ctt.mois_renouvellement', 'renouvellement')
+		.field('ctt.police', 'police')
+		.field('f.nom', 'fnom')
+		.left_join('public."ACTIVITE"', "activite", "activite.idactivite = entreprise.idactivite")
+		.left_join('public."CLIENT"', "client", "client.idclient = entreprise.idclient")
+		.left_join('public."ETAT"', "etat", "etat.idetat = client.idetat")
+		.left_join('public."CONTACT_CLIENT"', 'ccli', 'client.idclient = ccli.idclient')
+		.left_join('public."PERSONNE"', 'p', 'p.idpersonne = ccli.idpersonne')
+		.left_join('public."CONTRAT"', 'ctt', 'ctt.idclient = client.idclient')
+		.left_join('public."FOURNISSEUR"', 'f', 'f.idfournisseur = ctt.idfournisseur')
+		.where('estDecideur = true')
+		/*.group('client.idclient')
+		.group('entreprise.nom')
+		.group('entreprise.date_creation')
+		.group('activite.libelleactivite')
+		.group('etat.libelleetat')
+		.group('p.nom', 'nomresp')
+		.group('p.prenom', 'prenomresp')
+		.group('ctt.mois_renouvellement', 'renouvellement')
+		.group('ctt.police', 'police')
+		.group('f.nom', 'fnom')*/
+		.toString();
+};
 
 module.exports = router;

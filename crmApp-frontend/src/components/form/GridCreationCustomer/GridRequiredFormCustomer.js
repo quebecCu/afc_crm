@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ContactsContainer from "../../../containers/ContactsContainer";
 
 class GridRequiredFormCustomer extends Component {
 	constructor(props) {
@@ -11,7 +12,6 @@ class GridRequiredFormCustomer extends Component {
 		this._changeCodePostal = this._changeCodePostal.bind(this);
 		this._changeTel = this._changeTel.bind(this);
 		this._changeExtension = this._changeExtension.bind(this);
-		this._changeDate = this._changeDate.bind(this);
 		this._changeActivite = this._changeActivite.bind(this);
 		this._changeEtat = this._changeEtat.bind(this);
 		this._changeProvenance = this._changeProvenance.bind(this);
@@ -49,10 +49,6 @@ class GridRequiredFormCustomer extends Component {
 
 	_changeExtension(event) {
 		this.props.changeRequiredFields({...this.props.requiredFields , extension: event.target.value});
-	}
-
-	_changeDate(event) {
-		this.props.changeRequiredFields({...this.props.requiredFields , date: event.target.value});
 	}
 
 	_changeActivite(event) {
@@ -133,11 +129,7 @@ class GridRequiredFormCustomer extends Component {
 					</div>
 				</div>
 
-				<div className="form-group">
-					<label htmlFor="creationDate" className="control-label">Date de création</label>
-					<input type="text" className="form-control" id="creationDate" name="creationDate"
-						   onChange={this._changeDate} value={this.props.requiredFields.date} required/>
-				</div>
+
 				<div className="form-group">
 					<label className="control-label " htmlFor="activite">Activité</label>
 					<select className="form-control" id="activite" name="activite"
@@ -185,6 +177,7 @@ class GridRequiredFormCustomer extends Component {
 					<textarea className="form-control" id="notes" name="notes"
 							  onChange={this._changeNotes} value={this.props.requiredFields.notes} required/>
 				</div>
+				<ContactsContainer/>
 			</div>
 		);
 	}

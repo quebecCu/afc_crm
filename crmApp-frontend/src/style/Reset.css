@@ -41,6 +41,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	font-weight: 700;
 }
 
+
 }
 .reset .element-main {
 	width: 50%;
@@ -211,4 +212,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		padding: 0 4px;
 	}
 }
+
+#resetPasswordMsg h3 {
+	
+	text-align: -webkit-center;
+}
+#resetPasswordMsg p {
+	
+	text-align: -webkit-center;
+	color:white;
+}
+#resetPasswordMsgFail h3 {
+	
+	text-align: -webkit-center;
+}
+#resetPasswordMsgFail p {
+	
+	text-align: -webkit-center;
+	color:white;
+}
+
 /*--media quiries end here--*/

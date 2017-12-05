@@ -8,7 +8,7 @@ var security = require('../security/security');
 var jwt = require('jsonwebtoken');
 var expressJwtIp = require('express-jwt-ip');
 
-//Create an update-join method for squel
+// Create an update-join method for squel
 squel.updateJoin = function(options) {
     return squel.update(options, [
         new squel.cls.StringBlock(options, 'UPDATE'),
@@ -22,6 +22,7 @@ squel.updateJoin = function(options) {
     ]);
 };
 
+// Squel request for getting contacts of a client
 let getContacts = (idclient) =>
 squel.select()
 .field('pers.idpersonne', 'idpersonne')
@@ -35,11 +36,12 @@ squel.select()
 .field('estdecideur')
 .from('public."CONTACT_CLIENT"', 'cont')
 .left_join('public."PERSONNE"', 'pers', "pers.idpersonne = cont.idpersonne")
-.left_join('public."POSTE"', 'poste', "poste.idposte = cont.idposte")
+.left_join('public."POSTE_ENTREPRISE"', 'poste', "poste.idposte_ent = cont.idposte_ent")
 .left_join('public."TITRE"', 'titre', "pers.idtitre = titre.idtitre")
 .where('cont.idclient = ?', idclient)
 .toString();
 
+// Squel request for getting a title id with its label
 let getIdTitre = (titre) =>
 squel.select()
 	.from('public."TITRE"', 't')
@@ -47,6 +49,7 @@ squel.select()
 	.where("t.libelletitre = ?", titre)
 	.toString();
 
+// Squel request for creating a person
 let createPerson = (person) =>
 squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .into('public."PERSONNE"')
@@ -59,15 +62,17 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .returning('idpersonne')
 .toParam();
 
+// Squel request for crating a contact for a client
 let createContact = (person) =>
 squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .into('public."CONTACT_CLIENT"')
 .set("idpersonne", person.idpersonne)
 .set("estdecideur", person.estdecideur)
-.set("idposte", person.idposte)
+.set("idposte_ent", person.idposte)
 .set("idclient", person.idclient)
 .toParam();
 
+// Squel request for updating a person (who is a client contact)
 let updatePerson = (person) =>
 squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .table('public."PERSONNE"')
@@ -80,21 +85,24 @@ squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .where("idpersonne = ?", person.idpersonne)
 .toParam();
 
+// Squel request for updating a client contact
 let updateContact = (person) =>
 squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .table('public."CONTACT_CLIENT"')
 .set("estdecideur", person.estdecideur)
-.set("idposte", person.idposte)
+.set("idposte_ent", person.idposte)
 .where("idpersonne = ?", person.idpersonne)
 .where("idclient = ?", person.idclient)
 .toParam();
 
+// Squel request for deleting a person (who was a client contact)
 let deletePerson = (idpersonne) =>
 squel.delete()
 .from('public."PERSONNE"')
 .where("idpersonne = ?", idpersonne)
 .toParam();
 
+// Squel request for deleting a client contact
 let deleteContact = (idpersonne, idclient) =>
 squel.delete()
 .from('public."CONTACT_CLIENT"')
@@ -102,6 +110,7 @@ squel.delete()
 .where("idclient = ?", idclient)
 .toParam();
 
+// Squel request for getting the sending modes available
 let getStatementSendingModes = () =>
 squel.select()
 .from('public."RELEVE"')
@@ -109,6 +118,7 @@ squel.select()
 .field("modeenvoiereleve")
 .toString();
 
+// Squel request for getting the chambers of commerce available
 let getChambersOfCommerce = () =>
 squel.select()
 .from('public."CHAMBRE_COMMERCE"')
@@ -116,6 +126,7 @@ squel.select()
 .field("libellechambrecommerce")
 .toString();
 
+// Squel request for getting the activities available
 let getActivities = () =>
 squel.select()
 .from('public."ACTIVITE"')
@@ -123,13 +134,15 @@ squel.select()
 .field("libelleactivite")
 .toString();
 
+// Squel request for getting the jobs available
 let getJobs = () =>
 squel.select()
-	.from('public."POSTE"')	
-	.field("idposte")
+	.from('public."POSTE_ENTREPRISE"')	
+	.field("idposte_ent", "idposte")
 	.field("libelleposte")
 	.toString();
 
+// Squel request for getting the provenances available
 let getProvenances = () =>
 squel.select()
 .from('public."PROVENANCE"')
@@ -137,6 +150,7 @@ squel.select()
 .field("libelleprovenance")
 .toString();
 
+// Squel request for getting the states available
 let getStates = () =>
 squel.select()
 .from('public."ETAT"')
@@ -144,6 +158,15 @@ squel.select()
 .field("libelleetat")
 .toString();
 
+/**
+ * Route retrieving contacts of a client
+ * @method GET
+ * @URL /clients/contacts/:id
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: success, message: [{ idpersonne, prenom, nom, libelletitre, 
+ * libelleposte, num_tel_principal, ext_tel_principal, mail, estdecideur }] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/contacts/:id', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /contacts/:id');
 	/*var tokenReceived = req.get("authorization");
@@ -175,6 +198,15 @@ router.get('/contacts/:id', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route creating a contact for a client
+ * @method POST
+ * @URL /clients/contact/create
+ * @param expressJwtIp.ip() server IP address
+ * @DataParams {idclient, prenom, idposte, titre, num_tel_principal, ext_tel_principal, mail, estdecideur} Contact to be created
+ * @SuccessResponse { status: 'success', message: null }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.post('/contact/create', expressJwtIp.ip(), function (req, res) {
 	console.log('route POST /create/contact');
 	/*var tokenReceived = req.get("authorization");
@@ -227,6 +259,15 @@ router.post('/contact/create', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route updating a contact for a client
+ * @method POST
+ * @URL /clients/contact/
+ * @param expressJwtIp.ip() server IP address
+ * @DataParams {idclient, idpersonne, prenom, idposte, titre, num_tel_principal, ext_tel_principal, mail, estdecideur} Contact to be updated
+ * @SuccessResponse { status: 'success', message: null }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.post('/contact/update', expressJwtIp.ip(), function (req, res) {
 	console.log('route POST /contact/update');
 	/*var tokenReceived = req.get("authorization");
@@ -279,6 +320,14 @@ router.post('/contact/update', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route deleting a contact for a client
+ * @method DELETE
+ * @URL /clients/contact/:idclient/:idpersonne
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: null }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.delete('/contact/:idclient/:idpersonne', expressJwtIp.ip(), function (req, res) {
 	console.log('route DELETE /contact/:idclient/:idpersonne');
 	/*var tokenReceived = req.get("authorization");
@@ -317,6 +366,14 @@ router.delete('/contact/:idclient/:idpersonne', expressJwtIp.ip(), function (req
 	}*/
 });
 
+/**
+ * Route getting sending modes available
+ * @method GET
+ * @URL /clients/statementSendingModes
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: [ { idreleve, modeenvoiereleve } ] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/statementSendingModes', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /statementSendingModes');
 	/*var tokenReceived = req.get("authorization");
@@ -348,6 +405,14 @@ router.get('/statementSendingModes', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route getting chambers of commerce available
+ * @method GET
+ * @URL /clients/aga
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: [ { idchambrecommerce, libellechambrecommerce } ] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/aga', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /aga');
 	/*var tokenReceived = req.get("authorization");
@@ -379,6 +444,14 @@ router.get('/aga', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route getting activities available
+ * @method GET
+ * @URL /clients/activities
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: [ { idactivite, libelleactivite } ] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/activities', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /activities');
 	/*var tokenReceived = req.get("authorization");
@@ -410,6 +483,14 @@ router.get('/activities', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route getting states available
+ * @method GET
+ * @URL /clients/states
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: [ { idetat, libelleetat } ] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/states', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /states');
 	/*var tokenReceived = req.get("authorization");
@@ -441,6 +522,14 @@ router.get('/states', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route getting jobs available
+ * @method GET
+ * @URL /clients/jobs
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: [ { idposte, libelleposte } ] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/jobs', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /jobs');
 	/*var tokenReceived = req.get("authorization");
@@ -463,7 +552,7 @@ router.get('/jobs', expressJwtIp.ip(), function (req, res) {
 			.catch(error => {
 				res.send({
 					status: 'fail',
-					message: error.toString() //'Les activités disponibles n\'ont pas pu être récupérées'
+					message: error.toString() //'Les postes disponibles n\'ont pas pu être récupérées'
 				});
 			})
 	/*} else {
@@ -472,6 +561,14 @@ router.get('/jobs', expressJwtIp.ip(), function (req, res) {
 	}*/
 });
 
+/**
+ * Route getting jobs available
+ * @method GET
+ * @URL /clients/provenances
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: [ { idprovenance, libelleprovenance } ] }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.get('/provenances', expressJwtIp.ip(), function (req, res) {
 	console.log('route GET /provenances');
 	/*var tokenReceived = req.get("authorization");
@@ -561,6 +658,7 @@ router.get('/:idClient', expressJwtIp.ip(), function (req, res) {
 	console.log("end get /clients/:id");
 });
 
+// Build optionnal values for a client, in order to serve them
 const buildClientObject = (optionnalRows) => {
 	let clientRowsToReturn = [];
 	let columnName;
@@ -591,6 +689,7 @@ const buildClientObject = (optionnalRows) => {
 const getClientById = (idClient) => {
 };
 
+// Squel request getting the optionnal attributes of a specific client
 const getOptionnalClientRowsById = (idClient) => {
 	return squel.select()
 		.field('label')
@@ -607,6 +706,7 @@ const getOptionnalClientRowsById = (idClient) => {
 		.toString();
 };
 
+// Squel request getting the obligatory attributes of a specific client
 const getObligatoryClientRowsById = (idClient) => {
 	return squel.select()
 		.field('cli.idclient', 'idclient')
@@ -648,6 +748,7 @@ const sendResponse = (message, response, status) => {
 	});
 }
 
+// Squel request creating an address for a client
 let createAdresse = (client) =>
 squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .into('public."ADRESSE"')
@@ -658,6 +759,7 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .returning("idadresse")
 .toParam();
 
+// Squel request creating a company
 let createEntrepriseOblig = (client) =>
 squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .into('public."ENTREPRISE"')
@@ -670,6 +772,7 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .set("idactivite", client.idactivite)
 .toParam();
 
+// Squel request creating a client
 let createClientOblig = (client) =>
 squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .into('public."CLIENT"')
@@ -680,6 +783,7 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .returning("idclient")
 .toParam();
 
+// Squel request filling optionnal attributes for a specific client
 let createClientFacul = (idclient, idattr, valeur) =>
 squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .into('public."ENTREPRISE_FACUL"')
@@ -688,6 +792,16 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .set("valeur", valeur)
 .toParam();
 
+/**
+ * Route creating a client
+ * @method POST
+ * @URL /clients/create
+ * @param expressJwtIp.ip() server IP address
+ * @DataParams {idreleve, nom, tel_princ, ext_tel_princ, idactivite, ville, province, 
+ * codepostal, idetat, idprovenance, prospect, notes, facul, newcontacts} Client to be created
+ * @SuccessResponse { status: 'success', message: null }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.post('/create', expressJwtIp.ip(), function (req, res) {
 
 	/*var tokenReceived = req.get("authorization");
@@ -715,7 +829,8 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 				idprovenance: req.body.idprovenance,
 				prospect: req.body.prospect,
 				notes: req.body.notes,
-				facul: req.body.facultatif
+				facul: req.body.facultatif,
+				newcontacts: req.body.newcontacts
 			};
 
 		db.tx(t => {
@@ -730,7 +845,33 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 							const queries = client.facul.map(attribute => {
 						        return t.none(createClientFacul(client.idclient, attribute.id, attribute.value));
 							});
-						    return t.batch(queries);
+						    return t.batch(queries)
+						    		.then(() => {
+						    			const queriesContactNew = client.newcontacts.map(contact => {
+						    				let person = {
+						    						idclient: client.idclient,
+						    						prenom: contact.prenom,
+						    						nom: contact.nom,
+						    						idposte: contact.idposte,
+						    						titre: contact.titre,
+						    						num_tel_principal: contact.num_tel_principal,
+						    						ext_tel_principal: contact.ext_tel_principal,
+						    						mail: contact.mail,
+						    						estdecideur: contact.estdecideur
+						    					}
+						    					
+					    					return t.one(getIdTitre(person.titre))
+					    						.then(titre => {
+					    							person.idtitre = titre.idtitre;
+					    							return t.one(createPerson(person))
+					    								.then(personCreated => {
+					    									person.idpersonne = personCreated.idpersonne;
+					    									return t.none(createContact(person));
+					    								})
+					    					})
+					    				});
+						    			return t.batch(queriesContactNew);
+						    		})
 						})
 					})
 				})
@@ -755,6 +896,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 	console.log("end post /clients/create");
 });
 
+// Squel request for updating a client address
 let updateAdresse = (client) =>
 squel.updateJoin({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .table('public."ADRESSE"', "adr")
@@ -767,6 +909,7 @@ squel.updateJoin({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .where("entr.idclient = ?", client.idclient)
 .toParam();
 
+// Squel request for updating a company
 let updateEntrepriseOblig = (client) =>
 squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .table('public."ENTREPRISE"')
@@ -778,6 +921,7 @@ squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .where("idclient = ?", client.idclient)
 .toParam();
 
+// Squel request for updating a client obligatory attributes
 let updateClientOblig = (client) =>
 squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .table('public."CLIENT"')
@@ -788,12 +932,23 @@ squel.update({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .where("idclient = ?", client.idclient)
 .toParam();
 
+// Squel request for deleting a client facultative attributes
 let deleteClientFacul = (idclient) =>
 squel.delete({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .from('public."ENTREPRISE_FACUL"')
 .where("identreprise = ?", idclient)
 .toParam();
 
+/**
+ * Route updating a client
+ * @method POST
+ * @URL /clients/update
+ * @param expressJwtIp.ip() server IP address
+ * @DataParams {idclient, idreleve, nom, tel_princ, ext_tel_princ, idactivite, ville, province, 
+ * codepostal, idetat, idprovenance, prospect, notes, facul, newcontacts, updtcontacts, delcontacts} Client to be created
+ * @SuccessResponse { status: 'success', message: null }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.post('/update', expressJwtIp.ip(), function (req, res) {
 
 	/*var tokenReceived = req.get("authorization");
@@ -822,26 +977,81 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 				idprovenance: req.body.idprovenance,
 				prospect: req.body.prospect,
 				notes: req.body.notes,
-				facul: req.body.facultatif
+				facul: req.body.facultatif,
+				updtcontacts: req.body.updtcontacts,
+				newcontacts: req.body.newcontacts,
+				delcontacts: req.body.delcontacts
 			};
 
 		db.tx(t => {
 			return t.none(updateAdresse(client))
 			.then(() => {	
-				console.log("1");
 				return t.none(updateClientOblig(client))
 				.then(() => {
-					console.log("2");
 					return t.none(updateEntrepriseOblig(client))
 					.then(() => {
-						console.log("3");
 						return t.none(deleteClientFacul(client.idclient))
 						.then(() => {
-							console.log("4");
 							const queries = client.facul.map(attribute => {
 						        return t.none(createClientFacul(client.idclient, attribute.id, attribute.value));
 							});
-						    return t.batch(queries);
+						    return t.batch(queries)
+					    			.then(() => {
+					    				const queriesContactNew = client.newcontacts.map(contact => {
+						    				let person = {
+						    						idclient: client.idclient,
+						    						prenom: contact.prenom,
+						    						nom: contact.nom,
+						    						idposte: contact.idposte,
+						    						titre: contact.titre,
+						    						num_tel_principal: contact.num_tel_principal,
+						    						ext_tel_principal: contact.ext_tel_principal,
+						    						mail: contact.mail,
+						    						estdecideur: contact.estdecideur
+						    					}
+						    					
+					    					return t.one(getIdTitre(person.titre))
+					    						.then(titre => {
+					    							person.idtitre = titre.idtitre;
+					    							return t.one(createPerson(person))
+					    								.then(personCreated => {
+					    									person.idpersonne = personCreated.idpersonne;
+					    									return t.none(createContact(person));
+					    								})
+					    					})
+					    				});
+					    				
+					    				const queriesContactUpdt = client.updtcontacts.map(contact => {
+						    				let person = {
+						    						idclient: client.idclient,
+						    						idpersonne: contact.idpersonne,
+						    						prenom: contact.prenom,
+						    						nom: contact.nom,
+						    						idposte: contact.idposte,
+						    						titre: contact.titre,
+						    						num_tel_principal: contact.num_tel_principal,
+						    						ext_tel_principal: contact.ext_tel_principal,
+						    						mail: contact.mail,
+						    						estdecideur: contact.estdecideur
+						    					}
+				    						return t.one(getIdTitre(person.titre))
+				    						.then(titre => {
+				    							person.idtitre = titre.idtitre;
+				    							return t.none(updatePerson(person))
+				    								.then(() => {
+				    									return t.none(updateContact(person));
+				    								})
+					    					})
+					    				});
+					    				
+					    				const queriesContactDel = client.delcontacts.map(contact => {
+					    				return t.none(deleteContact(contact.idpersonne, client.idclient))
+						    				.then(() => {
+						    					return t.none(deletePerson(contact.idpersonne));
+						    				})
+					    				})
+					    				return t.batch(queriesContactNew.concat(queriesContactUpdt.concat(queriesContactDel)));
+					    			});
 						})
 					})
 				})
@@ -867,12 +1077,14 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 	console.log("end post /clients/update");
 });
 
+// Squel request for getting the inactive state id
 let getInactifState = () =>
 squel.select()
 .field('idetat')
 .from('public."ETAT"')
 .where('libelleetat LIKE ?', "Annulé")
 
+// Squel request for deletting (state changement) a client
 let deleteClient = (idclient) =>
 squel.updateJoin({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .table('public."CLIENT"')
@@ -880,6 +1092,14 @@ squel.updateJoin({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
 .where('idclient = ?', idclient)
 .toParam();
 
+/**
+ * Route deleting a client (changement of state)
+ * @method DELETE
+ * @URL /clients/:idclient
+ * @param expressJwtIp.ip() server IP address
+ * @SuccessResponse { status: 'success', message: null }
+ * @ErrorResponse { status: 'fail', message: error }
+ * **/
 router.delete('/:idClient', expressJwtIp.ip(), function (req, res) {
 
 	/*var tokenReceived = req.get("authorization");

@@ -18,25 +18,20 @@ export function * getListFournisseurs (){
 				}
 		};
 		//communication avec server
-		let server = "http://localhost:3002/fournisseurs";
+		let server = "http://localhost:3002/providers";
 
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/fournisseurs';
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers';
 
-		console.log("test  " );
-
-		axios.post(backendUrl, {
-
-		}, config)
-
-		.then(function (response) {
-			if(!!response.data.fournisseur ){
-				store.dispatch(getRequestFour(response.data.fournisseur));
-			}
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+		axios.get(server, config)
+			.then(function (response) {
+				if(!!response.data.status && response.data.status === "success"){
+					store.dispatch(getRequestFour(response.data.message));
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 	}
 }
 

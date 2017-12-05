@@ -32,7 +32,7 @@ class ListUsers extends React.Component{
 			});
 			this.props.addSub(links);
 		}
-
+		this.props.changeLoading(true);
 		this.props.displayUser(id);
 		this.props.handleClick("DisplayUser");
    }

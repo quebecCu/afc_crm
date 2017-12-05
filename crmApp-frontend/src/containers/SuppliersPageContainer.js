@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import HistoriqueContainer from "./HistoriqueContainer";
 import { connect  } from 'react-redux';
-import {changeFormFour, sendingRequestFour, searchFour} from '../actions/crmRechercheFournisseur';
 import PageFournisseurs from "../components/PageFournisseurs";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
-import CreationClient from "./GridContainer";
 import {changeViewDashboard} from "../actions/crmDashboard";
 import CreationFournisseur from "./GridContainerSuppliers";
 

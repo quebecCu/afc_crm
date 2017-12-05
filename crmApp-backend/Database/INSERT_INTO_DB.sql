@@ -16,7 +16,8 @@ SELECT setval('public."RELEVE_idreleve_seq"', 1, FALSE);
 SELECT setval('public."TYPE_idtype_seq"', 1, FALSE);
 SELECT setval('public."FOURNISSEUR_idfournisseur_seq"', 1, FALSE);
 SELECT setval('public."CATEGORIE_idcategorie_seq"', 1, FALSE);
-SELECT setval('public."POSTE_idposte_seq"', 1, FALSE);
+SELECT setval('public."POSTE_ENTREPRISE_idposte_ent_seq"', 1, FALSE);
+SELECT setval('public."POSTE_FOURNISSEUR_idposte_fou_seq"', 1, FALSE);
 SELECT setval('public."ROLE_idrole_seq"', 1, FALSE);
 SELECT setval('public."DOMAINE_ASSURANCE_iddomaineass_seq"', 1, FALSE);
 SELECT setval('public."MODALITE_idmodalite_seq"', 1, FALSE);
@@ -34,6 +35,7 @@ SELECT setval('users."ROLEADM_idrole_seq"', 1, FALSE);
 SELECT setval('users."UTILISATEUR_iduser_seq"', 1, FALSE);
 SELECT setval('users."EMPLOYE_INT_idemploye_seq"', 1, FALSE);
 
+
 --TYPE--
 INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Nombre', '[-+]?[0-9]*\.?[0-9]+');
 INSERT INTO public."TYPE"(libelletype, forme) VALUES ('String', '(.*?)');
@@ -44,20 +46,26 @@ INSERT INTO public."TYPE"(libelletype, forme) VALUES ('Booléen', '[Oui|Non]');
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mr');
 INSERT INTO public."TITRE"(libelletitre) VALUES ('Mme');
 
---POSTE--
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Président/Vice-Président');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Représentant');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint interne');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Adjoint Administratif');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Service de réclamations');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Service aux conseillers');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Services à la clientèle');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Participants du régime');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Ressources humines');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Controleur');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Comptable');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Secrétaire');
-INSERT INTO public."POSTE"(libelleposte) VALUES ('Autre');
+--POSTE_ENTREPRISE--
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Président/Vice-Président');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Adjoint Administratif');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Ressources humaines');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Controleur');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Comptable');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Secrétaire');
+INSERT INTO public."POSTE_ENTREPRISE"(libelleposte) VALUES ('Autre');
+
+--POSTE_ENTREPRISE--
+
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Représentant');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Soumissions');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Administration');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Adjoint interne');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Service de réclamations');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Service aux conseillers');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Services à la clientèle');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Participants du régime');
+INSERT INTO public."POSTE_FOURNISSEUR"(libelleposte) VALUES ('Autre');
 
 --PROVENANCE--
 INSERT INTO public."PROVENANCE"(libelleprovenance) VALUES ('Publicité Internet');
@@ -161,7 +169,7 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 4, 10, 9632584 , 'Contrat de test');
 INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 2, 6, 5222 , 'Contrat de test2');
 
---DOMAINE_ASS--
+--DOMAINE_ASS-- L'ordre est important !
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Vie - Adhérent et personnes à charge');
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance soins dentaires'); --id:2
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance soins medicaux');
@@ -169,8 +177,6 @@ INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Invalid
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Invalidité longue durée');
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Maladies Graves'); --id:6
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Maladie Complémentaire');
-INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Historique de Taux'); --id:8
-INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Rémunération');
 
 --CATEGORIE--
 INSERT INTO public."CATEGORIE" (libellecategorie) VALUES ('Cadres');
@@ -186,38 +192,36 @@ INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Max
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Conjoint', 1, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Enfants', 1, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 1, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 1, 2);
 
 --Assurance invalidite courte duree id:4
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Ct_Classe', 4, 2);
+INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Classe', 4, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Hospitalisation', 4, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Accident', 4, 2);
+INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maladie', 4, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Durée', 4, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Pourcentage', 4, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maximum SP', 4, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maximum AP', 4, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Imposables ?', 4, 2);
+INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Imposables ?', 4, 4);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Assurances Emploi', 4, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Reduction du taux A.E', 4, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 4, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 4, 2);
 
 --Assurance invalidite longue duree id:5
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Lt_Classe', 5, 2);
+INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Classe', 5, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Délai de carrence', 5, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Durée', 5, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Pourcentage', 5, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maximum SP', 5, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maximum AP', 5, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Imposables ?', 5, 2);
+INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Imposables ?', 5, 4);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Indexation', 5, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Protection occupation', 5, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('LT_NOTE', 5, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 5, 2);
 
 --Assurance maladie complementaire id:7
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Franchise médicaments', 7, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Coassurance médicaments', 7, 2);
+INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Coassurance médicaments', 7, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Mecanisme de substitution', 7, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Franchise pour autres frais médicaux', 7, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Coassurance médicaments', 7, 1);
@@ -229,7 +233,6 @@ INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Ass
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Annulation voyage', 7, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Assurance bagages', 7, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 7, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 7, 2);
 
 --Soins dentaires id:2
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Franchise', 2, 2);
@@ -240,7 +243,6 @@ INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Coa
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Examen de rappel', 2, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maximum annuel', 2, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 2, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 2, 2);
 
 --Assurance maladies graves id:6
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Employé', 6, 1);
@@ -249,28 +251,7 @@ INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Enf
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Nombre de maladies', 6, 1);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Maladies préexistantes', 6, 2);
 INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Terminaison', 6, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 6, 2);
 
---Remuneration id:9
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Vie, DMA, PAC', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('CT', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('LT', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('AMC', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Dentaire', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('MG', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('PAE', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Notes', 9, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Date payée : Base', 9, 3);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Montant payé : Base', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Montant payé : Boni', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Rémunération totale', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Rémunération globale', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Conseiller', 9, 2);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Pourcentage payable', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Montant du', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Montant payé', 9, 1);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Date payée', 9, 3);
-INSERT INTO public."MODALITE"(libelleavantage, iddomaineass, idtype) VALUES('Solde', 9, 1);
 
 --MODALITE_VALEUR--
 --Classe
@@ -290,7 +271,10 @@ INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('7500', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('10000', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('15000', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('20000', 1);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('30000', 1);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('50000', 1);
 --Terminaison
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('65 ans', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('70 ans', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('75 ans', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('80 ans', 2);
@@ -299,34 +283,46 @@ INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('85 ans', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('0 jours', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('7 jours', 2);
 --Durée
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('15 semaines', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('16 semaines', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('17 semaines', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('26 semaines', 2);
 --Pourcentage
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('50', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('60', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('66.67', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('67', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('75', 1);
 --Imposable
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES (true, 4);
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES (false, 4);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Oui', 4);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Non', 4);
+--Assurance emploi
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Oui, standard', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Oui, supplémentaire à A.E', 2);
+--Reducion taux A.E
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Effective', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('A venir', 2);
 --Indexation
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Non', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Selon IPC maximum 3%', 2);
 --Protection de l'occupation
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('24 mois', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('60 mois', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Jusqu à 65 ans', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Jusqu à 70 ans', 2);
 --Revenus admissibles
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('salaire de base', 2);
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('salaire et dividendes', 2);
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('salaire, dividences, commissions et bonis', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Salaires de base', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Salaires et dividendes', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Salaires, dividendes et commissions', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Salaires, dividendes, commissions et bonis', 2);
 --AMC_MEDF
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('aucune', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Combinées avec les médicaments', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('25$ ind. / 50$ Fam', 2);
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('50 ind. / 100$ Fam', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('50$ ind. / 100$ Fam', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('100$ ind. / 200$ Fam', 2);
 --COASSM
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('70', 1);
-INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('75', 1);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('80', 1);
 --PARA_MAX
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('300', 1);
@@ -358,18 +354,335 @@ INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Retraite ou 70ans
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Retraite ou 75ans', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Retraite ou 80ans', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Retraite ou 85ans', 2);
+--Examen de rappel
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('5 mois', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('6 mois', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('9 mois', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('12 mois', 2);
+--Nombre de maladies
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('25 maladies', 2);
+--Maladies préexistantes
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('24 mois avant/24 mois après', 2);
+--Mecanismes de substitution
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Substitution générique', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Substitution générique obligatoire', 2);
+
 
 --VALEUR_MODALITE_CONTRAT--
-INSERT INTO public."VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur) VALUES (1, 1);
+
+--Assurances vie id:1
+--Classe
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE libelleavantage like ('Classe') AND (valeur like ('Propriétaires')
+                OR valeur like ('Cadres')
+                OR valeur like ('Employés')
+                OR valeur like ('Autres'));
+--Formule
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE libelleavantage like ('Formule') AND (valeur like ('1x salaire')
+                OR valeur like ('2x salaire')
+                OR valeur like ('3x salaire')
+                OR valeur like ('Montant fixe'));
+--Max SP
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE libelleavantage like ('Maximum SP') AND valeur like ('Autres');
+--Max AP
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE libelleavantage like ('Maximum AP') AND valeur like ('Autres');
+--Conjoint
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Conjoint') AND iddomaineass = 1) AND (valeur like ('5000')
+                OR valeur like ('10000')
+                OR valeur like ('15000')
+                OR valeur like ('20000')
+                OR valeur like ('Autres'));
+--Enfants
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Enfants') AND iddomaineass = 1) AND (valeur like ('2500')
+                OR valeur like ('5000')
+                OR valeur like ('7500')
+                OR valeur like ('10000')
+                OR valeur like ('Autres'));
+--Terminaison
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Terminaison') AND iddomaineass = 1) AND (valeur like ('70 ans')
+                OR valeur like ('75 ans')
+                OR valeur like ('80 ans')
+                OR valeur like ('85 ans')
+                OR valeur like ('Autres'));
+
+--Assurance invalidité de courte durée id:4
+--Delai
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Hospitalisation') AND iddomaineass = 4) AND (valeur like ('0 jours')
+                OR valeur like ('7 jours')
+                OR valeur like ('Autres'));
+--Accident
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Accident') AND iddomaineass = 4) AND (valeur like ('0 jours')
+                OR valeur like ('7 jours')
+                OR valeur like ('Autres'));
+--Maladie
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Maladie') AND iddomaineass = 4) AND (valeur like ('7 jours')
+                OR valeur like ('Autres'));
+--Durée
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Durée') AND iddomaineass = 4) AND (valeur like ('16 semaines')
+                OR valeur like ('26 semaines')
+                OR valeur like ('Autres'));
+--Pourcentage
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Pourcentage') AND iddomaineass = 4) AND (valeur like ('60')
+                OR valeur like ('66.67')
+                OR valeur like ('67')
+                OR valeur like ('75')
+                OR valeur like ('Autres'));
+--Imposables
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" mv WHERE (libelleavantage like ('Imposables ?') AND iddomaineass = 4) AND (valeur like ('Oui')
+                OR valeur like ('Non'))
+                AND mv.idtype = 4;
+--Assurance emploi
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" mv WHERE (libelleavantage like ('Assurances Emploi') AND iddomaineass = 4) AND (valeur like ('Non')
+                OR valeur like ('Oui, standard')
+                OR valeur like ('Oui, supplémentaire à A.E')
+                OR valeur like ('Autres'))
+                AND mv.idtype = 2;
+--Reduction taux AE
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" mv WHERE (libelleavantage like ('Reduction du taux A.E') AND iddomaineass = 4) AND (valeur like ('Non')
+                OR valeur like ('Effective')
+                OR valeur like ('A venir'))
+                AND mv.idtype = 2;
+--Terminaison
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Terminaison') AND iddomaineass = 4) AND (valeur like ('65 ans')
+                OR valeur like ('70 ans')
+                OR valeur like ('Autres'));
+
+--Assurace invalidité longue durée id:5
+--Delai carence
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Délai de carrence') AND iddomaineass = 5) AND (valeur like ('15 semaines')
+                OR valeur like ('16 semaines')
+                OR valeur like ('17 semaines')
+                OR valeur like ('26 semaines')
+                OR valeur like ('Autres'));
+--Durée
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Durée') AND iddomaineass = 5) AND (valeur like ('24 mois')
+                OR valeur like ('60 mois')
+                OR valeur like ('Jusqu à 65 ans')
+                OR valeur like ('Jusqu à 70 ans')
+                OR valeur like ('Autres'));
+--Pourcentages
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Pourcentage') AND iddomaineass = 5) AND (valeur like ('60')
+                OR valeur like ('66.67')
+                OR valeur like ('67')
+                OR valeur like ('75')
+                OR valeur like ('Autres'));
+--Imposables
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" mv WHERE (libelleavantage like ('Imposables ?') AND iddomaineass = 5) AND (valeur like ('Oui')
+                OR valeur like ('Non'))
+                AND mv.idtype = 4;
+--Indexation
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" mv WHERE (libelleavantage like ('Indexation') AND iddomaineass = 5) AND (valeur like ('Non')
+                OR valeur like ('Selon IPC maximum 3%')
+                OR valeur like ('Autres'))
+                AND mv.idtype = 2;
+--Protection occupation
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Protection occupation') AND iddomaineass = 5) AND (valeur like ('24 mois')
+                OR valeur like ('60 mois')
+                OR valeur like ('Jusqu à 65 ans')
+                OR valeur like ('Autres'));
+--LT_NOTES
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('LT_NOTE') AND iddomaineass = 5) AND (valeur like ('Salaires de base')
+                OR valeur like ('Salaires et dividendes')
+                OR valeur like ('Salaires, dividendes et commissions')
+                OR valeur like ('Salaires, dividendes, commissions et bonis')
+                OR valeur like ('Autres'));
+
+--Assurance maladie complementaire id:7
+--Franchise medicaments
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Franchise médicaments') AND iddomaineass = 7) AND (valeur like ('aucune')
+                OR valeur like ('25$ ind. / 50$ Fam')
+                OR valeur like ('50$ ind. / 100$ Fam')
+                OR valeur like ('100$ ind. / 200$ Fam')
+                OR valeur like ('Autres'));
+--Coassurance médicaments
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Coassurance médicaments') AND iddomaineass = 7) AND (valeur like ('70')
+                OR valeur like ('75')
+                OR valeur like ('80')
+                OR valeur like ('Autres'));
+--Mecanisme de substitution
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Mecanisme de substitution') AND iddomaineass = 7) AND (valeur like ('aucune')
+                OR valeur like ('Substitution générique')
+                OR valeur like ('Substitution générique obligatoire')
+                OR valeur like ('Autres'));
+--Franchise pour autres frais médicaux
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Franchise pour autres frais médicaux') AND iddomaineass = 7) AND (valeur like ('aucune')
+                OR valeur like ('Combinées avec les médicaments')
+                OR valeur like ('25$ ind. / 50$ Fam')
+                OR valeur like ('50$ ind. / 100$ Fam')
+                OR valeur like ('Autres'));
+--Coassurance autres frais
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Coassurance autres frais') AND iddomaineass = 7) AND (valeur like ('70')
+                OR valeur like ('75')
+                OR valeur like ('80')
+                OR valeur like ('Autres'));
+--Paramédicaux
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Paramédicaux') AND iddomaineass = 7) AND (valeur like ('300')
+                OR valeur like ('400')
+                OR valeur like ('500')
+                OR valeur like ('Autres'));
+--Examen de la vue
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Examen de la vue') AND iddomaineass = 7) AND (valeur like ('50$/24mois')
+                OR valeur like ('75$/24mois')
+                OR valeur like ('1 examen/24mois')
+                OR valeur like ('Autres'));
+--Verres correcteurs
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Verres correcteurs') AND iddomaineass = 7) AND (valeur like ('200$/24mois')
+                OR valeur like ('300$/24mois')
+                OR valeur like ('Autres'));
+--Maximum payable
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Assurance voyage') AND iddomaineass = 7) AND (valeur like ('1000000')
+                OR valeur like ('2000000')
+                OR valeur like ('3000000')
+                OR valeur like ('5000000')
+                OR valeur like ('Autres'));
+--Annulation voyage
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Annulation voyage') AND iddomaineass = 7) AND (valeur like ('Annulation et interruption voyage')
+                OR valeur like ('aucune')
+                OR valeur like ('Annulation 5000$')
+                OR valeur like ('Annulation et interruption 5000$')
+                OR valeur like ('Autres'));
+--Annulation bagages
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Assurance bagages') AND iddomaineass = 7) AND (valeur like ('aucune')
+                OR valeur like ('500$')
+                OR valeur like ('Autres'));
+--Terminaison
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Terminaison') AND iddomaineass = 7) AND (valeur like ('Retraite')
+                OR valeur like ('Retraite ou 70ans')
+                OR valeur like ('Retraite ou 75ans')
+                OR valeur like ('Retraite ou 80ans')
+                OR valeur like ('Retraite ou 85ans')
+                OR valeur like ('Autres'));
+
+--Soins dentaires id:2
+--Franchise
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Franchise') AND iddomaineass = 2) AND (valeur like ('aucune')
+                OR valeur like ('25$ ind. / 50$ Fam')
+                OR valeur like ('50$ ind. / 100$ Fam')
+                OR valeur like ('Autres'));
+--Coassurance de Base
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Coassurance de Base') AND iddomaineass = 2) AND (valeur like ('70')
+                OR valeur like ('80')
+                OR valeur like ('90')
+                OR valeur like ('100')
+                OR valeur like ('Autres'));
+
+--Coassurance Perio/Endo
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Coassurance Perio/Endo') AND iddomaineass = 2) AND (valeur like ('70')
+                OR valeur like ('80')
+                OR valeur like ('90')
+                OR valeur like ('100')
+                OR valeur like ('Autres'));
+--Coassurance Majeurs
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Coassurance Majeurs') AND iddomaineass = 2) AND (valeur like ('50')
+                OR valeur like ('60')
+                OR valeur like ('70')
+                OR valeur like ('80')
+                OR valeur like ('Autres'));
+--Coassurance Orthodontie
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Coassurance Orthodontie') AND iddomaineass = 2) AND (valeur like ('50')
+                OR valeur like ('60')
+                OR valeur like ('70')
+                OR valeur like ('80')
+                OR valeur like ('Autres'));
+--Examen de rappel
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Examen de rappel') AND iddomaineass = 2) AND (valeur like ('5 mois')
+                OR valeur like ('6 mois')
+                OR valeur like ('9 mois')
+                OR valeur like ('12 mois')
+                OR valeur like ('Autres'));
+--Maximum annuel
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Maximum annuel') AND iddomaineass = 2) AND (valeur like ('1000')
+                OR valeur like ('1500')
+                OR valeur like ('2000')
+                OR valeur like ('Autres'));
+--Terminaison
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Terminaison') AND iddomaineass = 2) AND (valeur like ('Retraite')
+                OR valeur like ('Retraite ou 70ans')
+                OR valeur like ('Retraite ou 75ans')
+                OR valeur like ('Retraite ou 80ans')
+                OR valeur like ('Retraite ou 85ans')
+                OR valeur like ('Autres'));
+
+--Assurance maladies graves id:6
+--Employé
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Employé') AND iddomaineass = 6) AND (valeur like ('30000')
+                OR valeur like ('50000')
+                OR valeur like ('Autres'));
+--Conjoint
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Conjoint') AND iddomaineass = 6) AND (valeur like ('10000')
+                OR valeur like ('20000')
+                OR valeur like ('Autres'));
+--Enfants
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Enfants') AND iddomaineass = 6) AND (valeur like ('5000')
+                OR valeur like ('10000')
+                OR valeur like ('Autres'));
+--Nombre de maladies
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Nombre de maladies') AND iddomaineass = 6) AND (valeur like ('25 maladies')
+                OR valeur like ('Autres'));
+--Maladies préexistantes
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Nombre de maladies') AND iddomaineass = 6) AND (valeur like ('24 mois avant/24 mois après')
+                OR valeur like ('Autres'));
+--Terminaison
+INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
+    SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE (libelleavantage like ('Terminaison') AND iddomaineass = 6) AND (valeur like ('65 ans')
+                OR valeur like ('70 ans')
+                OR valeur like ('Autres'));
 
 --MODULES--
-INSERT INTO public."MODULE"(idcontrat, iddomaineass) VALUES(1, 1);
+--INSERT INTO public."MODULE"(idcontrat, iddomaineass) VALUES(1, 1);
 
 --CATEGORIE_MODULE--
-INSERT INTO public."CATEGORIE_MODULE"(idmodule, idcategorie) VALUES(1, 1);
+--INSERT INTO public."CATEGORIE_MODULE"(idmodule, idcategorie) VALUES(1, 1);
 
 --SOUSCRIPTIONS--
-INSERT INTO public."SOUSCRIPTIONS"(idmodalite, idmodule, valeur) VALUES(1, 1, '');
+--INSERT INTO public."SOUSCRIPTIONS"(idmodalite, idmodule, valeur) VALUES(1, 1, '');
 
 --ENTREPRISE_ATTR--
 INSERT INTO public."ENTREPRISE_ATTR" (idtype, label, description, forme, valeur_defaut) VALUES (1, 'Nombre d''employés', 'Indiquez le nombre d''employés', null, 1);
@@ -421,9 +734,9 @@ INSERT INTO public."CONTRAT_COLLECTIF_ATTR" (idtype, label, description, forme, 
 
 
 --CONTACT_CLIENT--
-INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(1, 2, 1, true);
-INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 4, 1, true);
-INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte, estDecideur) VALUES(2, 3, 4, false);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecideur) VALUES(1, 2, 1, true);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecideur) VALUES(2, 4, 1, true);
+INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecideur) VALUES(2, 3, 4, false);
 
 -----end public schema -----
 
