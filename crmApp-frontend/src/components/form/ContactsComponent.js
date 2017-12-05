@@ -11,7 +11,6 @@ class ContactsComponent extends Component   {
 		this._changePoste = this._changePoste.bind(this);
 		this._changePrenom = this._changePrenom.bind(this);
 		this._changeTitre = this._changeTitre.bind(this);
-		this._addContact = this._addContact.bind(this);
 		this._deleteContact = this._deleteContact.bind(this);
 	}
 
@@ -56,23 +55,6 @@ class ContactsComponent extends Component   {
 		array[this.props.idContact].mail = event.target.value;
 		this.props.changeForm(array);	}
 
-	_addContact() {
-		let array = this.props.contacts;
-		array.push(
-			{
-				prenom: '',
-				nom: '',
-				idposte: 1,
-				titre: 'Mr',
-				num_tel_principal: '',
-				ext_tel_principal: '',
-				mail: '',
-				estdecideur: false
-			}
-		);
-		this.props.addContact(array);
-	}
-
 	_deleteContact() {
 		let array  = this.props.contacts;
 		let deletedContacts = array.splice(this.props.idContact, 1);
@@ -90,7 +72,7 @@ class ContactsComponent extends Component   {
 	render() {
 		return(
 			<div>
-				<h4>Contact {this.props.idContact + 1}<span className="fa fa-plus-square" onClick={this._addContact}/> <span className="fa fa-minus-square" onClick={this._deleteContact}/></h4>
+				<h4>Contact {this.props.idContact + 1} <span className="fa fa-minus-square" onClick={this._deleteContact}/></h4>
 				<div className="form-group row">
 					<div className="col-4">
 						<label htmlFor="prenom" className="control-label">Prénom</label>
@@ -125,14 +107,17 @@ class ContactsComponent extends Component   {
 							}
 						</select>
 					</div>
-					<div className="col-6">
-						<label className="control-label " htmlFor="decideur">Décideur</label>
-						<select className="form-control" id="decideur" name="decideur"
-								value={this.props.formState.estdecideur} onChange={this._changeDecideur}>
-							<option value={true}>Oui</option>
-							<option value={false}>Non</option>
-						</select>
-					</div>
+					{
+						this.props.view === 'collIns' &&
+						<div className="col-6">
+							<label className="control-label " htmlFor="decideur">Décideur</label>
+							<select className="form-control" id="decideur" name="decideur"
+									value={this.props.formState.estdecideur} onChange={this._changeDecideur}>
+								<option value={true}>Oui</option>
+								<option value={false}>Non</option>
+							</select>
+						</div>
+					}
 				</div>
 				<div className="form-group row">
 					<div className="col-4">

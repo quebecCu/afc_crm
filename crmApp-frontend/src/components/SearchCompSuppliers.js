@@ -61,7 +61,7 @@ class SearchCompSuppliers extends Component {
 					&& td2.innerHTML.toUpperCase().indexOf(inputContactName) > -1 && parseInt(td1.innerHTML, 10) >= inputEmployesNumber) {
 					tr[i].style.display = "";
 				} else {
-					tr[i].style.display = "none";
+					//tr[i].style.display = "none";
 				}
 			}
 		}

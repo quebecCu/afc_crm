@@ -9,6 +9,7 @@ import {changeViewContract} from "../actions/crmContract";
 import '../style/NavBar.css';
 import {addSubCustomerNav, addSubUserNav} from "../actions/crmNavBar";
 import {getClientRequest} from "../actions/crmClientList";
+import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 
 class NavBar extends Component {
 	constructor(props) {
@@ -68,7 +69,7 @@ class NavBar extends Component {
                                 <NavBarLink name="Placements" id="placements" handleClick={this.props.changeViewDashboard} view={this.props.view} />
                             </li>
                             <li>
-                                <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} />
+                                <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewSuppliers} reset=''/>
                             </li>
 
                             {
@@ -150,6 +151,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		changeLoading: (newLoading) => {
     		dispatch(changeLoading(newLoading));
+		},
+		changeViewSuppliers : (newView) => {
+			dispatch(changeViewSuppliers(newView))
 		}
     }
 };

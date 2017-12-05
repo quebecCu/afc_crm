@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import {GridCreationFournisseur} from "../components/form/GridCreationFournisseur";
+import {GridCreationFournisseur} from "../components/form/GridCreationProvider/GridCreationFournisseur";
 import {connect} from "react-redux";
 import {
-	changeGridFour, changeLayoutFour, changeViewGridFour, createSuppliersFile, requestGridFour,
+	changeGridFour, changeLayoutFour, changeNewFieldSup, changeRequiredSup, changeUpdateFieldSup, createNewFieldSup,
+	createSuppliersFile, deleteFieldSup,
+	requestGridFour, updateFieldSup,
+	updatePositionsSup,
 	updateSuppliersFile
 } from "../actions/crmGridLayoutSuppliers";
-import {GridSupplierFile} from "../components/form/GridSupplierFile";
-//import {getChambreCommerce, getReleves} from "../middleware/GridLayoutSaga";
 
 class CreationFournisseur extends Component {
     constructor(props) {
         super(props);
+		window.scrollTo(0,0);
         this._handleStatic = this._handleStatic.bind(this);
         this._handleSubmitCreate = this._handleSubmitCreate.bind(this);
 		this._handleSubmitUpdate = this._handleSubmitUpdate.bind(this);
@@ -18,12 +20,11 @@ class CreationFournisseur extends Component {
         this._handleDrag = this._handleDrag.bind(this);
         this._handleNonStatic = this._handleNonStatic.bind(this);
         this._handleChangeInput = this._handleChangeInput.bind(this);
+        this._handleModifyField = this._handleModifyField.bind(this);
 
         if(this.props.view === 'newSupplier') {
 			this.props.requestGridFour();
 		}
-		//this.props.getChambreCommerce();
-        //this.props.getReleves();
     }
 
 	//Rends les champs static
@@ -39,7 +40,8 @@ class CreationFournisseur extends Component {
 
     //Change le state: sauvegarde la position des champs
     _handleDrag(newItem) {
-		this.props.changeLayout({lg: newItem, md: newItem, sm: newItem, xs: newItem, xxs: newItem});
+		this.props.changeLayoutFour({lg: newItem, md: newItem, sm: newItem, xs: newItem, xxs: newItem});
+		this.props.updatePositionsSup({newItem});
     }
 
     //Rends les champs non-static, on peut les déplacer
@@ -56,13 +58,14 @@ class CreationFournisseur extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Creation du fournisseur)
     _handleSubmitCreate(event) {
        event.preventDefault();
-       let {layouts, grid} = this.props.crmGridSuppliersLayout;
+       let {grid, requiredFields} = this.props.crmGridSuppliersLayout;
+       let {arrayContacts} = this.props.crmContacts;
        this._handleStatic();
-       this.props.createSuppliersFile({layouts, grid});
+       this.props.createSuppliersFile({grid, requiredFields, arrayContacts});
        console.log("submit file");
     }
 
-    //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du client)
+    //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du fournisseur)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
 		let {layouts, grid} = this.props.crmGridSuppliersLayout;
@@ -85,51 +88,57 @@ class CreationFournisseur extends Component {
 	//On crée un nouveau champ !
     _handleSubmitChamp(event) {
         event.preventDefault();
-		let {layouts, grid} = this.props.crmGridSuppliersLayout;
-        let key = (grid.length+1).toString();
-        let x = (grid.length % 4)*3;
-        let y = 3;
-        if(grid.length % 4 === 0 && grid.length !== 0) {
-            y++;
-        }
-        layouts.lg.push({w: 3, h: 1, x: x, y: y, i: key, minW: 3});
+		let {grid, formNewField} = this.props.crmGridSuppliersLayout;
+		let x = (grid.length % 4)*3;
+		let y = Math.floor(grid.length/4);
 
-
-        grid.push({key: key, label: document.getElementById('champId').value, nom: document.getElementById('champNom').value, value: ''});
 		document.getElementById('champNom').value = '';
-		document.getElementById('champId').value = '';
-
-		this.props.changeGridFour(grid);
-		this.props.changeLayoutFour({lg: layouts.lg, md: layouts.lg, sm: layouts.lg, xs: layouts.lg, xxs: layouts.lg});
-        //dispatch le nouveau champ au back-end
-		this._handleNonStatic();
+		document.getElementById('champDescription').value = '';
+		document.getElementById('champType').value = '';
+		this.props.createNewFieldSup({form: formNewField, posx: x, posy: y});
     }
 
+	_handleModifyField(event) {
+		event.preventDefault();
+		let {formUpdateField} = this.props.crmGridSuppliersLayout;
+		this.props.updateFieldSup(formUpdateField);
+	}
+
     render() {
-		let {grid, layouts, view} = this.props.crmGridSuppliersLayout;
+		let {
+			grid, layouts, requiredFields, formNewField,
+			formUpdateField, champTypes
+		} = this.props.crmGridSuppliersLayout;
 		let {isAdmin} = this.props.crmLogin;
         return (
         	<div>
 				{
 					this.props.view === 'newSupplier'
 					&& <GridCreationFournisseur handleStatic={this._handleStatic} handleSubmit={this._handleSubmitCreate} layouts={layouts}
-										handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
-										handleSubmitChamp={this._handleSubmitChamp} grid={grid}
-										handleChangeInput={this._handleChangeInput} title="Création d'une fiche fournisseur"
-										isAdmin={isAdmin} />
+												handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
+												handleSubmitChamp={this._handleSubmitChamp} grid={grid}
+												handleChangeInput={this._handleChangeInput} title="Création d'une fiche fournisseur"
+												isAdmin={isAdmin} requiredFields={requiredFields}
+												changeRequiredSup={this.props.changeRequiredSup}
+												formNewField={formNewField} changeNewField={this.props.changeNewFieldSup}
+												formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateFieldSup}
+												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
+												handleModifyField={this._handleModifyField}
+						/>
 				}
 				{
-					this.props.view === 'supplierFile' && view === 'read'
-					&& <GridSupplierFile handleModify={this.props.changeViewGridFour}
-										 layouts={layouts} grid={grid}/>
-				}
-				{
-					this.props.view === 'supplierFile' && view === 'write'
+					this.props.view === 'supplierFile'
 					&& <GridCreationFournisseur handleStatic={this._handleStatic} handleSubmit={this._handleSubmitUpdate} layouts={layouts}
-										   handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
-										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
-										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche fournisseur"
-										   isAdmin={isAdmin} />
+												handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
+												handleSubmitChamp={this._handleSubmitChamp} grid={grid}
+												handleChangeInput={this._handleChangeInput} title="Modification d'une fiche fournisseur"
+												isAdmin={isAdmin} requiredFields={requiredFields}
+												changeRequiredSup={this.props.changeRequiredSup}
+												formNewField={formNewField} changeNewField={this.props.changeNewFieldSup}
+												formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateFieldSup}
+												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
+												handleModifyField={this._handleModifyField}
+						/>
 				}
 			</div>
         )
@@ -140,7 +149,8 @@ function mapStateToProps (state) {
 
 	return{
 		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
-		crmLogin: state.crmLogin
+		crmLogin: state.crmLogin,
+		crmContacts: state.crmContacts
 	}
 }
 
@@ -159,18 +169,30 @@ const  mapDispatchToProps = (dispatch) => {
 		createSuppliersFile: (file) => {
 			dispatch(createSuppliersFile(file));
 		},
-		changeViewGridFour: (newView) => {
-			dispatch(changeViewGridFour(newView))
-		},
 		updateSuppliersFile: (file) => {
-			dispatch(updateSuppliersFile(file))
+			dispatch(updateSuppliersFile(file));
 		},
-//		getReleves: () => {
-//			dispatch(getReleves());
-//		},
-//		getChambreCommerce: () => {
-//			dispatch(getChambreCommerce());
-//		}
+		changeRequiredSup: (newRequiredFields) => {
+			dispatch(changeRequiredSup(newRequiredFields));
+		},
+		updatePositionsSup: (positions) => {
+			dispatch(updatePositionsSup(positions))
+		},
+		createNewFieldSup: (newField) => {
+			dispatch(createNewFieldSup(newField))
+		},
+		changeNewFieldSup: (newField) => {
+			dispatch(changeNewFieldSup(newField));
+		},
+		changeUpdateFieldSup: (newUpdateField) => {
+			dispatch(changeUpdateFieldSup(newUpdateField));
+		},
+		deleteFieldSup: (field) => {
+			dispatch(deleteFieldSup(field));
+		},
+		updateFieldSup: (field) => {
+			dispatch(updateFieldSup(field))
+		}
 	}
 };
 
