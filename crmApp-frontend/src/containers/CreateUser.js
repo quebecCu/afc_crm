@@ -25,7 +25,7 @@ class CreateUser extends React.Component{
 			let newMail = JSON.parse(JSON.stringify(this.props.user.mail));
 			let newUserPerms = JSON.parse(JSON.stringify(this.props.user.userPerms));
 			let userID=JSON.parse(JSON.stringify(this.props.user.id));
-			let userTitre = JSON.parse(JSON.stringify(this.props.user.titre))
+			let userTitre = JSON.parse(JSON.stringify(this.props.user.titre));
 			this.props.changeForm({
 				id:userID,
 				titre:userTitre,
@@ -236,6 +236,6 @@ const  mapDispatchToProps = (dispatch) => {
 			dispatch(updateUser(updatedUser));
 		}
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps) (CreateUser);
