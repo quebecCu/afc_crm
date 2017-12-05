@@ -81,10 +81,15 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 				.field('fournisseur.nom')
 				.field('fournisseur.code')
 				.field('fournisseur.idfournisseur', 'idfournisseur')
+				.field('personne.idpersonne')
+				.field('personne.nom', 'p_nom')
+				.field('personne.prenom', 'p_prenom')
+				.left_join('public."CONTACT_FOURNISSEUR"', "contact_fournisseur", "contact_fournisseur.idfournisseur = fournisseur.idfournisseur")
+				.left_join('public."PERSONNE"', "personne", "personne.idpersonne = contact_fournisseur.idpersonne")
 				.toString())
 			.then(function (fournisseurs) {
 				var supplierToSend = [];
-				let _nomFournisseur, _police, _minEmploye, _idFournisseur
+				let _nomFournisseur, _police, _idFournisseur, _nomPersonne, _prenomPersonne
 
 				// TODO: Refactor & fix supplierArrayBuilder
 				//Le matching est incorrect
@@ -100,8 +105,13 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 					_nomFournisseur = (!!fournisseurs[i].nom ? fournisseurs[i].nom : null)
 					_code = (!!fournisseurs[i].code ? fournisseurs[i].code : null)
 					_idFournisseur = (!!fournisseurs[i].idfournisseur ? fournisseurs[i].idfournisseur : null)
-
-					suppliersJSON = {id : _idFournisseur, nom: _nomFournisseur, code: _code}
+					_nomPersonne = (!!fournisseurs[i].p_nom ? fournisseurs[i].p_nom : null)
+					_prenomPersonne = (!!fournisseurs[i].p_prenom ? fournisseurs[i].p_prenom : null)
+					
+					_fullName = (!!_nomPersonne ?  _nomPersonne : "") + (!!_prenomPersonne ? " " + _prenomPersonne : "")
+					_fullName = (_fullName == "" ? null : _fullName);
+					
+					suppliersJSON = {id : _idFournisseur, nom: _nomFournisseur, contact: _fullName, code: _code}
 					supplierToSend.push(suppliersJSON);
 
 					//debugg
