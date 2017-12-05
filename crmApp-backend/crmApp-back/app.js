@@ -44,7 +44,7 @@ app.use('/clients', clients);
 app.use('/', login);
 app.use('/', reset);
 app.use('/', assurancesCollectives);
-app.use('/', fournisseurs);
+app.use('/providers', fournisseurs);
 app.use('/', resetPassword);
 app.use('/', createCustomer);
 
