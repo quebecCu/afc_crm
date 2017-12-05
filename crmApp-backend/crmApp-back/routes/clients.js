@@ -699,7 +699,7 @@ const getOptionnalClientRowsById = (idClient) => {
 		.field('type.forme', 'forme_type')
 		.field('facul.idattrentreprise', 'idattr')
 		.from('"ENTREPRISE"', 'entp')
-		.left_join('"ENTREPRISE_FACUL"', 'facul', 'entp.idclient = facul.identreprise')
+		.join('"ENTREPRISE_FACUL"', 'facul', 'entp.idclient = facul.identreprise')
 		.left_join('"ENTREPRISE_ATTR"', 'attr', 'attr.idattrentreprise = facul.idattrentreprise')	
 		.left_join('"TYPE"', 'type', 'type.idtype = attr.idtype')
 		.where('entp.idclient = ?', idClient)

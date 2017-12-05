@@ -743,6 +743,7 @@ INSERT INTO public."CONTACT_CLIENT"(idclient, idpersonne, idposte_ent, estDecide
 -----users schema-----
 SELECT setval('users."ENTITE_identite_seq"', 1, FALSE);
 SELECT setval('users."OPERATION_idoperation_seq"', 1, FALSE);
+SELECT setval('users."CONTRAT_COLLECTIF_MENU_idcontratcollmenu_seq"', 1, FALSE);
 
 
 --AFFICHAGE-CLIENT--
@@ -772,6 +773,21 @@ INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height,
 INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (16, 9, 3, 1, 3, 3, true);
 INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (17, 0, 4, 1, 3, 3, true);
 INSERT INTO users."FOURNISSEUR_AFFICHAGE"(idattrfournisseur, posX, posY, height, width, minwidth, affichage) VALUES (18, 3, 4, 1, 3, 3, true);
+
+--CONTRAT_MENU--
+INSERT INTO users."CONTRAT_COLLECTIF_MENU"(idcontratcollmenu, libellemenu) VALUES (1, 'Renseignement généraux sur le contrat');
+INSERT INTO users."CONTRAT_COLLECTIF_MENU"(idcontratcollmenu, libellemenu) VALUES (2, 'Renseignement facultatifs');
+INSERT INTO users."CONTRAT_COLLECTIF_MENU"(idcontratcollmenu, libellemenu) VALUES (3, 'Modules');
+
+--AFFICHAGE_META_CONTRAT--
+INSERT INTO users."CONTRAT_COLLECTIF_AFFICHAGE_META"(idcontratcollmenu, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
+INSERT INTO users."CONTRAT_COLLECTIF_AFFICHAGE_META"(idcontratcollmenu, posX, posY, height, width, minwidth, affichage) VALUES (2, 3, 0, 1, 3, 3, true);
+INSERT INTO users."CONTRAT_COLLECTIF_AFFICHAGE_META"(idcontratcollmenu, posX, posY, height, width, minwidth, affichage) VALUES (3, 6, 0, 1, 3, 3, true);
+
+--AFFICHAGE_CONTRAT--
+INSERT INTO users."CONTRAT_COLLECTIF_AFFICHAGE"(idattrcontratcoll, posX, posY, height, width, minwidth, affichage) VALUES (1, 0, 0, 1, 3, 3, true);
+INSERT INTO users."CONTRAT_COLLECTIF_AFFICHAGE"(idattrcontratcoll, posX, posY, height, width, minwidth, affichage) VALUES (2, 3, 0, 1, 3, 3, true);
+INSERT INTO users."CONTRAT_COLLECTIF_AFFICHAGE"(idattrcontratcoll, posX, posY, height, width, minwidth, affichage) VALUES (3, 6, 0, 1, 3, 3, true);
 
 ---OPERATION---
 INSERT INTO users."OPERATION"(description, level) VALUES ('READ', 1);

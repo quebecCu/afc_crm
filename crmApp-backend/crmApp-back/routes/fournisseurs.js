@@ -61,7 +61,7 @@ router.get('/jobs', expressJwtIp.ip(), function (req, res) {
  * @method GET
  * @URL /providers
  * @param expressJwtIp.ip() server IP address
- * @SuccessResponse { status: 200, fournisseurs: {Array} }
+ * @SuccessResponse { status: 200, { status: 'success', message: supplierToSend } }
  * @ErrorResponse { status: 'fail', message: 'Erreur' }
  * **/
 router.get('/', expressJwtIp.ip(), function (req, res) {
@@ -81,15 +81,10 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 				.field('fournisseur.nom')
 				.field('fournisseur.code')
 				.field('fournisseur.idfournisseur', 'idfournisseur')
-				.field('personne.idpersonne')
-				.field('personne.nom', 'p_nom')
-				.field('personne.prenom', 'p_prenom')
-				.left_join('public."CONTACT_FOURNISSEUR"', "contact_fournisseur", "contact_fournisseur.idfournisseur = fournisseur.idfournisseur")
-				.left_join('public."PERSONNE"', "personne", "personne.idpersonne = contact_fournisseur.idpersonne")
 				.toString())
 			.then(function (fournisseurs) {
 				var supplierToSend = [];
-				let _nomFournisseur, _police, _minEmploye, _idFournisseur, _nomPersonne, _prenomPersonne
+				let _nomFournisseur, _police, _minEmploye, _idFournisseur
 
 				// TODO: Refactor & fix supplierArrayBuilder
 				//Le matching est incorrect
@@ -104,13 +99,9 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 
 					_nomFournisseur = (!!fournisseurs[i].nom ? fournisseurs[i].nom : null)
 					_code = (!!fournisseurs[i].code ? fournisseurs[i].code : null)
-					_minEmploye = (!!fournisseurs[i].min_emp1 ? fournisseurs[i].min_emp1 : null)
 					_idFournisseur = (!!fournisseurs[i].idfournisseur ? fournisseurs[i].idfournisseur : null)
-					_nomPersonne = (!!fournisseurs[i].p_nom ? fournisseurs[i].p_nom : null)
-					_prenomPersonne = (!!fournisseurs[i].p_prenom ? fournisseurs[i].p_prenom : null)
-					_fullName = (!!_nomPersonne ?  _nomPersonne : "") + (!!_prenomPersonne ? " " + _prenomPersonne : "")
 
-					suppliersJSON = {id : _idFournisseur, nom: _nomFournisseur, min_emp1: _minEmploye, contact: _fullName, code: _code}
+					suppliersJSON = {id : _idFournisseur, nom: _nomFournisseur, code: _code}
 					supplierToSend.push(suppliersJSON);
 
 					//debugg
@@ -532,7 +523,7 @@ const getOptionnalProviderRowsById = (idFournisseur) => {
 		.field('type.forme', 'forme_type')
 		.field('facul.idattrfournisseur', 'idattr')
 		.from('"FOURNISSEUR"', 'fourn')
-		.left_join('"FOURNISSEUR_FACUL"', 'facul', 'fourn.idfournisseur = facul.idfournisseur')
+		.join('"FOURNISSEUR_FACUL"', 'facul', 'fourn.idfournisseur = facul.idfournisseur')
 		.left_join('"FOURNISSEUR_ATTR"', 'attr', 'attr.idattrfournisseur = facul.idattrfournisseur')
 		.left_join('"TYPE"', 'type', 'type.idtype = attr.idtype')
 		.where('fourn.idfournisseur = ?', idFournisseur)
