@@ -3,13 +3,12 @@ import {
 	REQUEST_GRID_FOUR, CREATE_FOURNISSEUR_FILE,
 	UPDATE_FOURNISSEUR_FILE, changeGridFour, changeLayoutFour, UPDATE_POSITIONS_SUP, changeNewFieldSup,
 	CREATE_NEW_FIELD_SUP, getChampTypesSup, GET_CHAMP_TYPES_SUP, updateChampTypesSup, DELETE_FIELD_SUP, requestGridFour,
-	UPDATE_FIELD_SUP, changeUpdateFieldSup, GET_SUPPLIER, changeRequiredSup, DELETE_SUPPLIER, getGridModifySup,
+	UPDATE_FIELD_SUP, changeUpdateFieldSup, GET_SUPPLIER, changeRequiredSup, getGridModifySup,
 	GET_GRID_MODIFY_SUP
 } from '../actions/crmGridLayoutSuppliers';
 import axios from 'axios';
 import {store} from '../store';
 import {getContactsSup} from "../actions/crmContacts";
-import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import {changeLoading} from "../actions/crmDashboard";
 
 let tokenToSend= localStorage.getItem("cookieSession");
@@ -342,7 +341,6 @@ export function* requestSupplier() {
 					store.dispatch(changeRequiredSup(requiredFields));
 					store.dispatch(getContactsSup(id));
 					store.dispatch(getGridModifySup(facultatif));
-					store.dispatch(changeViewSuppliers("supplierFile"));
 				} else {
 					alert('Erreur lors du chargement du fournisseur');
 				}

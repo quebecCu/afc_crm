@@ -24,7 +24,30 @@ class DossiersComponent extends Component {
 			this.props.handleClick(client, event);
 		}
 		else if(this.props.fournisseur) {
-			this.props.handleClick(client.id, 'supplierFile');
+			this.props.displaySub(true);
+			let links = this.props.links;
+			let check = true;
+			links.forEach(link => {
+				if(link.idSupplier === client.id) {
+					check = false;
+				}
+			});
+			if(check) {
+				this.props.fournisseur.forEach((element, index) => {
+					let duplicate = false;
+					this.props.fournisseur.forEach((element2, index2)=> {
+						if(element.id === element2.id && index > index2) {
+							duplicate = true;
+						}
+					});
+					if(!duplicate && client.id === element.id) {
+						links.push({name: element.nom, view: 'supplierFile', idSupplier: client.id});
+					}
+				});
+				this.props.addSub(links);
+			}
+			//this.props.changeLoading(true);
+			this.props.handleClick(client.id);
 		}
 	}
 
@@ -97,7 +120,7 @@ class DossiersComponent extends Component {
 			);
 		} else if (this.props.fournisseur) {
 			let row = [];
-			this.props.fournisseur.map( (element, index) => {
+			this.props.fournisseur.forEach( (element, index) => {
 				let duplicate = false;
 				this.props.fournisseur.forEach((element2, index2)=> {
 					if(element.id === element2.id && index > index2) {
