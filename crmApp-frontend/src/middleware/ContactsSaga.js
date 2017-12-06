@@ -4,7 +4,9 @@ import {store} from '../store';
 import {changeLoading} from "../actions/crmDashboard";
 import {
 	addArrayContacts,
-	GET_CONTACTS, GET_POSTES_CONTACTS, GET_POSTES_CONTACTS_SUP, updateContacts,
+	GET_CONTACTS, GET_CONTACTS_SUP, GET_POSTES_CONTACTS, GET_POSTES_CONTACTS_SUP, getPostesContacts,
+	getPostesContactsSup, updateContacts,
+	updateContactsSup,
 	updatePostesContacts, updatePostesContactsSup
 } from "../actions/crmContacts";
 
@@ -22,14 +24,27 @@ export function* requestPostesContacts() {
 
 	while (true) {
 
-		yield take(GET_POSTES_CONTACTS);
-
+		let data = yield take(GET_POSTES_CONTACTS);
+		let contacts = data.data;
 
 		let server = "http://localhost:3002/clients/jobs";
 
 		axios.get(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
+					let postes = response.data.message;
+					if(contacts) {
+						let array = contacts.map(contact => {
+							let poste = 1;
+							postes.forEach(element => {
+								if(element.libelleposte === contact.libelleposte) {
+									poste = element.idposte;
+								}
+							});
+							return {...contact, idposte: poste}	;
+						});
+						store.dispatch(addArrayContacts(array));
+					}
 					store.dispatch(updatePostesContacts(response.data.message));
 					store.dispatch(changeLoading(false));
 				} else {
@@ -46,14 +61,27 @@ export function* requestPostesContactsFournisseurs() {
 
 	while (true) {
 
-		yield take(GET_POSTES_CONTACTS_SUP);
-
+		let data = yield take(GET_POSTES_CONTACTS_SUP);
+		let contacts = data.data;
 
 		let server = "http://localhost:3002/providers/jobs";
 
 		axios.get(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
+					let postes = response.data.message;
+					if(contacts) {
+						let array = contacts.map(contact => {
+							let poste = 1;
+							postes.forEach(element => {
+								if(element.libelleposte === contact.libelleposte) {
+									poste = element.idposte;
+								}
+							});
+							return {...contact, idposte: poste}	;
+						});
+						store.dispatch(addArrayContacts(array));
+					}
 					store.dispatch(updatePostesContactsSup(response.data.message));
 					store.dispatch(changeLoading(false));
 				} else {
@@ -66,7 +94,7 @@ export function* requestPostesContactsFournisseurs() {
 	}
 }
 
-export function* requestContacts() {
+export function * requestContacts() {
 
 	while (true) {
 
@@ -78,9 +106,9 @@ export function* requestContacts() {
 		axios.get(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(getPostesContacts(response.data.message));
 					store.dispatch(updateContacts(response.data.message));
 					store.dispatch(changeLoading(false));
-					store.dispatch(addArrayContacts(response.data.message));
 				} else {
 					alert('Erreur lors du chargement des contact');
 				}
@@ -91,9 +119,34 @@ export function* requestContacts() {
 	}
 }
 
+export function * requestContactsSup() {
+
+	while (true) {
+
+		let supplier = yield take(GET_CONTACTS_SUP);
+		let id = supplier.id;
+
+		let server = "http://localhost:3002/providers/contacts/"+ id;
+
+		axios.get(server, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(getPostesContactsSup(response.data.message));
+					store.dispatch(updateContactsSup(response.data.message));
+					store.dispatch(changeLoading(false));
+				} else {
+					alert('Erreur lors du chargement des contact');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
 
 export function * ContactsFlow() {
 	yield fork(requestPostesContacts);
 	yield fork(requestContacts);
 	yield fork(requestPostesContactsFournisseurs);
+	yield fork(requestContactsSup);
 }

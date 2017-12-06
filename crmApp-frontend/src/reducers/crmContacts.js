@@ -1,6 +1,6 @@
 
 import {
-	ADD_ARRAY_CONTACTS, CHANGE_FORM_STATE, DELETE_CONTACT, UPDATE_CONTACTS,
+	ADD_ARRAY_CONTACTS, CHANGE_FORM_STATE, DELETE_CONTACT, UPDATE_CONTACTS, UPDATE_CONTACTS_SUP,
 	UPDATE_POSTES_CONTACTS, UPDATE_POSTES_CONTACTS_SUP
 } from "../actions/crmContacts";
 
@@ -31,6 +31,8 @@ export default function reducer(state = initialState, action) {
 		case UPDATE_POSTES_CONTACTS_SUP:
 			return {...state, postes: action.postes, errors:''};
 		case UPDATE_CONTACTS:
+			return {...state, contacts: action.contacts, errors:''};
+		case UPDATE_CONTACTS_SUP:
 			return {...state, contacts: action.contacts, errors:''};
 		case CHANGE_FORM_STATE:
 			return {...state, arrayContacts: action.newFormState, errors: ''};

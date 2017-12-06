@@ -2,7 +2,6 @@ export const CHANGE_LAYOUT_FOUR = 'CHANGE_LAYOUT_FOUR';
 export const CHANGE_GRID_FOUR = 'CHANGE_GRID_FOUR';
 export const REQUEST_GRID_FOUR = 'REQUEST_GRID_FOUR';
 export const CREATE_FOURNISSEUR_FILE = 'CREATE_FOURNISSEUR_FILE';
-export const CHANGE_VIEW_GRID_FOUR = 'CHANGE_VIEW_GRID_FOUR';
 export const UPDATE_FOURNISSEUR_FILE = 'UPDATE_FOURNISSEUR_FILE';
 export const CHANGE_REQUIRED_SUP = 'CHANGE_REQUIRE_SUP';
 export const CREATE_NEW_FIELD_SUP = 'CREATE_NEW_FIELD_SUP';
@@ -16,6 +15,7 @@ export const DELETE_FIELD_SUP = 'DELETE_FIELD_SUP';
 export const GET_GRID_MODIFY_SUP = 'GET_GRID_MODIFY_SUP';
 export const CHANGE_ID_DISPLAY_SUP = 'CHANGE_ID_DISPLAY_SUP';
 export const DELETE_SUPPLIER = 'DELETE_SUPPLIER';
+export const GET_SUPPLIER = 'GET_SUPPLIER';
 
 export function changeLayoutFour (newLayout){
 	return {type: CHANGE_LAYOUT_FOUR, newLayout}
@@ -40,7 +40,6 @@ export function updateSuppliersFile(file) {
 export function changeRequiredSup(newRequiredFields) {
 	return {type: CHANGE_REQUIRED_SUP, newRequiredFields}
 }
-
 
 export function createNewFieldSup(newField) {
 	return {type: CREATE_NEW_FIELD_SUP, newField}
@@ -84,4 +83,8 @@ export function changeIdDisplaySup(newId) {
 
 export function deleteSupplier(id) {
 	return {type: DELETE_SUPPLIER, id}
+}
+
+export function getSupplier(id) {
+	return {type: GET_SUPPLIER, id}
 }

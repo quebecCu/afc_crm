@@ -3,6 +3,8 @@ import DossiersComponent from "../components/DossiersComponent";
 import '../style/PageAccueil.css';
 import {changeViewDashboard} from "../actions/crmDashboard";
 import {connect} from "react-redux";
+import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
+import {getSupplier, requestGridFour} from "../actions/crmGridLayoutSuppliers";
 
 class HistoriqueContainer extends Component {
 
@@ -170,7 +172,9 @@ class HistoriqueContainer extends Component {
 							</tr>
 							</thead>
 							<DossiersComponent fournisseur={this.props.dossiersState}
-											   handleClick={this.props.changeViewDashboard}/>
+											   handleClick={this.props.getViewSuppliers}
+											   changeView={this.props.changeViewSuppliers}
+							/>
 						</table>
 					</div>
 
@@ -187,7 +191,8 @@ class HistoriqueContainer extends Component {
 function mapStateToProps(state) {
 
 	return {
-		crmDashboard: state.crmDashboard
+		crmDashboard: state.crmDashboard,
+		crmGridSuppliersLayout: state.crmGridSuppliersLayout
 	}
 }
 
@@ -196,6 +201,13 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		changeViewDashboard: (newView) => {
 			dispatch(changeViewDashboard(newView));
+		},
+		changeViewSuppliers: (newView) => {
+			dispatch(changeViewSuppliers(newView))
+		},
+		getViewSuppliers: (id, newView) => {
+			dispatch(getSupplier(id));
+			//dispatch(changeViewSuppliers(newView));
 		}
 	}
 };

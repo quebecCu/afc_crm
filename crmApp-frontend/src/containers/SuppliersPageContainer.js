@@ -4,14 +4,17 @@ import PageFournisseurs from "../components/PageFournisseurs";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import {changeViewDashboard} from "../actions/crmDashboard";
 import CreationFournisseur from "./GridContainerSuppliers";
+import SupplierPage from "./SupplierPage";
+import {requestGridFour} from "../actions/crmGridLayoutSuppliers";
 
 
 class suppliersPageContainer extends Component {
 	constructor(props){
 		super(props);
-//		this.props.sendingRequestFour();
+		window.scrollTo(0,0);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleClick2 = this.handleClick2.bind(this);
+		this.props.requestGridFour();
 	}
 	handleClick(event) {
 		event.preventDefault();
@@ -36,7 +39,10 @@ class suppliersPageContainer extends Component {
 					view === "newSupplier" && <CreationFournisseur view="newSupplier"/>
 				}
 				{
-					view === "supplierFile" && <CreationFournisseur view="supplierFile"/>
+					view === "updateSupplier" && <CreationFournisseur view="updateSupplier"/>
+				}
+				{
+					view === "supplierFile" && <SupplierPage view="supplierFile"/>
 				}
 				</div>
 
@@ -60,7 +66,10 @@ const  mapDispatchToProps = (dispatch) => {
          },
          changeViewDashboard : (newView) => {
              dispatch(changeViewDashboard(newView))
-         }
+         },
+		requestGridFour: () => {
+			dispatch(requestGridFour());
+		}
 	}
 };
 

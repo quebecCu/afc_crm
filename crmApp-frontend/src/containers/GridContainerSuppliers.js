@@ -8,6 +8,7 @@ import {
 	updatePositionsSup,
 	updateSuppliersFile
 } from "../actions/crmGridLayoutSuppliers";
+import {changeLoading} from "../actions/crmDashboard";
 
 class CreationFournisseur extends Component {
     constructor(props) {
@@ -22,9 +23,10 @@ class CreationFournisseur extends Component {
         this._handleChangeInput = this._handleChangeInput.bind(this);
         this._handleModifyField = this._handleModifyField.bind(this);
 
-        if(this.props.view === 'newSupplier') {
+		if(this.props.view === 'newSupplier') {
 			this.props.requestGridFour();
 		}
+
     }
 
 	//Rends les champs static
@@ -68,9 +70,30 @@ class CreationFournisseur extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du fournisseur)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
-		let {layouts, grid} = this.props.crmGridSuppliersLayout;
+		let {grid, requiredFields} = this.props.crmGridSuppliersLayout;
+		let {arrayContacts, delcontacts, postes} = this.props.crmContacts;
+		//On récupère les contacts à modifier
+		let updatedContacts = [];
+		arrayContacts.forEach(contact => {
+			if(contact.libelletitre) {
+				let poste = 1;
+				postes.forEach(element => {
+					if(element.libelleposte === contact.libelleposte) {
+						poste = element.idposte;
+					}
+				});
+				updatedContacts.push( {
+					...contact,
+					idposte: poste,
+					titre: contact.libelletitre
+				})
+			}
+		});
+		let newcontacts = arrayContacts.filter( contact => {
+			return !contact.idpersonne;
+		});
 		this._handleStatic();
-		this.props.updateSuppliersFile({layouts, grid});
+		this.props.updateSuppliersFile({grid, requiredFields, newcontacts, delcontacts, updatedContacts});
 		console.log("submit file");
 	}
 
@@ -110,6 +133,7 @@ class CreationFournisseur extends Component {
 			formUpdateField, champTypes
 		} = this.props.crmGridSuppliersLayout;
 		let {isAdmin} = this.props.crmLogin;
+		let {loading} = this.props.crmDashboard;
         return (
         	<div>
 				{
@@ -124,10 +148,11 @@ class CreationFournisseur extends Component {
 												formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateFieldSup}
 												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
 												handleModifyField={this._handleModifyField}
+												changeLoading={this.props.changeLoading} loading={loading}
 						/>
 				}
 				{
-					this.props.view === 'supplierFile'
+					this.props.view === 'updateSupplier'
 					&& <GridCreationFournisseur handleStatic={this._handleStatic} handleSubmit={this._handleSubmitUpdate} layouts={layouts}
 												handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 												handleSubmitChamp={this._handleSubmitChamp} grid={grid}
@@ -138,6 +163,7 @@ class CreationFournisseur extends Component {
 												formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateFieldSup}
 												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
 												handleModifyField={this._handleModifyField}
+												changeLoading={this.props.changeLoading} loading={loading}
 						/>
 				}
 			</div>
@@ -150,7 +176,8 @@ function mapStateToProps (state) {
 	return{
 		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
 		crmLogin: state.crmLogin,
-		crmContacts: state.crmContacts
+		crmContacts: state.crmContacts,
+		crmDashboard: state.crmDashboard
 	}
 }
 
@@ -192,6 +219,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		updateFieldSup: (field) => {
 			dispatch(updateFieldSup(field))
+		},
+		changeLoading: (newLoading) => {
+			dispatch(changeLoading(newLoading));
 		}
 	}
 };

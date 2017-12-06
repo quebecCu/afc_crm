@@ -23,6 +23,9 @@ class DossiersComponent extends Component {
 			this.props.changeLoading(true);
 			this.props.handleClick(client, event);
 		}
+		else if(this.props.fournisseur) {
+			this.props.handleClick(client.id, 'supplierFile');
+		}
 	}
 
 	componentDidUpdate() {
@@ -93,23 +96,35 @@ class DossiersComponent extends Component {
 				</tbody>
 			);
 		} else if (this.props.fournisseur) {
-			this.rows = (
-				<tbody>
-
-				{this.props.fournisseur.map( (element, index) => {
-					return (
-						<tr onClick={this.handleClick.bind(this)} key={index}>
+			let row = [];
+			this.props.fournisseur.map( (element, index) => {
+				let duplicate = false;
+				this.props.fournisseur.forEach((element2, index2)=> {
+					if(element.id === element2.id && index > index2) {
+						duplicate = true;
+					}
+				});
+				if(!duplicate) {
+					row.push(
+						<tr onClick={this.handleClick.bind(this, element)} key={index}>
 							<td>{element.nom}</td>
 							<td>{element.min_emp1}</td>
 							<td>{element.contact}</td>
 							<td>{element.code}</td>
 						</tr>
 					);
-				})}
+				}
+			});
+			this.rows = (
+				<tbody>
+				{
+					row.map((element)=> {
+						return element;
+					})
+				}
 				</tbody>
 			);
 		}
-		console.log(this.rows);
 		return this.rows;
 	}
 }
