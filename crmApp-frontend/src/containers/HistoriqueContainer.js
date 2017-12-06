@@ -166,7 +166,6 @@ class HistoriqueContainer extends Component {
 							<thead>
 							<tr>
 								<th onClick={this.handleClickF0}>Nom de l'assurance</th>
-								<th onClick={this.handleClickF1}>Nombre d'employés</th>
 								<th onClick={this.handleClickF2}>Nom contact</th>
 								<th onClick={this.handleClickF3}>Code</th>
 							</tr>

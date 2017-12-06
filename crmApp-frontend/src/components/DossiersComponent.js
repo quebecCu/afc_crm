@@ -108,7 +108,6 @@ class DossiersComponent extends Component {
 					row.push(
 						<tr onClick={this.handleClick.bind(this, element)} key={index}>
 							<td>{element.nom}</td>
-							<td>{element.min_emp1}</td>
 							<td>{element.contact}</td>
 							<td>{element.code}</td>
 						</tr>

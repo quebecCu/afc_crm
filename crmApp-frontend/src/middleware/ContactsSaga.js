@@ -41,7 +41,7 @@ export function* requestPostesContacts() {
 									poste = element.idposte;
 								}
 							});
-							return {...contact, idposte: poste}	;
+							return {...contact, idposte: poste, titre: contact.libelletitre}	;
 						});
 						store.dispatch(addArrayContacts(array));
 					}
@@ -78,7 +78,7 @@ export function* requestPostesContactsFournisseurs() {
 									poste = element.idposte;
 								}
 							});
-							return {...contact, idposte: poste}	;
+							return {...contact, idposte: poste, titre: contact.libelletitre}	;
 						});
 						store.dispatch(addArrayContacts(array));
 					}
