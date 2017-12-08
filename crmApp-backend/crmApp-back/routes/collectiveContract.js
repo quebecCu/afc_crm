@@ -98,7 +98,8 @@ router.get('/', expressJwtIp.ip(), function (req, res) {
 				contractsMess = buildContractsArray(contracts);
 				res.status(200);
 				res.send({
-					clients: contractsMess
+					status : "success",
+					message: contractsMess
 				});
 			})
 			.catch(error => {
