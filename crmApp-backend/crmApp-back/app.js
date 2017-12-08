@@ -8,6 +8,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const attributesManagement = require('./routes/attributesManagement');
 const login = require('./routes/login');
+const collectiveContracts = require('./routes/collectiveContract');
 
 const reset = require('./routes/reset');
 const resetPassword = require('./routes/resetPassword');
@@ -47,6 +48,7 @@ app.use('/', assurancesCollectives);
 app.use('/providers', fournisseurs);
 app.use('/', resetPassword);
 app.use('/', createCustomer);
+app.use('/collectiveContracts', collectiveContracts)
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {

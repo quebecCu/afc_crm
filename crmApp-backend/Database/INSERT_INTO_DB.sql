@@ -122,6 +122,8 @@ INSERT INTO public."CLIENT"(idetat, idprovenance, prospect, notes) VALUES (2, 3,
 INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, nom) VALUES (1, 2, 1, 3, 'Groupe CGI');
 INSERT INTO public."ENTREPRISE"(idclient, idadresse, idreleve, idactivite, nom) VALUES (2, 3, 2, 1, 'Sherweb Inc');
 
+
+
 --FOURNISSEUR--
 INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Assomption');
 INSERT INTO public."FOURNISSEUR"(idadresse, nom) VALUES (3, 'Avantage Maximum');
@@ -168,6 +170,10 @@ INSERT INTO users."EMPLOYE_INT"(iduser, idpersonne) VALUES (4, 4);
 --CONTRAT--
 INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 4, 10, 9632584 , 'Contrat de test');
 INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 2, 6, 5222 , 'Contrat de test2');
+
+--CONTRAT_COLLECTIF--
+INSERT INTO public."CONTRAT_COLLECTIF"(idcontrat, prime, pdate, split, autre_vendeur_paye, autre_vendeur_datepaye, base, boni, bdu, hresmin, misapied, taux_commission, np_employes, idautrevendeur) VALUES (1, 2000, (to_date('2010-09-01', 'YYYY-MM-DD')), 50, 10000,(to_date('2010-09-02', 'YYYY-MM-DD')), 47, 90, 35, 23, 45, 390, 1);
+INSERT INTO public."CONTRAT_COLLECTIF"(idcontrat, prime, pdate, split, autre_vendeur_paye, autre_vendeur_datepaye, base, boni, bdu, hresmin, misapied, taux_commission, np_employes, idautrevendeur) VALUES (2, 2000, (to_date('2010-09-01', 'YYYY-MM-DD')), 50, 10500,(to_date('2010-09-02', 'YYYY-MM-DD')), 60, 20, 45, 28, 55, 4500, 2);
 
 --DOMAINE_ASS-- L'ordre est important !
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Vie - Adhérent et personnes à charge');
