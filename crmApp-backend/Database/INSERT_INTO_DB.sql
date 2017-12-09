@@ -172,8 +172,8 @@ INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renou
 INSERT INTO public."CONTRAT"(idfournisseur, idclient, idrepresentant, mois_renouvellement, police, notes) VALUES (10, 2, 2, 6, 5222 , 'Contrat de test2');
 
 --CONTRAT_COLLECTIF--
-INSERT INTO public."CONTRAT_COLLECTIF"(idcontrat, prime, pdate, split, autre_vendeur_paye, autre_vendeur_datepaye, base, boni, bdu, hresmin, misapied, taux_commission, np_employes, idautrevendeur) VALUES (1, 2000, (to_date('2010-09-01', 'YYYY-MM-DD')), 50, 10000,(to_date('2010-09-02', 'YYYY-MM-DD')), 47, 90, 35, 23, 45, 390, 1);
-INSERT INTO public."CONTRAT_COLLECTIF"(idcontrat, prime, pdate, split, autre_vendeur_paye, autre_vendeur_datepaye, base, boni, bdu, hresmin, misapied, taux_commission, np_employes, idautrevendeur) VALUES (2, 2000, (to_date('2010-09-01', 'YYYY-MM-DD')), 50, 10500,(to_date('2010-09-02', 'YYYY-MM-DD')), 60, 20, 45, 28, 55, 4500, 2);
+INSERT INTO public."CONTRAT_COLLECTIF"(idcontrat, prime, pdate, split, autre_vendeur_paye, autre_vendeur_datepaye, base, boni, bdu, misapied, taux_commission, nb_employes, idautrevendeur) VALUES (1, 2000, (to_date('2010-09-01', 'YYYY-MM-DD')), 50, 10000,(to_date('2010-09-02', 'YYYY-MM-DD')), 47, 90, 35, 23, 45, 390, 1);
+INSERT INTO public."CONTRAT_COLLECTIF"(idcontrat, prime, pdate, split, autre_vendeur_paye, autre_vendeur_datepaye, base, boni, bdu, misapied, taux_commission, nb_employes, idautrevendeur) VALUES (2, 2000, (to_date('2010-09-01', 'YYYY-MM-DD')), 50, 10500,(to_date('2010-09-02', 'YYYY-MM-DD')), 60, 20, 45, 28, 55, 4500, 2);
 
 --DOMAINE_ASS-- L'ordre est important !
 INSERT INTO public."DOMAINE_ASSURANCE"(libelledomaine) VALUES('Assurance Vie - Adhérent et personnes à charge');
@@ -265,6 +265,7 @@ INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Autres', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Propriétaires', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Cadres', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Employés', 2);
+INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('Tous', 2);
 --Formule
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('1x salaire', 2);
 INSERT INTO public."MODALITES_VALEUR"(valeur, idtype) VALUES ('2x salaire', 2);
@@ -382,6 +383,7 @@ INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)
     SELECT idmodalite, idmodvaleur FROM "MODALITE", "MODALITES_VALEUR" WHERE libelleavantage like ('Classe') AND (valeur like ('Propriétaires')
                 OR valeur like ('Cadres')
                 OR valeur like ('Employés')
+				OR valeur like ('Tous')
                 OR valeur like ('Autres'));
 --Formule
 INSERT INTO "VALEUR_MODALITE_CONTRAT"(idmodalite, idmodvaleur)

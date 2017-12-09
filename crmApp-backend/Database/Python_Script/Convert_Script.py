@@ -273,6 +273,36 @@ def insert_entreprise_facul_nbr_employee(sql_file, line):
     sql_file.write(query + ";\n")
 
 
+# Create Fournisseur
+def insert_fournisseur(sql_file, line):
+    nom = "'" + htmlparser.unescape(line[1]).replace("'", "\'\'") + "'"
+    prenom = "'" + htmlparser.unescape(line[2]).replace("'", "\'\'") + "'"
+
+    if htmlparser.unescape(line[3]) is "Monsieur":
+        cleaned_title = "'Mr'"
+    else:
+        cleaned_title = "'Mme'"
+    idtitre = '(' + \
+              'SELECT idtitre ' \
+              'FROM public."TITRE" ' \
+              'WHERE lower(libelleTitre) ' \
+              'LIKE lower({0})'.format(cleaned_title) + ')'
+    date_naiss = ("to_date('" + htmlparser.unescape(line[19].replace("'", "\'\'")) +
+                  "', 'YYYY-MM-DD')") if line[19] is not None else 'NULL'
+
+    query = 'INSERT INTO ' \
+            'public."PERSONNE"(' \
+            'nom, ' \
+            'prenom, ' \
+            'idtitre, ' \
+            'date_naiss) ' \
+            'VALUES ' \
+            '({0}, {1}, {2}, {3})' \
+        .format(nom, prenom, idtitre, date_naiss)
+
+    sql_file.write(query + ";\n")
+
+
 # Standardize Phone Number
 def standardize_phone_number(number):
     cleaned_number = ""

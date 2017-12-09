@@ -1,151 +1,175 @@
 # CLIENT
-	Reférence // Put in the Note
-	Propect // Set to False
-	
+Reférence // Put in the Note
+Propect // Set to False
+
 # Entreprise
-	Nom du Groupe // nom
-	TEL
-	Ext.
-	AGA // Add the id of AGA linked to the values
-	
+Nom du Groupe // nom
+TEL
+Ext.
+
 # Cree Personne
-	Nom/Administrateur // Nom
-	Prénom/Adm. // Prenom
-	Titre // Get the id of TITRE linked to the values
-	# post // Nullable
-	estDecideur // true
+Nom/Administrateur // Nom
+Prénom/Adm. // Prenom
+Titre // Get the id of TITRE linked to the values
+# post // Nullable
+estDecideur // true
 
 # Create CONTACT_CLIENT & link Personne to it
-	
-# CONTACT_CLIENT
-	// Is empty atm
-	
-# Adresse // To ignore
-	Rue
-	Ville
-	Prov.
-	Code-Post
-	
-# ENTREPRISE_FACUL // Insert for each element
-	idattrentreprise // FAX // Get the id ENTREPRISE_ATTR to the values
-	idattrentreprise // Email // Get the id ENTREPRISE_ATTR to the values
-	idattrentreprise // EMPLOYES // Get the id ENTREPRISE_ATTR to the values
-	identreprise // The id of the entreprise
-	valeur // The values of the (FAX, Email, EMPLOYES, ...)
-	
-# TODO: Check later
-	// Assureur
-	// Chambre
 
-# Contrat
-	Police #
-	SousGroupe
-	DATE NAIS.
-	Mois
-	ADMIN
-	Adm
-	HRES.MIN
-	MISAPIED
-	RVER
-	Sec. Nom
-	Sec. Prénom
-	Titre
-	TELSEC
-	EXTSEC
-	SECEMAIL
-	Responcables
-	Classe/Vie
-	Sal
-	Montant Fixe
-	Maximum
-	SansPreuve
-	Vie Conj
-	Vie Enf
-	Classe 2
-	CT Classe
-	Hop
-	Acc
-	Mal
-	Sem
-	%
-	Max.
-	CEIC
-	LT/Classe
-	Delai
-	Durée
-	LT %
-	Max AP
-	LT SP
-	Imp
-	OCCP
-	Index
-	Max
-	LT_NOTE
-	AssMaladie
-	Coass % Médicaments
-	CARTE
-	AutresF
-	COASSA
-	Para Max
-	Visite
-	Examen Vue
-	Lunette
-	Annulation
-	Noter Bien
-	Dentaire
-	Base %
-	majeurs %
-	Prot %
-	Ortho
-	Dent Max
-	Note
-	AUTRES
-	Notes 1
-	Notes 2
-	Année1
-	EMPLOY1
-	Compagnie1
-	DIFF1
-	Taux Vie1
-	DMA1
-	PAC1
-	Ct
-	Lt
-	AMCI1
-	AMCI1
-	AMCF1
-	DENTI1
-	DENF1
-	DenM1
-	%Comm
-	BoniTaux
-	Date/Base
-	BASE92
-	Boni92
-	DRECU09
-	BASE09
-	BONI09
-	DRECU10
-	BASE10
-	BONI10
-	DRECU03
-	BASE03
-	BONI03
-	D12Recu
-	BASE12
-	BONI12
-	D13RECU
-	BASE13
-	BONI13
-	DRECU14
-	BASE14
-	BONI14
-	D15RECU
-	BASE15
-	BONI15
-	Nom du 2ème Vendeur
-	Split
-	Base dû
-	Base Payee
-	Date Payée
-	Commnunications
+# CONTACT_CLIENT
+// Is empty atm
+
+# Adresse // To ignore
+Rue
+Ville
+Prov.
+Code-Post
+
+# ENTREPRISE_FACUL // Insert for each element
+idattrentreprise // FAX // Get the id ENTREPRISE_ATTR to the values
+idattrentreprise // Email // Get the id ENTREPRISE_ATTR to the values
+idattrentreprise // EMPLOYES // Get the id ENTREPRISE_ATTR to the values
+identreprise // The id of the entreprise
+valeur // The values of the (FAX, Email, EMPLOYES, ...)
+/////// New
+idattrentreprise // SousGroupe // Get the id ENTREPRISE_ATTR to the values
+
+
+
+//Chambre
+//RVER
+//Sec. Nom
+//Sec. Prénom
+//Titre
+//TELSEC
+//EXTSEC
+//SECEMAIL
+//Responcables
+//Sal
+//Montant Fixe
+*--------------------------------------
+
+# FOURNISSEUR
+Assureur // Put in nom
+
+# CONTRAT
+Police // Put in police
+DATE NAIS. // Put in date_signature
+Mois // Put in mois_renouvellement
+
+# CONTRAT_COLLECTIF
+MISAPIED // put in misapied
+
+# CONTRAT_COLLECTIF_FACUL
+idattrcontratcoll // ADMIN // Get the id CONTRAT_COLLECTIF_ATTR to the values
+idattrcontratcoll // Adm // Get the id CONTRAT_COLLECTIF_ATTR to the values
+idattrcontratcoll // HRES.MIN // Get the id CONTRAT_COLLECTIF_ATTR to the values
+
+Creer Module 
+	iddomaineass = 1 // Assurance Vie
+	SELECT last idcontrat
+	
+Creer Souscription
+	SELECT last_insert_id MODULE
+	idmodalite = 1
+	SELECT valeur FROM MODALITE_VALEUR WHERE (valeur = #Classe/Vie) XOR (valeur = 'Autres') // Check XOR
+
+Creer Souscription
+	SELECT last_insert_id MODULE
+	idmodalite = 1
+	SELECT valeur FROM MODALITE_VALEUR WHERE (valeur = #Classe/Vie) XOR (valeur = 'Autres') // Check XOR
+
+
+
+Maximum
+SansPreuve
+Vie Conj
+Vie Enf
+Classe 2
+CT Classe
+Hop
+Acc
+Mal
+Sem
+%
+Max.
+CEIC
+LT/Classe
+Delai
+Durée
+LT %
+Max AP
+LT SP
+Imp
+OCCP
+Index
+Max
+LT_NOTE
+AssMaladie
+Coass % Médicaments
+CARTE
+AutresF
+COASSA
+Para Max
+Visite
+Examen Vue
+Lunette
+Annulation
+Noter Bien
+Dentaire
+Base %
+majeurs %
+Prot %
+Ortho
+Dent Max
+Note
+AUTRES
+Notes 1
+Notes 2
+Année1
+EMPLOY1
+Compagnie1
+DIFF1
+Taux Vie1
+DMA1
+PAC1
+Ct
+Lt
+AMCI1
+AMCI1
+AMCF1
+DENTI1
+DENF1
+DenM1
+%Comm
+BoniTaux
+Date/Base
+BASE92
+Boni92
+DRECU09
+BASE09
+BONI09
+DRECU10
+BASE10
+BONI10
+DRECU03
+BASE03
+BONI03
+D12Recu
+BASE12
+BONI12
+D13RECU
+BASE13
+BONI13
+DRECU14
+BASE14
+BONI14
+D15RECU
+BASE15
+BONI15
+Nom du 2ème Vendeur
+Split
+Base dû
+Base Payee
+Date Payée
+Commnunications
