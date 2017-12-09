@@ -6,6 +6,9 @@ export const GET_LIST_ASSUREURS = 'GET_LIST_ASSUREURS';
 export const UPDATE_LIST_ASSUREURS = 'UPDATE_LIST_ASSUREURS';
 export const GET_AGA = 'GET_AGA';
 export const UPDATE_AGA = 'UPDATE_AGA';
+export const GET_LIST_CONTRACTS = 'GET_LIST_CONTRACTS';
+export const SET_LIST_CONTRACTS = 'SET_LIST_CONTRACTS';
+export const CHANGE_SEARCH_CONTRACTS = 'CHANGE_SEARCH_CONTRACTS';
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}
@@ -37,4 +40,16 @@ export function getAGA(){
 
 export function updateAGA(listAGA){
 	return {type: UPDATE_AGA, listAGA}
+}
+
+export function getListContracts() {
+	return {type: GET_LIST_CONTRACTS}
+}
+
+export function setListContracts(contracts) {
+	return {type: SET_LIST_CONTRACTS, contracts}
+}
+
+export function changeSearchContracts(search) {
+	return {type: CHANGE_SEARCH_CONTRACTS, search}
 }

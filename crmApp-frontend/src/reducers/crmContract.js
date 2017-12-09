@@ -3,11 +3,18 @@ import {
 	CHANGE_FORM_CONTRACT,
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
-	UPDATE_LIST_ASSUREURS
+	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS
 } from "../actions/crmContract";
 
 let initialState = {
 	view: '',
+	listContracts: [],
+	searchContracts: {
+		numeroPolice: '',
+		nomClient: '',
+		nomAssureur: '',
+		moisRenouvellement: ''
+	},
 	formState: {
 		intModulesToDisplay:1,
 		modulesToDisplay:[],//Tableau qui gère l'affichage des modules
@@ -140,6 +147,10 @@ export default function reducer (state = initialState, action){
 			return {...state, formState:{...state.formState, employesAFC:action.listEmployes}, errors:'' };
 		case UPDATE_LIST_ASSUREURS:
 			return {...state, formState:{...state.formState, listAssureurs:action.listAssureurs}, errors:'' };
+		case SET_LIST_CONTRACTS:
+			return {...state, listContracts: action.contracts, errors:''};
+		case CHANGE_SEARCH_CONTRACTS:
+			return {...state, searchContracts: action.search, errors: ''};
 		default:
 			return state;
 	}
