@@ -4,6 +4,9 @@ class ContractClientPart extends React.Component{
 	constructor(props){
 		super(props);
 		this.props.getEmployesAFC();
+		if(this.props.comesFrom === "client"){
+			document.getElementById("nomClient").setAttribute('disabled', true);
+		}
 	}
 
 
@@ -27,6 +30,7 @@ class ContractClientPart extends React.Component{
 					className="form-control col-sm-8"
 					placeholder="Sous groupe"
 					id="sousGroupe"
+					disabled
 				/>
 			</div>
 			<div className="form-group row">
@@ -36,6 +40,7 @@ class ContractClientPart extends React.Component{
 					className="form-control col-sm-8"
 					placeholder="Nombre d'employés"
 					id="nbEmployes"
+					disabled
 				/>
 			</div>
 			<div className="form-group row">

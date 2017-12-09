@@ -30,7 +30,7 @@ class ContractsContainer extends React.Component {
 				<div><h1>Liste des contrats</h1><br /><button onClick={this._handleClick} value="create">Créer contrat</button></div>
 			}
 			{
-				view === "create" && <CreateContractContainer />
+				view === "create" && <CreateContractContainer comesFrom="blankContract" />
 			}
 		</div>;
 	}

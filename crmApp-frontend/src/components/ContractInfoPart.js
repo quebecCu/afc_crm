@@ -67,6 +67,7 @@ class ContractInfoPart extends React.Component {
 							className=" form-control"
 							value=""
 							onChange={this._onChangeAGA}
+
 						>
 							<option disabled value=""> -- LA REQUETE BACKEND AGA-- </option>
 						</select>
@@ -83,6 +84,7 @@ class ContractInfoPart extends React.Component {
 						placeholder="Numéro de police"
 						id="numPolice"
 						onChange={this._onChangeNumPolice}
+						value={this.props.formState.contrat.numPolice}
 					/>
 						<p id="numPoliceHelp" className="help-block text-danger">Insérer un numéro de police</p>
 
@@ -96,6 +98,7 @@ class ContractInfoPart extends React.Component {
 						className="form-control"
 						placeholder="AAAA-MM"
 						id="dateEmission"
+						value={this.props.formState.contrat.dateEmission}
 						onChange={this._onChangeDateEmission}
 					/>
 						<p id="dateEmissionHelp" className="help-block text-danger">Format de la date AAAA-MM</p>
@@ -110,6 +113,7 @@ class ContractInfoPart extends React.Component {
 							className="form-control"
 							placeholder="MM"
 							id="moisRenouv"
+							value={this.props.formState.contrat.moisRenouv}
 							onChange={this._onChangeMoisRenouv}
 						/>
 						<p id="moisRenouvHelp" className="help-block text-danger">Format MM</p>
@@ -121,6 +125,7 @@ class ContractInfoPart extends React.Component {
 					<div className="col-sm-8">
 					<textarea
 						className="form-control"
+						value={this.props.formState.contrat.notes}
 						placeholder="Informations supplémentaires sur le contrat"
 						id="notes"
 						onChange={this._onChangeNotes}

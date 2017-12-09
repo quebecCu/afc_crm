@@ -17,18 +17,20 @@ class CreateContractContainer extends React.Component {
 		this._onClickValidate=this._onClickValidate.bind(this);
 		this._validateForm=this._validateForm.bind(this);
 		let {formState} = this.props.crmContract;
+		//si on display un blank contrat on fait un state vide de toute envie de vivre.
+		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		this.props.changeForm({...formState, intModulesToDisplay:1, modulesToDisplay:[], contrat:{...formState.contrat,
 			idAssureur: '',
 			idAGA: '',
 			modulesChoisis: [],
-			numPolice:'',
+			numPolice:'222333',
 			dateEmission:'',
-			moisRenouv:'',
-			notes:'',
+			moisRenouv:'2233',
+			notes:'Salut hehe je test',
 			historiqueTaux:{diff: '',
 				vie: '',
-				dma: '',
-				pac: '',
+				dma: 'ererf',
+				pac: 'erf',
 				ct: '',
 				lt: '',
 				amc_ind: '',
@@ -43,7 +45,7 @@ class CreateContractContainer extends React.Component {
 				mg_mono: '',
 				mg_couple: '',
 				mg_fam: '',
-				pae: '',
+				pae: 'erferf',
 				prime_ms: '',
 				prime_an: ''
 			},
@@ -55,7 +57,7 @@ class CreateContractContainer extends React.Component {
 				dent:'',
 				mg:'',
 				pae:'',
-				notes:'',
+				notes:'rrree',
 				recu:'',
 				base:'',
 				boni:'',
@@ -63,7 +65,7 @@ class CreateContractContainer extends React.Component {
 				gtotal:'',
 				idConseiller:'',
 				split:'',
-				bdu:'',
+				bdu:'eferferf',
 				paye:'',
 				dpaye:'',
 			}
@@ -160,7 +162,7 @@ class CreateContractContainer extends React.Component {
 										compactType={null}
 										autoSize = {true}>
 				<div key="1"><ContractClientPart getEmployesAFC={this.props.getEmployesAFC} changeForm={this.props.changeForm}
-												formState={formState}/></div>
+												formState={formState} comesFrom={this.props.comesFrom}/></div>
 				<div key="2"><ContractInfoPart getListAssureurs={this.props.getListAssureurs}
 											   getAGA={this.props.getAGA}
 											   formState={formState}
@@ -187,6 +189,7 @@ function mapStateToProps(state) {
 //fonctions
 const mapDispatchToProps = (dispatch) => {
 	return {
+
 		changeForm : (newFormState) => {
 			dispatch(changeFormContract(newFormState))
 		},
