@@ -3,13 +3,12 @@ import {
 	REQUEST_GRID_FOUR, CREATE_FOURNISSEUR_FILE,
 	UPDATE_FOURNISSEUR_FILE, changeGridFour, changeLayoutFour, UPDATE_POSITIONS_SUP, changeNewFieldSup,
 	CREATE_NEW_FIELD_SUP, getChampTypesSup, GET_CHAMP_TYPES_SUP, updateChampTypesSup, DELETE_FIELD_SUP, requestGridFour,
-	UPDATE_FIELD_SUP, changeUpdateFieldSup, GET_SUPPLIER, changeRequiredSup, DELETE_SUPPLIER, getGridModifySup,
+	UPDATE_FIELD_SUP, changeUpdateFieldSup, GET_SUPPLIER, changeRequiredSup, getGridModifySup,
 	GET_GRID_MODIFY_SUP
 } from '../actions/crmGridLayoutSuppliers';
 import axios from 'axios';
 import {store} from '../store';
 import {getContactsSup} from "../actions/crmContacts";
-import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import {changeLoading} from "../actions/crmDashboard";
 
 let tokenToSend= localStorage.getItem("cookieSession");
@@ -105,32 +104,58 @@ export function * sendFile() {
 
 //Envoie les champs et leurs positions au back-end (Modification d'un fournisseur)
 export function * updateFile() {
-	/*while(true) {
+	while(true) {
 		let file = yield take(UPDATE_FOURNISSEUR_FILE);
 		let {
 			grid,
-			layouts
+			requiredFields,
+			newcontacts,
+			delcontacts,
+			updatedContacts
 		} = file.file;
 		console.log("update file");
-		let layout = layouts.lg;
 
-		let server = "http://localhost:3002/updateSuppliers";
+		let facultatif = grid.map(champ => {
+			return {id: champ.idattrfournisseur, value: champ.value}
+		});
+		console.log(requiredFields);
+		console.log(newcontacts);
+		console.log(updatedContacts);
+		console.log(delcontacts);
+		console.log(facultatif);
+		let server = "http://localhost:3002/providers/update";
 
 		axios.post(server, {
-			grid: grid,
-			layout: layout,
+			idfournisseur: requiredFields.id,
+			nom: requiredFields.nomEntreprise,
+			tel_princ: requiredFields.telephone,
+			ext_tel_princ: requiredFields.extension,
+			rue: requiredFields.rue,
+			ville: requiredFields.ville,
+			code: requiredFields.code,
+			province: requiredFields.province,
+			codepostal: requiredFields.codePostal,
+			facultatif: facultatif,
+			updtcontacts: updatedContacts,
+			newcontacts: newcontacts,
+			delcontacts: delcontacts,
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					alert('La fiche fournisseur a été modifiée avec succès');
-				} else {
-					alert('Erreur lors de la modification de la fiche fournisseur');
+					alert('La fiche client a été modifiée avec succès');
+					//store.dispatch(changeViewCollective('customerFile'));
+				}
+				else if(response.data.status === 'fail') {
+					alert(response.data.message);
+				}
+				else {
+					alert('Erreur lors de la modification de la fiche client');
 				}
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
-	}*/
+	}
 }
 
 //on envoie la position des champs
@@ -316,7 +341,6 @@ export function* requestSupplier() {
 					store.dispatch(changeRequiredSup(requiredFields));
 					store.dispatch(getContactsSup(id));
 					store.dispatch(getGridModifySup(facultatif));
-					store.dispatch(changeViewSuppliers("supplierFile"));
 				} else {
 					alert('Erreur lors du chargement du fournisseur');
 				}

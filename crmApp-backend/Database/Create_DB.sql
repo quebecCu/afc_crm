@@ -240,15 +240,14 @@ CREATE TABLE public."CONTRAT_COLLECTIF" (
   idcontrat  integer  PRIMARY KEY REFERENCES "CONTRAT" (idcontrat),
   prime  integer,
   pdate  date,
-  split  decimal(3,2),
+  split  decimal(5,2),
   autre_vendeur_paye  decimal(10,2),
   autre_vendeur_datepaye  date,
   base  decimal(10,2),
-  boni  decimal(3,2),
+  boni  decimal(10,2),
   bdu  decimal(10,2),
-  hresmin  integer,
   misapied  integer,
-  taux_commission  decimal(3,2),
+  taux_commission  decimal(5,2),
   nb_employes integer,
   idautrevendeur  integer  REFERENCES  "PERSONNE" (idpersonne)
 );

@@ -23,6 +23,10 @@ class NavBarLink extends Component {
         	this.props.changeLoading(true);
 			this.props.displayUser(this.props.idCustomer);
 		}
+		if(this.props.idSupplier && !this.state.deleted) {
+        	this.props.changeLoading(true);
+        	this.props.displayUser(this.props.idSupplier);
+		}
     }
 
     _handleDelete() {
@@ -32,6 +36,10 @@ class NavBarLink extends Component {
 			}
 			if(this.props.idCustomer) {
 				this.props.deleteSub(this.props.idCustomer);
+			}
+			if(this.props.idSupplier) {
+				console.log(this.state.deleted);
+				this.props.deleteSub(this.props.idSupplier);
 			}
 		});
 	}

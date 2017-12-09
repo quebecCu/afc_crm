@@ -7,15 +7,17 @@ import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {changeViewUserManagement, requestUserById} from "../actions/crmUserManagement";
 import {changeViewContract} from "../actions/crmContract";
 import '../style/NavBar.css';
-import {addSubCustomerNav, addSubUserNav} from "../actions/crmNavBar";
+import {addSubCustomerNav, addSubSupplierNav, addSubUserNav} from "../actions/crmNavBar";
 import {getClientRequest} from "../actions/crmClientList";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
+import {getSupplier} from "../actions/crmGridLayoutSuppliers";
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
 		this._deleteSubUser = this._deleteSubUser.bind(this);
 		this._deleteSubCustomer = this._deleteSubCustomer.bind(this);
+		this._deleteSubSupplier = this._deleteSubSupplier.bind(this);
 	}
 
 	_deleteSubUser(idUser) {
@@ -30,6 +32,12 @@ class NavBar extends Component {
 			return link.idCustomer !== idCustomer;
 		});
 		this.props.deleteSubCustomerNav(links, "customers");
+	}
+	_deleteSubSupplier(idSupplier) {
+		let links = this.props.crmNavBar.linksSubSupplier.filter(link => {
+			return link.idSupplier !== idSupplier;
+		});
+		this.props.deleteSubSupplierNav(links, "");
 	}
 
     render() {
@@ -71,6 +79,19 @@ class NavBar extends Component {
                             <li>
                                 <NavBarLink name="Fournisseurs" id="suppliers" handleClick={this.props.changeViewDashboard} view={this.props.view} resetView={this.props.changeViewSuppliers} reset=''/>
                             </li>
+							{
+								this.props.crmNavBar.displaySubSupplier === true
+								&& this.props.crmNavBar.linksSubSupplier.map(link => {
+									return <ul id="subSupplier" key={"subSupplierMenu"+ link.idSupplier}>
+										<li><NavBarLink name={link.name} id="suppliers" handleClick={this.props.changeViewDashboard}
+														view={this.props.view} resetView={this.props.changeViewSuppliers}
+														reset={link.view} displayUser={this.props.getSupplier}
+														changeLoading={this.props.changeLoading}
+														idSupplier={link.idSupplier} menu="subMenu" deleteSub={this._deleteSubSupplier}/>
+										</li>
+									</ul>
+								})
+							}
 
                             {
     							this.props.crmLogin.isAdmin === true
@@ -153,7 +174,15 @@ const  mapDispatchToProps = (dispatch) => {
     		dispatch(changeLoading(newLoading));
 		},
 		changeViewSuppliers : (newView) => {
-			dispatch(changeViewSuppliers(newView))
+			dispatch(changeViewSuppliers(newView));
+		},
+		deleteSubSupplierNav: (newSubSupplier, newView) => {
+			dispatch(addSubSupplierNav(newSubSupplier));
+			dispatch(changeViewSuppliers(newView));
+		},
+		getSupplier: (id) => {
+    		dispatch(getSupplier(id));
+			dispatch(changeViewSuppliers("supplierFile"));
 		}
     }
 };

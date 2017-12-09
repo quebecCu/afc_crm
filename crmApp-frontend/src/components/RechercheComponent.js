@@ -66,9 +66,9 @@ class RechercheComponent extends Component {
 	componentDidMount() {
 		this._reset();
 	}
-	
+
 	_print(event) {
-		document.getElementById("print-content").style.height = "auto";  
+		document.getElementById("print-content").style.height = "auto";
 		window.print();
 		 document.getElementById("print-content").style.height = "450px"
 	}
@@ -150,19 +150,19 @@ class RechercheComponent extends Component {
 				<input type="text" id="nomAssureur" placeholder="Assureur" onChange={this._changeNomAssureur}
 					   value={this.props.formState.nomAssureur}/>
 
-				<select required id="selectedStatut" onChange={this._filtre}>
+				<select required id="selectedStatut" onChange={this._filtre} defaultValue="actif">
 					<option value="">-- Choisir le statut --</option>
-					<option value="actif" selected="selected">Actif</option>
+					<option value="actif">Actif</option>
 					<option value="annulé">Annulé</option>
 				</select>
 
-				<select required name="prospects" id="prospects" onChange={this._filtre}>
-					<option value="" selected="selected">-- Type prospect --</option>
+				<select required name="prospects" id="prospects" onChange={this._filtre} defaultValue="">
+					<option value="">-- Type prospect --</option>
 					<option value="oui">Prospect</option>
 					<option value="non"> Non prospect</option>
 				</select>
 				<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
-				
+
 			</form>
 				<button type="reset" value="print" id="print" onClick={this._print}>
 				<a className="glyphicon glyphicon-print"> </a> Imprimer la liste </button>

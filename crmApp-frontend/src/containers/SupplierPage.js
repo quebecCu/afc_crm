@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import FicheClient from "./FicheClient";
-import {changeIdDisplay, deleteCustomer, requestGrid} from "../actions/crmGridLayout";
 import LoadingAnimation from "../components/LoadingAnimation";
 import SupplierFile from "../components/SupplierFile";
 import {getContactsSup} from "../actions/crmContacts";
-import {deleteSupplier, requestGridFour} from "../actions/crmGridLayoutSuppliers";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 
 class SupplierPage extends Component {

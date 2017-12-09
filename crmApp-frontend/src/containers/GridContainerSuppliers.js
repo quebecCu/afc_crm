@@ -192,6 +192,16 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		requestGridFour: () => {
 			dispatch(requestGridFour());
+			dispatch(changeRequiredSup({
+				nomEntreprise: '',
+				rue: '',
+				ville: '',
+				province: '',
+				codePostal: '',
+				telephone: '',
+				extension: '',
+				code: ''
+			}));
 		},
 		createSuppliersFile: (file) => {
 			dispatch(createSuppliersFile(file));

@@ -58,10 +58,10 @@ class SearchCompSuppliers extends Component {
 			td3 = tr[i].getElementsByTagName("td")[3];
 			if (td0 || td1 || td2 || td3) {
 				if (td3.innerHTML.toUpperCase().indexOf(inputCode) > -1 && td0.innerHTML.toUpperCase().indexOf(inputAssuranceName) > -1
-					&& td2.innerHTML.toUpperCase().indexOf(inputContactName) > -1 && parseInt(td1.innerHTML, 10) >= inputEmployesNumber) {
+					&& td2.innerHTML.toUpperCase().indexOf(inputContactName) > -1) {
 					tr[i].style.display = "";
 				} else {
-					//tr[i].style.display = "none";
+					tr[i].style.display = "none";
 				}
 			}
 		}
