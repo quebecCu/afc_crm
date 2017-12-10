@@ -48,7 +48,7 @@ router.get('/aga', expressJwtIp.ip(), function (req, res) {
 	var _ip = res.locals.ip;*/
 
 	//if (!!decoded && (_ip === _ipReceived)) {
-		
+
 		db.any(getChambersOfCommerce())
 			.then((chambers) => {
 				console.log(JSON.stringify(chambers));
@@ -67,6 +67,36 @@ router.get('/aga', expressJwtIp.ip(), function (req, res) {
 		res.status(403);
 		sendResponse('Acces refusé', res, 'fail')
 	}*/
+});
+
+let getEmployes = () =>
+	squel.select()
+		.from('users."EMPLOYE_INT"', 'emp')
+		.left_join('public."PERSONNE"', 'pers', 'emp.idpersonne = pers.idpersonne')
+		.field('emp.idemploye')
+		.field('pers.nom')
+		.field('pers.prenom')
+		.toString();
+
+router.get('/employesafc',expressJwtIp.ip(), function(req,res){
+	console.log('route /employesafc');
+//on veut renvoyer {idemploye, nom, prenom}
+	console.log(getEmployes());
+	db.any(getEmployes())
+		.then((response) => {
+			console.log(response);
+			res.send({
+				status: 'success',
+				message: response
+			});
+		})
+		.catch(error => {
+			res.send({
+				status: 'fail',
+				message: error.toString() //'Les chambres de commerce disponibles n\'ont pas pu être récupérées'
+			})
+			});
+
 });
 
 /**
@@ -205,7 +235,7 @@ router.get('/:idClient', expressJwtIp.ip(), function (req, res) {
 			.then((optionnalRows) => {
 
 				wantedClientRows = buildClientObject(optionnalRows);
-				
+
 				db.one(getObligatoryClientRowsById(req.params.idClient))
 				.then((obligatoryRow) => {
 					obligatoryRow.facultatif = wantedClientRows;
@@ -270,14 +300,14 @@ const getClientById = (idClient) => {
 const getOptionnalClientRowsById = (idClient) => {
 	return squel.select()
 		.field('label')
-		.field('valeur')	
+		.field('valeur')
 		.field('attr.description', 'description')
 		.field('type.libelletype', 'type')
 		.field('type.forme', 'forme_type')
 		.field('facul.idattrentreprise', 'idattr')
 		.from('"ENTREPRISE"', 'entp')
 		.join('"ENTREPRISE_FACUL"', 'facul', 'entp.idclient = facul.identreprise')
-		.left_join('"ENTREPRISE_ATTR"', 'attr', 'attr.idattrentreprise = facul.idattrentreprise')	
+		.left_join('"ENTREPRISE_ATTR"', 'attr', 'attr.idattrentreprise = facul.idattrentreprise')
 		.left_join('"TYPE"', 'type', 'type.idtype = attr.idtype')
 		.where('entp.idclient = ?', idClient)
 		.toString();
@@ -288,7 +318,7 @@ const getObligatoryClientRowsById = (idClient) => {
 	return squel.select()
 		.field('cli.idclient', 'idclient')
 		.field('libelleprovenance', 'provenance')
-		.field('libelleetat', 'etat')		
+		.field('libelleetat', 'etat')
 		.field('modeenvoiereleve', 'releve')
 		.field('libelleactivite', 'forme_type')
 		.field('nom')
@@ -299,15 +329,15 @@ const getObligatoryClientRowsById = (idClient) => {
 		.field('notes')
 		.field('rue')
 		.field('province')
-		.field('codepostal')	
+		.field('codepostal')
 		.field('ville')
 		.from('"CLIENT"', 'cli')
 		.left_join('"ENTREPRISE"', 'entr', 'cli.idclient = entr.idclient')
-		.left_join('"RELEVE"', 'rel', 'entr.idreleve = rel.idreleve')		
-		.left_join('"ACTIVITE"', 'act', 'entr.idactivite = act.idactivite')		
+		.left_join('"RELEVE"', 'rel', 'entr.idreleve = rel.idreleve')
+		.left_join('"ACTIVITE"', 'act', 'entr.idactivite = act.idactivite')
 		.left_join('"ADRESSE"', 'adr', 'adr.idadresse = entr.idadresse')
-		.left_join('"ETAT"', 'etat', 'cli.idetat = etat.idetat')			
-		.left_join('"PROVENANCE"', 'prov', 'cli.idprovenance = prov.idprovenance')	
+		.left_join('"ETAT"', 'etat', 'cli.idetat = etat.idetat')
+		.left_join('"PROVENANCE"', 'prov', 'cli.idprovenance = prov.idprovenance')
 		.where('cli.idclient = ?', idClient)
 		.toString();
 };
@@ -374,7 +404,7 @@ squel.insert({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
  * @method POST
  * @URL /clients/create
  * @param expressJwtIp.ip() server IP address
- * @DataParams {idreleve, nom, tel_princ, ext_tel_princ, idactivite, ville, province, 
+ * @DataParams {idreleve, nom, tel_princ, ext_tel_princ, idactivite, ville, province,
  * codepostal, idetat, idprovenance, prospect, notes, facul, newcontacts} Client to be created
  * @SuccessResponse { status: 'success', message: null }
  * @ErrorResponse { status: 'fail', message: error }
@@ -391,7 +421,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 	if (!!decoded && (_ip === _ipReceived)) {*/
 
 		console.log("Starting /clients/create");
-		
+
 		var client = {
 				idreleve: req.body.idreleve,
 				nom: req.body.nom,
@@ -436,7 +466,7 @@ router.post('/create', expressJwtIp.ip(), function (req, res) {
 						    						mail: contact.mail,
 						    						estdecideur: contact.estdecideur
 						    					}
-						    					
+
 					    					return t.one(getIdTitre(person.titre))
 					    						.then(titre => {
 					    							person.idtitre = titre.idtitre;
@@ -521,7 +551,7 @@ squel.delete({replaceSingleQuotes: true, singleQuoteReplacement:"''"})
  * @method POST
  * @URL /clients/update
  * @param expressJwtIp.ip() server IP address
- * @DataParams {idclient, idreleve, nom, tel_princ, ext_tel_princ, idactivite, ville, province, 
+ * @DataParams {idclient, idreleve, nom, tel_princ, ext_tel_princ, idactivite, ville, province,
  * codepostal, idetat, idprovenance, prospect, notes, facul, newcontacts, updtcontacts, delcontacts} Client to be created
  * @SuccessResponse { status: 'success', message: null }
  * @ErrorResponse { status: 'fail', message: error }
@@ -538,7 +568,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 	if (!!decoded && (_ip === _ipReceived)) {*/
 
 		console.log("Starting /clients/update");
-		
+
 		var client = {
 				idclient: req.body.idclient,
 				idreleve: req.body.idreleve,
@@ -562,7 +592,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 
 		db.tx(t => {
 			return t.none(updateAdresse(client))
-			.then(() => {	
+			.then(() => {
 				return t.none(updateClientOblig(client))
 				.then(() => {
 					return t.none(updateEntrepriseOblig(client))
@@ -586,7 +616,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 						    						mail: contact.mail,
 						    						estdecideur: contact.estdecideur
 						    					}
-						    					
+
 					    					return t.one(getIdTitre(person.titre))
 					    						.then(titre => {
 					    							person.idtitre = titre.idtitre;
@@ -597,7 +627,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 					    								})
 					    					})
 					    				});
-					    				
+
 					    				const queriesContactUpdt = client.updtcontacts.map(contact => {
 						    				let person = {
 						    						idclient: client.idclient,
@@ -620,7 +650,7 @@ router.post('/update', expressJwtIp.ip(), function (req, res) {
 				    								})
 					    					})
 					    				});
-					    				
+
 					    				const queriesContactDel = client.delcontacts.map(contact => {
 					    				return t.none(deleteContact(contact.idpersonne, client.idclient))
 						    				.then(() => {
