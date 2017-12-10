@@ -95,8 +95,100 @@ router.get('/employesafc',expressJwtIp.ip(), function(req,res){
 				status: 'fail',
 				message: error.toString() //'Les chambres de commerce disponibles n\'ont pas pu être récupérées'
 			})
-			});
+		});
 
+});
+
+
+let getModulesAndModalites = () =>
+	squel.select()
+		.from('public."MODALITE"', 'modalite')
+		.left_join('public."DOMAINE_ASSURANCE"', 'domassu', 'domassu.iddomaineass = modalite.iddomaineass')
+		.field('domassu.iddomaineass')
+	//	.field('modalite.description')
+		.field('domassu.libelledomaine')
+		.field('modalite.idmodalite')
+		.field('modalite.libelleavantage');
+
+let addModalitesValues = () =>
+	squel.select()
+		.from(getModulesAndModalites(), 'modmod')
+		.left_join('public."VALEUR_MODALITE_CONTRAT"', 'vmc', 'vmc.idmodalite = modmod.idmodalite')
+		.left_join('public."MODALITES_VALEUR"', 'valmod', 'valmod.idmodvaleur = vmc.idmodvaleur')
+		.field('modmod.iddomaineass')
+		.field('modmod.libelledomaine')
+		.field('modmod.idmodalite')
+		.field('modmod.libelleavantage')
+		//.field('modmod.description')
+		.field('valmod.idmodvaleur')
+		.field('valmod.valeur')
+		.toString();
+
+//ne pas oublier de rajouter les description qd c tt bon
+function buildModulesObject(modules){
+	let object = [];
+	modules.forEach(element => {
+		let containsModule = false;
+		let containsModalite = false;
+		let containsValeur = false;
+		let indexModule = null;
+		let indexModalite = null;
+		object.forEach((obj, index) => {
+			if(parseInt(element.iddomaineass) === parseInt(obj.idModule)){
+				indexModule = index;
+				containsModule = true;
+				obj.modalites.forEach((eachMod, indMod) => {
+					if(parseInt(element.idmodalite) === parseInt(eachMod.idModalite)){
+						containsModalite = true;
+						indexModalite = indMod;
+						eachMod.valeurs.forEach((eachVal, indVal) => {
+							if(parseInt(element.idvaleur) === parseInt(eachVal.idValeur)){
+								containsValeur = true;
+
+							}
+						})
+					}
+				});
+			}
+		});
+		if(!containsModule){
+			let valeurs = [{idValeur:element.idmodvaleur, label:element.valeur}];
+			let modalites = [{idModalite:element.idmodalite, nom: element.libelleavantage, valeurs:valeurs}];
+			object.push({nom:element.libelledomaine, idModule:element.iddomaineass, modalites:modalites});
+		}
+		if(containsModule && !containsModalite){
+			let valeurs2 = [{idValeur:element.idmodvaleur, label:element.valeur}];
+			let modalites2 = {idModalite:element.idmodalite, nom: element.libelleavantage, valeurs:valeurs2};
+			//push la modalite pour le bon module
+			object[indexModule].modalites.push(modalites2);
+		}
+		if(containsModule && containsModalite && !containsValeur){
+			let valeurs3 = {idValeur:element.idmodvaleur, label:element.valeur};
+			object[indexModule].modalites[indexModalite].valeurs.push(valeurs3);
+		}
+	});
+	return object;
+
+}
+
+router.get('/modules', expressJwtIp.ip(), function(req,res){
+	console.log('route /modules');
+	let getModules = addModalitesValues();
+	console.log(getModules);
+	db.any(getModules)
+		.then((modules) => {
+			let JSONToReturn = buildModulesObject(modules);
+			res.send({
+				status: 'success',
+				message: JSONToReturn
+			});
+		})
+		.catch(error => {
+			res.send({
+				status: 'fail',
+				message: error.toString() //'Les chambres de commerce disponibles n\'ont pas pu être récupérées'
+			})
+		});
 });
 
 /**
