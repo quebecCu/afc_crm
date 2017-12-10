@@ -1,12 +1,14 @@
 import {take, fork} from 'redux-saga/effects';
 
 import {
-	GET_AGA, GET_EMPLOYES_AFC, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, setListContracts,
+	GET_AGA, GET_EMPLOYES_AFC, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, getEmployesAFC, getListAssureurs,
+	setListContracts,
 	updateAGA, updateEmployesAFC, updateListAssureurs,
 } from '../actions/crmContract';
 
 import axios from 'axios';
 import {store} from '../store';
+import {sendingRequestColl} from "../actions/crmRechercheCollective";
 
 let tokenToSend = localStorage.getItem("cookieSession");
 if (tokenToSend === undefined)
@@ -31,6 +33,7 @@ export function* requestAGA() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateAGA(response.data.message));
+					store.dispatch(getEmployesAFC());
 				} else {
 					alert('Erreur lors du chargement des AGAs');
 				}
@@ -77,6 +80,7 @@ export function* requestAFC() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateEmployesAFC(response.data.message));
+					store.dispatch(getListAssureurs());
 				} else {
 					alert('Erreur lors du chargement des employes');
 				}
@@ -100,6 +104,7 @@ export function* requestFourniseurs() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateListAssureurs(response.data.message));
+					store.dispatch(sendingRequestColl());
 				} else {
 					alert('Erreur lors du chargement des fournisseurs');
 				}

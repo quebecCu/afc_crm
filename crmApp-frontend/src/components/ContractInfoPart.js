@@ -37,7 +37,6 @@ class ContractInfoPart extends React.Component {
 
 
 
-
 	render(){
 		return <div>
 			<h4>Renseignement généraux sur le contrat</h4>
@@ -62,7 +61,7 @@ class ContractInfoPart extends React.Component {
 								});
 								if(!duplicate) {
 									return (
-										<option value={element.id}>{element.nom}</option>
+										<option key={index} value={element.id}>{element.nom}</option>
 									);
 								}
 							})
@@ -84,8 +83,8 @@ class ContractInfoPart extends React.Component {
 						>
 							<option disabled value=""> -- Veuillez sélectionner une valeur -- </option>
 							{
-								this.props.formState.AGA.map(aga => {
-									return <option value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
+								this.props.formState.AGA.map((aga, index) => {
+									return <option key={index} value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
 								})
 							}
 						</select>
