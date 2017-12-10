@@ -91,6 +91,10 @@ class ContractInput extends React.Component{
 		return <div className="form-group row">
 				<label className="col-form-label col-3">{this.props.titre + " "}</label>
 				<div className="col-8">
+					<div className="tooltipp" style={{cursor:"pointer", position: 'absolute', right: '2px', top: 0}}>
+						<span className="fa fa-info"/>
+						<span className="tooltipptext">{this.props.description}</span>
+					</div>
 					<input type="text" placeholder={this.props.format} className="form-control"
 						onChange={this._onChangeField} id={"input"+this.props.titreChamp+this.props.part}
 						value={value}/>
