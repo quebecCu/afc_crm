@@ -23,7 +23,9 @@ class CreateContractContainer extends React.Component {
 		this._handleStatic = this._handleStatic.bind(this);
 		this._handleNonStatic = this._handleNonStatic.bind(this);
 		this._handleDrag = this._handleDrag.bind(this);
-
+		this.props.getAGA();
+		this.props.getEmployesAFC();
+		this.props.getListAssureurs();
 		let {formState} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
@@ -190,11 +192,9 @@ class CreateContractContainer extends React.Component {
 									   autoSize = {true}
 									   onDragStop={this._handleDrag} onResizeStop={this._handleDrag}
 			>
-				<div key="1"><ContractClientPart getEmployesAFC={this.props.getEmployesAFC} changeForm={this.props.changeForm}
-												formState={formState} comesFrom={this.props.comesFrom}/></div>
-				<div key="2"><ContractInfoPart getListAssureurs={this.props.getListAssureurs}
-											   getAGA={this.props.getAGA}
-											   formState={formState}
+				<div key="1"><ContractClientPart changeForm={this.props.changeForm}
+												 formState={formState} comesFrom={this.props.comesFrom}/></div>
+				<div key="2"><ContractInfoPart formState={formState}
 											   changeForm={this.props.changeForm}/></div>
 				<div key="3"><ContractModulesPart formState={formState} changeForm = {this.props.changeForm}/></div>
 				<div key="4"><GridOptionnalContract lilLayout={lilLayout} changeLilLayout={this.props.changeLilLayout}/></div>

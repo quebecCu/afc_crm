@@ -97,6 +97,7 @@ let initialState = {
 			dateEmission:'',
 			moisRenouv:'',
 			notes:'',
+			idRepresentant: '',
 			historiqueTaux: {
 				diff: '',
 				vie: '',
