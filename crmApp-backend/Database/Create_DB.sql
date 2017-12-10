@@ -200,7 +200,8 @@ CREATE TABLE public."MODALITE" (
   iddomaineass  integer  REFERENCES  "DOMAINE_ASSURANCE" (iddomaineass),
   idtype  integer  REFERENCES "TYPE" (idtype),
   multi boolean,
-  ext char(1)
+  ext char(1),
+  description varchar (255)
 );
 
 CREATE TABLE public."RELATION" (
