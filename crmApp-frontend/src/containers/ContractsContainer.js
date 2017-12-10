@@ -1,12 +1,14 @@
 import React from 'react';
-import {changeViewContract} from "../actions/crmContract";
+import {changeSearchContracts, changeViewContract, getListContracts} from "../actions/crmContract";
 import CreateContractContainer from './CreateContractContainer';
 import {connect} from "react-redux";
+import ListContractsComponent from "../components/ListContractsComponent";
 
 class ContractsContainer extends React.Component {
 	constructor(props){
 		super(props);
 		this._handleClick = this._handleClick.bind(this);
+		this.props.getListContracts();
 	}
 
 	_handleClick(event){
@@ -14,7 +16,7 @@ class ContractsContainer extends React.Component {
 	}
 
 	render(){
-		let {view} = this.props.crmContract;
+		let {view, listContracts, searchContracts} = this.props.crmContract;
 		return <div className="text-center">
 			{
 				view === "" && <h1>Contrats</h1>
@@ -27,10 +29,14 @@ class ContractsContainer extends React.Component {
 			}
 			{
 				view === "collContract" &&
-				<div><h1>Liste des contrats</h1><br /><button onClick={this._handleClick} value="create">Créer contrat</button></div>
+				<ListContractsComponent handleClick={this._handleClick}
+										listContracts={listContracts}
+										searchContracts={searchContracts}
+										changeSearchContracts={this.props.changeSearchContracts}
+				/>
 			}
 			{
-				view === "create" && <CreateContractContainer />
+				view === "create" && <CreateContractContainer comesFrom="blankContract" />
 			}
 		</div>;
 	}
@@ -49,8 +55,13 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		changeViewContract: (newView) => {
 			dispatch(changeViewContract(newView));
+		},
+		getListContracts: () => {
+			dispatch(getListContracts());
+		},
+		changeSearchContracts: (search) => {
+			dispatch(changeSearchContracts(search))
 		}
-
 	}
 };
 

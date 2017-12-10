@@ -3,8 +3,6 @@ import React from 'react';
 class ContractInfoPart extends React.Component {
 	constructor(props){
 		super(props);
-		this.props.getAGA();
-		this.props.getListAssureurs();
 		this._onChangeAssureur=this._onChangeAssureur.bind(this);
 		this._onChangeAGA=this._onChangeAGA.bind(this);
 		this._onChangeNumPolice=this._onChangeNumPolice.bind(this);
@@ -14,11 +12,11 @@ class ContractInfoPart extends React.Component {
 	}
 
 	_onChangeAssureur(event){
-
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idAssureur:event.target.value}});
 	}
 
 	_onChangeAGA(event){
-
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idAGA:event.target.value}});
 	}
 
 	_onChangeNumPolice(event){
@@ -50,10 +48,25 @@ class ContractInfoPart extends React.Component {
 						id="assureur"
 						name="nomAssureur"
 						className="form-control"
-						value=""
+						value={this.props.formState.contrat.idAssureur}
 						onChange={this._onChangeAssureur}
 					>
-						<option disabled value=""> -- LA REQUETE BACKENDAAAAAA NOMS ASSUREURS -- </option>
+						<option disabled value=""> -- Veuillez sélectionner une valeur -- </option>
+						{
+							this.props.formState.listAssureurs.map( (element, index) => {
+								let duplicate = false;
+								this.props.formState.listAssureurs.forEach((element2, index2)=> {
+									if(element.id === element2.id && index > index2) {
+										duplicate = true;
+									}
+								});
+								if(!duplicate) {
+									return (
+										<option value={element.id}>{element.nom}</option>
+									);
+								}
+							})
+						}
 					</select>
 					<p id="assureurHelp" className="help-block text-danger">Sélectionner un assureur</p>
 					</div>
@@ -65,10 +78,16 @@ class ContractInfoPart extends React.Component {
 							id="AGA"
 							name="AGA"
 							className=" form-control"
-							value=""
+							value={this.props.formState.contrat.idAGA}
 							onChange={this._onChangeAGA}
+
 						>
-							<option disabled value=""> -- LA REQUETE BACKEND AGA-- </option>
+							<option disabled value=""> -- Veuillez sélectionner une valeur -- </option>
+							{
+								this.props.formState.AGA.map(aga => {
+									return <option value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
+								})
+							}
 						</select>
 						<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
 
@@ -83,6 +102,7 @@ class ContractInfoPart extends React.Component {
 						placeholder="Numéro de police"
 						id="numPolice"
 						onChange={this._onChangeNumPolice}
+						value={this.props.formState.contrat.numPolice}
 					/>
 						<p id="numPoliceHelp" className="help-block text-danger">Insérer un numéro de police</p>
 
@@ -96,6 +116,7 @@ class ContractInfoPart extends React.Component {
 						className="form-control"
 						placeholder="AAAA-MM"
 						id="dateEmission"
+						value={this.props.formState.contrat.dateEmission}
 						onChange={this._onChangeDateEmission}
 					/>
 						<p id="dateEmissionHelp" className="help-block text-danger">Format de la date AAAA-MM</p>
@@ -110,6 +131,7 @@ class ContractInfoPart extends React.Component {
 							className="form-control"
 							placeholder="MM"
 							id="moisRenouv"
+							value={this.props.formState.contrat.moisRenouv}
 							onChange={this._onChangeMoisRenouv}
 						/>
 						<p id="moisRenouvHelp" className="help-block text-danger">Format MM</p>
@@ -121,6 +143,7 @@ class ContractInfoPart extends React.Component {
 					<div className="col-sm-8">
 					<textarea
 						className="form-control"
+						value={this.props.formState.contrat.notes}
 						placeholder="Informations supplémentaires sur le contrat"
 						id="notes"
 						onChange={this._onChangeNotes}
