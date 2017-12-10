@@ -27,9 +27,13 @@ export function* requestPostesContacts() {
 		let data = yield take(GET_POSTES_CONTACTS);
 		let contacts = data.data;
 
+		//communication avec server
 		let server = "http://localhost:3002/clients/jobs";
-
-		axios.get(server, config)
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/jobs';
+		
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let postes = response.data.message;
@@ -105,9 +109,13 @@ export function * requestContacts() {
 		let client = yield take(GET_CONTACTS);
 		let id = client.idClient;
 
-		let server = "http://localhost:3002/clients/contacts/"+ id;
 
-		axios.get(server, config)
+		//communication avec server
+		let server = "http://localhost:3002/clients/contacts/"+ id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/contacts/'+ id;
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(getPostesContacts(response.data.message));
@@ -130,9 +138,12 @@ export function * requestContactsSup() {
 		let supplier = yield take(GET_CONTACTS_SUP);
 		let id = supplier.id;
 
+		//communication avec server
 		let server = "http://localhost:3002/providers/contacts/"+ id;
-
-		axios.get(server, config)
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/contacts/'+ id;
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(getPostesContactsSup(response.data.message));

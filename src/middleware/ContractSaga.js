@@ -26,8 +26,8 @@ export function* requestAGA() {
 
 		//communication avec server
 		let server = "http://localhost:3002/clients/aga";
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
 
 		axios.get(server, config)
 			.then(function (response) {
@@ -50,10 +50,10 @@ export function * requestlistContracts() {
 
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts";
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setListContracts(response.data.message));
@@ -73,10 +73,10 @@ export function* requestAFC() {
 
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/employesafc";
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateEmployesAFC(response.data.message));
@@ -97,10 +97,10 @@ export function* requestFourniseurs() {
 
 		//communication avec server
 		let server = "http://localhost:3002/providers";
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateListAssureurs(response.data.message));
