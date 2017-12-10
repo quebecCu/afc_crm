@@ -64,9 +64,13 @@ export function* requestPostesContactsFournisseurs() {
 		let data = yield take(GET_POSTES_CONTACTS_SUP);
 		let contacts = data.data;
 
+		//communication avec server
 		let server = "http://localhost:3002/providers/jobs";
-
-		axios.get(server, config)
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/jobs';
+		
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let postes = response.data.message;
