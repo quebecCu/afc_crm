@@ -92,6 +92,7 @@ let initialState = {
 		contrat:{
 			idAssureur: '',
 			idAGA: '',
+			idClient: '',
 			modulesChoisis: [],
 			numPolice:'',
 			dateEmission:'',

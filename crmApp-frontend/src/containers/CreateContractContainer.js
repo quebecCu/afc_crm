@@ -11,6 +11,8 @@ import {
 } from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridOptionnalContract from "../components/GridOptionnalContract";
+import {getClientRequest} from "../actions/crmClientList";
+import {sendingRequestColl} from "../actions/crmRechercheCollective";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
@@ -23,9 +25,7 @@ class CreateContractContainer extends React.Component {
 		this._handleStatic = this._handleStatic.bind(this);
 		this._handleNonStatic = this._handleNonStatic.bind(this);
 		this._handleDrag = this._handleDrag.bind(this);
-		this.props.getAGA();
-		this.props.getEmployesAFC();
-		this.props.getListAssureurs();
+		this.props.requests();
 		let {formState} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
@@ -181,7 +181,8 @@ class CreateContractContainer extends React.Component {
 
 	render(){
 		let { formState, bigLayout, lilLayout } = this.props.crmContract;
-
+		let {dossiersState} = this.props.crmRechercheCollective;
+		let {client} = this.props.crmClientList;
 		let layout = bigLayout;
 		let layouts = {lg:layout, md:layout, sm:layout, xs:layout, xxs:layout};
 		return <div>
@@ -193,7 +194,10 @@ class CreateContractContainer extends React.Component {
 									   onDragStop={this._handleDrag} onResizeStop={this._handleDrag}
 			>
 				<div key="1"><ContractClientPart changeForm={this.props.changeForm}
-												 formState={formState} comesFrom={this.props.comesFrom}/></div>
+												 clients={dossiersState} getClient={this.props.getClientRequest}
+												 formState={formState} comesFrom={this.props.comesFrom}
+												 client={client}
+				/></div>
 				<div key="2"><ContractInfoPart formState={formState}
 											   changeForm={this.props.changeForm}/></div>
 				<div key="3"><ContractModulesPart formState={formState} changeForm = {this.props.changeForm}/></div>
@@ -215,6 +219,8 @@ function mapStateToProps(state) {
 
 	return {
 		crmContract: state.crmContract,
+		crmRechercheCollective: state.crmRechercheCollective,
+		crmClientList: state.crmClientList
 	}
 }
 
@@ -225,20 +231,20 @@ const mapDispatchToProps = (dispatch) => {
 		changeForm : (newFormState) => {
 			dispatch(changeFormContract(newFormState))
 		},
-		getAGA: () => {
-			dispatch(getAGA());
-		},
-		getListAssureurs: () => {
-			dispatch(getListAssureurs());
-		},
-		getEmployesAFC: () => {
-			dispatch(getEmployesAFC());
-		},
 		changeBigLayout: (layout) => {
 			dispatch(changeBigLayout(layout));
 		},
 		changeLilLayout: (layout) => {
 			dispatch(changeLilLayout(layout));
+		},
+		sendingRequestColl: () => {
+			dispatch(sendingRequestColl());
+		},
+		requests:() => {
+			dispatch(getAGA());
+		},
+		getClientRequest: (id) => {
+			dispatch(getClientRequest(id));
 		}
 
 	}
