@@ -3,7 +3,7 @@ import {
 	CHANGE_FORM_CONTRACT,
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
-	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS
+	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT
 } from "../actions/crmContract";
 
 let initialState = {
@@ -15,6 +15,17 @@ let initialState = {
 		nomAssureur: '',
 		moisRenouvellement: ''
 	},
+	bigLayout: [
+		{i: '1', x: 0, y: 0, w: 5, h: 7, minH: 7, minW:3},
+		{i: '2', x: 6, y: 0, w: 5, h: 6, minH: 6, minW:3},
+		{i: '3', x: 0, y: 7, w: 5, h: 6, minH: 6, minW:3},
+		{i: '4', x: 0, y: 13, w: 10, h: 8, minH: 8, minW:10},
+	],
+	lilLayout: [
+		{i: '1', x: 0, y: 0, w: 2, h: 3, minH: 3, minW:2},
+		{i: '2', x: 2, y: 0, w: 2, h: 3, minH: 3, minW:2},
+		{i: '3', x: 4, y: 0, w: 2, h: 3, minH: 3, minW:2},
+	],
 	formState: {
 		intModulesToDisplay:1,
 		modulesToDisplay:[],//Tableau qui gère l'affichage des modules
@@ -151,6 +162,10 @@ export default function reducer (state = initialState, action){
 			return {...state, listContracts: action.contracts, errors:''};
 		case CHANGE_SEARCH_CONTRACTS:
 			return {...state, searchContracts: action.search, errors: ''};
+		case CHANGE_BIG_LAYOUT:
+			return {...state, bigLayout: action.layout, errors: ''};
+		case CHANGE_LIL_LAYOUT:
+			return {...state, lilLayout: action.layout, errors: ''};
 		default:
 			return state;
 	}
