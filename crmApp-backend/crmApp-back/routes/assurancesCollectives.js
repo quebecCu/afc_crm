@@ -66,11 +66,14 @@ const buildClientsArray = (entrepriseFromDB) => {
 	entrepriseFromDB.forEach((entreprise) => {
 		entreprise.prospect === true ? isProspect = 'Oui' : isProspect = 'Non';
 		entreprise.libelleetat === 'Actif' ? etat = 'Actif' : etat = 'Annulé';
-
+		let isResp = (!!entreprise.nomresp || !!entreprise.prenomresp) ? true : false;
+		let nomresp = (!!entreprise.nomresp) ? entreprise.nomresp : "";
+		let prenomresp = (!!entreprise.prenomresp) ? entreprise.prenomresp : "";
+		let resp = ((nomresp !== "") && (prenomresp !== "")) ? nomresp + " " + prenomresp : nomresp + prenomresp;
 		client = {
 			id: entreprise.idclient,
 			nom_groupe: entreprise.nomentp,
-			responsable: entreprise.nomresp + ", " + entreprise.prenomresp,
+			responsable: (resp === "") ? null: resp,
 			date_creation: entreprise.date_creation,
 			activite: entreprise.libelleactivite,
 			mois_renouvellement: entreprise.renouvellement,
@@ -108,11 +111,10 @@ const getClientsListRequest = () => {
 		.left_join('public."ACTIVITE"', "activite", "activite.idactivite = entreprise.idactivite")
 		.left_join('public."CLIENT"', "client", "client.idclient = entreprise.idclient")
 		.left_join('public."ETAT"', "etat", "etat.idetat = client.idetat")
-		.left_join('public."CONTACT_CLIENT"', 'ccli', 'client.idclient = ccli.idclient')
+		.left_join(squel.select().from('public."CONTACT_CLIENT"').where('estDecideur = true'), 'ccli', 'client.idclient = ccli.idclient')
 		.left_join('public."PERSONNE"', 'p', 'p.idpersonne = ccli.idpersonne')
 		.left_join('public."CONTRAT"', 'ctt', 'ctt.idclient = client.idclient')
 		.left_join('public."FOURNISSEUR"', 'f', 'f.idfournisseur = ctt.idfournisseur')
-		.where('estDecideur = true')
 		/*.group('client.idclient')
 		.group('entreprise.nom')
 		.group('entreprise.date_creation')
