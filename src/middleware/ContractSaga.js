@@ -1,8 +1,10 @@
 import {take, fork} from 'redux-saga/effects';
 
 import {
-	GET_AGA, GET_EMPLOYES_AFC, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, getEmployesAFC, getListAssureurs,
-	setListContracts,
+	GET_AGA, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES, getEmployesAFC,
+	getListAssureurs,
+	getModules,
+	setListContracts, setModules,
 	updateAGA, updateEmployesAFC, updateListAssureurs,
 } from '../actions/crmContract';
 
@@ -104,7 +106,7 @@ export function* requestFourniseurs() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(updateListAssureurs(response.data.message));
-					store.dispatch(sendingRequestColl());
+					store.dispatch(getModules());
 				} else {
 					alert('Erreur lors du chargement des fournisseurs');
 				}
@@ -115,9 +117,51 @@ export function* requestFourniseurs() {
 	}
 }
 
+export function * requestModules() {
+	while (true) {
+		yield take(GET_MODULES);
+		let server = "http://localhost:3002/collectiveContracts/modules";
+
+		axios.get(server, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(setModules(response.data.message));
+					store.dispatch(sendingRequestColl());
+				} else {
+					alert('Erreur lors du chargement des modules');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function * requestGrid() {
+	while (true) {
+		yield take(GET_GRID);
+		let server = "http://localhost:3002/attributesManagement/contract";
+
+		/*axios.get(server, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(setModules(response.data.message));
+					store.dispatch(sendingRequestColl());
+				} else {
+					alert('Erreur lors du chargement des modules');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});*/
+	}
+}
+
 export function * ContractsFlow() {
 	yield fork(requestlistContracts);
 	yield fork(requestAGA);
 	yield fork(requestAFC);
-	yield fork(requestFourniseurs)
+	yield fork(requestFourniseurs);
+	yield fork(requestModules);
+	yield fork(requestGrid);
 }

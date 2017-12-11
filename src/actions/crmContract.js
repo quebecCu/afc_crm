@@ -11,7 +11,10 @@ export const SET_LIST_CONTRACTS = 'SET_LIST_CONTRACTS';
 export const CHANGE_SEARCH_CONTRACTS = 'CHANGE_SEARCH_CONTRACTS';
 export const CHANGE_BIG_LAYOUT = 'CHANGE_BIG_LAYOUT';
 export const CHANGE_LIL_LAYOUT = 'CHANGE_LIL_LAYOUT';
-
+export const GET_MODULES = 'GET_MODULES';
+export const SET_MODULES = 'SET_MODULES';
+export const GET_GRID = 'GET_GRID';
+export const SET_GRID = 'SET_GRID';
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}
@@ -63,4 +66,20 @@ export function changeBigLayout(layout) {
 
 export function changeLilLayout(layout) {
 	return {type: CHANGE_LIL_LAYOUT, layout}
+}
+
+export function getModules() {
+	return {type: GET_MODULES}
+}
+
+export function setModules(modules) {
+	return {type: SET_MODULES, modules}
+}
+
+export function getGrid() {
+	return {type: GET_GRID}
+}
+
+export function setGrid(grid) {
+	return {type: SET_GRID, grid}
 }

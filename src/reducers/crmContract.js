@@ -3,7 +3,8 @@ import {
 	CHANGE_FORM_CONTRACT,
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
-	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT
+	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT,
+	SET_MODULES
 } from "../actions/crmContract";
 
 let initialState = {
@@ -32,63 +33,7 @@ let initialState = {
 		AGA: [],
 		employesAFC:[],
 		listAssureurs:[],
-		modules:[
-			{
-				nom: "Assurance vie",
-				idModule: 0,
-				modalites: [
-					{
-						nom: "classe",
-						idModalite: 0,
-						description: "",
-						type: "select",
-						valeurs: [
-							{idValeur: 0, label: "Autres"}
-							]
-					},
-					{
-						nom: "Vie conj",
-						idModalite: 1,
-						description: "conjoint",
-						type: "select",
-						valeurs: [
-							{idValeur: 0, label: "5000$"},
-							{idValeur: 1, label: "10000$"},
-							{idValeur:2, label:"15000$"},
-							{idValeur:5, label:"Autres"}]
-					},
-				]
-			},
-			{
-				nom: "Assurance invalidité longue durée",
-				idModule: 1,
-				modalites: [
-					{
-						nom: "classe",
-						idModalite: 0,
-						description: "",
-						type: "select",
-						valeurs: [
-							{idValeur: 0, label: "employes"},
-							{idValeur: 4, label: "cadres"},
-							{idValeur:1, label:"Autres"}
-							]
-					},
-					{
-						nom: "Vie enfant",
-						idModalite: 3,
-						description: "enfant",
-						type: "select",
-						valeurs: [
-							{idValeur: 0, label: "5000$"},
-							{idValeur: 6, label: "10000$"},
-							{idValeur:2, label:"15000$"},
-							{idValeur:1, label:"Autres"}]
-					},
-				]
-			}
-
-		],
+		modules:[],
 		contrat:{
 			idAssureur: '',
 			idAGA: '',
@@ -168,6 +113,8 @@ export default function reducer (state = initialState, action){
 			return {...state, bigLayout: action.layout, errors: ''};
 		case CHANGE_LIL_LAYOUT:
 			return {...state, lilLayout: action.layout, errors: ''};
+		case SET_MODULES:
+			return {...state,  formState:{...state.formState, modules:action.modules}, errors: ''};
 		default:
 			return state;
 	}
