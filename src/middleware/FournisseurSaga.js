@@ -23,7 +23,7 @@ export function * getListFournisseurs (){
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if(!!response.data.status && response.data.status === "success"){
 					store.dispatch(getRequestFour(response.data.message));

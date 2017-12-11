@@ -355,9 +355,12 @@ export function* requestSupplier() {
 		let supplierReq = yield take(GET_SUPPLIER);
 		let id = supplierReq.id;
 
+		//communication avec server
 		let server = "http://localhost:3002/providers/" + id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/' + id;
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let supplier = response.data.message;
@@ -394,7 +397,10 @@ export function * getGridLayoutModify (){
 		let facultatif = data.data;
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/provider";
-		axios.get(server,config)
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider';
+
+		axios.get(backendUrl,config)
 			.then(function (response) {
 
 				if(!!response.data.message && response.data.status === "success"){
