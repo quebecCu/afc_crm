@@ -25,7 +25,7 @@ export function* resetPasswordFlow() {
 		var backendUrl = window.location.host;
 		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/ResetPassword';
 	
-		axios.post(server, {
+		axios.post(backendUrl, {
 			confirmPassword: newPassword,
 			newPassword: confirmPassword,
 			resetToken: resetToken

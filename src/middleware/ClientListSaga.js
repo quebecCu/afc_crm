@@ -22,9 +22,13 @@ export function* getClient() {
 		let clientReq = yield take(GET_CLIENT_REQ);
 		let id = clientReq.idClient;
 
+		//communication avec server
 		let server = "http://localhost:3002/clients/" + id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/' + id;
 
-		axios.get(server, config)
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(bindClientData(response.data.message));

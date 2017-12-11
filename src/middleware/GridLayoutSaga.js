@@ -29,10 +29,13 @@ export function * getGridLayout (){
 
 		let view = yield take(REQUEST_GRID);
 		let {id} = view;
+		
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/customer";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/customer';
 
-		axios.get(server,config)
+		axios.get(backendUrl,config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					let grid = response.data.message.map( champ => {
@@ -87,8 +90,10 @@ export function * requestReleves (){
 		let view = yield take(GET_RELEVES);
 		//communication avec server
 		let server = "http://localhost:3002/clients/statementSendingModes";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/statementSendingModes';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateReleves(response.data.message));
@@ -111,10 +116,13 @@ export function * requestChampTypes (){
 	while(true){
 
 		let view = yield take(GET_CHAMP_TYPES);
+
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/types";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
 
-		axios.get(server,config)
+		axios.get(backendUrl,config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateChampTypes(response.data.message));
@@ -141,10 +149,13 @@ export function * requestActivites (){
 	while(true){
 
 		let view = yield take(GET_ACTIVITES);
+
 		//communication avec server
 		let server = "http://localhost:3002/clients/activities";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/activities';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateActivites(response.data.message));
@@ -172,10 +183,13 @@ export function * requestEtats (){
 	while(true){
 
 		let view = yield take(GET_ETATS);
+		
 		//communication avec server
 		let server = "http://localhost:3002/clients/states";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/states';
 
-		axios.get(server,config)
+		axios.get(backendUrl,config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateEtats(response.data.message));
@@ -204,10 +218,13 @@ export function * requestProvenances (){
 	while(true){
 
 		let view = yield take(GET_PROVENANCES);
+
 		//communication avec server
 		let server = "http://localhost:3002/clients/provenances";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/provenances';
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateProvenances(response.data.message));
@@ -244,9 +261,13 @@ export function * sendFile() {
 		let facultatif = grid.map(champ => {
 			return {id: champ.idattrentreprise, value: champ.value}
 		});
-		let server = "http://localhost:3002/clients/create";
 
-		axios.post(server, {
+		//communication avec server
+		let server = "http://localhost:3002/clients/create";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/create';
+
+		axios.post(backendUrl, {
 			idreleve: requiredFields.releve,
 			nom: requiredFields.nomEntreprise,
 			tel_princ: requiredFields.telephone,
@@ -300,9 +321,12 @@ export function * updateFile() {
 			return {id: champ.idattrentreprise, value: champ.value}
 		});
 
+		//communication avec server
 		let server = "http://localhost:3002/clients/update";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/update';
 
-		axios.post(server, {
+		axios.post(backendUrl, {
 			idclient: idToDisplay,
 			idreleve: requiredFields.releve,
 			nom: requiredFields.nomEntreprise,
@@ -345,9 +369,12 @@ export function * deleteCustomerFile() {
 	while(true) {
 		let field = yield take(DELETE_CUSTOMER);
 		let id = field.id;
+		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/'+id;
 
-		axios.delete(server,config)
+		axios.delete(backendUrl,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(changeViewCollective("customers"));
@@ -373,9 +400,12 @@ export function * createNewField() {
 		} = champ.newField;
 		console.log("create new field");
 
+		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/create/customer";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/customer';
 
-		axios.post(server, {
+		axios.post(backendUrl, {
 			description: form.description,
 			label: form.label,
 			idtype: form.type,
@@ -417,8 +447,13 @@ export function * updatePositions() {
 		let {
 			newItem,
 		} = positions.positions;
+		
+		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer/display";
-		axios.post(server, {
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/customer/display';
+
+		axios.post(backendUrl, {
 			layout: newItem,
 		},config)
 			.then(function (response) {
@@ -442,9 +477,12 @@ export function * sendUpdateField() {
 			nameField,
 			id
 		} = field.field;
+		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/customer';
 
-		axios.post(server, {
+		axios.post(backendUrl, {
 			id: id,
 			label: nameField,
 			description: descField,
@@ -480,9 +518,13 @@ export function * sendDeleteField() {
 		let field = yield take(DELETE_FIELD);
 		let id = field.field;
 
-		let server = "http://localhost:3002/attributesManagement/customer/"+id;
 
-		axios.delete(server,config)
+		//communication avec server
+		let server = "http://localhost:3002/attributesManagement/customer/"+id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/customer/'+id;
+
+		axios.delete(backendUrl,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(requestGrid());
@@ -504,9 +546,13 @@ export function * getGridLayoutToModify() {
 		let {id, releves, activites, etats, provenances, grid} = client.data;
 		let releve, activite, etat, provenance = '';
 		let gridModified = [];
-		let server = "http://localhost:3002/clients/"+id;
 
-		axios.get(server,config)
+		//communication avec server
+		let server = "http://localhost:3002/clients/"+id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/clients/'+id;
+
+		axios.get(backendUrl,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let champs = response.data.message;
