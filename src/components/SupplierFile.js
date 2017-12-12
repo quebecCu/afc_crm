@@ -98,6 +98,22 @@ class SupplierFile extends React.Component {
 						<TitreValeur titre="Province" valeur={supplier.province}/>
 						<TitreValeur titre="Code postal" valeur={supplier.codePostal}/>
 					</div>
+					<div className="unePartie w3-animate-zoom">
+						{
+							supplier.lilGroup && <TitreValeur titre="Petits groupes" valeur="Oui"/>
+						}
+						{
+							!supplier.lilGroup && <TitreValeur titre="Petits groupes" valeur="Non"/>
+						}
+						<TitreValeur titre="Nombre d'employés petits groupes" valeur={supplier.employesLilGroup}/>
+						{
+							supplier.bigGroup && <TitreValeur titre="Grands groupes" valeur="Oui"/>
+						}
+						{
+							!supplier.bigGroup && <TitreValeur titre="Grands groupes" valeur="Non"/>
+						}
+						<TitreValeur titre="Nombre d'employés grands groupes" valeur={supplier.employesBigGroup}/>
+					</div>
 					{
 					<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
 											   breakpoints={{lg: 800, md: 600, sm: 468, xs: 380, xxs: 0}} autoSize={true}

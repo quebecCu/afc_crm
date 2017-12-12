@@ -17,7 +17,11 @@ let initialState = {
 		codePostal: '',
 		telephone: '',
 		extension: '',
-		code: ''
+		code: '',
+		bigGroup: true,
+		lilGroup: true,
+		employesBigGroup: '',
+		employesLilGroup: '',
 	},
 	formNewField:  {
 		description: '',
