@@ -6,6 +6,17 @@ span.titre{
 span.valeur{
 	color: #008CBA;
 }
+#role {
+	height: auto;
+	}
+
+#UserManagement form {
+	margin-top: 0em;
+}
+
+.form-check input {
+	    margin: 4px -20px 0;
+}
 
 
 button.delete{
