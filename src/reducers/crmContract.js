@@ -4,7 +4,7 @@ import {
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
 	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT,
-	SET_MODULES
+	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT
 } from "../actions/crmContract";
 
 let initialState = {
@@ -27,12 +27,19 @@ let initialState = {
 		{i: '2', x: 2, y: 0, w: 2, h: 3, minH: 3, minW:2},
 		{i: '3', x: 4, y: 0, w: 2, h: 3, minH: 3, minW:2},
 	],
+	types: [],
+	newField: {
+		name: '',
+		description: '',
+		type: '1'
+	},
 	formState: {
 		intModulesToDisplay:1,
 		modulesToDisplay:[],//Tableau qui gère l'affichage des modules
 		AGA: [],
 		employesAFC:[],
 		listAssureurs:[],
+		facultatif:[],
 		modules:[],
 		contrat:{
 			idAssureur: '',
@@ -115,6 +122,12 @@ export default function reducer (state = initialState, action){
 			return {...state, lilLayout: action.layout, errors: ''};
 		case SET_MODULES:
 			return {...state,  formState:{...state.formState, modules:action.modules}, errors: ''};
+		case SET_GRID:
+			return {...state,  formState:{...state.formState, facultatif:action.grid}, errors: ''};
+		case CHANGE_NEW_FIELD_CONTRACT:
+			return {...state, newField: action.newField, errors:''};
+		case SET_TYPES_CONTRACT:
+			return {...state, types: action.types, errors:''};
 		default:
 			return state;
 	}

@@ -6,8 +6,8 @@ import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {connect} from "react-redux";
 import {
-	changeBigLayout, changeFormContract, changeLilLayout, getAGA, getEmployesAFC,
-	getListAssureurs
+	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, getAGA, getEmployesAFC,
+	getListAssureurs, sendNewFieldContract, setGrid, updatePosLayout
 } from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridOptionnalContract from "../components/GridOptionnalContract";
@@ -25,6 +25,7 @@ class CreateContractContainer extends React.Component {
 		this._handleStatic = this._handleStatic.bind(this);
 		this._handleNonStatic = this._handleNonStatic.bind(this);
 		this._handleDrag = this._handleDrag.bind(this);
+		this._handleSubmitChamp = this._handleSubmitChamp.bind(this);
 		this.props.requests();
 		let {formState} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
@@ -128,7 +129,21 @@ class CreateContractContainer extends React.Component {
 	}
 
 	_handleDrag(newItem) {
-		this.props.changeBigLayout(newItem);
+		let { lilLayout } = this.props.crmContract;
+		this.props.updatePosLayout(lilLayout, newItem);
+	}
+
+	//On crée un nouveau champ !
+	_handleSubmitChamp(event) {
+		event.preventDefault();
+		let {formState, newField} = this.props.crmContract;
+		let x = (formState.facultatif.length % 4)*3;
+		let y = Math.floor(formState.facultatif.length/4);
+
+		document.getElementById('champNom').value = '';
+		document.getElementById('champDescription').value = '';
+		document.getElementById('champType').value = '';
+		this.props.sendNewFieldContract({form: newField, posx: x, posy: y});
 	}
 
 	_onClickValidate(event){
@@ -180,9 +195,10 @@ class CreateContractContainer extends React.Component {
 	}
 
 	render(){
-		let { formState, bigLayout, lilLayout } = this.props.crmContract;
+		let { formState, bigLayout, lilLayout, newField, types } = this.props.crmContract;
 		let {dossiersState} = this.props.crmRechercheCollective;
 		let {client} = this.props.crmClientList;
+		let {isAdmin} = this.props.crmLogin;
 		let layout = bigLayout;
 		let layouts = {lg:layout, md:layout, sm:layout, xs:layout, xxs:layout};
 		return <div>
@@ -201,7 +217,20 @@ class CreateContractContainer extends React.Component {
 				<div key="2"><ContractInfoPart formState={formState}
 											   changeForm={this.props.changeForm}/></div>
 				<div key="3"><ContractModulesPart formState={formState} changeForm = {this.props.changeForm}/></div>
-				<div key="4"><GridOptionnalContract lilLayout={lilLayout} changeLilLayout={this.props.changeLilLayout}/></div>
+				<div key="4">
+					<GridOptionnalContract lilLayout={lilLayout}
+										   bigLayout={bigLayout}
+										   formState={formState}
+										   isAdmin={isAdmin}
+										   newField={newField}
+										   types={types}
+										   changeNewField={this.props.changeNewFieldContract}
+										   setGrid={this.props.setGrid}
+										   changeLilLayout={this.props.changeLilLayout}
+										   updatePosLayout={this.props.updatePosLayout}
+										   handleSubmitChamp={this._handleSubmitChamp}
+					/>
+				</div>
 			</ResponsiveReactGridLayout>
 
 			<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
@@ -220,7 +249,8 @@ function mapStateToProps(state) {
 	return {
 		crmContract: state.crmContract,
 		crmRechercheCollective: state.crmRechercheCollective,
-		crmClientList: state.crmClientList
+		crmClientList: state.crmClientList,
+		crmLogin : state.crmLogin
 	}
 }
 
@@ -245,8 +275,21 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		getClientRequest: (id) => {
 			dispatch(getClientRequest(id));
+		},
+		updatePosLayout: (layout, menus) => {
+			dispatch(updatePosLayout(layout, menus));
+			dispatch(changeBigLayout(menus));
+			dispatch(changeLilLayout(layout));
+		},
+		setGrid: (grid) => {
+			dispatch(setGrid(grid));
+		},
+		changeNewFieldContract: (newField) => {
+			dispatch(changeNewFieldContract(newField))
+		},
+		sendNewFieldContract: (newField) => {
+			dispatch(sendNewFieldContract(newField))
 		}
-
 	}
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateContractContainer);
