@@ -6,8 +6,9 @@ import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {connect} from "react-redux";
 import {
-	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, getAGA, getEmployesAFC,
-	getListAssureurs, sendNewFieldContract, setGrid, updatePosLayout
+	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
+	getEmployesAFC,
+	getListAssureurs, sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridOptionnalContract from "../components/GridOptionnalContract";
@@ -26,6 +27,11 @@ class CreateContractContainer extends React.Component {
 		this._handleNonStatic = this._handleNonStatic.bind(this);
 		this._handleDrag = this._handleDrag.bind(this);
 		this._handleSubmitChamp = this._handleSubmitChamp.bind(this);
+		this._changeNameModifyField = this._changeNameModifyField.bind(this);
+		this._changeDescModifyField = this._changeDescModifyField.bind(this);
+		this._changeIdModifyField = this._changeIdModifyField.bind(this);
+		this._handleModifyField = this._handleModifyField.bind(this);
+		this._deleteField = this._deleteField.bind(this);
 		this.props.requests();
 		let {formState} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
@@ -87,6 +93,18 @@ class CreateContractContainer extends React.Component {
 		this._resetStyle();
 	}
 
+	_changeNameModifyField(event) {
+		this.props.changeUpdateFieldContract({...this.props.crmContract.updateField , name: event.target.value});
+	}
+
+	_changeDescModifyField(event) {
+		this.props.changeUpdateFieldContract({...this.props.crmContract.updateField , description: event.target.value});
+	}
+
+	_changeIdModifyField(event) {
+		this.props.changeUpdateFieldContract({...this.props.crmContract.updateField , id: event.target.value});
+	}
+
 	_resetStyle(){
 		document.getElementById("assureurLabel").className = "col-sm-3 col-form-label";
 		document.getElementById("assureur").className = "form-control";
@@ -146,6 +164,16 @@ class CreateContractContainer extends React.Component {
 		this.props.sendNewFieldContract({form: newField, posx: x, posy: y});
 	}
 
+	_handleModifyField(event) {
+		event.preventDefault();
+		let {updateField} = this.props.crmContract;
+		this.props.sendUpdateFieldContract(updateField);
+	}
+
+	_deleteField(event) {
+		this.props.sendDeleteFieldContract(event.target.value);
+	}
+
 	_onClickValidate(event){
 		//let {formState} = this.props.crmContract;
 		//let isValid = this._validateForm();
@@ -154,7 +182,6 @@ class CreateContractContainer extends React.Component {
 
 	_validateForm(){
 		this._resetStyle();
-		console.log("HELLLLO");
 		let {formState} = this.props.crmContract;
 		//let isValid = true;
 		if(!formState.contrat.idAssureur){
@@ -195,7 +222,7 @@ class CreateContractContainer extends React.Component {
 	}
 
 	render(){
-		let { formState, bigLayout, lilLayout, newField, types } = this.props.crmContract;
+		let { formState, bigLayout, lilLayout, newField, types, updateField } = this.props.crmContract;
 		let {dossiersState} = this.props.crmRechercheCollective;
 		let {client} = this.props.crmClientList;
 		let {isAdmin} = this.props.crmLogin;
@@ -235,7 +262,45 @@ class CreateContractContainer extends React.Component {
 
 			<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
 			<ContractRemunerationContainer formState={formState} changeForm={this.props.changeForm} />
-
+			{
+				formState.facultatif.map(element => {
+					return (
+						<div className="modal fade" id={element.idattrcontratcoll+"modal"} key={element.idattrcontratcoll+"modal"}
+							 tabIndex="-100" role="dialog" aria-labelledby="myModalLabel">
+							<div className="modal-dialog" role="document">
+								<div className="modal-content">
+									<div className="modal-header">
+										<h4 className="modal-title" id="myModalLabel">Modification du champ : {element.label}</h4>
+										<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div className="modal-body">
+										<form onSubmit={this._handleModifyField}>
+											<div className="form-group">
+												<label htmlFor="modificationNomChamp" className="control-label">Nouveau titre du champ</label>
+												<input type="text" className="form-control" id="modificationNomChamp"
+													   name="modificationNomChamp" onChange={this._changeNameModifyField}
+													   value={updateField.name} required/>
+											</div>
+											<div className="form-group">
+												<label htmlFor="modificationDescChamp" className="control-label">Nouvelle description du champ</label>
+												<input type="text" className="form-control" id="modificationDescChamp"
+													   name="modificationDescChamp" onChange={this._changeDescModifyField}
+													   value={updateField.description} required/>
+											</div>
+											<button type="button" className="btn btn-danger" data-dismiss="modal"
+													value={element.idattrcontratcoll} onClick={this._deleteField}>Supprimer le champ</button>
+											<button type="submit" className="btn btn-primary"
+													value={element.idattrcontratcoll} onClick={this._changeIdModifyField}>Modifier le champ</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					);
+				})
+			}
 			<button onClick={this._handleStatic}>Rendre le grid static</button>
 			<button onClick={this._handleNonStatic}>Rendre le grid non-static</button>
 
@@ -287,8 +352,17 @@ const mapDispatchToProps = (dispatch) => {
 		changeNewFieldContract: (newField) => {
 			dispatch(changeNewFieldContract(newField))
 		},
+		changeUpdateFieldContract: (updateField) => {
+			dispatch(changeUpdateFieldContract(updateField))
+		},
 		sendNewFieldContract: (newField) => {
 			dispatch(sendNewFieldContract(newField))
+		},
+		sendUpdateFieldContract: (updateField) => {
+			dispatch(sendUpdateFieldContract(updateField))
+		},
+		sendDeleteFieldContract: (id) => {
+			dispatch(sendDeleteFieldContract(id))
 		}
 	}
 };

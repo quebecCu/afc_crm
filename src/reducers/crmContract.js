@@ -4,7 +4,7 @@ import {
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
 	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT,
-	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT
+	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT, CHANGE_UPDATE_FIELD_CONTRACT
 } from "../actions/crmContract";
 
 let initialState = {
@@ -32,6 +32,11 @@ let initialState = {
 		name: '',
 		description: '',
 		type: '1'
+	},
+	updateField: {
+		name: '',
+		description: '',
+		id: ''
 	},
 	formState: {
 		intModulesToDisplay:1,
@@ -126,6 +131,8 @@ export default function reducer (state = initialState, action){
 			return {...state,  formState:{...state.formState, facultatif:action.grid}, errors: ''};
 		case CHANGE_NEW_FIELD_CONTRACT:
 			return {...state, newField: action.newField, errors:''};
+		case CHANGE_UPDATE_FIELD_CONTRACT:
+			return {...state, updateField: action.updateField, errors:''};
 		case SET_TYPES_CONTRACT:
 			return {...state, types: action.types, errors:''};
 		default:

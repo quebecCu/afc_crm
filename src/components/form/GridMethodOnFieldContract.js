@@ -7,33 +7,18 @@ class GridMethodOnFieldContract extends Component {
 		this._changeName = this._changeName.bind(this);
 		this._changeType = this._changeType.bind(this);
 		this._deleteField = this._deleteField.bind(this);
-		this._changeNameModifyField = this._changeNameModifyField.bind(this);
-		this._changeDescModifyField = this._changeDescModifyField.bind(this);
-		this._changeIdModifyField = this._changeIdModifyField.bind(this);
-	}
-
-	_changeNameModifyField(event) {
-		this.props.changeUpdateField({...this.props.formUpdateField , nameField: event.target.value});
-	}
-
-	_changeDescModifyField(event) {
-		this.props.changeUpdateField({...this.props.formUpdateField , descField: event.target.value});
-	}
-
-	_changeIdModifyField(event) {
-		this.props.changeUpdateField({...this.props.formUpdateField , id: event.target.value});
 	}
 
 	_changeDescription(event) {
-		this.props.changeNewFieldContract({...this.props.newField , description: event.target.value});
+		this.props.changeNewField({...this.props.newField , description: event.target.value});
 	}
 
 	_changeName(event) {
-		this.props.changeNewFieldContract({...this.props.newField , name: event.target.value});
+		this.props.changeNewField({...this.props.newField , name: event.target.value});
 	}
 
 	_changeType(event) {
-		this.props.changeNewFieldContract({...this.props.newField , type: event.target.value});
+		this.props.changeNewField({...this.props.newField , type: event.target.value});
 	}
 
 	_deleteField(event) {

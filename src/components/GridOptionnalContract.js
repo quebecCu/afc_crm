@@ -88,14 +88,16 @@ class GridOptionnalContract extends React.Component {
 										  data-target={"#" + element.idattrcontratcoll + "modal"}/>
 								}
 							</div>
+
 						);
 					})
 				}
 			</ResponsiveReactGridLayout>
 			<Button onClick={this._handleStatic}>Rendre le grid static</Button>
 			<Button onClick={this._handleNonStatic}>Rendre le grid non-static</Button>
-			<GridMethodOnFieldContract changeNewFieldContract={this.props.changeNewField}
+			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}
 									   newField={this.props.newField}
+									   formState={this.props.formState}
 									   types={this.props.types}
 									   handleSubmitChamp={this.props.handleSubmitChamp}
 			/>

@@ -17,9 +17,12 @@ export const GET_GRID = 'GET_GRID';
 export const SET_GRID = 'SET_GRID';
 export const UPDATE_POS_LAYOUT = 'UPDATE_POS_LAYOUT';
 export const CHANGE_NEW_FIELD_CONTRACT = 'CHANGE_NEW_FIELD_CONTRACT';
+export const CHANGE_UPDATE_FIELD_CONTRACT = 'CHANGE_UPDATE_FIELD_CONTRACT';
 export const GET_TYPES_CONTRACT = 'GET_TYPES_CONTRACT';
 export const SET_TYPES_CONTRACT = 'SET_TYPES_CONTRACT';
 export const SEND_NEW_FIELD_CONTRACT = 'SEND_NEW_FIELD_CONTRACT';
+export const SEND_UPDATE_FIELD_CONTRACT = 'SEND_UPDATE_FIELD_CONTRACT';
+export const SEND_DELETE_FIELD_CONTRACT = 'SEND_DELETE_FIELD_CONTRACT';
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}
@@ -107,4 +110,16 @@ export function setTypesContract(types) {
 
 export function sendNewFieldContract(newField) {
 	return {type: SEND_NEW_FIELD_CONTRACT, newField}
+}
+
+export function changeUpdateFieldContract(updateField) {
+	return {type: CHANGE_UPDATE_FIELD_CONTRACT, updateField}
+}
+
+export function sendUpdateFieldContract(updateField) {
+	return {type: SEND_UPDATE_FIELD_CONTRACT, updateField}
+}
+
+export function sendDeleteFieldContract(id) {
+	return {type: SEND_DELETE_FIELD_CONTRACT, id}
 }

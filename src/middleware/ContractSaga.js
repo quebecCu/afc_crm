@@ -1,11 +1,12 @@
 import {take, fork} from 'redux-saga/effects';
 
 import {
-	changeBigLayout, changeLilLayout, changeNewFieldContract,
+	changeBigLayout, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract,
 	GET_AGA, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES, GET_TYPES_CONTRACT,
 	getEmployesAFC, getGrid,
 	getListAssureurs,
-	getModules, getTypesContract, SEND_NEW_FIELD_CONTRACT, setGrid,
+	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
+	setGrid,
 	setListContracts, setModules, setTypesContract, UPDATE_POS_LAYOUT,
 	updateAGA, updateEmployesAFC, updateListAssureurs,
 } from '../actions/crmContract';
@@ -276,6 +277,78 @@ export function * requestSendNewField() {
 	}
 }
 
+export function * requestSendUpdateField() {
+	while(true) {
+		let field = yield take(SEND_UPDATE_FIELD_CONTRACT);
+		let {
+			description,
+			name,
+			id
+		} = field.updateField;
+
+		//communication avec server
+		let server = "http://localhost:3002/attributesManagement/update/contract";
+		//let backendUrl = window.location.host;
+		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/provider';
+
+
+		axios.post(server, {
+			id: id,
+			label: name,
+			description: description,
+			forme: null,
+			valeur_defaut: null,
+			ext: null
+		},config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					alert("La modification du champ est un succès");
+					store.dispatch(changeUpdateFieldContract({
+						name: '',
+						description: '',
+						id: ''
+					}));
+					store.dispatch(getGrid());
+				}
+				else if(response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
+					alert('Erreur lors de la modification des positions');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+//on supprime un champ
+export function * requestSendDeleteField() {
+	while(true) {
+		let field = yield take(SEND_DELETE_FIELD_CONTRACT);
+		let id = field.id;
+
+		//communication avec server
+		let server = "http://localhost:3002/attributesManagement/contract/"+id;
+		//let backendUrl = window.location.host;
+		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/'+id;
+
+		axios.delete(server,config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(getGrid());
+					alert("Champ supprimé avec succès");
+				} else {
+					alert('Erreur lors de la supression d\'un champ');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 export function * ContractsFlow() {
 	yield fork(requestlistContracts);
 	yield fork(requestAGA);
@@ -286,4 +359,6 @@ export function * ContractsFlow() {
 	yield fork(requestUpdateGridLayout);
 	yield fork(requestTypes);
 	yield fork(requestSendNewField);
+	yield fork(requestSendUpdateField);
+	yield fork(requestSendDeleteField);
 }
