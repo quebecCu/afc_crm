@@ -62,11 +62,23 @@ class GridOptionnalContract extends React.Component {
 							<div key={element.idattrcontratcoll} className="form-group">
 								<label htmlFor={element.label}
 									   className="control-label">{element.label}</label>
-								<input type="text" name={element.label} id={element.label}
-									   className="form-control"
-									   value={element.value} onChange={this._handleChange}
-									   placeholder={element.valeur_defaut}
-								/>
+								{
+									element.libelletype === 'Booléen' &&
+									<select className="form-control" id={element.label} name={element.label}
+											required value={element.value} onChange={this._handleChange}>
+										<option value="">-- Veuillez choisir une valeur --</option>
+										<option value={true}>Oui</option>
+										<option value={false}>Non</option>
+									</select>
+								}
+								{
+									!(element.libelletype === 'Booléen') &&
+									<input type="text" name={element.label} id={element.label}
+										   className="form-control"
+										   value={element.value} onChange={this._handleChange}
+										   placeholder={element.valeur_defaut}
+									/>
+								}
 								<div className="tooltipp" style={{
 									cursor: "pointer",
 									position: 'absolute',

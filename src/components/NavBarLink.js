@@ -5,6 +5,7 @@ class NavBarLink extends Component {
         super(props);
         this._handleClick = this._handleClick.bind(this);
         this._handleDelete = this._handleDelete.bind(this);
+        this._handleResetState = this._handleResetState.bind(this);
         this.state = {
         	deleted: false
 		};
@@ -27,7 +28,19 @@ class NavBarLink extends Component {
         	this.props.changeLoading(true);
         	this.props.displayUser(this.props.idSupplier);
 		}
+		this._handleResetState();
     }
+
+    _handleResetState() {
+    	if(this.props.resetFor === "contract") {
+    		this.props.resetState({
+				idClient: false,
+				name: '',
+				sousGroupe: '',
+				nombreEmployes: ''
+			});
+		}
+	}
 
     _handleDelete() {
 		this.setState({deleted: true}, () => {

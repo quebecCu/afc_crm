@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import FicheClient from "./FicheClient";
 import {changeIdDisplay, deleteCustomer, requestGrid} from "../actions/crmGridLayout";
 import LoadingAnimation from "../components/LoadingAnimation";
+import {changeViewDashboard} from "../actions/crmDashboard";
+import {changeViewContract, setFromClient} from "../actions/crmContract";
 
 class PageClient extends Component {
 	constructor(props) {
@@ -26,7 +28,11 @@ class PageClient extends Component {
 								 handleClick={this.props.handleClick} changeIdDisplay={this.props.changeIdDisplay}
 								 deleteCustomer={this.props.deleteCustomer} isAdmin={isAdmin}
 								 layouts={layouts} contacts={contacts}
-								 optionnalFields={this.props.crmClientList.client.facultatif}/>
+								 optionnalFields={this.props.crmClientList.client.facultatif}
+								 changeViewDashboard={this.props.changeViewDashboard}
+								 changeViewContract={this.props.changeViewContract}
+								 setFromClient={this.props.setFromClient}
+					/>
 				}
 			</div>
 		);
@@ -55,6 +61,15 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		requestGrid: (id) => {
 			dispatch(requestGrid(id));
+		},
+		changeViewDashboard: (view) => {
+			dispatch(changeViewDashboard(view));
+		},
+		changeViewContract: (view) => {
+			dispatch(changeViewContract(view));
+		},
+		setFromClient:(fromClient) => {
+			dispatch(setFromClient(fromClient))
 		}
 	}
 };

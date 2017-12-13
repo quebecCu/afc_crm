@@ -4,11 +4,17 @@ import {
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
 	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT,
-	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT, CHANGE_UPDATE_FIELD_CONTRACT
+	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT, CHANGE_UPDATE_FIELD_CONTRACT, SET_FROM_CLIENT
 } from "../actions/crmContract";
 
 let initialState = {
 	view: '',
+	fromClient: {
+		idClient: false,
+		name: '',
+		sousGroupe: '',
+		nombreEmployes: ''
+	},
 	listContracts: [],
 	searchContracts: {
 		numeroPolice: '',
@@ -16,17 +22,8 @@ let initialState = {
 		nomAssureur: '',
 		moisRenouvellement: ''
 	},
-	bigLayout: [
-		{i: '1', x: 0, y: 0, w: 5, h: 7, minH: 7, minW:3},
-		{i: '2', x: 6, y: 0, w: 5, h: 6, minH: 6, minW:3},
-		{i: '3', x: 0, y: 7, w: 5, h: 6, minH: 6, minW:3},
-		{i: '4', x: 0, y: 13, w: 10, h: 8, minH: 8, minW:10},
-	],
-	lilLayout: [
-		{i: '1', x: 0, y: 0, w: 2, h: 3, minH: 3, minW:2},
-		{i: '2', x: 2, y: 0, w: 2, h: 3, minH: 3, minW:2},
-		{i: '3', x: 4, y: 0, w: 2, h: 3, minH: 3, minW:2},
-	],
+	bigLayout: [],
+	lilLayout: [],
 	types: [],
 	newField: {
 		name: '',
@@ -135,6 +132,8 @@ export default function reducer (state = initialState, action){
 			return {...state, updateField: action.updateField, errors:''};
 		case SET_TYPES_CONTRACT:
 			return {...state, types: action.types, errors:''};
+		case SET_FROM_CLIENT:
+			return {...state, fromClient: action.fromClient, errors:''};
 		default:
 			return state;
 	}

@@ -23,6 +23,7 @@ export const SET_TYPES_CONTRACT = 'SET_TYPES_CONTRACT';
 export const SEND_NEW_FIELD_CONTRACT = 'SEND_NEW_FIELD_CONTRACT';
 export const SEND_UPDATE_FIELD_CONTRACT = 'SEND_UPDATE_FIELD_CONTRACT';
 export const SEND_DELETE_FIELD_CONTRACT = 'SEND_DELETE_FIELD_CONTRACT';
+export const SET_FROM_CLIENT = 'SET_FROM_CLIENT';
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}
@@ -122,4 +123,8 @@ export function sendUpdateFieldContract(updateField) {
 
 export function sendDeleteFieldContract(id) {
 	return {type: SEND_DELETE_FIELD_CONTRACT, id}
+}
+
+export function setFromClient(fromClient) {
+	return {type: SET_FROM_CLIENT, fromClient}
 }

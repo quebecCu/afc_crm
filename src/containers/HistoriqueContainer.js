@@ -22,6 +22,7 @@ class HistoriqueContainer extends Component {
 		this.handleClickF1 = this.handleClickF1.bind(this);
 		this.handleClickF2 = this.handleClickF2.bind(this);
 		this.handleClickF3 = this.handleClickF3.bind(this);
+		this.handleClickF4 = this.handleClickF4.bind(this);
 		this.handleClick0 = this.handleClick0.bind(this);
 		this.handleClick1 = this.handleClick1.bind(this);
 		this.handleClick2 = this.handleClick2.bind(this);
@@ -52,6 +53,10 @@ class HistoriqueContainer extends Component {
 		this.handleClick(3, table);
 	}
 
+	handleClickF4() {
+		var table = document.getElementById("PageFournisseursTable");
+		this.handleClick(4, table);
+	}
 	handleClick0() {
 
 		var table = document.getElementById("PageCollectivesClientsTable");
@@ -167,9 +172,10 @@ class HistoriqueContainer extends Component {
 							<thead>
 							<tr>
 								<th onClick={this.handleClickF0}>Nom de l'assurance</th>
-								<th onClick={this.handleClickF1}>Nombre d'employés</th>
-								<th onClick={this.handleClickF2}>Nom contact</th>
-								<th onClick={this.handleClickF3}>Code</th>
+								<th onClick={this.handleClickF1}>Nombre d'employés petits groupes</th>
+								<th onClick={this.handleClickF2}>Nombre d'employés grands groupes</th>
+								<th onClick={this.handleClickF3}>Nom contact</th>
+								<th onClick={this.handleClickF4}>Code</th>
 							</tr>
 							</thead>
 							<DossiersComponent fournisseur={this.props.dossiersState}
