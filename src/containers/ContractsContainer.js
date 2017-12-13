@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import ListContractsComponent from "../components/ListContractsComponent";
 import {changeLoading} from "../actions/crmDashboard";
 import {bindClientData} from "../actions/crmClientList";
+import ContractPage from "./ContractPage";
 
 class ContractsContainer extends React.Component {
 	constructor(props) {
@@ -37,6 +38,7 @@ class ContractsContainer extends React.Component {
 				<ListContractsComponent handleClick={this._handleClick}
 										listContracts={listContracts}
 										searchContracts={searchContracts}
+										changeViewContract={this.props.changeViewContract}
 										changeSearchContracts={this.props.changeSearchContracts}
 				/>
 			}
@@ -46,6 +48,10 @@ class ContractsContainer extends React.Component {
 										 changeLoading={this.props.changeLoading}
 										 loading={loading}
 				/>
+			}
+			{
+				view === "display" &&
+				<ContractPage/>
 			}
 		</div>;
 	}

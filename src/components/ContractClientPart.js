@@ -7,6 +7,7 @@ class ContractClientPart extends React.Component {
 		this._onChangeRepresentant = this._onChangeRepresentant.bind(this);
 		this._sousGroupe = this._sousGroupe.bind(this);
 		this._nombreEmployes = this._nombreEmployes.bind(this);
+		this._filterClients = this._filterClients.bind(this);
 		if (this.props.comesFrom === "client") {
 			document.getElementById("nomClient").setAttribute('disabled', true);
 		}
@@ -98,6 +99,18 @@ class ContractClientPart extends React.Component {
 
 	}
 
+	_filterClients() {
+		return this.props.clients.filter( (element, index) => {
+			let duplicate = false;
+			this.props.clients.forEach((element2, index2)=> {
+				if(element.id === element2.id && index > index2) {
+					duplicate = true;
+				}
+			});
+			return !duplicate;
+		});
+	}
+
 	render() {
 		return <div>
 			<h4>Informations sur le client</h4>
@@ -105,7 +118,7 @@ class ContractClientPart extends React.Component {
 				<label id="nomClientLabel" className="col-sm-3 col-form-label">Nom client</label>
 				{
 					!this.props.fromClient.idClient &&
-					<SuggestionClients clients={this.props.clients}
+					<SuggestionClients clients={this._filterClients()}
 									   getClient={this.props.getClient}
 									   changeForm={this.props.changeForm}
 									   formState={this.props.formState}

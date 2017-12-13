@@ -5,6 +5,7 @@ import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import CreationClient from "./GridContainer";
 import PageClient from "./PageClient";
 import {changeViewDashboard} from "../actions/crmDashboard";
+import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 
 class CollectivePageContainer extends Component {
 	constructor(props) {
@@ -21,6 +22,7 @@ class CollectivePageContainer extends Component {
 	handleClick2(event) {
 		event.preventDefault();
 		this.props.changeViewDashboard(event.target.className);
+		this.props.changeViewSuppliers("");
 	}
 
 	render() {
@@ -70,6 +72,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		changeViewDashboard: (newView) => {
 			dispatch(changeViewDashboard(newView))
+		},
+		changeViewSuppliers: (newView) => {
+			dispatch(changeViewSuppliers(newView))
 		}
 	}
 };

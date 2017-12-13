@@ -9,6 +9,7 @@ class ListContractsComponent extends React.Component {
 	}
 
 	_handleClick(contract) {
+		this.props.changeViewContract("display");
 		console.log(contract);
 	}
 
