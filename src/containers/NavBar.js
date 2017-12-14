@@ -5,9 +5,9 @@ import NavBarLink from "../components/NavBarLink";
 import {logout} from "../actions/crmLogin";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {changeViewUserManagement, requestUserById} from "../actions/crmUserManagement";
-import {changeViewContract, setFromClient} from "../actions/crmContract";
+import {changeViewContract, getContract, setFromClient} from "../actions/crmContract";
 import '../style/NavBar.css';
-import {addSubCustomerNav, addSubSupplierNav, addSubUserNav} from "../actions/crmNavBar";
+import {addSubContractNav, addSubCustomerNav, addSubSupplierNav, addSubUserNav} from "../actions/crmNavBar";
 import {getClientRequest} from "../actions/crmClientList";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
@@ -18,6 +18,7 @@ class NavBar extends Component {
 		this._deleteSubUser = this._deleteSubUser.bind(this);
 		this._deleteSubCustomer = this._deleteSubCustomer.bind(this);
 		this._deleteSubSupplier = this._deleteSubSupplier.bind(this);
+		this._deleteSubContract = this._deleteSubContract.bind(this);
 	}
 
 	_deleteSubUser(idUser) {
@@ -39,6 +40,13 @@ class NavBar extends Component {
 			return link.idSupplier !== idSupplier;
 		});
 		this.props.deleteSubSupplierNav(links, "");
+	}
+
+	_deleteSubContract(idContract) {
+		let links = this.props.crmNavBar.linksSubContract.filter(link => {
+			return link.idContract !== idContract;
+		});
+		this.props.deleteSubContractNav(links, "collContract");
 	}
 
 	render() {
@@ -85,6 +93,22 @@ class NavBar extends Component {
 											resetState={this.props.setFromClient} resetFor="contract"
 								/>
 							</li>
+							{
+								this.props.crmNavBar.displaySubContract === true
+								&& this.props.crmNavBar.linksSubContract.map(link => {
+									return <ul id="subContract" key={"subContractMenu" + link.idContract}>
+										<li><NavBarLink name={link.name} id="contracts"
+														handleClick={this.props.changeViewDashboard}
+														view={this.props.view}
+														resetView={this.props.changeViewContract}
+														reset={link.view} displayUser={this.props.getContract}
+														changeLoading={this.props.changeLoading}
+														idContract={link.idContract} menu="subMenu"
+														deleteSub={this._deleteSubContract}/>
+										</li>
+									</ul>
+								})
+							}
 							<li>
 								<NavBarLink name="Placements" id="placements"
 											handleClick={this.props.changeViewDashboard} view={this.props.view}/>
@@ -210,7 +234,14 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setFromClient: (fromClient) => {
 			dispatch(setFromClient(fromClient));
-		}
+		},
+		getContract: (id) => {
+			dispatch(getContract(id));
+		},
+		deleteSubContractNav: (newSubContract, newView) => {
+			dispatch(addSubContractNav(newSubContract));
+			dispatch(changeViewContract(newView));
+		},
 	}
 };
 

@@ -365,6 +365,7 @@ export function* requestGetContract() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setContract(response.data.message));
+					store.dispatch(getGrid());
 				} else {
 					alert('Erreur lors de la récupération du contrat');
 				}

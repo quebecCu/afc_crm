@@ -24,6 +24,18 @@ class ContractFile extends React.Component {
 
 	_handleClient(contract, event) {
 		event.preventDefault();
+		this.props.displaySubCustomerNav(true);
+		let links = this.props.linksSubCustomer;
+		let check = true;
+		links.forEach(link => {
+			if (link.idCustomer === contract.idfournisseur) {
+				check = false;
+			}
+		});
+		if (check) {
+			links.push({name: contract.nomclient, view: 'customer', idCustomer: contract.idclient});
+			this.props.addSubCustomerNav(links);
+		}
 		this.props.changeViewCollective("customer");
 		this.props.changeViewDashboard("collIns");
 		this.props.changeLoading(true);
@@ -32,6 +44,18 @@ class ContractFile extends React.Component {
 
 	_handleAssureur(contract, event) {
 		event.preventDefault();
+		this.props.displaySubSupplierNav(true);
+		let links = this.props.linksSubSupplier;
+		let check = true;
+		links.forEach(link => {
+			if (link.idSupplier === contract.idfournisseur) {
+				check = false;
+			}
+		});
+		if (check) {
+			links.push({name: contract.nomfournisseur, view: 'supplierFile', idSupplier: contract.idfournisseur});
+			this.props.addSubSupplierNav(links);
+		}
 		this.props.changeViewSuppliers("supplierFile");
 		this.props.changeViewDashboard("suppliers");
 		this.props.changeLoading(true);
@@ -126,6 +150,9 @@ class ContractFile extends React.Component {
 
 	render() {
 		let contract = this.props.contract;
+		let layout = this.props.lilLayout;
+		let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
+		console.log(layout);
 		return (
 			<div className="container">
 				<h1>Contrat</h1>
@@ -134,8 +161,12 @@ class ContractFile extends React.Component {
 						<TitreValeur titre="N° Police" valeur={contract.police}/></button>
 					<div id="wrapperClient" className=" wrapper show  ">
 						<div className="unePartie w3-animate-zoom">
-							<a onClick={this._handleClient.bind(this, contract)} style={{cursor: 'pointer'}}><TitreValeur titre="Client " valeur={contract.nomclient}/></a>
-							<a onClick={this._handleAssureur.bind(this, contract)} style={{cursor: 'pointer'}}><TitreValeur titre="Assureur" valeur={contract.nomfournisseur}/></a>
+							<a onClick={this._handleClient.bind(this, contract)}
+							   style={{cursor: 'pointer'}}><TitreValeur titre="Client "
+																		valeur={contract.nomclient}/></a>
+							<a onClick={this._handleAssureur.bind(this, contract)}
+							   style={{cursor: 'pointer'}}><TitreValeur titre="Assureur"
+																		valeur={contract.nomfournisseur}/></a>
 							<TitreValeur titre="Représentant"
 										 valeur={contract.prenomrepresentant + " " + contract.nomrepresentant}/>
 						</div>
@@ -147,24 +178,23 @@ class ContractFile extends React.Component {
 						<div className="unePartie w3-animate-zoom">
 							<TitreValeur titre="Notes" valeur={contract.notes}/>
 						</div>
-						{
-							/*
-                            <ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-                                                       breakpoints={{lg: 800, md: 600, sm: 468, xs: 380, xxs: 0}} autoSize={true}
-                                                       compactType={null}>
-                                {
-                                    contract.facultatif.map(element => {
-                                        return (
-                                            <div key={element.idRow} className="form-group">
-                                                <TitreValeur key={element.idRow} titre={element.nom} valeur={element.valeur}/>
-                                            </div>
-                                        );
-                                    })
-                                }
+						<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={layouts}
+												   cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+												   rowHeight={20}
+												   breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+						>
+							{
+								contract.facultatif.map(element => {
+									return (
+										<div key={element.idRow} className="form-group">
+											<TitreValeur key={element.idRow} titre={element.nom}
+														 valeur={element.valeur}/>
+										</div>
+									);
+								})
+							}
 
-                            </ResponsiveReactGridLayout>
-                            */
-						}
+						</ResponsiveReactGridLayout>
 					</div>
 
 

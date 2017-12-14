@@ -9,6 +9,10 @@ import {changeLoading, changeViewDashboard} from "../actions/crmDashboard";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {getClientRequest} from "../actions/crmClientList";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
+import {
+	addSubContractNav, addSubCustomerNav, addSubSupplierNav, displaySubContractNav, displaySubCustomerNav,
+	displaySubSupplierNav
+} from "../actions/crmNavBar";
 
 class ContractPage extends Component {
 	constructor(props) {
@@ -17,20 +21,27 @@ class ContractPage extends Component {
 
 	render() {
 		let {isAdmin} = this.props.crmLogin;
-		let {layouts} = this.props.crmGridSuppliersLayout;
 		let {contacts} = this.props.crmContacts;
-		let {contractDisplay} = this.props.crmContract;
+		let {contractDisplay, lilLayout} = this.props.crmContract;
+		let {linksSubSupplier, linksSubCustomer} = this.props.crmNavBar;
 		return (
 			<div>
 				{
 					Object.keys(contractDisplay).length !== 0 &&
 					<ContractFile contract={contractDisplay}
+								  linksSubSupplier={linksSubSupplier}
+								  linksSubCustomer={linksSubCustomer}
+								  lilLayout={lilLayout}
 								  changeViewCollective={this.props.changeViewCollective}
 								  changeViewDashboard={this.props.changeViewDashboard}
 								  changeLoading={this.props.changeLoading}
 								  getClientRequest={this.props.getClientRequest}
 								  changeViewSuppliers={this.props.changeViewSuppliers}
 								  getSupplier={this.props.getSupplier}
+								  addSubSupplierNav={this.props.addSubSupplierNav}
+								  displaySubSupplierNav={this.props.displaySubSupplierNav}
+								  addSubCustomerNav={this.props.addSubCustomerNav}
+								  displaySubCustomerNav={this.props.displaySubCustomerNav}
 					/>
 				}
 			</div>
@@ -46,6 +57,7 @@ function mapStateToProps(state) {
 		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
 		crmContacts: state.crmContacts,
 		crmContract: state.crmContract,
+		crmNavBar: state.crmNavBar
 	}
 }
 
@@ -69,6 +81,18 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		getSupplier: (id) => {
 			dispatch(getSupplier(id));
+		},
+		addSubSupplierNav: (links) => {
+			dispatch(addSubSupplierNav(links));
+		},
+		displaySubSupplierNav: (display) => {
+			dispatch(displaySubSupplierNav(display));
+		},
+		addSubCustomerNav: (links) => {
+			dispatch(addSubCustomerNav(links));
+		},
+		displaySubCustomerNav: (display) => {
+			dispatch(displaySubCustomerNav(display));
 		}
 	}
 };

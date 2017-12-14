@@ -6,6 +6,7 @@ import ListContractsComponent from "../components/ListContractsComponent";
 import {changeLoading} from "../actions/crmDashboard";
 import {bindClientData} from "../actions/crmClientList";
 import ContractPage from "./ContractPage";
+import {addSubContractNav, displaySubContractNav} from "../actions/crmNavBar";
 
 class ContractsContainer extends React.Component {
 	constructor(props) {
@@ -21,6 +22,7 @@ class ContractsContainer extends React.Component {
 	render() {
 		let {view, listContracts, searchContracts} = this.props.crmContract;
 		let {loading} = this.props.crmDashboard;
+		let {linksSubContract} = this.props.crmNavBar;
 		return <div className="text-center">
 			{
 				view === "" && <h1>Contrats</h1>
@@ -41,6 +43,9 @@ class ContractsContainer extends React.Component {
 										searchContracts={searchContracts}
 										changeViewContract={this.props.changeViewContract}
 										changeSearchContracts={this.props.changeSearchContracts}
+										linksSubContract={linksSubContract}
+										displaySubContractNav={this.props.displaySubContractNav}
+										addSubContractNav={this.props.addSubContractNav}
 				/>
 			}
 			{
@@ -63,7 +68,8 @@ function mapStateToProps(state) {
 
 	return {
 		crmContract: state.crmContract,
-		crmDashboard: state.crmDashboard
+		crmDashboard: state.crmDashboard,
+		crmNavBar: state.crmNavBar
 	}
 }
 
@@ -84,6 +90,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		getContract: (idContract) => {
 			dispatch(getContract(idContract));
+		},
+		displaySubContractNav: (display) => {
+			dispatch(displaySubContractNav(display));
+		},
+		addSubContractNav: (links) => {
+			dispatch(addSubContractNav(links));
 		}
 	}
 };
