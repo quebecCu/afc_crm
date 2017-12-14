@@ -40,6 +40,10 @@ select:required:invalid {
    #createNewCx {
     visibility: hidden;
   }
+  
+  #releve {
+	height: auto;
+	}
     #print {
     visibility: hidden;
   }
