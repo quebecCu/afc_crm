@@ -67,8 +67,8 @@ class GridOptionnalContract extends React.Component {
 									<select className="form-control" id={element.label} name={element.label}
 											required value={element.value} onChange={this._handleChange}>
 										<option value="">-- Veuillez choisir une valeur --</option>
-										<option value={true}>Oui</option>
-										<option value={false}>Non</option>
+										<option value="Oui">Oui</option>
+										<option value="Non">Non</option>
 									</select>
 								}
 								{

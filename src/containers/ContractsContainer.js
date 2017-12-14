@@ -1,5 +1,5 @@
 import React from 'react';
-import {changeSearchContracts, changeViewContract, getListContracts} from "../actions/crmContract";
+import {changeSearchContracts, changeViewContract, getContract, getListContracts} from "../actions/crmContract";
 import CreateContractContainer from './CreateContractContainer';
 import {connect} from "react-redux";
 import ListContractsComponent from "../components/ListContractsComponent";
@@ -36,6 +36,7 @@ class ContractsContainer extends React.Component {
 			{
 				view === "collContract" &&
 				<ListContractsComponent handleClick={this._handleClick}
+										getContract={this.props.getContract}
 										listContracts={listContracts}
 										searchContracts={searchContracts}
 										changeViewContract={this.props.changeViewContract}
@@ -80,6 +81,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		changeLoading: (loading) => {
 			dispatch(changeLoading(loading));
+		},
+		getContract: (idContract) => {
+			dispatch(getContract(idContract));
 		}
 	}
 };

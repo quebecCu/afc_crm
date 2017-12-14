@@ -4,7 +4,8 @@ import {
 	UPDATE_AGA,
 	UPDATE_EMPLOYES_AFC,
 	UPDATE_LIST_ASSUREURS, SET_LIST_CONTRACTS, CHANGE_SEARCH_CONTRACTS, CHANGE_BIG_LAYOUT, CHANGE_LIL_LAYOUT,
-	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT, CHANGE_UPDATE_FIELD_CONTRACT, SET_FROM_CLIENT
+	SET_MODULES, SET_GRID, CHANGE_NEW_FIELD_CONTRACT, SET_TYPES_CONTRACT, CHANGE_UPDATE_FIELD_CONTRACT, SET_FROM_CLIENT,
+	SET_CONTRACT
 } from "../actions/crmContract";
 
 let initialState = {
@@ -15,6 +16,7 @@ let initialState = {
 		sousGroupe: '',
 		nombreEmployes: ''
 	},
+	contractDisplay : {},
 	listContracts: [],
 	searchContracts: {
 		numeroPolice: '',
@@ -46,6 +48,7 @@ let initialState = {
 		contrat:{
 			idAssureur: '',
 			idAGA: '',
+			libelleAGA: '',
 			idClient: '',
 			modulesChoisis: [],
 			numPolice:'',
@@ -134,6 +137,8 @@ export default function reducer (state = initialState, action){
 			return {...state, types: action.types, errors:''};
 		case SET_FROM_CLIENT:
 			return {...state, fromClient: action.fromClient, errors:''};
+		case SET_CONTRACT:
+			return {...state, contractDisplay: action.contract, errors:''};
 		default:
 			return state;
 	}

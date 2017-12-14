@@ -2,10 +2,12 @@ import {take, fork} from 'redux-saga/effects';
 
 import {
 	changeBigLayout, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract,
-	GET_AGA, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES, GET_TYPES_CONTRACT,
+	GET_AGA, GET_CONTRACT, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
+	GET_TYPES_CONTRACT,
 	getEmployesAFC, getGrid,
 	getListAssureurs,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
+	setContract,
 	setGrid,
 	setListContracts, setModules, setTypesContract, UPDATE_POS_LAYOUT,
 	updateAGA, updateEmployesAFC, updateListAssureurs,
@@ -50,7 +52,7 @@ export function* requestAGA() {
 	}
 }
 
-export function * requestlistContracts() {
+export function* requestlistContracts() {
 	while (true) {
 		yield take(GET_LIST_CONTRACTS);
 
@@ -121,7 +123,7 @@ export function* requestFourniseurs() {
 	}
 }
 
-export function * requestModules() {
+export function* requestModules() {
 	while (true) {
 		yield take(GET_MODULES);
 		let server = "http://localhost:3002/collectiveContracts/modules";
@@ -141,7 +143,7 @@ export function * requestModules() {
 	}
 }
 
-export function * requestGrid() {
+export function* requestGrid() {
 	while (true) {
 		yield take(GET_GRID);
 		let server = "http://localhost:3002/attributesManagement/contract";
@@ -150,7 +152,7 @@ export function * requestGrid() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let grids = response.data.message;
-					let grid = response.data.message.attributes.map( champ => {
+					let grid = response.data.message.attributes.map(champ => {
 						return {...champ, value: ''};
 					});
 					store.dispatch(setGrid(grid));
@@ -191,7 +193,7 @@ export function * requestGrid() {
 	}
 }
 
-export function * requestUpdateGridLayout() {
+export function* requestUpdateGridLayout() {
 	while (true) {
 		let layouts = yield take(UPDATE_POS_LAYOUT);
 		let layout = layouts.layout;
@@ -201,7 +203,7 @@ export function * requestUpdateGridLayout() {
 		axios.post(server, {
 			layout: layout,
 			menus: menus
-		} ,config)
+		}, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					console.log("update du layout is a success")
@@ -215,11 +217,11 @@ export function * requestUpdateGridLayout() {
 	}
 }
 
-export function * requestTypes() {
+export function* requestTypes() {
 	while (true) {
 		yield take(GET_TYPES_CONTRACT);
 		let server = "http://localhost:3002/attributesManagement/types";
-		axios.get(server,config)
+		axios.get(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setTypesContract(response.data.message));
@@ -233,7 +235,7 @@ export function * requestTypes() {
 	}
 }
 
-export function * requestSendNewField() {
+export function* requestSendNewField() {
 	while (true) {
 		let field = yield take(SEND_NEW_FIELD_CONTRACT);
 		let {
@@ -255,7 +257,7 @@ export function * requestSendNewField() {
 			height: 1,
 			minwidth: 3,
 			width: 3
-		} ,config)
+		}, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(changeNewFieldContract(
@@ -277,8 +279,8 @@ export function * requestSendNewField() {
 	}
 }
 
-export function * requestSendUpdateField() {
-	while(true) {
+export function* requestSendUpdateField() {
+	while (true) {
 		let field = yield take(SEND_UPDATE_FIELD_CONTRACT);
 		let {
 			description,
@@ -299,7 +301,7 @@ export function * requestSendUpdateField() {
 			forme: null,
 			valeur_defaut: null,
 			ext: null
-		},config)
+		}, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert("La modification du champ est un succès");
@@ -310,7 +312,7 @@ export function * requestSendUpdateField() {
 					}));
 					store.dispatch(getGrid());
 				}
-				else if(response.data.status === "fail") {
+				else if (response.data.status === "fail") {
 					alert(response.data.message);
 				}
 				else {
@@ -324,17 +326,17 @@ export function * requestSendUpdateField() {
 }
 
 //on supprime un champ
-export function * requestSendDeleteField() {
-	while(true) {
+export function* requestSendDeleteField() {
+	while (true) {
 		let field = yield take(SEND_DELETE_FIELD_CONTRACT);
 		let id = field.id;
 
 		//communication avec server
-		let server = "http://localhost:3002/attributesManagement/contract/"+id;
+		let server = "http://localhost:3002/attributesManagement/contract/" + id;
 		//let backendUrl = window.location.host;
 		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/'+id;
 
-		axios.delete(server,config)
+		axios.delete(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(getGrid());
@@ -349,7 +351,31 @@ export function * requestSendDeleteField() {
 	}
 }
 
-export function * ContractsFlow() {
+export function* requestGetContract() {
+	while (true) {
+		let contract = yield take(GET_CONTRACT);
+		let id = contract.idContract;
+
+		//communication avec server
+		let server = "http://localhost:3002/collectiveContracts/" + id;
+		//let backendUrl = window.location.host;
+		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/'+id;
+
+		axios.get(server, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					store.dispatch(setContract(response.data.message));
+				} else {
+					alert('Erreur lors de la récupération du contrat');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function* ContractsFlow() {
 	yield fork(requestlistContracts);
 	yield fork(requestAGA);
 	yield fork(requestAFC);
@@ -361,4 +387,5 @@ export function * ContractsFlow() {
 	yield fork(requestSendNewField);
 	yield fork(requestSendUpdateField);
 	yield fork(requestSendDeleteField);
+	yield fork(requestGetContract);
 }

@@ -10,7 +10,7 @@ class ListContractsComponent extends React.Component {
 
 	_handleClick(contract) {
 		this.props.changeViewContract("display");
-		console.log(contract);
+		this.props.getContract(contract.idcontrat);
 	}
 
 	_handleClickHead(n) {
