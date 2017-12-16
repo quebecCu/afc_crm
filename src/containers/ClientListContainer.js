@@ -102,17 +102,17 @@ class ClientListContainer extends Component {
 	render() {
 		let {linksSubCustomer} = this.props.crmNavBar;
 		this.table = (
-			<div id="print-content" style={{overflow: 'auto', height: '450px',}}>
-				<table id="PageCollectivesClientsTable" className="table" >
-					<thead>
-					<tr>
-						<th onClick={this.handleClick0}>Nom du groupe</th>
-						<th onClick={this.handleClick1}>Décideur</th>
-						<th onClick={this.handleClick2}>Statut</th>
-						<th onClick={this.handleClick3}>Prospect</th>
-						<th onClick={this.handleClick4}>Mois de renouvellement</th>
-						<th onClick={this.handleClick5}>No police</th>
-						<th onClick={this.handleClick6}>Assureur</th>
+			<div id="print-content" style={{overflow: 'auto', height: '450px', width: 'auto'}}>
+				<table id="PageCollectivesClientsTable" className="table"  >
+					<thead >
+					<tr >
+						<th onClick={this.handleClick0} style={{width: 'auto'}}>Nom du groupe</th>
+						<th onClick={this.handleClick1} style={{width: 'auto'}}>Décideur</th>
+						<th onClick={this.handleClick2} style={{width: 'auto'}}>Statut</th>
+						<th onClick={this.handleClick3} style={{width: 'auto'}} >Prospect</th>
+						<th onClick={this.handleClick4} style={{width: 'auto'}}>Mois de renouvellement</th>
+						<th onClick={this.handleClick5} style={{width: 'auto'}}>No police</th>
+						<th onClick={this.handleClick6} style={{width: 'auto'}}>Assureur</th>
 					</tr>
 					</thead>
 					<DossiersComponent collective={this.props.dossiersState}
