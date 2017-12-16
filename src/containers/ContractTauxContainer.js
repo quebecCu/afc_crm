@@ -6,11 +6,22 @@ class ContractTauxContainer extends React.Component{
 		super(props);
 	}
 
+	componentDidMount(){
+		document.getElementById("input"+"prime_an"+"taux").setAttribute('disabled', true);
+	}
+
 	render(){
 		return <div>
 			<h4>Historique des taux</h4>
 			<div className="container">
-				Ici annéedépart/annéefin
+				<div className="row justify-content-md-center">
+					<ContractInput titre="Année de départ" unite="" format="AAAA-MM" titreChamp="anneedep"
+								   description="Année de départ" part="taux"
+								   formState={this.props.formState} changeForm={this.props.changeForm}/>
+					<ContractInput titre="Année de fin" unite="" format="AAAA-MM" titreChamp="anneefin"
+								   description="Année de départ" part="taux"
+								   formState={this.props.formState} changeForm={this.props.changeForm}/>
+				</div>
 				<div className="row col-12">
 					<div className="col-4">
 						<ContractInput titre="Différence" unite="%" format="XX.X" titreChamp="diff"
@@ -77,21 +88,11 @@ class ContractTauxContainer extends React.Component{
 						<ContractInput titre="MG Fam." unite="$" format="X XXX.XX" titreChamp="mg_fam"
 									   description="Assurance maladies graves familiale" part="taux"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
-						Input grisé qui calcule :)
+						<ContractInput titre="Prime annuelle" unite="$" format="X XXX.XX" titreChamp="prime_an"
+									   description="Prime mensuelle *12" part="taux"
+									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 			</div>
 

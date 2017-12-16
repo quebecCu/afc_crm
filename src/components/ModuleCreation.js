@@ -8,6 +8,18 @@ class ModuleCreation extends React.Component{
 		this._handleClickMoins=this._handleClickMoins.bind(this);
 	}
 
+	//Si on vient d'une creation de contrat classique rien n'est prérempli
+	//si on est sur un update on prérempli les modules
+	componentDidMount(){
+		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis),10);
+
+		if(this.props.view === "create" && this.props.idComponent < modulesChoisis.length){
+			this.value = modulesChoisis[this.props.idComponent].idModule;
+			this.idModule = this.value;
+			this.isSelected = true;
+		}
+	}
+
 	_onChangeModule(event){
 		// SIIII la taille de modulesChoisis est egale a l'id du component, ça veut dire que le module a pas encore été sélectionne
 		// du coup, au premier click, on push le module, la taille augmente et aux prochains clics, ça modifie le tableau
@@ -48,10 +60,39 @@ class ModuleCreation extends React.Component{
 		modulesChoisis.splice(event.target.id,1);
 		this.props.changeForm({...this.props.formState, intModulesToDisplay:newInt, modulesToDisplay:modulesToDisplay,
 			contrat:{...this.props.formState.contrat, modulesChoisis:modulesChoisis}});
-		//document.getElementById(event.target.id).style.display = "none";
-		document.getElementById("module"+event.target.id).setAttribute('value', "");
-		document.getElementById("module"+event.target.id).value = "";
-		this.isSelected = false;
+
+		//ICI A GERER LE BORDEL
+		if(modulesChoisis.length > 1 && event.target.id !== modulesChoisis.length-1 && !(document.getElementById("module"+(modulesChoisis.length)).value = "")){
+			for(let i = 1; i < modulesChoisis.length; i++){
+				document.getElementById("module"+i).setAttribute('value', modulesChoisis[i].idModule);
+				document.getElementById("module"+i).value = modulesChoisis[i].idModule;
+				this.idModule=modulesChoisis[i].idModule;
+				this.isSelected = true
+			}
+		}
+		else if(modulesChoisis.length > 1 && event.target.id !== modulesChoisis.length-1 &&
+			(document.getElementById("module"+(modulesChoisis.length)).value = "")){
+			for(let i = 1; i < modulesChoisis.length; i++){
+				document.getElementById("module"+i).setAttribute('value', modulesChoisis[i].idModule);
+				document.getElementById("module"+i).value = modulesChoisis[i].idModule;
+				this.idModule=modulesChoisis[i].idModule;
+				this.isSelected = true;
+			}
+
+			document.getElementById("module"+(modulesChoisis.length)).setAttribute('value', "");
+			document.getElementById("module"+(modulesChoisis.length)).value = "";
+
+			this.isSelected = false
+			/*document.getElementById("module"+event.target.id).setAttribute('value', "");
+			document.getElementById("module"+event.target.id).value = "";
+			this.isSelected = false;*/
+		}
+		else{
+			document.getElementById("module"+event.target.id).setAttribute('value', "");
+			document.getElementById("module"+event.target.id).value = "";
+			this.isSelected = false;
+		}
+
 	}
 
 
@@ -63,6 +104,7 @@ class ModuleCreation extends React.Component{
 					name="module"
 					className="form-control"
 					onChange={this._onChangeModule}
+					value={this.value}
 					>
 					<option id={"optionNull"+this.props.idComponent} value=""> -- select an option -- </option>
 					{
@@ -110,11 +152,18 @@ class ModuleCreation extends React.Component{
 				</select>
 			</div >
 			{
-				this.isSelected &&
-				<div className="p2"><ModalitesDisplay idModule={this.idModule} formState = {this.props.formState} changeForm={this.props.changeForm}/></div>
+				(this.isSelected && (document.getElementById("module"+(this.props.idComponent)).value !== "")) &&
+				<div className="d-flex flex-wrap">
+					<ModalitesDisplay idModule={this.idModule} view={this.props.view}
+									  formState = {this.props.formState} changeForm={this.props.changeForm}/>
+				</div>
 			}
+			<textarea id={"textarea"+this.props.idComponent} placeholder="Notes relatives au module " className="form-control"
+			/>
+			<hr />
 			{
-				(this.props.idComponent !== 0) && <div style={{width: 50}}><button id={this.props.idComponent} onClick={this._handleClickMoins}>Supprimer ce module </button></div>
+				(this.props.idComponent !== 0) &&
+				<div style={{width: 50}}><button id={this.props.idComponent} onClick={this._handleClickMoins}>Supprimer ce module </button></div>
 			}
 		</div>
 	}

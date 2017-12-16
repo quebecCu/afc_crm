@@ -28,8 +28,8 @@ let initialState = {
 		{i: '3', x: 4, y: 0, w: 2, h: 3, minH: 3, minW:2},
 	],
 	formState: {
-		intModulesToDisplay:1,
-		modulesToDisplay:[],//Tableau qui gère l'affichage des modules
+		intModulesToDisplay:2,
+		modulesToDisplay:["4","1"],//Tableau qui gère l'affichage des modules
 		AGA: [],
 		employesAFC:[],
 		listAssureurs:[],
@@ -38,7 +38,16 @@ let initialState = {
 			idAssureur: '',
 			idAGA: '',
 			idClient: '',
-			modulesChoisis: [],
+			modulesChoisis: [{
+				idModule: "4",
+				modalites:[{idValeur:23,idModalite:10,valeur:"0 jours"},
+					{idValeur:26,idModalite:12,valeur:"16 semaines"}]
+
+			},
+				{idModule:"1",
+				modalites:[{idValeur:1,idModalite:5,valeur:"edrg"},
+					{idValeur:1,idModalite:4,valeur:23}]}
+				],
 			numPolice:'',
 			dateEmission:'',
 			moisRenouv:'',

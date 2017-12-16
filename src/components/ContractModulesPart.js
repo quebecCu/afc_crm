@@ -8,7 +8,9 @@ class ContractModulesPart extends React.Component{
 		this._modulesToReturn=this._modulesToReturn.bind(this);
 	}
 
-	//Si le state contrat a sélectionné encore module, affichage d'un module
+
+
+	//Si le state contrat a sélectionné un module, affichage d'un module
 	// Si le state contrat a déjà des modules, loop dedans pour les afficher
 	_handleClickPlus(event){
 
@@ -26,7 +28,10 @@ class ContractModulesPart extends React.Component{
 			if(element!==0){
 				return (
 
-						<ModuleCreation id={"module"+element} key = {element} idComponent = {element} formState = {this.props.formState} changeForm = {this.props.changeForm}/>
+						<ModuleCreation id={"module"+element} key = {element} idComponent = {element}
+										formState = {this.props.formState}
+										view={this.props.view}
+										changeForm = {this.props.changeForm}/>
 
 
 				)
@@ -43,7 +48,10 @@ class ContractModulesPart extends React.Component{
 	render(){
 		let toReturn = this._modulesToReturn();
 		return <div>
-			<ModuleCreation idComponent = {0} formState = {this.props.formState} changeForm = {this.props.changeForm}/>
+			<ModuleCreation idComponent = {0} formState = {this.props.formState}
+							comesFrom={this.props.comesFrom}
+							view={this.props.view}
+							changeForm = {this.props.changeForm}/>
 
 			{
 				toReturn

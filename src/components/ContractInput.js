@@ -7,7 +7,19 @@ class ContractInput extends React.Component{
 		this._checkValues=this._checkValues.bind(this);
 		this._getFieldValue=this._getFieldValue.bind(this);
 
+		if(this.props.titreChamp === "notes"){
+			this.type = "text";
+		}
+		else if(this.props.format === "AAAA-MM-JJ"){
+			this.type="date";
+		}
+		else{
+			this.type = "number";
+		}
+
+
 	}
+
 
 	_getFieldValue(){
 		//check les values des champs dans le cas où on est sur un update
@@ -27,8 +39,12 @@ class ContractInput extends React.Component{
 	_onChangeField(event){
 		let titreChamp = this.props.titreChamp;
 		if(this.props.part === "taux"){
+
 			let historiqueTaux = this.props.formState.contrat.historiqueTaux;
 			historiqueTaux[titreChamp] = event.target.value;
+			if(titreChamp==="prime_ms"){
+				historiqueTaux["prime_an"] = parseInt(event.target.value)*12;
+			}
 			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,
 				historiqueTaux:historiqueTaux}});
 			this._checkValues(historiqueTaux[titreChamp]);
@@ -37,6 +53,9 @@ class ContractInput extends React.Component{
 		else{
 			let remuneration = this.props.formState.contrat.remuneration;
 			remuneration[titreChamp] = event.target.value;
+			if(titreChamp === "bdu" || titreChamp === "paye"){
+				remuneration["solde"] = remuneration.bdu - remuneration.paye;
+			}
 			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,
 				remuneration:remuneration}});
 			this._checkValues(remuneration[titreChamp]);
@@ -75,6 +94,16 @@ class ContractInput extends React.Component{
 
 				}
 			}
+			else if(this.props.format === "AAAA-MM" && valeurDuForm !== ""){
+				if(!/^((?:19|20)\d{2})-(0?\d|1[012])$/.test(valeurDuForm )){
+					document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "block";
+
+				}
+				else{
+					document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
+
+				}
+			}
 		}
 		if(valeurDuForm === ""){
 			document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
@@ -95,7 +124,7 @@ class ContractInput extends React.Component{
 						<span className="fa fa-info"/>
 						<span className="tooltipptext">{this.props.description}</span>
 					</div>
-					<input type="text" placeholder={this.props.format} className="form-control"
+					<input type={this.type} placeholder={this.props.format} className="form-control"
 						onChange={this._onChangeField} id={"input"+this.props.titreChamp+this.props.part}
 						value={value}/>
 					<p id={"verif"+this.props.part+this.props.titreChamp}

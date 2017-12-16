@@ -9,9 +9,55 @@ class DisplayOneModalite extends React.Component{
 		this._toDisplay=this._toDisplay.bind(this);
 		this._onChangeSelectValue=this._onChangeSelectValue.bind(this);
 		this._onChangeTextField=this._onChangeTextField.bind(this);
+		this.value="";
+
+	}
+
+	componentDidMount(){
+		if(this.props.view==="create"){
+			//on get l'index du module choisi dans modulesChoisis et on cherche la valeur associée si elle existe...
+			let idModuleDansContrat;
+			for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
+				if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
+					idModuleDansContrat = i;
+				}
+			}
+			let contains = false;
+			let idValue;
+			let value;
+			let idModaliteDsModule;
+			this.props.formState.contrat.modulesChoisis[idModuleDansContrat].modalites.forEach((element,index)=>{
+
+				if(element.idModalite === parseInt(this.props.modalite.idModalite,10)){
+					contains=true;
+					idValue= element.idValeur;
+					value= element.valeur;
+					idModaliteDsModule = index;
+				}
+			});
+			if(contains){
+				this.idValue=idValue;
+				this.value=value;
+				this.label=this.value;
+				console.log("idValue"+this.idValue);
+				console.log(this.idValue===1);
+				if(this.idValue===1){
+					this.label="Autres";
+					console.log(this.label);
+				}
+
+				//si on est sur du "autres" et que on a une valeur "spéciale", on display le textfield avec sa valeur
+				if(parseInt(this.idValue,10)===1 && this.props.formState.contrat.modulesChoisis[idModuleDansContrat].modalites[idModaliteDsModule].valeur !=="Autres"){
+					document.getElementById("valeur"+this.props.modalite.idModalite+this.props.idModule).style.display="block";
+
+				}
+			}
+
+		}
 	}
 
 	_onChangeTextField(event){
+		this.value=event.target.value;
 		//quand on change un textfield c'est forcément un "autre" donc on FIESTA
 		let modaliteModifiee = {idValeur : 1, idModalite: this.props.modalite.idModalite,valeur:event.target.value};
 		let idModuleDansContrat;
@@ -75,7 +121,11 @@ class DisplayOneModalite extends React.Component{
 	}
 
 	_onChangeSelectValue(event){
+		this.idValue=event.target.id;
+		this.value=event.target.value;
+		this.label=this.value;
 		if(event.target.value==="Autres"){
+			this.label="Autres";
 			document.getElementById("valeur"+this.props.modalite.idModalite+this.props.idModule).style.display="block";
 		}
 		else{
@@ -88,7 +138,6 @@ class DisplayOneModalite extends React.Component{
 		let idModuleDansContrat;
 		for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
 
-			console.log(!this.props.formState.contrat.modulesChoisis[i]);
 			if(this.props.formState.contrat.modulesChoisis[i]){
 				if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
 					idModuleDansContrat = i;
@@ -101,11 +150,16 @@ class DisplayOneModalite extends React.Component{
 		//si on passe à "", alors on supprime la ligne de la modalité du tableau
 		if(event.target.value === ""){
 			let idModaliteDansLarray;
+			let contains = false
 			for(let j = 0; j < modalitesChoisies.length; j++){
 				if(modalitesChoisies[j].idModalite === this.props.modalite.idModalite)
+					contains = true;
 					idModaliteDansLarray = j;
 			}
-			modalitesChoisies.splice(idModaliteDansLarray, 1);
+			if(contains){
+				modalitesChoisies.splice(idModaliteDansLarray, 1);
+
+			}
 		}
 		else{
 			let idValeur;
@@ -173,6 +227,7 @@ class DisplayOneModalite extends React.Component{
 				type="textField"
 				className="form-control"
 				placeholder="test"
+				value={this.value}
 				onChange={this._onChangeTextField}
 
 			/>
@@ -183,6 +238,7 @@ class DisplayOneModalite extends React.Component{
 					id={"modalite"+this.props.modalite.idModalite+this.props.idModule}
 					name="modalite"
 					className="form-control"
+					value={this.label}
 					onChange={this._onChangeSelectValue}
 				>
 					<option value=""> -- select an option -- </option>
@@ -190,7 +246,9 @@ class DisplayOneModalite extends React.Component{
 						this.props.modalite.valeurs.map((element) => {
 							return (<option
 								key={element.idValeur}
-								value={element.label}
+								id={element.idValeur}
+								value={element.valeur}
+								label={element.label}
 
 							>
 								{
@@ -205,6 +263,7 @@ class DisplayOneModalite extends React.Component{
 						type="textField"
 						className="form-control"
 						placeholder="test"
+						value={this.value}
 						style={{display: "none"}}
 						onChange={this._onChangeTextField}
 					/>
@@ -221,7 +280,6 @@ class DisplayOneModalite extends React.Component{
 				{
 					this._toDisplay()
 				}
-
 			</div>
 		</div>
 	}

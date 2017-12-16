@@ -36,7 +36,7 @@ class ContractsContainer extends React.Component {
 				/>
 			}
 			{
-				view === "create" && <CreateContractContainer comesFrom="blankContract" />
+				view === "create" && <CreateContractContainer comesFrom="blankContract" view={view}/>
 			}
 		</div>;
 	}

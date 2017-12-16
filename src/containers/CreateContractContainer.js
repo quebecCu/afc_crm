@@ -29,18 +29,29 @@ class CreateContractContainer extends React.Component {
 		let {formState} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
-		this.props.changeForm({...formState, intModulesToDisplay:1, modulesToDisplay:[], contrat:{...formState.contrat,
+		this.props.changeForm({...formState, intModulesToDisplay:2, modulesToDisplay:["4","1"], contrat:{...formState.contrat,
 			idAssureur: '',
 			idAGA: '',
-			modulesChoisis: [],
-			numPolice:'222333',
+			modulesChoisis: [{
+				idModule: "4",
+				modalites:[{idValeur:23,idModalite:10,valeur:"0 jours"},
+					{idValeur:26,idModalite:12,valeur:"16 semaines"}]
+
+			},
+				{idModule:"1",
+					modalites:[{idValeur:1,idModalite:5,valeur:"edrg"},
+						{idValeur:1,idModalite:4,valeur:23}]}
+			],
+			numPolice:'',
 			dateEmission:'',
-			moisRenouv:'2233',
-			notes:'Salut hehe je test',
+			moisRenouv:'',
+			notes:'',
 			historiqueTaux:{diff: '',
+				anneedep:'',
+				anneefin:'',
 				vie: '',
-				dma: 'ererf',
-				pac: 'erf',
+				dma: '',
+				pac: '',
 				ct: '',
 				lt: '',
 				amc_ind: '',
@@ -55,7 +66,7 @@ class CreateContractContainer extends React.Component {
 				mg_mono: '',
 				mg_couple: '',
 				mg_fam: '',
-				pae: 'erferf',
+				pae: '',
 				prime_ms: '',
 				prime_an: ''
 			},
@@ -67,7 +78,7 @@ class CreateContractContainer extends React.Component {
 				dent:'',
 				mg:'',
 				pae:'',
-				notes:'rrree',
+				notes:'',
 				recu:'',
 				base:'',
 				boni:'',
@@ -75,9 +86,10 @@ class CreateContractContainer extends React.Component {
 				gtotal:'',
 				idConseiller:'',
 				split:'',
-				bdu:'eferferf',
+				bdu:'',
 				paye:'',
 				dpaye:'',
+				solde:''
 			}
 		}});
 	}
@@ -200,7 +212,7 @@ class CreateContractContainer extends React.Component {
 				/></div>
 				<div key="2"><ContractInfoPart formState={formState}
 											   changeForm={this.props.changeForm}/></div>
-				<div key="3"><ContractModulesPart formState={formState} changeForm = {this.props.changeForm}/></div>
+				<div key="3"><ContractModulesPart formState={formState} changeForm = {this.props.changeForm} view={this.props.view}/></div>
 				<div key="4"><GridOptionnalContract lilLayout={lilLayout} changeLilLayout={this.props.changeLilLayout}/></div>
 			</ResponsiveReactGridLayout>
 
