@@ -1,6 +1,7 @@
 import {
+	ADD_SUBCONTRACT_NAV,
 	ADD_SUBCUSTOMER_NAV, ADD_SUBSUPPLIER_NAV,
-	ADD_SUBUSER_NAV, DISPLAY_SUBCUSTOMER_NAV, DISPLAY_SUBSUPPLIER_NAV,
+	ADD_SUBUSER_NAV, DISPLAY_SUBCONTRACT_NAV, DISPLAY_SUBCUSTOMER_NAV, DISPLAY_SUBSUPPLIER_NAV,
 	DISPLAY_SUBUSER_NAV
 } from '../actions/crmNavBar';
 
@@ -14,6 +15,8 @@ let initialState = {
 	linksSubSupplier: [],
 	displaySubUser : false,
 	linksSubUser: [],
+	displaySubContract: false,
+	linksSubContract: [],
 	errors: '',
 };
 
@@ -33,6 +36,10 @@ export default function reducer (state = initialState, action ){
 			return {...state ,linksSubSupplier: action.newSubSupplier , error:''};
 		case DISPLAY_SUBSUPPLIER_NAV:
 			return {...state ,displaySubSupplier: action.display , error:''};
+		case ADD_SUBCONTRACT_NAV:
+			return {...state ,linksSubContract: action.newSubContract , error:''};
+		case DISPLAY_SUBCONTRACT_NAV:
+			return {...state ,displaySubContract: action.display , error:''};
 		default:
 			return state
 

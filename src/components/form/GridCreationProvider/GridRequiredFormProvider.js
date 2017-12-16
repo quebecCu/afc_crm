@@ -12,6 +12,10 @@ class GridRequiredFormProvider extends Component {
 		this._changeTel = this._changeTel.bind(this);
 		this._changeExtension = this._changeExtension.bind(this);
 		this._changeCode = this._changeCode.bind(this);
+		this._changeLilGroup = this._changeLilGroup.bind(this);
+		this._changeBilGroup = this._changeBilGroup.bind(this);
+		this._changeEmployesLilGroup = this._changeEmployesLilGroup.bind(this);
+		this._changeEmployesBigGroup = this._changeEmployesBigGroup.bind(this);
 	}
 
 	_changeNomEntreprise(event) {
@@ -44,6 +48,22 @@ class GridRequiredFormProvider extends Component {
 
 	_changeCode(event) {
 		this.props.changeRequiredSup({...this.props.requiredFields , code: event.target.value});
+	}
+
+	_changeLilGroup(event) {
+		this.props.changeRequiredSup({...this.props.requiredFields , lilGroup: event.target.value});
+	}
+
+	_changeBilGroup(event) {
+		this.props.changeRequiredSup({...this.props.requiredFields , bilGroup: event.target.value});
+	}
+
+	_changeEmployesLilGroup(event) {
+		this.props.changeRequiredSup({...this.props.requiredFields , employesLilGroup: event.target.value});
+	}
+
+	_changeEmployesBigGroup(event) {
+		this.props.changeRequiredSup({...this.props.requiredFields , employesBigGroup: event.target.value});
 	}
 
 	render() {
@@ -97,6 +117,36 @@ class GridRequiredFormProvider extends Component {
 						<label htmlFor="code" className="control-label">Code</label>
 						<input type="text" className="form-control" id="code"
 							   name="code" onChange={this._changeCode} value={this.props.requiredFields.code} required/>
+					</div>
+				</div>
+				<div className="form-group row">
+					<div className="col-6">
+						<label htmlFor="lilGroup" className="control-label">Petits groupes</label>
+						<select className="form-control" id="lilGroup" name="lilGroup"
+								value={this.props.requiredFields.lilGroup} onChange={this._changeLilGroup} required>
+							<option value={true}>Oui</option>
+							<option value={false}>Non</option>
+						</select>
+					</div>
+					<div className="col-6">
+						<label htmlFor="employesLilGroup" className="control-label">Nombre d'employés pour petits groupes</label>
+						<input type="text" className="form-control" id="employesLilGroup"
+							   name="employesLilGroup" value={this.props.requiredFields.employesLilGroup} onChange={this._changeEmployesLilGroup} required/>
+					</div>
+				</div>
+				<div className="form-group row">
+					<div className="col-6">
+						<label htmlFor="bigGroup" className="control-label">Grands groupes</label>
+						<select className="form-control" id="bigGroup" name="bigGroup"
+								required value={this.props.requiredFields.bigGroup} onChange={this._changeBilGroup}>
+							<option value={true}>Oui</option>
+							<option value={false}>Non</option>
+						</select>
+					</div>
+					<div className="col-6">
+						<label htmlFor="employesBigGroup" className="control-label">Nombre d'employés pour grands groupes</label>
+						<input type="text" className="form-control" id="employesBigGroup"
+							   name="employesBigGroup" value={this.props.requiredFields.employesBigGroup} onChange={this._changeEmployesBigGroup} required/>
 					</div>
 				</div>
 				<ContactsContainer/>

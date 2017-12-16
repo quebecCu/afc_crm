@@ -15,6 +15,17 @@ export const GET_MODULES = 'GET_MODULES';
 export const SET_MODULES = 'SET_MODULES';
 export const GET_GRID = 'GET_GRID';
 export const SET_GRID = 'SET_GRID';
+export const UPDATE_POS_LAYOUT = 'UPDATE_POS_LAYOUT';
+export const CHANGE_NEW_FIELD_CONTRACT = 'CHANGE_NEW_FIELD_CONTRACT';
+export const CHANGE_UPDATE_FIELD_CONTRACT = 'CHANGE_UPDATE_FIELD_CONTRACT';
+export const GET_TYPES_CONTRACT = 'GET_TYPES_CONTRACT';
+export const SET_TYPES_CONTRACT = 'SET_TYPES_CONTRACT';
+export const SEND_NEW_FIELD_CONTRACT = 'SEND_NEW_FIELD_CONTRACT';
+export const SEND_UPDATE_FIELD_CONTRACT = 'SEND_UPDATE_FIELD_CONTRACT';
+export const SEND_DELETE_FIELD_CONTRACT = 'SEND_DELETE_FIELD_CONTRACT';
+export const SET_FROM_CLIENT = 'SET_FROM_CLIENT';
+export const GET_CONTRACT = 'GET_CONTRACT';
+export const SET_CONTRACT = 'SET_CONTRACT';
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}
@@ -82,4 +93,48 @@ export function getGrid() {
 
 export function setGrid(grid) {
 	return {type: SET_GRID, grid}
+}
+
+export function updatePosLayout(layout, menus) {
+	return {type: UPDATE_POS_LAYOUT, layout, menus}
+}
+
+export function changeNewFieldContract(newField) {
+	return {type: CHANGE_NEW_FIELD_CONTRACT, newField}
+}
+
+export function getTypesContract() {
+	return {type: GET_TYPES_CONTRACT}
+}
+
+export function setTypesContract(types) {
+	return {type: SET_TYPES_CONTRACT, types}
+}
+
+export function sendNewFieldContract(newField) {
+	return {type: SEND_NEW_FIELD_CONTRACT, newField}
+}
+
+export function changeUpdateFieldContract(updateField) {
+	return {type: CHANGE_UPDATE_FIELD_CONTRACT, updateField}
+}
+
+export function sendUpdateFieldContract(updateField) {
+	return {type: SEND_UPDATE_FIELD_CONTRACT, updateField}
+}
+
+export function sendDeleteFieldContract(id) {
+	return {type: SEND_DELETE_FIELD_CONTRACT, id}
+}
+
+export function setFromClient(fromClient) {
+	return {type: SET_FROM_CLIENT, fromClient}
+}
+
+export function getContract(idContract) {
+	return {type: GET_CONTRACT, idContract}
+}
+
+export function setContract(contract) {
+	return {type: SET_CONTRACT, contract}
 }

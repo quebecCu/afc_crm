@@ -1,24 +1,31 @@
 import React from 'react';
 import SuggestionClients from "./SuggestionClients";
 
-class ContractClientPart extends React.Component{
-	constructor(props){
+class ContractClientPart extends React.Component {
+	constructor(props) {
 		super(props);
 		this._onChangeRepresentant = this._onChangeRepresentant.bind(this);
 		this._sousGroupe = this._sousGroupe.bind(this);
 		this._nombreEmployes = this._nombreEmployes.bind(this);
-		if(this.props.comesFrom === "client"){
+		this._filterClients = this._filterClients.bind(this);
+		if (this.props.comesFrom === "client") {
 			document.getElementById("nomClient").setAttribute('disabled', true);
+		}
+		if(this.props.fromClient.idClient) {
+			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idClient:this.props.fromClient.idClient}});
 		}
 	}
 
 	_onChangeRepresentant(event) {
-		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idRepresentant:event.target.value}});
+		this.props.changeForm({
+			...this.props.formState,
+			contrat: {...this.props.formState.contrat, idRepresentant: event.target.value}
+		});
 	}
 
 	_sousGroupe() {
 		let duplicate = false;
-		if(this.props.client.facultatif.length === 0) {
+		if (this.props.client.facultatif.length === 0) {
 			return <input
 				type="textField"
 				className="form-control col-sm-8"
@@ -29,24 +36,24 @@ class ContractClientPart extends React.Component{
 		}
 		else {
 			return this.props.client.facultatif.map(champ => {
-				if(champ.nom === 'Sous-groupe' && champ.valeur !== '' && !duplicate) {
+				if (champ.nom === 'Sous-groupe' && champ.valeur !== '' && !duplicate) {
 					duplicate = true;
 					return <input key={champ.idRow}
-						type="textField"
-						className="form-control col-sm-8"
-						value={champ.valeur}
-						id="sousGroupe"
-						disabled
+								  type="textField"
+								  className="form-control col-sm-8"
+								  value={champ.valeur}
+								  id="sousGroupe"
+								  disabled
 					/>
 				}
-				else if(champ.nom === 'Sous-groupe' && champ.valeur === '' && !duplicate) {
+				else if (champ.nom === 'Sous-groupe' && champ.valeur === '' && !duplicate) {
 					duplicate = true;
 					return <input key={champ.idRow}
-						type="textField"
-						className="form-control col-sm-8"
-						value="Le client n'a pas de sous-groupe"
-						id="sousGroupe"
-						disabled
+								  type="textField"
+								  className="form-control col-sm-8"
+								  value="Le client n'a pas de sous-groupe"
+								  id="sousGroupe"
+								  disabled
 					/>
 				}
 			})
@@ -56,7 +63,7 @@ class ContractClientPart extends React.Component{
 
 	_nombreEmployes() {
 		let duplicate = false;
-		if(this.props.client.facultatif.length === 0) {
+		if (this.props.client.facultatif.length === 0) {
 			return <input
 				type="textField"
 				className="form-control col-sm-8"
@@ -67,24 +74,24 @@ class ContractClientPart extends React.Component{
 		}
 		else {
 			return this.props.client.facultatif.map(champ => {
-				if(champ.nom === 'Nombre d\'employés' && champ.valeur !== '' && !duplicate) {
+				if (champ.nom === 'Nombre d\'employés' && champ.valeur !== '' && !duplicate) {
 					duplicate = true;
 					return <input key={champ.idRow}
-						type="textField"
-						className="form-control col-sm-8"
-						value={champ.valeur}
-						id="nbEmployes"
-						disabled
+								  type="textField"
+								  className="form-control col-sm-8"
+								  value={champ.valeur}
+								  id="nbEmployes"
+								  disabled
 					/>
 				}
-				else if(champ.nom === 'Nombre d\'employés' && champ.valeur === '' && !duplicate) {
+				else if (champ.nom === 'Nombre d\'employés' && champ.valeur === '' && !duplicate) {
 					duplicate = true;
 					return <input key={champ.idRow}
-						type="textField"
-						className="form-control col-sm-8"
-						value="Le nombre d'employés n'est pas précisé"
-						id="nbEmployes"
-						disabled
+								  type="textField"
+								  className="form-control col-sm-8"
+								  value="Le nombre d'employés n'est pas précisé"
+								  id="nbEmployes"
+								  disabled
 					/>
 				}
 			})
@@ -92,36 +99,70 @@ class ContractClientPart extends React.Component{
 
 	}
 
-	render(){
+	_filterClients() {
+		return this.props.clients.filter( (element, index) => {
+			let duplicate = false;
+			this.props.clients.forEach((element2, index2)=> {
+				if(element.id === element2.id && index > index2) {
+					duplicate = true;
+				}
+			});
+			return !duplicate;
+		});
+	}
+
+	render() {
 		return <div>
 			<h4>Informations sur le client</h4>
 			<div className="form-group row">
 				<label id="nomClientLabel" className="col-sm-3 col-form-label">Nom client</label>
-					<SuggestionClients clients={this.props.clients}
+				{
+					!this.props.fromClient.idClient &&
+					<SuggestionClients clients={this._filterClients()}
 									   getClient={this.props.getClient}
 									   changeForm={this.props.changeForm}
 									   formState={this.props.formState}
 					/>
+				}
 				{
-					/*<input
-						type="textField"
-						className="form-control col-sm-8"
-						placeholder="Nom client"
-						id="nomClient"
-					/>*/
+					this.props.fromClient.idClient &&
+					<input type="textField"
+						   className="form-control col-sm-8"
+						   value={this.props.fromClient.name}
+						   id="nomClient"
+						   disabled
+					/>
 				}
 
 			</div>
 			<div className="form-group row">
 				<label id="sousGroupeLabel" className="col-sm-3 col-form-label">Sous groupe</label>
 				{
-					this._sousGroupe()
+					!this.props.fromClient.idClient && this._sousGroupe()
+				}
+				{
+					this.props.fromClient.idClient &&
+					<input type="textField"
+						   className="form-control col-sm-8"
+						   value={this.props.fromClient.sousGroupe}
+						   id="sousGroupe"
+						   disabled
+					/>
 				}
 			</div>
 			<div className="form-group row">
 				<label id="nbEmployesLabel" className="col-sm-3 col-form-label">Nombre d'employés</label>
 				{
-					this._nombreEmployes()
+					!this.props.fromClient.idClient && this._nombreEmployes()
+				}
+				{
+					this.props.fromClient.idClient &&
+					<input type="textField"
+						   className="form-control col-sm-8"
+						   value={this.props.fromClient.nombreEmployes}
+						   id="nbEmployes"
+						   disabled
+					/>
 				}
 			</div>
 			<div className="form-group row">
@@ -133,7 +174,7 @@ class ContractClientPart extends React.Component{
 					value={this.props.formState.contrat.idRepresentant}
 					onChange={this._onChangeRepresentant}
 				>
-					<option disabled value=""> -- Veuillez sélectionner une valeur -- </option>
+					<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
 					{
 						this.props.formState.employesAFC.map((employe, index) => {
 							return <option key={index} value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
@@ -141,7 +182,7 @@ class ContractClientPart extends React.Component{
 					}
 				</select>
 			</div>
-		</div> ;
+		</div>;
 	}
 }
 

@@ -13,10 +13,32 @@ class FicheClient extends React.Component {
 		this._handleModify = this._handleModify.bind(this);
 		this._handleDelete = this._handleDelete.bind(this);
 		this.dropDownClient = this.dropDownClient.bind(this);
+		this._handleContract = this._handleContract.bind(this);
 	}
 
 	componentWillMount() {
 		this.setContactsState();
+	}
+
+	_handleContract(event) {
+		this.props.changeViewContract("create");
+		this.props.changeViewDashboard("contracts");
+		let nombreEmployes= 0;
+		let sousGroupe = '';
+		this.props.optionnalFields.forEach(element => {
+			if (element.idRow === 1) {
+				nombreEmployes = element.valeur;
+			}
+			if (element.idRow === 6) {
+				sousGroupe = element.valeur;
+			}
+		});
+		this.props.setFromClient({
+			idClient: event.target.value,
+			name: this.props.client.nom,
+			sousGroupe: sousGroupe,
+			nombreEmployes: nombreEmployes
+		});
 	}
 
 
@@ -32,7 +54,7 @@ class FicheClient extends React.Component {
 		        }
 
 	}
-	
+
 	dropDownContacts(event){
 	    var x = document.getElementById("wrapperContacts");
 	    if (x.className.indexOf("show") === -1) {
@@ -134,7 +156,7 @@ class FicheClient extends React.Component {
 
 					</ResponsiveReactGridLayout>
 					</div>
-					
+
 
 				<div className="grandTitre">
 				<button  className="grandTitreContacts"   onClick={this.dropDownContacts}  >
@@ -170,7 +192,7 @@ class FicheClient extends React.Component {
 				<div className="unePartie">
 				</div>
 				</div>
-				
+
 				<div className="grandTitre">
 					<TitreValeur valeur = "Assureur"/>
 				</div>
@@ -194,7 +216,12 @@ class FicheClient extends React.Component {
 					<button type="button" className="btn btn-primary" 
 							onClick={this._handleModify} value={this.props.client.idclient}> 
 						Modifier la fiche client 
-					</button> 
+					</button>
+					<button type="button" className="btn btn-primary"
+							onClick={this._handleContract}
+							value={this.props.client.idclient}>
+						Créer un contrat avec ce client
+					</button>
 				</div>
 			</div>
 		)

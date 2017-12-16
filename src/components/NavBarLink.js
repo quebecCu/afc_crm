@@ -5,6 +5,7 @@ class NavBarLink extends Component {
         super(props);
         this._handleClick = this._handleClick.bind(this);
         this._handleDelete = this._handleDelete.bind(this);
+        this._handleResetState = this._handleResetState.bind(this);
         this.state = {
         	deleted: false
 		};
@@ -27,7 +28,23 @@ class NavBarLink extends Component {
         	this.props.changeLoading(true);
         	this.props.displayUser(this.props.idSupplier);
 		}
+		if(this.props.idContract) {
+			this.props.changeLoading(true);
+			this.props.displayUser(this.props.idContract);
+		}
+		this._handleResetState();
     }
+
+    _handleResetState() {
+    	if(this.props.resetFor === "contract") {
+    		this.props.resetState({
+				idClient: false,
+				name: '',
+				sousGroupe: '',
+				nombreEmployes: ''
+			});
+		}
+	}
 
     _handleDelete() {
 		this.setState({deleted: true}, () => {
@@ -38,8 +55,11 @@ class NavBarLink extends Component {
 				this.props.deleteSub(this.props.idCustomer);
 			}
 			if(this.props.idSupplier) {
-				console.log(this.state.deleted);
 				this.props.deleteSub(this.props.idSupplier);
+			}
+			if(this.props.idContract) {
+				console.log(this.state.deleted);
+				this.props.deleteSub(this.props.idContract);
 			}
 		});
 	}

@@ -26,7 +26,7 @@ export function * getGridLayout (){
 	while(true){
 
 		yield take(REQUEST_GRID_FOUR);
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/provider";
 		let backendUrl = window.location.host;
@@ -73,7 +73,7 @@ export function * sendFile() {
 		let facultatif = grid.map(champ => {
 			return {id: champ.idattrfournisseur, value: champ.value}
 		});
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/providers/create";
 		let backendUrl = window.location.host;
@@ -90,7 +90,11 @@ export function * sendFile() {
 			codepostal: requiredFields.codePostal,
 			code: requiredFields.code,
 			facultatif: facultatif,
-			newcontacts: arrayContacts
+			newcontacts: arrayContacts,
+			petit_grp: requiredFields.lilGroup,
+			grand_grp: requiredFields.bigGroup,
+			nb_min_petit_grp: requiredFields.employesLilGroup,
+			nb_min_grand_grp: requiredFields.employesBigGroup
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -132,8 +136,8 @@ export function * updateFile() {
 		console.log(updatedContacts);
 		console.log(delcontacts);
 		console.log(facultatif);
-		
-		
+
+
 		//communication avec server
 		let server = "http://localhost:3002/providers/update";
 		let backendUrl = window.location.host;
@@ -154,6 +158,10 @@ export function * updateFile() {
 			updtcontacts: updatedContacts,
 			newcontacts: newcontacts,
 			delcontacts: delcontacts,
+			petit_grp: requiredFields.lilGroup,
+			grand_grp: requiredFields.bigGroup,
+			nb_min_petit_grp: requiredFields.employesLilGroup,
+			nb_min_grand_grp: requiredFields.employesBigGroup
 		},config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -180,7 +188,7 @@ export function * updatePositions() {
 		let {
 			newItem,
 		} = positions.positions;
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/provider/display";
 		let backendUrl = window.location.host;
@@ -261,7 +269,7 @@ export function * sendUpdateField() {
 			nameField,
 			id
 		} = field.field;
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/provider";
 		let backendUrl = window.location.host;
@@ -373,7 +381,11 @@ export function* requestSupplier() {
 						codePostal: supplier.codepostal,
 						telephone: supplier.tel_principal,
 						extension: supplier.ext_tel_principal,
-						code: supplier.code
+						code: supplier.code,
+						lilGroup: supplier.petit_grp,
+						bigGroup: supplier.grand_grp,
+						employesLilGroup: supplier.nb_min_petit_grp,
+						employesBigGroup: supplier.nb_min_grand_grp
 					};
 					let facultatif = response.data.message.facultatif;
 					store.dispatch(changeRequiredSup(requiredFields));

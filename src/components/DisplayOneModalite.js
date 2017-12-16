@@ -18,7 +18,7 @@ class DisplayOneModalite extends React.Component{
 			//on get l'index du module choisi dans modulesChoisis et on cherche la valeur associée si elle existe...
 			let idModuleDansContrat;
 			for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
-				if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
+				if(parseInt(this.props.formState.contrat.modulesChoisis[i].idModule,10) === parseInt(this.props.idModule,10)){
 					idModuleDansContrat = i;
 				}
 			}
@@ -26,6 +26,7 @@ class DisplayOneModalite extends React.Component{
 			let idValue;
 			let value;
 			let idModaliteDsModule;
+			console.log("IDMODULEDSCONTRATDESAMERELAPUTEQUIMANGEDESSUSHIS"+idModuleDansContrat);
 			this.props.formState.contrat.modulesChoisis[idModuleDansContrat].modalites.forEach((element,index)=>{
 
 				if(element.idModalite === parseInt(this.props.modalite.idModalite,10)){
@@ -150,7 +151,7 @@ class DisplayOneModalite extends React.Component{
 		//si on passe à "", alors on supprime la ligne de la modalité du tableau
 		if(event.target.value === ""){
 			let idModaliteDansLarray;
-			let contains = false
+			let contains = false;
 			for(let j = 0; j < modalitesChoisies.length; j++){
 				if(modalitesChoisies[j].idModalite === this.props.modalite.idModalite)
 					contains = true;

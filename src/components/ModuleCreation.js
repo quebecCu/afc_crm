@@ -6,6 +6,7 @@ class ModuleCreation extends React.Component{
 		super(props);
 		this._onChangeModule=this._onChangeModule.bind(this);
 		this._handleClickMoins=this._handleClickMoins.bind(this);
+
 	}
 
 	//Si on vient d'une creation de contrat classique rien n'est prérempli
@@ -14,10 +15,18 @@ class ModuleCreation extends React.Component{
 		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis),10);
 
 		if(this.props.view === "create" && this.props.idComponent < modulesChoisis.length){
-			this.value = modulesChoisis[this.props.idComponent].idModule;
+			/*this.props.formState.modules.forEach((element,index)=>{
+				if(parseInt(this.props.formState.contrat.modulesChoisis[this.props.idComponent].idModule,10) === parseInt(element.idModule,10)){
+					this.label = element.nom;
+					console.log(this.label);
+				}
+			});*/
+			this.value=parseInt(modulesChoisis[this.props.idComponent].idModule,10);
 			this.idModule = this.value;
 			this.isSelected = true;
 		}
+
+		console.log(this.value);
 	}
 
 	_onChangeModule(event){
@@ -152,7 +161,7 @@ class ModuleCreation extends React.Component{
 				</select>
 			</div >
 			{
-				(this.isSelected && (document.getElementById("module"+(this.props.idComponent)).value !== "")) &&
+				(this.isSelected && this.value !== "") &&
 				<div className="d-flex flex-wrap">
 					<ModalitesDisplay idModule={this.idModule} view={this.props.view}
 									  formState = {this.props.formState} changeForm={this.props.changeForm}/>

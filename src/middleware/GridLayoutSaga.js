@@ -29,7 +29,7 @@ export function * getGridLayout (){
 
 		let view = yield take(REQUEST_GRID);
 		let {id} = view;
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/customer";
 		let backendUrl = window.location.host;
@@ -183,7 +183,7 @@ export function * requestEtats (){
 	while(true){
 
 		let view = yield take(GET_ETATS);
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/clients/states";
 		let backendUrl = window.location.host;
@@ -447,7 +447,7 @@ export function * updatePositions() {
 		let {
 			newItem,
 		} = positions.positions;
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer/display";
 		let backendUrl = window.location.host;

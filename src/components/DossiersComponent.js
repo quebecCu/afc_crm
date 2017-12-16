@@ -131,7 +131,18 @@ class DossiersComponent extends Component {
 					row.push(
 						<tr onClick={this.handleClick.bind(this, element)} key={index}>
 							<td>{element.nom}</td>
-							<td>{element.min_emp1}</td>
+							{
+								element.petit_groupe && <td>{element.nb_min_petit_groupe}</td>
+							}
+							{
+								!element.petit_groupe && <td>Petits groupes non gérés</td>
+							}
+							{
+								element.grand_groupe && <td>{element.nb_min_grand_groupe}</td>
+							}
+							{
+								!element.grand_groupe && <td>Grands groupes non gérés</td>
+							}
 							<td>{element.contact}</td>
 							<td>{element.code}</td>
 						</tr>

@@ -9,7 +9,30 @@ class ListContractsComponent extends React.Component {
 	}
 
 	_handleClick(contract) {
-		console.log(contract);
+		let links = this.props.linksSubContract;
+		let check = true;
+		links.forEach(link => {
+			if(link.idContract === contract.idcontrat) {
+				check = false;
+			}
+		});
+		if(check) {
+			this.props.listContracts.forEach((element, index) => {
+				let duplicate = false;
+				this.props.listContracts.forEach((element2, index2)=> {
+					if(element.idcontrat === element2.idcontrat && index > index2) {
+						duplicate = true;
+					}
+				});
+				if(!duplicate && contract.idcontrat === element.idcontrat) {
+					links.push({name: element.police, view: 'display', idContract: contract.idcontrat});
+				}
+			});
+			this.props.addSubContractNav(links);
+		}
+		this.props.changeViewContract("display");
+		this.props.displaySubContractNav(true);
+		this.props.getContract(contract.idcontrat);
 	}
 
 	_handleClickHead(n) {

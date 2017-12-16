@@ -10,7 +10,8 @@ import {
 let initialState = {
     formState:{
         nomEntreprise:'',
-        nombreEmployes: '',
+        employesLilGroup: '',
+		employesBigGroup: '',
         nomContact: '',
         code: ''
     },
