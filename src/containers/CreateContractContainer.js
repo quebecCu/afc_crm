@@ -130,7 +130,6 @@ class CreateContractContainer extends React.Component {
 				//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
 				modulesToUpdate.push({idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate});
 			});
-			console.log(modulesToUpdate);
 			let toUpdate = {
 				idAssureur: contract.idfournisseur,
 				idAGA: '',//LOOOOP,
@@ -188,7 +187,6 @@ class CreateContractContainer extends React.Component {
 					solde: ''
 				}
 			};
-			console.log(contract);
 			this.props.changeForm({...formState, intModulesToDisplay: intModulesToDisplay, modulesToDisplay:modulesToDisplay,
 				contrat:toUpdate})
 		}
@@ -303,11 +301,7 @@ class CreateContractContainer extends React.Component {
 					if(parseInt(el.idModule,10)===parseInt(element.idModule,10)){
 						contains = true;
 						let modalitesInitiales = element.modalites;
-						 console.log("modalinit");
-						 console.log(modalitesInitiales);
-						 console.log("modalModif");
 						let modalitesModifiees = el.modalites;
-						console.log(modalitesModifiees);
 
 						//on crée l'objet monstrueux <3 (dans chaque module a update on regarde les modalités à suppr/créer/update
 						let modalitesToCreate=[];
@@ -366,9 +360,7 @@ class CreateContractContainer extends React.Component {
 					modulesToCreate.push(element);
 				}
 			});
-			console.log(modulesToUpdate);
-			console.log(modulesToDelete);
-			console.log(modulesToCreate);
+
 		}
 
 		this._validateForm();
