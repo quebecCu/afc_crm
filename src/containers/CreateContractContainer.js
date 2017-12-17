@@ -15,6 +15,7 @@ import GridOptionnalContract from "../components/GridOptionnalContract";
 import {bindClientData, getClientRequest} from "../actions/crmClientList";
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
 import LoadingAnimation from "../components/LoadingAnimation";
+import ModalForModalites from "../components/modal/ModalForModalites";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -463,6 +464,9 @@ class CreateContractContainer extends React.Component {
 
 					<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
 					<ContractRemunerationContainer formState={formState} changeForm={this.props.changeForm}/>
+
+					<ModalForModalites/>
+
 					{
 						formState.facultatif.map(element => {
 							return (
