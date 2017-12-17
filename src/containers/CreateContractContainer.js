@@ -57,8 +57,8 @@ class CreateContractContainer extends React.Component {
 					notes: '',
 					historiqueTaux: {
 						diff: '',
-						anneedep: '',
-						anneefin: '',
+						annee_dep: '',
+						annee_fin: '',
 						vie: '',
 						dma: '',
 						pac: '',
@@ -138,9 +138,11 @@ class CreateContractContainer extends React.Component {
 					modalites: modalitesToUpdate
 				});
 			});
+
+
 			let toUpdate = {
 				idAssureur: contract.idfournisseur,
-				idAGA: '',//LOOOOP,
+				idAGA: contract.idchambrecommerce,//LOOOOP,
 				idContract: contract.idcontrat,
 				idClient: fromClient.idClient,
 				modulesChoisis: modulesToUpdate,
@@ -196,13 +198,67 @@ class CreateContractContainer extends React.Component {
 					solde: ''
 				}
 			};
+
+			let dateDep = parseInt(contract.date_signature[0]+contract.date_signature[1]+contract.date_signature[2]+contract.date_signature[3],10);
+			contract.remuneration.forEach(element=>{
+				if(parseInt(element.annee_dep,10) === dateDep){
+					toUpdate.remuneration.vie = element.vie;
+					toUpdate.remuneration.ct = element.ct;
+					toUpdate.remuneration.lt = element.lt;
+					toUpdate.remuneration.dent = element.dentaire;
+					toUpdate.remuneration.mg = element.mg;
+					toUpdate.remuneration.pae = element.pae;
+					toUpdate.remuneration.notes = element.notes;
+					toUpdate.remuneration.recu = element.date_payée_base;
+					toUpdate.remuneration.base = element.montant_payé_base;
+					toUpdate.remuneration.boni = element.montant_payé_boni;
+					toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
+					toUpdate.remuneration.total = element.rémunération_totale;
+					toUpdate.remuneration.idConseiller = element.idconseiller;
+					toUpdate.remuneration.bdu = element.montant_dû;
+					toUpdate.remuneration.paye = element.montant_payé;
+					toUpdate.remuneration.dpaye = element.date_payée;
+
+				}
+			});
+
+			contract.historique_taux.forEach(element=> {
+				if (parseInt(element.annee_dep, 10) === dateDep) {
+					toUpdate.historiqueTaux.diff = element.différence;
+					toUpdate.historiqueTaux.anneedep = element.annee_dep;
+					toUpdate.historiqueTaux.anneefin = element.annee_fin;
+					toUpdate.historiqueTaux.vie = element.vie;
+					toUpdate.historiqueTaux.dma = element.dma;
+					toUpdate.historiqueTaux.pac = element.pac;
+					toUpdate.historiqueTaux.ct = element.ct;
+					toUpdate.historiqueTaux.lt = element.lt;
+					toUpdate.historiqueTaux.amc_ind = element.amc_ind;
+					toUpdate.historiqueTaux.amc_mono = element.amc_mono;
+					toUpdate.historiqueTaux.amc_couple = element.amc_couple;
+					toUpdate.historiqueTaux.amc_fam = element.amc_fam;
+					toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
+					toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
+					toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
+					toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
+					toUpdate.historiqueTaux.mg_ind = element.mg_ind;
+					toUpdate.historiqueTaux.mg_mono = element.mg_mono;
+					toUpdate.historiqueTaux.mg_couple = element.mg_couple;
+					toUpdate.historiqueTaux.mg_fam = element.mg_fam;
+					toUpdate.historiqueTaux.pae = element.pae;
+					toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
+					toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
+				}
+			});
+
 			console.log(toUpdate);
 			this.props.changeForm({
 				...formState,
 				intModulesToDisplay: intModulesToDisplay,
 				modulesToDisplay: modulesToDisplay,
 				contrat: toUpdate
-			})
+			});
+
+
 		}
 
 
