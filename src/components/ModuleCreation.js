@@ -16,21 +16,13 @@ class ModuleCreation extends React.Component{
 		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis),10);
 
 		if(this.props.view === "updatecontract" && this.props.idComponent < modulesChoisis.length){
-			/*this.props.formState.modules.forEach((element,index)=>{
-				if(parseInt(this.props.formState.contrat.modulesChoisis[this.props.idComponent].idModule,10) === parseInt(element.idModule,10)){
-					this.label = element.nom;
-					console.log(this.label);
-				}
-			});*/
+
 			this.notes = modulesChoisis[this.props.idComponent].module_notes;
 			this.value=parseInt(modulesChoisis[this.props.idComponent].idModule,10);
 			this.idModule = this.value;
 			this.isSelected = true;
 		}
 
-		/*console.log(this.value);
-		console.log("TES MOOORTS");
-		console.log('PHILIPPPPE');*/
 	}
 
 	_onChangeModule(event){
@@ -56,6 +48,10 @@ class ModuleCreation extends React.Component{
 		this.idModule=event.target.value;
 		this.value=this.idModule;
 		this.isSelected=true;
+		console.log("IDMODULE"+this.idModule);
+		console.log(this.isSelected);
+		console.log(this.value !== "");
+		console.log(this.isSelected && this.value !== "");
 		document.getElementById("optionNull"+this.props.idComponent).setAttribute('disabled',true);
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, modulesChoisis:modulesContrat},
 					modulesToDisplay:arrayDaffichage});
@@ -106,9 +102,7 @@ class ModuleCreation extends React.Component{
 			document.getElementById("module"+(modulesChoisis.length)).value = "";
 
 			this.isSelected = false
-			/*document.getElementById("module"+event.target.id).setAttribute('value', "");
-			document.getElementById("module"+event.target.id).value = "";
-			this.isSelected = false;*/
+
 		}
 		else{
 			document.getElementById("module"+event.target.id).setAttribute('value', "");

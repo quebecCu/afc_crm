@@ -160,12 +160,14 @@ class DisplayOneModalite extends React.Component {
 			let contains = false;
 			console.log("passenprops" + this.props.modalite.idModalite);
 
-			for (let j = 0; j < modalitesChoisies.length; j++) {
-				if (parseInt(modalitesChoisies[j].idModalite, 10) === parseInt(this.props.modalite.idModalite, 10))
+
+			for(let j = 0; j < modalitesChoisies.length; j++){
+				if(parseInt(modalitesChoisies[j].idModalite,10) === parseInt(this.props.modalite.idModalite,10)) {
 					console.log("DSARRAY?" + modalitesChoisies[j].idModalite);
-				contains = true;
-				idModaliteDansLarray = j;
-				console.log("idModDsArray" + j);
+					contains = true;
+					idModaliteDansLarray = j;
+					console.log("idModDsArray" + j);
+				}
 			}
 			if (contains) {
 				modalitesChoisies.splice(idModaliteDansLarray, 1);
