@@ -7,6 +7,7 @@ import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import ContractFile from "../components/ContractFile";
 import {changeLoading, changeViewDashboard} from "../actions/crmDashboard";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
+import {changeViewContract} from "../actions/crmContract";
 import {getClientRequest} from "../actions/crmClientList";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
 import {
@@ -32,6 +33,7 @@ class ContractPage extends Component {
 								  linksSubSupplier={linksSubSupplier}
 								  linksSubCustomer={linksSubCustomer}
 								  lilLayout={lilLayout}
+								  changeViewContract={this.props.changeViewContract}
 								  changeViewCollective={this.props.changeViewCollective}
 								  changeViewDashboard={this.props.changeViewDashboard}
 								  changeLoading={this.props.changeLoading}
@@ -64,6 +66,9 @@ function mapStateToProps(state) {
 //fonctions
 const mapDispatchToProps = (dispatch) => {
 	return {
+		changeViewContract: (newView) => {
+			dispatch(changeViewContract(newView));
+		},
 		changeViewSuppliers: (newView) => {
 			dispatch(changeViewSuppliers(newView));
 		},

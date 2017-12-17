@@ -14,7 +14,7 @@ class DisplayOneModalite extends React.Component{
 	}
 
 	componentDidMount(){
-		if(this.props.view==="create"){
+		if(this.props.view==="updatecontract"){
 			//on get l'index du module choisi dans modulesChoisis et on cherche la valeur associée si elle existe...
 			let idModuleDansContrat;
 			for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
@@ -26,7 +26,6 @@ class DisplayOneModalite extends React.Component{
 			let idValue;
 			let value;
 			let idModaliteDsModule;
-			console.log("IDMODULEDSCONTRATDESAMERELAPUTEQUIMANGEDESSUSHIS"+idModuleDansContrat);
 			this.props.formState.contrat.modulesChoisis[idModuleDansContrat].modalites.forEach((element,index)=>{
 
 				if(element.idModalite === parseInt(this.props.modalite.idModalite,10)){
@@ -60,10 +59,10 @@ class DisplayOneModalite extends React.Component{
 	_onChangeTextField(event){
 		this.value=event.target.value;
 		//quand on change un textfield c'est forcément un "autre" donc on FIESTA
-		let modaliteModifiee = {idValeur : 1, idModalite: this.props.modalite.idModalite,valeur:event.target.value};
+		let modaliteModifiee = {idModalite: this.props.modalite.idModalite, souscription_notes:'', valeur:event.target.value, idValeur : 1};
 		let idModuleDansContrat;
 		for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
-			if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
+			if(parseInt(this.props.formState.contrat.modulesChoisis[i].idModule,10) === parseInt(this.props.idModule,10)){
 				idModuleDansContrat = i;
 			}
 		}
@@ -140,22 +139,27 @@ class DisplayOneModalite extends React.Component{
 		for(let i = 0; i < this.props.formState.contrat.modulesChoisis.length; i++){
 
 			if(this.props.formState.contrat.modulesChoisis[i]){
-				if(this.props.formState.contrat.modulesChoisis[i].idModule === this.props.idModule){
+				if(parseInt(this.props.formState.contrat.modulesChoisis[i].idModule,10) === parseInt(this.props.idModule,10)){
 					idModuleDansContrat = i;
 				}
 			}
 		}
 		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis));
+
 		let modalitesChoisies = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis[idModuleDansContrat].modalites));
 
 		//si on passe à "", alors on supprime la ligne de la modalité du tableau
 		if(event.target.value === ""){
 			let idModaliteDansLarray;
 			let contains = false;
+			console.log("passenprops"+this.props.modalite.idModalite);
+
 			for(let j = 0; j < modalitesChoisies.length; j++){
-				if(modalitesChoisies[j].idModalite === this.props.modalite.idModalite)
+				if(parseInt(modalitesChoisies[j].idModalite,10) === parseInt(this.props.modalite.idModalite,10))
+					console.log("DSARRAY?"+modalitesChoisies[j].idModalite);
 					contains = true;
 					idModaliteDansLarray = j;
+					console.log("idModDsArray"+j);
 			}
 			if(contains){
 				modalitesChoisies.splice(idModaliteDansLarray, 1);
@@ -169,8 +173,7 @@ class DisplayOneModalite extends React.Component{
 					idValeur = element.idValeur;
 				}
 			});
-
-			let modaliteModifiee = {idValeur: idValeur, idModalite:this.props.modalite.idModalite, valeur:event.target.value};
+			let modaliteModifiee = {idModalite:this.props.modalite.idModalite, souscription_notes:'', valeur:event.target.value, idValeur: idValeur};
 
 			//si le formState.contrat.modulesChoisis[placedeidModuleChoisi].modalites est vide, on push dedans
 			//sinon si le module choisi est déjà dans le tableau ou le modifie
@@ -278,6 +281,10 @@ class DisplayOneModalite extends React.Component{
 		return <div>
 			<div className="form-group column">
 				<label id={this.props.modalite.idModalite} className="col-form-label">{this.props.modalite.nom}</label>
+				<div className="tooltipp" style={{cursor:"pointer", position: 'relative', right: '-8px', top: 0}}>
+					<span className="fa fa-info"/>
+					<span className="tooltipptext">{this.props.modalite.description}</span>
+				</div>
 				{
 					this._toDisplay()
 				}

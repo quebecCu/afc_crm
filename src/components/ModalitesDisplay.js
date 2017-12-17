@@ -4,6 +4,12 @@ import DisplayOneModalite from './DisplayOneModalite';
 class ModalitesDisplay extends React.Component{
 	constructor(props){
 		super(props);
+		this.props.formState.modules.forEach(element=>{
+			if(parseInt(element.idModule,10)===parseInt(this.props.idModule, 10)){
+				this.state=({modalites: element.modalites});
+				//this.state.modalites = element.modalites;
+			}
+		});
 
 	}
 
@@ -21,12 +27,7 @@ class ModalitesDisplay extends React.Component{
 	//loop dans formState.modules pour trouver les bonnes modalités
 
 	render(){
-		this.props.formState.modules.forEach(element=>{
-			if(element.idModule===parseInt(this.props.idModule, 10)){
-				this.state = {modalites: element.modalites};
-				//this.state.modalites = element.modalites;
-			}
-		});
+
 		return <div className="d-flex flex-wrap justify-content-around">
 			{
 				this.state.modalites.map(element=>{

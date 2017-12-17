@@ -55,6 +55,16 @@ class ContractsContainer extends React.Component {
 										 changeLoading={this.props.changeLoading}
 										 loading={loading}
 										 view={view}
+										 titrebouton="Créer le contrat"
+				/>
+			}
+			{
+				view === "updatecontract" &&
+				<CreateContractContainer comesFrom="update"
+										 changeLoading={this.props.changeLoading}
+										 loading={loading}
+										 view={view}
+										 titrebouton="Modifier le contrat"
 				/>
 			}
 			{

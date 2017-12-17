@@ -144,7 +144,7 @@ class ContractFile extends React.Component {
 	}
 
 	_handleModify(event) {
-		this.props.changeView("updatecontract");
+		this.props.changeViewContract("updatecontract");
 		//this.props.changeIdDisplay(event.target.value);
 	}
 

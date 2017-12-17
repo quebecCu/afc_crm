@@ -5,6 +5,7 @@ class ModuleCreation extends React.Component{
 	constructor(props){
 		super(props);
 		this._onChangeModule=this._onChangeModule.bind(this);
+		this._onChangeNotes=this._onChangeNotes.bind(this);
 		this._handleClickMoins=this._handleClickMoins.bind(this);
 
 	}
@@ -14,19 +15,22 @@ class ModuleCreation extends React.Component{
 	componentDidMount(){
 		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis),10);
 
-		if(this.props.view === "create" && this.props.idComponent < modulesChoisis.length){
+		if(this.props.view === "updatecontract" && this.props.idComponent < modulesChoisis.length){
 			/*this.props.formState.modules.forEach((element,index)=>{
 				if(parseInt(this.props.formState.contrat.modulesChoisis[this.props.idComponent].idModule,10) === parseInt(element.idModule,10)){
 					this.label = element.nom;
 					console.log(this.label);
 				}
 			});*/
+			this.notes = modulesChoisis[this.props.idComponent].module_notes;
 			this.value=parseInt(modulesChoisis[this.props.idComponent].idModule,10);
 			this.idModule = this.value;
 			this.isSelected = true;
 		}
 
-		console.log(this.value);
+		/*console.log(this.value);
+		console.log("TES MOOORTS");
+		console.log('PHILIPPPPE');*/
 	}
 
 	_onChangeModule(event){
@@ -39,7 +43,7 @@ class ModuleCreation extends React.Component{
 		let arrayDaffichage = JSON.parse(JSON.stringify(this.props.formState.modulesToDisplay));
 
 		if(this.props.idComponent === modulesContrat.length){
-			modulesContrat.push({idModule: event.target.value, modalites:[]});
+			modulesContrat.push({idModule: event.target.value, module_notes:"", modalites:[]});
 			arrayDaffichage.push(event.target.value);
 		}
 		//else if idComponent > contrat.length et que ça créerait un null si on le push a la place de idcomponent...
@@ -50,6 +54,7 @@ class ModuleCreation extends React.Component{
 
 
 		this.idModule=event.target.value;
+		this.value=this.idModule;
 		this.isSelected=true;
 		document.getElementById("optionNull"+this.props.idComponent).setAttribute('disabled',true);
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, modulesChoisis:modulesContrat},
@@ -58,6 +63,15 @@ class ModuleCreation extends React.Component{
 
 
 	}
+
+	_onChangeNotes(event){
+		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis),10);
+		this.notes = event.target.value;
+		modulesChoisis[this.props.idComponent].module_notes = this.notes;
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, modulesChoisis:modulesChoisis}});
+	}
+
+
 	_handleClickMoins(event){
 		//on get la position de l'ID du module dans le modulesToDisplay pour le dégager du tableau
 
@@ -167,7 +181,8 @@ class ModuleCreation extends React.Component{
 									  formState = {this.props.formState} changeForm={this.props.changeForm}/>
 				</div>
 			}
-			<textarea id={"textarea"+this.props.idComponent} placeholder="Notes relatives au module " className="form-control"
+			<textarea id={"textarea"+this.props.idComponent} placeholder="Notes relatives au module " value={this.notes}
+					  onChange={this._onChangeNotes} className="form-control"
 			/>
 			<hr />
 			{

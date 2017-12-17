@@ -39,31 +39,109 @@ class CreateContractContainer extends React.Component {
 		this.props.bindClientData({
 			facultatif: []
 		});
-		let {formState} = this.props.crmContract;
+		let {formState, contractDisplay} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
-		this.props.changeForm({
-			...formState, intModulesToDisplay: 2, modulesToDisplay: ["4", "1"], contrat: {
-				...formState.contrat,
-				idAssureur: '',
-				idAGA: '',
-				modulesChoisis: [{
-					idModule: "4",
-					modalites: [{idValeur: 23, idModalite: 10, valeur: "0 jours"},
-						{idValeur: 26, idModalite: 12, valeur: "16 semaines"}]
+		if (this.props.view === "create") {
+			this.props.changeForm({
+				...formState, intModulesToDisplay: 1, modulesToDisplay: [], contrat: {
+					...formState.contrat,
+					idAssureur: '',
+					idAGA: '',
+					modulesChoisis: [],
+					numPolice: '',
+					dateEmission: '',
+					moisRenouv: '',
+					notes: '',
+					historiqueTaux: {
+						diff: '',
+						anneedep: '',
+						anneefin: '',
+						vie: '',
+						dma: '',
+						pac: '',
+						ct: '',
+						lt: '',
+						amc_ind: '',
+						amc_mono: '',
+						amc_couple: '',
+						amc_fam: '',
+						dent_ind: '',
+						dent_mono: '',
+						dent_couple: '',
+						dent_fam: '',
+						mg_ind: '',
+						mg_mono: '',
+						mg_couple: '',
+						mg_fam: '',
+						pae: '',
+						prime_ms: '',
+						prime_an: ''
+					},
+					remuneration: {
+						vie: '',
+						ct: '',
+						lt: '',
+						amc: '',
+						dent: '',
+						mg: '',
+						pae: '',
+						notes: '',
+						recu: '',
+						base: '',
+						boni: '',
+						total: '',
+						gtotal: '',
+						idConseiller: '',
+						split: '',
+						bdu: '',
+						paye: '',
+						dpaye: '',
+						solde: ''
 
-				},
-					{
-						idModule: "1",
-						modalites: [{idValeur: 1, idModalite: 5, valeur: "edrg"},
-							{idValeur: 1, idModalite: 4, valeur: 23}]
 					}
-				],
-				numPolice: '',
-				dateEmission: '',
-				moisRenouv: '',
-				notes: '',
-				historiqueTaux: {
+				}
+			})
+		}
+		else {
+
+			let contract = JSON.parse(JSON.stringify(contractDisplay));
+			let modulesChoisis = contract.souscriptions;
+			let modulesToUpdate=[];
+			let intModulesToDisplay = modulesChoisis.length;
+			let modulesToDisplay=[];
+			modulesChoisis.forEach((element,index)=>{
+				modulesToDisplay.push(element.id.toString());
+				let modalitesToUpdate=[];
+				element.subscriptions.forEach(subs=>{
+					/*let subsToPush={
+						idModalite:subs.id,
+						souscription_notes:subs.souscription_notes,
+						valeur:subs.valeur,
+						idValeur: ''//aller chercher dans le backend :(
+					};*/
+					modalitesToUpdate.push({
+						idModalite:subs.id,
+						souscription_notes:subs.souscription_notes,
+						valeur:subs.valeur,
+						idValeur: subs.idvaleur
+					});
+				});
+				//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
+				modulesToUpdate.push({idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate});
+			});
+			console.log(modulesToUpdate);
+			let toUpdate = {
+				idAssureur: contract.idfournisseur,
+				idAGA: '',//LOOOOP,
+				idContract:contract.idcontrat,
+				modulesChoisis: modulesToUpdate,
+				modulesInitiaux: modulesToUpdate,
+				numPolice: contract.police,
+				dateEmission: contract.date_signature,
+				moisRenouv: contract.mois_renouvellement,
+				notes: contract.notes,
+				historiqueTaux: { //Aller chercher la bonne année?
 					diff: '',
 					anneedep: '',
 					anneefin: '',
@@ -88,7 +166,7 @@ class CreateContractContainer extends React.Component {
 					prime_ms: '',
 					prime_an: ''
 				},
-				remuneration: {
+				remuneration: { //idem avec année depart et annee fin ?
 					vie: '',
 					ct: '',
 					lt: '',
@@ -108,14 +186,18 @@ class CreateContractContainer extends React.Component {
 					paye: '',
 					dpaye: '',
 					solde: ''
-
 				}
-			}
-		})
+			};
+			console.log(contract);
+			this.props.changeForm({...formState, intModulesToDisplay: intModulesToDisplay, modulesToDisplay:modulesToDisplay,
+				contrat:toUpdate})
+		}
+
+
 	}
 
 	componentDidUpdate() {
-		if(!this.props.loading) {
+		if (!this.props.loading) {
 			this._resetStyle();
 		}
 	}
@@ -202,8 +284,93 @@ class CreateContractContainer extends React.Component {
 	}
 
 	_onClickValidate(event) {
-		//let {formState} = this.props.crmContract;
+		let {formState} = this.props.crmContract;
 		//let isValid = this._validateForm();
+		//si on est sur un update, on vérifie les tableaux initiaux/modifié pour envoyer au backend du toupdate, todelete ou tocreate
+		if(this.props.view==="updatecontract"){
+			let modulesInitiaux = JSON.parse(JSON.stringify(formState.contrat.modulesInitiaux));
+			let modulesModifies = JSON.parse(JSON.stringify(formState.contrat.modulesChoisis));
+			let modulesToUpdate=[];
+			let modulesToDelete=[];
+			let modulesToCreate=[];
+			//D'abord on check les modules a update pis ceux à delete (si ds initialModules qqchose n'est pas contenu dans les modules
+			//a update, on le supprime
+			modulesInitiaux.forEach((element) => {
+				let contains = false;
+				let newElement = element;
+
+				modulesModifies.forEach(el=>{
+					if(parseInt(el.idModule,10)===parseInt(element.idModule,10)){
+						contains = true;
+						let modalitesInitiales = element.modalites;
+						 console.log("modalinit");
+						 console.log(modalitesInitiales);
+						 console.log("modalModif");
+						let modalitesModifiees = el.modalites;
+						console.log(modalitesModifiees);
+
+						//on crée l'objet monstrueux <3 (dans chaque module a update on regarde les modalités à suppr/créer/update
+						let modalitesToCreate=[];
+						let modalitesToUpdate=[];
+						let modalitesToDelete=[];
+						modalitesInitiales.forEach(modInit=>{
+							let cont=false;
+							modalitesModifiees.forEach(modMod=>{
+								if(parseInt(modInit.idModalite,10)===parseInt(modMod.idModalite,10)){
+									cont=true;
+									modalitesToUpdate.push(modMod);
+								}
+
+							});
+							if(!cont){
+								modalitesToDelete.push(modInit.idModalite);
+							}
+						});
+						//idem now pour les modalites a créer on parcourt dans l'autre senssss :)
+						modalitesModifiees.forEach(modMod=>{
+							let cont=false;
+							modalitesInitiales.forEach(modInit=>{
+								if(parseInt(modMod.idModalite,10)===parseInt(modInit.idModalite,10)){
+									cont=true;
+								}
+							});
+							if(!cont){
+								modalitesToCreate.push(modMod);
+							}
+						});
+						delete newElement["modalites"];
+						newElement["modalitesToCreate"]=modalitesToCreate;
+						newElement["modalitesToUpdate"]=modalitesToUpdate;
+						newElement["modalitesToDelete"]=modalitesToDelete;
+
+					}
+				});
+				if(contains){
+					//on donne a l'élément modalitesToUpdate,toCreate et toDelete
+
+					modulesToUpdate.push(newElement);
+				}
+				else{
+					modulesToDelete.push(element.idModule);
+				}
+			});
+			//Now on loop dans l'autre sens pour savoir les modules à créer
+			modulesModifies.forEach(element=>{
+				let contains=false;
+				modulesInitiaux.forEach(el=>{
+					if(parseInt(el.idModule,10)===parseInt(element.idModule,10)){
+						contains=true;
+					}
+				});
+				if(!contains){
+					modulesToCreate.push(element);
+				}
+			});
+			console.log(modulesToUpdate);
+			console.log(modulesToDelete);
+			console.log(modulesToCreate);
+		}
+
 		this._validateForm();
 	}
 
@@ -356,7 +523,7 @@ class CreateContractContainer extends React.Component {
 			<button onClick={this._handleStatic}>Rendre le grid static</button>
 			<button onClick={this._handleNonStatic}>Rendre le grid non-static</button>
 
-			<button id="validateForm" onClick={this._onClickValidate}>Créer le contrat</button>
+			<button id="validateForm" onClick={this._onClickValidate}>{this.props.titrebouton}</button>
 		</div>;
 	}
 }
