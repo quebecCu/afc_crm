@@ -16,6 +16,9 @@ class SuggestionClients extends React.Component {
 			value: '',
 			suggestions: []
 		};
+		if(this.props.client) {
+			this.props.getClient(this.props.client.idClient);
+		}
 	}
 
 	// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
@@ -68,11 +71,23 @@ class SuggestionClients extends React.Component {
 
 	render() {
 		const { value, suggestions } = this.state;
-		const inputProps = {
-			placeholder: "Tapez le nom d'un client",
-			value,
-			onChange: this.onChange
-		};
+		const disabled = true;
+		let inputProps;
+		if(this.props.client) {
+			inputProps = {
+				placeholder: "Tapez le nom d'un client",
+				value: this.props.client.name,
+				onChange: this.onChange,
+				disabled,
+			};
+		}
+		else {
+			inputProps = {
+				placeholder: "Tapez le nom d'un client",
+				value,
+				onChange: this.onChange
+			};
+		}
 
 		return (
 			<Autosuggest

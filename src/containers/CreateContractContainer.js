@@ -40,7 +40,7 @@ class CreateContractContainer extends React.Component {
 		this.props.bindClientData({
 			facultatif: []
 		});
-		let {formState, contractDisplay} = this.props.crmContract;
+		let {formState, contractDisplay, fromClient} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		if (this.props.view === "create") {
@@ -105,16 +105,15 @@ class CreateContractContainer extends React.Component {
 			})
 		}
 		else {
-
 			let contract = JSON.parse(JSON.stringify(contractDisplay));
 			let modulesChoisis = contract.souscriptions;
-			let modulesToUpdate=[];
+			let modulesToUpdate = [];
 			let intModulesToDisplay = modulesChoisis.length;
-			let modulesToDisplay=[];
-			modulesChoisis.forEach((element,index)=>{
+			let modulesToDisplay = [];
+			modulesChoisis.forEach((element, index) => {
 				modulesToDisplay.push(element.id.toString());
-				let modalitesToUpdate=[];
-				element.subscriptions.forEach(subs=>{
+				let modalitesToUpdate = [];
+				element.subscriptions.forEach(subs => {
 					/*let subsToPush={
 						idModalite:subs.id,
 						souscription_notes:subs.souscription_notes,
@@ -122,19 +121,24 @@ class CreateContractContainer extends React.Component {
 						idValeur: ''//aller chercher dans le backend :(
 					};*/
 					modalitesToUpdate.push({
-						idModalite:subs.id,
-						souscription_notes:subs.souscription_notes,
-						valeur:subs.valeur,
+						idModalite: subs.id,
+						souscription_notes: subs.souscription_notes,
+						valeur: subs.valeur,
 						idValeur: subs.idvaleur
 					});
 				});
 				//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
-				modulesToUpdate.push({idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate});
+				modulesToUpdate.push({
+					idModule: element.id,
+					module_notes: element.module_notes,
+					modalites: modalitesToUpdate
+				});
 			});
 			let toUpdate = {
 				idAssureur: contract.idfournisseur,
 				idAGA: '',//LOOOOP,
-				idContract:contract.idcontrat,
+				idContract: contract.idcontrat,
+				idClient: fromClient.idClient,
 				modulesChoisis: modulesToUpdate,
 				modulesInitiaux: modulesToUpdate,
 				numPolice: contract.police,
@@ -188,8 +192,13 @@ class CreateContractContainer extends React.Component {
 					solde: ''
 				}
 			};
-			this.props.changeForm({...formState, intModulesToDisplay: intModulesToDisplay, modulesToDisplay:modulesToDisplay,
-				contrat:toUpdate})
+			console.log(toUpdate);
+			this.props.changeForm({
+				...formState,
+				intModulesToDisplay: intModulesToDisplay,
+				modulesToDisplay: modulesToDisplay,
+				contrat: toUpdate
+			})
 		}
 
 
@@ -286,78 +295,78 @@ class CreateContractContainer extends React.Component {
 		let {formState} = this.props.crmContract;
 		//let isValid = this._validateForm();
 		//si on est sur un update, on vérifie les tableaux initiaux/modifié pour envoyer au backend du toupdate, todelete ou tocreate
-		if(this.props.view==="updatecontract"){
+		if (this.props.view === "updatecontract") {
 			let modulesInitiaux = JSON.parse(JSON.stringify(formState.contrat.modulesInitiaux));
 			let modulesModifies = JSON.parse(JSON.stringify(formState.contrat.modulesChoisis));
-			let modulesToUpdate=[];
-			let modulesToDelete=[];
-			let modulesToCreate=[];
+			let modulesToUpdate = [];
+			let modulesToDelete = [];
+			let modulesToCreate = [];
 			//D'abord on check les modules a update pis ceux à delete (si ds initialModules qqchose n'est pas contenu dans les modules
 			//a update, on le supprime
 			modulesInitiaux.forEach((element) => {
 				let contains = false;
 				let newElement = element;
 
-				modulesModifies.forEach(el=>{
-					if(parseInt(el.idModule,10)===parseInt(element.idModule,10)){
+				modulesModifies.forEach(el => {
+					if (parseInt(el.idModule, 10) === parseInt(element.idModule, 10)) {
 						contains = true;
 						let modalitesInitiales = element.modalites;
 						let modalitesModifiees = el.modalites;
 
 						//on crée l'objet monstrueux <3 (dans chaque module a update on regarde les modalités à suppr/créer/update
-						let modalitesToCreate=[];
-						let modalitesToUpdate=[];
-						let modalitesToDelete=[];
-						modalitesInitiales.forEach(modInit=>{
-							let cont=false;
-							modalitesModifiees.forEach(modMod=>{
-								if(parseInt(modInit.idModalite,10)===parseInt(modMod.idModalite,10)){
-									cont=true;
+						let modalitesToCreate = [];
+						let modalitesToUpdate = [];
+						let modalitesToDelete = [];
+						modalitesInitiales.forEach(modInit => {
+							let cont = false;
+							modalitesModifiees.forEach(modMod => {
+								if (parseInt(modInit.idModalite, 10) === parseInt(modMod.idModalite, 10)) {
+									cont = true;
 									modalitesToUpdate.push(modMod);
 								}
 
 							});
-							if(!cont){
+							if (!cont) {
 								modalitesToDelete.push(modInit.idModalite);
 							}
 						});
 						//idem now pour les modalites a créer on parcourt dans l'autre senssss :)
-						modalitesModifiees.forEach(modMod=>{
-							let cont=false;
-							modalitesInitiales.forEach(modInit=>{
-								if(parseInt(modMod.idModalite,10)===parseInt(modInit.idModalite,10)){
-									cont=true;
+						modalitesModifiees.forEach(modMod => {
+							let cont = false;
+							modalitesInitiales.forEach(modInit => {
+								if (parseInt(modMod.idModalite, 10) === parseInt(modInit.idModalite, 10)) {
+									cont = true;
 								}
 							});
-							if(!cont){
+							if (!cont) {
 								modalitesToCreate.push(modMod);
 							}
 						});
 						delete newElement["modalites"];
-						newElement["modalitesToCreate"]=modalitesToCreate;
-						newElement["modalitesToUpdate"]=modalitesToUpdate;
-						newElement["modalitesToDelete"]=modalitesToDelete;
+						newElement["modalitesToCreate"] = modalitesToCreate;
+						newElement["modalitesToUpdate"] = modalitesToUpdate;
+						newElement["modalitesToDelete"] = modalitesToDelete;
 
 					}
 				});
-				if(contains){
+				if (contains) {
 					//on donne a l'élément modalitesToUpdate,toCreate et toDelete
 
 					modulesToUpdate.push(newElement);
 				}
-				else{
+				else {
 					modulesToDelete.push(element.idModule);
 				}
 			});
 			//Now on loop dans l'autre sens pour savoir les modules à créer
-			modulesModifies.forEach(element=>{
-				let contains=false;
-				modulesInitiaux.forEach(el=>{
-					if(parseInt(el.idModule,10)===parseInt(element.idModule,10)){
-						contains=true;
+			modulesModifies.forEach(element => {
+				let contains = false;
+				modulesInitiaux.forEach(el => {
+					if (parseInt(el.idModule, 10) === parseInt(element.idModule, 10)) {
+						contains = true;
 					}
 				});
-				if(!contains){
+				if (!contains) {
 					modulesToCreate.push(element);
 				}
 			});
@@ -539,6 +548,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 
 		changeForm: (newFormState) => {
+			console.log(newFormState);
 			dispatch(changeFormContract(newFormState))
 		},
 		changeBigLayout: (layout) => {

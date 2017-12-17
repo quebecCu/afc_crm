@@ -30,7 +30,6 @@ class ModalitesDisplay extends React.Component{
 		this.props.formState.modules.forEach(element=>{
 			if(parseInt(element.idModule,10)===parseInt(this.props.idModule, 10)){
 				this.modalites= element.modalites;
-				console.log(this.modalites);
 				//this.state.modalites = element.modalites;
 			}
 		});

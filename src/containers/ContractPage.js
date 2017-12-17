@@ -7,7 +7,7 @@ import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import ContractFile from "../components/ContractFile";
 import {changeLoading, changeViewDashboard} from "../actions/crmDashboard";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
-import {changeViewContract} from "../actions/crmContract";
+import {changeViewContract, setFromClient} from "../actions/crmContract";
 import {getClientRequest} from "../actions/crmClientList";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
 import {
@@ -25,6 +25,7 @@ class ContractPage extends Component {
 		let {contacts} = this.props.crmContacts;
 		let {contractDisplay, lilLayout} = this.props.crmContract;
 		let {linksSubSupplier, linksSubCustomer} = this.props.crmNavBar;
+		let {dossiersState} = this.props.crmRechercheCollective;
 		return (
 			<div>
 				{
@@ -33,6 +34,8 @@ class ContractPage extends Component {
 								  linksSubSupplier={linksSubSupplier}
 								  linksSubCustomer={linksSubCustomer}
 								  lilLayout={lilLayout}
+								  clients={dossiersState}
+								  setFromClient={this.props.setFromClient}
 								  changeViewContract={this.props.changeViewContract}
 								  changeViewCollective={this.props.changeViewCollective}
 								  changeViewDashboard={this.props.changeViewDashboard}
@@ -59,7 +62,8 @@ function mapStateToProps(state) {
 		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
 		crmContacts: state.crmContacts,
 		crmContract: state.crmContract,
-		crmNavBar: state.crmNavBar
+		crmNavBar: state.crmNavBar,
+		crmRechercheCollective: state.crmRechercheCollective
 	}
 }
 
@@ -98,6 +102,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		displaySubCustomerNav: (display) => {
 			dispatch(displaySubCustomerNav(display));
+		},
+		setFromClient(client) {
+			dispatch(setFromClient(client));
 		}
 	}
 };

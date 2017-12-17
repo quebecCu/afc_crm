@@ -302,7 +302,6 @@ class DisplayOneModalite extends React.Component {
 		modalitesChoisies.forEach(mod => {
 			if(this.props.modalite.idModalite === mod.idModalite) {
 				choosed = true;
-				console.log("ALLLLLLLLOOOO");
 			}
 		});
 		return <div>

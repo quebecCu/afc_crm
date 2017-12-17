@@ -11,7 +11,7 @@ class ContractClientPart extends React.Component {
 		if (this.props.comesFrom === "client") {
 			document.getElementById("nomClient").setAttribute('disabled', true);
 		}
-		if(this.props.fromClient.idClient) {
+		if(this.props.fromClient.idClient && !this.props.fromClient.update) {
 			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idClient:this.props.fromClient.idClient}});
 		}
 	}
@@ -125,7 +125,16 @@ class ContractClientPart extends React.Component {
 					/>
 				}
 				{
-					this.props.fromClient.idClient &&
+					this.props.fromClient.idClient && this.props.fromClient.update &&
+					<SuggestionClients clients={this._filterClients()}
+									   getClient={this.props.getClient}
+									   client={this.props.fromClient}
+									   changeForm={this.props.changeForm}
+									   formState={this.props.formState}
+					/>
+				}
+				{
+					this.props.fromClient.idClient && !this.props.fromClient.update &&
 					<input type="textField"
 						   className="form-control col-sm-8"
 						   value={this.props.fromClient.name}
@@ -141,7 +150,10 @@ class ContractClientPart extends React.Component {
 					!this.props.fromClient.idClient && this._sousGroupe()
 				}
 				{
-					this.props.fromClient.idClient &&
+					this.props.fromClient.idClient && this.props.fromClient.update && this._sousGroupe()
+				}
+				{
+					this.props.fromClient.idClient && !this.props.fromClient.update &&
 					<input type="textField"
 						   className="form-control col-sm-8"
 						   value={this.props.fromClient.sousGroupe}
@@ -156,7 +168,10 @@ class ContractClientPart extends React.Component {
 					!this.props.fromClient.idClient && this._nombreEmployes()
 				}
 				{
-					this.props.fromClient.idClient &&
+					this.props.fromClient.idClient && this.props.fromClient.update && this._nombreEmployes()
+				}
+				{
+					this.props.fromClient.idClient && !this.props.fromClient.update &&
 					<input type="textField"
 						   className="form-control col-sm-8"
 						   value={this.props.fromClient.nombreEmployes}

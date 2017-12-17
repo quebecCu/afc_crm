@@ -144,6 +144,20 @@ class ContractFile extends React.Component {
 	}
 
 	_handleModify(event) {
+		let contract = this.props.contract;
+		this.props.clients.forEach(client => {
+			if(client.id === contract.idclient) {
+				let fromClient =
+					{
+						idClient: client.id,
+						name: client.nom_groupe,
+						sousGroupe: '',
+						nombreEmployes: '',
+						update: true
+					};
+				this.props.setFromClient(fromClient);
+			}
+		});
 		this.props.changeViewContract("updatecontract");
 		//this.props.changeIdDisplay(event.target.value);
 	}
