@@ -87,8 +87,8 @@ export function setModules(modules) {
 	return {type: SET_MODULES, modules}
 }
 
-export function getGrid() {
-	return {type: GET_GRID}
+export function getGrid(update) {
+	return {type: GET_GRID, update}
 }
 
 export function setGrid(grid) {

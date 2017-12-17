@@ -7,7 +7,7 @@ import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {connect} from "react-redux";
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getEmployesAFC,
+	getEmployesAFC, getGrid,
 	getListAssureurs, sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
@@ -44,6 +44,7 @@ class CreateContractContainer extends React.Component {
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		if (this.props.view === "create") {
+			this.props.getGrid();
 			this.props.changeForm({
 				...formState, intModulesToDisplay: 1, modulesToDisplay: [], contrat: {
 					...formState.contrat,
@@ -106,6 +107,9 @@ class CreateContractContainer extends React.Component {
 		}
 		else {
 			let contract = JSON.parse(JSON.stringify(contractDisplay));
+			let facDisplay = contract.facultatif;
+			this.props.getGrid(facDisplay);
+
 			let modulesChoisis = contract.souscriptions;
 			let modulesToUpdate = [];
 			let intModulesToDisplay = modulesChoisis.length;
@@ -550,6 +554,9 @@ const mapDispatchToProps = (dispatch) => {
 		changeForm: (newFormState) => {
 			console.log(newFormState);
 			dispatch(changeFormContract(newFormState))
+		},
+		getGrid: (facDisplay) => {
+			dispatch(getGrid(facDisplay));
 		},
 		changeBigLayout: (layout) => {
 			dispatch(changeBigLayout(layout));

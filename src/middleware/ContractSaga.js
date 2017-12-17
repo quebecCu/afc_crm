@@ -132,7 +132,6 @@ export function* requestModules() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setModules(response.data.message));
-					store.dispatch(getGrid());
 				} else {
 					alert('Erreur lors du chargement des modules');
 				}
@@ -145,17 +144,42 @@ export function* requestModules() {
 
 export function* requestGrid() {
 	while (true) {
-		yield take(GET_GRID);
+		let user = yield take(GET_GRID);
+		let facDisplay = user.update;
 		let server = "http://localhost:3002/attributesManagement/contract";
-
 		axios.get(server, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let grids = response.data.message;
-					let grid = response.data.message.attributes.map(champ => {
-						return {...champ, value: ''};
-					});
-					store.dispatch(setGrid(grid));
+
+					if(!!facDisplay) {
+						let facultatif = [];
+						grids.attributes.forEach(champ => {
+							let duplicate = false;
+							facDisplay.forEach(champ2 => {
+								if(champ2.idRow === champ.idattrcontratcoll) {
+									duplicate = true;
+									facultatif.push({
+										...champ,
+										value: champ2.valeur
+									});
+								}
+							});
+							if(!duplicate) {
+								facultatif.push({
+									...champ,
+									value: ''
+								});
+							}
+						});
+						store.dispatch(setGrid(facultatif));
+					}
+					else {
+						let grid = grids.attributes.map(champ => {
+							return {...champ, value: ''};
+						});
+						store.dispatch(setGrid(grid));
+					}
 					let bigLayout = grids.menus.map(menu => {
 						return {
 							i: menu.idcontratcollmenu.toString(),
