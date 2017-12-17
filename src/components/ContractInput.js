@@ -104,6 +104,17 @@ class ContractInput extends React.Component{
 
 				}
 			}
+			else if(this.props.format === "AAAA" && valeurDuForm !== ""){
+				if(!/^((?:19|20)\d{2})$/.test(valeurDuForm )){
+					document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "block";
+
+				}
+				else{
+					document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
+
+				}
+			}
+
 		}
 		if(valeurDuForm === ""){
 			document.getElementById("verif"+this.props.part+this.props.titreChamp).style.display = "none";
