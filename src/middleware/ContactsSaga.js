@@ -31,8 +31,8 @@ export function* requestPostesContacts() {
 		let server = "http://localhost:3002/clients/jobs";
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/jobs';
-		
-		
+
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -72,8 +72,8 @@ export function* requestPostesContactsFournisseurs() {
 		let server = "http://localhost:3002/providers/jobs";
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/jobs';
-		
-		
+
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -114,12 +114,24 @@ export function * requestContacts() {
 		let server = "http://localhost:3002/clients/contacts/"+ id;
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/contacts/'+ id;
-		
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					store.dispatch(getPostesContacts(response.data.message));
-					store.dispatch(updateContacts(response.data.message));
+					let contacts = response.data.message;
+					store.dispatch(getPostesContacts(contacts));
+					let array = contacts.map((contact)=> {
+						for(let key in contact) {
+							if (contact.hasOwnProperty(key)) {
+								if(contact[key] === null) {
+									contact[key] = '';
+								}
+							}
+						}
+						return contact
+					});
+					console.log(array);
+					store.dispatch(updateContacts(array));
 					store.dispatch(changeLoading(false));
 				} else {
 					alert('Erreur lors du chargement des contact');
@@ -142,7 +154,7 @@ export function * requestContactsSup() {
 		let server = "http://localhost:3002/providers/contacts/"+ id;
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/contacts/'+ id;
-		
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {

@@ -214,10 +214,10 @@ class ContractFile extends React.Component {
 
 					<div className="grandTitre">
 						<button className="grandTitreContacts" onClick={this.dropDownContacts}>
-							<TitreValeur valeur="Rémunérations"/></button>
+							<TitreValeur valeur="Historique des taux"/></button>
 						<div id="wrapperContacts" className=" wrapper show  ">
 							{
-								contract.remuneration.map((element, index) => {
+								contract.historique_taux.map((element, index) => {
 									return <div className="w3-animate-zoom" key={index}>
 										<div className="unePartie">
 											<TitreValeur titre="Année de début" valeur={element.annee_dep}/>
@@ -266,10 +266,10 @@ class ContractFile extends React.Component {
 
 					<div className="grandTitre">
 						<button className="grandTitreContacts" onClick={this.dropDownTaux}>
-							<TitreValeur valeur="Historique des taux"/></button>
+							<TitreValeur valeur="Rémunérations"/></button>
 						<div id="wrapperTaux" className=" wrapper show  " style={{backgroundColor: 'white'}}>
 							{
-								contract.historique_taux.map((element, index) => {
+								contract.remuneration.map((element, index) => {
 									return <div className="w3-animate-zoom" key={index}>
 										<div className="unePartie">
 											<TitreValeur titre="Année de début" valeur={element.annee_dep}/>

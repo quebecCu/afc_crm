@@ -406,7 +406,7 @@ export function * getGridLayoutModify (){
 	while(true){
 
 		let data = yield take(GET_GRID_MODIFY_SUP);
-		let facultatif = data.data;
+		let facultatifs = data.data;
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/provider";
 		let backendUrl = window.location.host;
@@ -416,10 +416,26 @@ export function * getGridLayoutModify (){
 			.then(function (response) {
 
 				if(!!response.data.message && response.data.status === "success"){
-					let grid = response.data.message.map( (champ, index) => {
-						return {...champ, value: facultatif[index].valeur};
+					let facultatif = [];
+					response.data.message.forEach(champ => {
+						let duplicate = false;
+						facultatifs.forEach(champ2 => {
+							if(champ2.idRow === champ.idattrfournisseur) {
+								duplicate = true;
+								facultatif.push({
+									...champ,
+									value: champ2.valeur
+								});
+							}
+						});
+						if(!duplicate) {
+							facultatif.push({
+								...champ,
+								value: ''
+							});
+						}
 					});
-					store.dispatch(changeGridFour(grid));
+					store.dispatch(changeGridFour(facultatif));
 					let layout = response.data.message.map(champ => {
 						return {
 							i: champ.idattrfournisseur.toString(),

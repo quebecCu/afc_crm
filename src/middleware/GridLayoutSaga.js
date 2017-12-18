@@ -545,21 +545,36 @@ export function * getGridLayoutToModify() {
 		let client = yield take(GET_GRID_MODIFY);
 		let {id, releves, activites, etats, provenances, grid} = client.data;
 		let releve, activite, etat, provenance = '';
-		let gridModified = [];
 
 		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/clients/'+id;
 
-		axios.get(backendUrl,config)
+		axios.get(server,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let champs = response.data.message;
-					for(let i = 0 ; i < grid.length ; i++) {
-						gridModified.push({...grid[i], value: champs.facultatif[i].valeur});
-					}
-					store.dispatch(changeGrid(gridModified));
+					let facultatif = [];
+					grid.forEach(champ => {
+						let duplicate = false;
+						champs.facultatif.forEach(champ2 => {
+							if(champ2.idRow === champ.idattrentreprise) {
+								duplicate = true;
+								facultatif.push({
+									...champ,
+									value: champ2.valeur
+								});
+							}
+						});
+						if(!duplicate) {
+							facultatif.push({
+								...champ,
+								value: ''
+							});
+						}
+					});
+					store.dispatch(changeGrid(facultatif));
 					releves.forEach(type => {
 						if(type.modeenvoiereleve === champs.releve) {
 							releve = type.idreleve;
