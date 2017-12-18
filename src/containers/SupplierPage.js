@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import LoadingAnimation from "../components/LoadingAnimation";
 import SupplierFile from "../components/SupplierFile";
-import {getContactsSup} from "../actions/crmContacts";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 
 class SupplierPage extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	render() {
 		let {isAdmin} = this.props.crmLogin;

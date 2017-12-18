@@ -7,8 +7,8 @@ import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {connect} from "react-redux";
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getEmployesAFC, getGrid,
-	getListAssureurs, sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
+	getGrid,
+	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridOptionnalContract from "../components/GridOptionnalContract";
@@ -608,7 +608,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 
 		changeForm: (newFormState) => {
-			console.log(newFormState);
 			dispatch(changeFormContract(newFormState))
 		},
 		getGrid: (facDisplay) => {

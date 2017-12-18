@@ -43,7 +43,7 @@ class ContractInput extends React.Component{
 			let historiqueTaux = this.props.formState.contrat.historiqueTaux;
 			historiqueTaux[titreChamp] = event.target.value;
 			if(titreChamp==="prime_ms"){
-				historiqueTaux["prime_an"] = parseInt(event.target.value)*12;
+				historiqueTaux["prime_an"] = parseInt(event.target.value, 10)*12;
 			}
 			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,
 				historiqueTaux:historiqueTaux}});

@@ -8,8 +8,8 @@ class ContractRemunerationContainer extends React.Component {
 	}
 
 	componentDidMount() {
-		document.getElementById("input" + "gtotal" + "remuneration").setAttribute('disabled', true);
-		document.getElementById("input" + "solde" + "remuneration").setAttribute('disabled', true);
+		document.getElementById("inputgtotalremuneration").setAttribute('disabled', true);
+		document.getElementById("inputsolderemuneration").setAttribute('disabled', true);
 
 	}
 

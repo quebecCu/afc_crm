@@ -16,8 +16,8 @@ class TitreValeur extends React.Component {
 			// nomClasse = "titreValeur";
 			let value;
 			let regexMail = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-			let regexPhone = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-			
+			let regexPhone = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
+
 			if (regexMail.test(this.props.valeur)) {
 				value = <a href={"mailto:" + this.props.valeur}>{this.props.valeur}</a>;
 			} else if (regexPhone.test(this.props.valeur)) {

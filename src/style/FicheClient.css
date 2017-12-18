@@ -5,11 +5,11 @@ div {
     box-sizing: border-box;
 }
 
-#releve, 	#activite, #etat, #provenance, #prospect, #poste,#titre,#decideur {
+#releve, #activite, #etat, #provenance, #prospect, #poste,#titre,#decideur {
 	height: auto;
 	}
  .grandTitreContacts {
-	width: -webkit-fill-available !important;
+	width: stretch !important;
 	background-color:#add8e6 !important;
 }
 #wrapperContacts{

@@ -3,9 +3,6 @@ import {connect} from "react-redux";
 import {changeFormContract} from "../../actions/crmContract";
 
 class ModalForModalites extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 
 	_handleChangeNotes(mod, event) {
 		let modules = this.props.crmContract.formState.contrat.modulesChoisis;

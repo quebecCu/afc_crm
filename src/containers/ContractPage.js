@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import LoadingAnimation from "../components/LoadingAnimation";
-import SupplierFile from "../components/SupplierFile";
-import {getContactsSup} from "../actions/crmContacts";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import ContractFile from "../components/ContractFile";
 import {changeLoading, changeViewDashboard} from "../actions/crmDashboard";
@@ -11,18 +8,13 @@ import {changeViewContract, setFromClient} from "../actions/crmContract";
 import {getClientRequest} from "../actions/crmClientList";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
 import {
-	addSubContractNav, addSubCustomerNav, addSubSupplierNav, displaySubContractNav, displaySubCustomerNav,
+	addSubCustomerNav, addSubSupplierNav, displaySubCustomerNav,
 	displaySubSupplierNav
 } from "../actions/crmNavBar";
 
 class ContractPage extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	render() {
-		let {isAdmin} = this.props.crmLogin;
-		let {contacts} = this.props.crmContacts;
 		let {contractDisplay, lilLayout} = this.props.crmContract;
 		let {linksSubSupplier, linksSubCustomer} = this.props.crmNavBar;
 		let {dossiersState} = this.props.crmRechercheCollective;

@@ -1,8 +1,6 @@
 //import MyInput from './../components/Input';
 import React, { Component } from 'react';
 import '../../style/Reset.css';
-import {store} from '../../store';
-import {push} from 'react-router-redux';
 
 
 class Reset extends Component   {
@@ -22,18 +20,18 @@ class Reset extends Component   {
 		e.preventDefault();
 		window.location.href='/';
 	}
-	
+
 	_changeEmail (event){
 		this._emitChange({...this.props.formState , email: event.target.value});
 	}
-	
+
 	_emitChange (newFormState){
 		this.props.changeForm(newFormState);
 	}
-	
+
 
 	render() {
-		return ( 
+		return (
 
 				<div className ="reset container-fluid">
 					<div className="elelment row">

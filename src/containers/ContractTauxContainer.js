@@ -2,12 +2,9 @@ import React from 'react';
 import ContractInput from '../components/ContractInput';
 
 class ContractTauxContainer extends React.Component{
-	constructor(props){
-		super(props);
-	}
 
 	componentDidMount(){
-		document.getElementById("input"+"prime_an"+"taux").setAttribute('disabled', true);
+		document.getElementById("inputprime_antaux").setAttribute('disabled', true);
 	}
 
 	render(){

@@ -35,10 +35,11 @@ class ContractClientPart extends React.Component {
 			/>
 		}
 		else {
-			return this.props.client.facultatif.map(champ => {
+			let input = '';
+			this.props.client.facultatif.forEach(champ => {
 				if (champ.nom === 'Sous-groupe' && champ.valeur !== '' && !duplicate) {
 					duplicate = true;
-					return <input key={champ.idRow}
+					input =  <input key={champ.idRow}
 								  type="textField"
 								  className="form-control col-sm-8"
 								  value={champ.valeur}
@@ -48,7 +49,7 @@ class ContractClientPart extends React.Component {
 				}
 				else if (champ.nom === 'Sous-groupe' && champ.valeur === '' && !duplicate) {
 					duplicate = true;
-					return <input key={champ.idRow}
+					input = <input key={champ.idRow}
 								  type="textField"
 								  className="form-control col-sm-8"
 								  value="Le client n'a pas de sous-groupe"
@@ -56,7 +57,8 @@ class ContractClientPart extends React.Component {
 								  disabled
 					/>
 				}
-			})
+			});
+			return input;
 		}
 
 	}
@@ -73,10 +75,11 @@ class ContractClientPart extends React.Component {
 			/>
 		}
 		else {
-			return this.props.client.facultatif.map(champ => {
+			let input = '';
+			this.props.client.facultatif.forEach(champ => {
 				if (champ.nom === 'Nombre d\'employés' && champ.valeur !== '' && !duplicate) {
 					duplicate = true;
-					return <input key={champ.idRow}
+					input = <input key={champ.idRow}
 								  type="textField"
 								  className="form-control col-sm-8"
 								  value={champ.valeur}
@@ -86,7 +89,7 @@ class ContractClientPart extends React.Component {
 				}
 				else if (champ.nom === 'Nombre d\'employés' && champ.valeur === '' && !duplicate) {
 					duplicate = true;
-					return <input key={champ.idRow}
+					input = <input key={champ.idRow}
 								  type="textField"
 								  className="form-control col-sm-8"
 								  value="Le nombre d'employés n'est pas précisé"
@@ -94,7 +97,8 @@ class ContractClientPart extends React.Component {
 								  disabled
 					/>
 				}
-			})
+			});
+			return input;
 		}
 
 	}

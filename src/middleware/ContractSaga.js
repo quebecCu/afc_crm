@@ -16,7 +16,6 @@ import {
 import axios from 'axios';
 import {store} from '../store';
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
-import {getChampTypes} from "../actions/crmGridLayout";
 
 let tokenToSend = localStorage.getItem("cookieSession");
 if (tokenToSend === undefined)

@@ -4,7 +4,6 @@ import CreateContractContainer from './CreateContractContainer';
 import {connect} from "react-redux";
 import ListContractsComponent from "../components/ListContractsComponent";
 import {changeLoading} from "../actions/crmDashboard";
-import {bindClientData} from "../actions/crmClientList";
 import ContractPage from "./ContractPage";
 import {addSubContractNav, displaySubContractNav} from "../actions/crmNavBar";
 

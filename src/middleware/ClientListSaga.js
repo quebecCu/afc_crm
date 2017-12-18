@@ -2,7 +2,6 @@ import {take, fork} from 'redux-saga/effects';
 import axios from 'axios';
 import {store} from '../store';
 import {bindClientData, GET_CLIENT_REQ} from "../actions/crmClientList";
-import {changeLoading} from "../actions/crmDashboard";
 import {getContacts} from "../actions/crmContacts";
 
 export function* getClient() {
@@ -27,7 +26,7 @@ export function* getClient() {
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/' + id;
 
-		
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {

@@ -9,6 +9,7 @@ class ContractInfoPart extends React.Component {
 		this._onChangeDateEmission=this._onChangeDateEmission.bind(this);
 		this._onChangeMoisRenouv=this._onChangeMoisRenouv.bind(this);
 		this._onChangeNotes=this._onChangeNotes.bind(this);
+		this._assureurs = this._assureurs.bind(this);
 	}
 
 	_onChangeAssureur(event){
@@ -35,6 +36,24 @@ class ContractInfoPart extends React.Component {
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,notes:event.target.value}});
 	}
 
+	_assureurs() {
+		let assureurs = [];
+
+		this.props.formState.listAssureurs.forEach( (element, index) => {
+			let duplicate = false;
+			this.props.formState.listAssureurs.forEach((element2, index2)=> {
+				if(element.id === element2.id && index > index2) {
+					duplicate = true;
+				}
+			});
+			if(!duplicate) {
+				assureurs.push(<option key={index} value={element.id}>{element.nom}</option>);
+			}
+		});
+
+		return assureurs;
+	}
+
 
 
 	render(){
@@ -52,18 +71,8 @@ class ContractInfoPart extends React.Component {
 					>
 						<option disabled value=""> -- Veuillez sélectionner une valeur -- </option>
 						{
-							this.props.formState.listAssureurs.map( (element, index) => {
-								let duplicate = false;
-								this.props.formState.listAssureurs.forEach((element2, index2)=> {
-									if(element.id === element2.id && index > index2) {
-										duplicate = true;
-									}
-								});
-								if(!duplicate) {
-									return (
-										<option key={index} value={element.id}>{element.nom}</option>
-									);
-								}
+							this._assureurs().map(element => {
+								return element;
 							})
 						}
 					</select>
