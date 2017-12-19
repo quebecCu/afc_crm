@@ -30,7 +30,6 @@ class ContractModulesPart extends React.Component{
 
 						<ModuleCreation id={"module"+element} key = {element} idComponent = {element}
 										formState = {this.props.formState}
-										comesFrom={this.props.comesFrom}
 										view={this.props.view}
 										changeForm = {this.props.changeForm}/>
 
@@ -50,7 +49,6 @@ class ContractModulesPart extends React.Component{
 		let toReturn = this._modulesToReturn();
 		return <div>
 			<ModuleCreation idComponent = {0} formState = {this.props.formState}
-							comesFrom={this.props.comesFrom}
 							view={this.props.view}
 							changeForm = {this.props.changeForm}/>
 

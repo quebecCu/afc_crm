@@ -8,7 +8,7 @@ import {
 	updatePositionsSup,
 	updateSuppliersFile
 } from "../actions/crmGridLayoutSuppliers";
-import {changeLoading} from "../actions/crmDashboard";
+import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
 
 class CreationFournisseur extends Component {
     constructor(props) {
@@ -60,6 +60,7 @@ class CreationFournisseur extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Creation du fournisseur)
     _handleSubmitCreate(event) {
        event.preventDefault();
+       this.props.changeLoadingValidation(true);
        let {grid, requiredFields} = this.props.crmGridSuppliersLayout;
        let {arrayContacts} = this.props.crmContacts;
        this._handleStatic();
@@ -70,6 +71,7 @@ class CreationFournisseur extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du fournisseur)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
+		this.props.changeLoadingValidation(true);
 		let {grid, requiredFields} = this.props.crmGridSuppliersLayout;
 		let {arrayContacts, delcontacts, postes} = this.props.crmContacts;
 		//On récupère les contacts à modifier
@@ -133,7 +135,7 @@ class CreationFournisseur extends Component {
 			formUpdateField, champTypes
 		} = this.props.crmGridSuppliersLayout;
 		let {isAdmin} = this.props.crmLogin;
-		let {loading} = this.props.crmDashboard;
+		let {loading, loadingValidation} = this.props.crmDashboard;
         return (
         	<div>
 				{
@@ -149,6 +151,7 @@ class CreationFournisseur extends Component {
 												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
 												handleModifyField={this._handleModifyField}
 												changeLoading={this.props.changeLoading} loading={loading}
+												loadingValidation={loadingValidation}
 						/>
 				}
 				{
@@ -164,7 +167,8 @@ class CreationFournisseur extends Component {
 												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
 												handleModifyField={this._handleModifyField}
 												changeLoading={this.props.changeLoading} loading={loading}
-						/>
+												loadingValidation={loadingValidation}
+					/>
 				}
 			</div>
         )
@@ -236,7 +240,10 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		changeLoading: (newLoading) => {
 			dispatch(changeLoading(newLoading));
-		}
+		},
+		changeLoadingValidation: (newLoading) => {
+			dispatch(changeLoadingValidation(newLoading));
+		},
 	}
 };
 

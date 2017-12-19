@@ -110,10 +110,6 @@ class ModuleCreation extends React.Component {
 
 	}
 
-	componentDidUpdate() {
-		console.log(document.getElementById("module1"));
-	}
-
 	//select list sur les types de module. Une fois le module sélec, ca va loop dans ses modalités
 	render() {
 		return <div className="d-flex flex-column">

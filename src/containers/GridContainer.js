@@ -6,7 +6,7 @@ import {
 	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../actions/crmGridLayout";
-import {changeLoading} from "../actions/crmDashboard";
+import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
 
 class CreationClient extends Component {
     constructor(props) {
@@ -60,6 +60,7 @@ class CreationClient extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Creation du client)
     _handleSubmitCreate(event) {
        event.preventDefault();
+       this.props.changeLoadingValidation(true);
        let {grid, requiredFields} = this.props.crmGridLayout;
        let {arrayContacts} = this.props.crmContacts;
        this._handleStatic();
@@ -70,6 +71,7 @@ class CreationClient extends Component {
     //On récupère le grid et le layout pour les envoyer au back-end grâce au middleware (Modification du client)
 	_handleSubmitUpdate(event) {
 		event.preventDefault();
+		this.props.changeLoadingValidation(true);
 		let {grid, requiredFields, idToDisplay} = this.props.crmGridLayout;
 		let {arrayContacts, delcontacts, postes} = this.props.crmContacts;
 		//On récupère les contacts à modifier
@@ -135,7 +137,7 @@ class CreationClient extends Component {
 			etats, provenances, requiredFields,
 			formNewField, formUpdateField} = this.props.crmGridLayout;
 		let {isAdmin} = this.props.crmLogin;
-		let {loading} = this.props.crmDashboard;
+		let {loading, loadingValidation} = this.props.crmDashboard;
         return (
         	<div>
 				{
@@ -151,7 +153,9 @@ class CreationClient extends Component {
 										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
 										   formNewField={formNewField} deleteField={this.props.deleteField}
 										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}
-										   changeLoading={this.props.changeLoading} loading={loading}/>
+										   changeLoading={this.props.changeLoading} loading={loading}
+										   loadingValidation={loadingValidation}
+					/>
 				}
 				{
 					this.props.view === 'customerFile'
@@ -166,7 +170,9 @@ class CreationClient extends Component {
 										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
 										   formNewField={formNewField} deleteField={this.props.deleteField}
 										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}
-										   changeLoading={this.props.changeLoading} loading={loading}/>
+										   changeLoading={this.props.changeLoading} loading={loading}
+										   loadingValidation={loadingValidation}
+					/>
 				}
 			</div>
         )
@@ -224,6 +230,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		changeLoading: (newLoading) => {
 			dispatch(changeLoading(newLoading));
+		},
+		changeLoadingValidation: (newLoading) => {
+			dispatch(changeLoadingValidation(newLoading));
 		}
 	}
 };

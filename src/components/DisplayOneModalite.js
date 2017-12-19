@@ -246,7 +246,6 @@ class DisplayOneModalite extends React.Component {
 				placeholder="test"
 				value={this.value}
 				onChange={this._onChangeTextField}
-
 			/>
 		}
 		else {

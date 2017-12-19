@@ -1,6 +1,7 @@
 import React from 'react';
 import TitreValeur from "../components/TitreValeur";
 import {Responsive, WidthProvider} from 'react-grid-layout';
+import LoadingAnimation from "./LoadingAnimation";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class SupplierFile extends React.Component {
@@ -11,6 +12,7 @@ class SupplierFile extends React.Component {
 		this.getPosition = this.getPosition.bind(this);
 		this._handleModify = this._handleModify.bind(this);
 		this.dropDownClient = this.dropDownClient.bind(this);
+		this.props.changeLoading(true);
 	}
 
 	componentWillMount() {
@@ -84,104 +86,112 @@ class SupplierFile extends React.Component {
 		return (
 			<div className="container">
 				<h1>Fiche fournisseur</h1>
-				<button  className="grandTitreClient" id="nomGroupe"  onClick={this.dropDownClient}  >
-					<TitreValeur titre="Nom du groupe" valeur={supplier.nomEntreprise} /></button>
-				<div id="wrapperClient"  className=" wrapper show  " >
-					<div className="unePartie w3-animate-zoom" >
-						<TitreValeur titre="Code" valeur={supplier.code}/>
-						<TitreValeur titre="Téléphone principal" valeur={supplier.telephone}/>
-						<TitreValeur titre="Extension" valeur={supplier.extension}/>
-					</div>
-					<div className="unePartie w3-animate-zoom">
-						<TitreValeur titre="Rue" valeur={supplier.rue}/>
-						<TitreValeur titre="Ville" valeur={supplier.ville}/>
-						<TitreValeur titre="Province" valeur={supplier.province}/>
-						<TitreValeur titre="Code postal" valeur={supplier.codePostal}/>
-					</div>
-					<div className="unePartie w3-animate-zoom">
-						{
-							supplier.lilGroup && <TitreValeur titre="Petits groupes" valeur="Oui"/>
-						}
-						{
-							!supplier.lilGroup && <TitreValeur titre="Petits groupes" valeur="Non"/>
-						}
-						<TitreValeur titre="Nombre d'employés petits groupes" valeur={supplier.employesLilGroup}/>
-						{
-							supplier.bigGroup && <TitreValeur titre="Grands groupes" valeur="Oui"/>
-						}
-						{
-							!supplier.bigGroup && <TitreValeur titre="Grands groupes" valeur="Non"/>
-						}
-						<TitreValeur titre="Nombre d'employés grands groupes" valeur={supplier.employesBigGroup}/>
-					</div>
-					{
-					<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-											   breakpoints={{lg: 800, md: 600, sm: 468, xs: 380, xxs: 0}} autoSize={true}
-											   compactType={null}>
-						{
-							this.props.optionnalFields.map(element => {
-								return (
-									<div key={element.idattrfournisseur} className="form-group">
-										<TitreValeur key={element.idattrfournisseur} titre={element.label} valeur={element.value}/>
-									</div>
-								);
-							})
-						}
+				{
+					this.props.loading && <LoadingAnimation/>
+				}
+				{
+					!this.props.loading &&
+						<div>
+							<button  className="grandTitreClient" id="nomGroupe"  onClick={this.dropDownClient}  >
+								<TitreValeur titre="Nom du groupe" valeur={supplier.nomEntreprise} /></button>
+							<div id="wrapperClient"  className=" wrapper show  " >
+								<div className="unePartie w3-animate-zoom" >
+									<TitreValeur titre="Code" valeur={supplier.code}/>
+									<TitreValeur titre="Téléphone principal" valeur={supplier.telephone}/>
+									<TitreValeur titre="Extension" valeur={supplier.extension}/>
+								</div>
+								<div className="unePartie w3-animate-zoom">
+									<TitreValeur titre="Rue" valeur={supplier.rue}/>
+									<TitreValeur titre="Ville" valeur={supplier.ville}/>
+									<TitreValeur titre="Province" valeur={supplier.province}/>
+									<TitreValeur titre="Code postal" valeur={supplier.codePostal}/>
+								</div>
+								<div className="unePartie w3-animate-zoom">
+									{
+										supplier.lilGroup && <TitreValeur titre="Petits groupes" valeur="Oui"/>
+									}
+									{
+										!supplier.lilGroup && <TitreValeur titre="Petits groupes" valeur="Non"/>
+									}
+									<TitreValeur titre="Nombre d'employés petits groupes" valeur={supplier.employesLilGroup}/>
+									{
+										supplier.bigGroup && <TitreValeur titre="Grands groupes" valeur="Oui"/>
+									}
+									{
+										!supplier.bigGroup && <TitreValeur titre="Grands groupes" valeur="Non"/>
+									}
+									<TitreValeur titre="Nombre d'employés grands groupes" valeur={supplier.employesBigGroup}/>
+								</div>
+								{
+									<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+															   breakpoints={{lg: 800, md: 600, sm: 468, xs: 380, xxs: 0}} autoSize={true}
+															   compactType={null}>
+										{
+											this.props.optionnalFields.map(element => {
+												return (
+													<div key={element.idattrfournisseur} className="form-group">
+														<TitreValeur key={element.idattrfournisseur} titre={element.label} valeur={element.value}/>
+													</div>
+												);
+											})
+										}
 
-					</ResponsiveReactGridLayout>
-					}
-				</div>
-
-
-				<div className="grandTitre">
-					<button  className="grandTitreContacts"   onClick={this.dropDownContacts}  >
-						<TitreValeur valeur="Contacts"  /> </button>
-					<div id="wrapperContacts"  className=" wrapper show  " >
-
-						{
-							this.props.contacts.map(contact => {
-								let decideur;
-								if(contact.estdecideur) {
-									decideur = <TitreValeur titre="Décideur" valeur="Oui"/>
+									</ResponsiveReactGridLayout>
 								}
-								else {
-									decideur = <TitreValeur titre="Décideur" valeur="Non"/>
-								}                      return (
-									<div key={contact.idpersonne}>
-										<div className="unePartie w3-animate-zoom">
-											<TitreValeur titre="Titre" valeur={contact.libelletitre}/>
-											<TitreValeur titre="Prénom" valeur={contact.prenom}/>
-											<TitreValeur titre="Nom" valeur={contact.nom}/>
-											<TitreValeur titre="Poste" valeur={contact.libelleposte}/>
-										</div>                            <div className="unePartie w3-animate-zoom">
-										<TitreValeur titre="N° de Téléphone" valeur={contact.num_tel_principal}/>
-										<TitreValeur titre="Extension" valeur={contact.ext_tel_principal}/>
-										<TitreValeur titre="Mail" valeur={contact.mail}/>
-										{decideur}
-									</div>
-									</div>
-								);
-							})
-						}
-					</div>
-					<div className="unePartie">
-					</div>
-				</div>
+							</div>
 
-				<div className="grandTitre">
-					<TitreValeur valeur = "Clients"/>
-				</div>
-				<div className="unePartie">
-				</div>
-				<div className="grandTitre">
-					<TitreValeur valeur="Divers"/>
-				</div>
-				<div className="form-group">
-					<button type="button" className="btn btn-primary"
-							onClick={this._handleModify} value={this.props.requiredFields.id}>
-						Modifier la fiche fournisseur
-					</button>
-				</div>
+
+							<div className="grandTitre">
+								<button  className="grandTitreContacts"   onClick={this.dropDownContacts}  >
+									<TitreValeur valeur="Contacts"  /> </button>
+								<div id="wrapperContacts"  className=" wrapper show  " >
+
+									{
+										this.props.contacts.map(contact => {
+											let decideur;
+											if(contact.estdecideur) {
+												decideur = <TitreValeur titre="Décideur" valeur="Oui"/>
+											}
+											else {
+												decideur = <TitreValeur titre="Décideur" valeur="Non"/>
+											}                      return (
+												<div key={contact.idpersonne}>
+													<div className="unePartie w3-animate-zoom">
+														<TitreValeur titre="Titre" valeur={contact.libelletitre}/>
+														<TitreValeur titre="Prénom" valeur={contact.prenom}/>
+														<TitreValeur titre="Nom" valeur={contact.nom}/>
+														<TitreValeur titre="Poste" valeur={contact.libelleposte}/>
+													</div>                            <div className="unePartie w3-animate-zoom">
+													<TitreValeur titre="N° de Téléphone" valeur={contact.num_tel_principal}/>
+													<TitreValeur titre="Extension" valeur={contact.ext_tel_principal}/>
+													<TitreValeur titre="Mail" valeur={contact.mail}/>
+													{decideur}
+												</div>
+												</div>
+											);
+										})
+									}
+								</div>
+								<div className="unePartie">
+								</div>
+							</div>
+
+							<div className="grandTitre">
+								<TitreValeur valeur = "Clients"/>
+							</div>
+							<div className="unePartie">
+							</div>
+							<div className="grandTitre">
+								<TitreValeur valeur="Divers"/>
+							</div>
+							<div className="form-group">
+								<button type="button" className="btn btn-primary"
+										onClick={this._handleModify} value={this.props.requiredFields.id}>
+									Modifier la fiche fournisseur
+								</button>
+							</div>
+						</div>
+				}
 			</div>
 		)
 

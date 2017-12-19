@@ -16,6 +16,7 @@ import {bindClientData, getClientRequest} from "../actions/crmClientList";
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
 import LoadingAnimation from "../components/LoadingAnimation";
 import ModalForModalites from "../components/modal/ModalForModalites";
+import {changeLoadingValidation} from "../actions/crmDashboard";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -199,9 +200,9 @@ class CreateContractContainer extends React.Component {
 				}
 			};
 
-			let dateDep = parseInt(contract.date_signature[0]+contract.date_signature[1]+contract.date_signature[2]+contract.date_signature[3],10);
-			contract.remuneration.forEach(element=>{
-				if(parseInt(element.annee_dep,10) === dateDep){
+			let dateDep = parseInt(contract.date_signature[0] + contract.date_signature[1] + contract.date_signature[2] + contract.date_signature[3], 10);
+			contract.remuneration.forEach(element => {
+				if (parseInt(element.annee_dep, 10) === dateDep) {
 					toUpdate.remuneration.vie = element.vie;
 					toUpdate.remuneration.ct = element.ct;
 					toUpdate.remuneration.lt = element.lt;
@@ -222,7 +223,7 @@ class CreateContractContainer extends React.Component {
 				}
 			});
 
-			contract.historique_taux.forEach(element=> {
+			contract.historique_taux.forEach(element => {
 				if (parseInt(element.annee_dep, 10) === dateDep) {
 					toUpdate.historiqueTaux.diff = element.différence;
 					toUpdate.historiqueTaux.anneedep = element.annee_dep;
@@ -499,13 +500,13 @@ class CreateContractContainer extends React.Component {
 					>
 						<div key="1"><ContractClientPart changeForm={this.props.changeForm}
 														 clients={dossiersState} getClient={this.props.getClientRequest}
-														 formState={formState} comesFrom={this.props.comesFrom}
+														 formState={formState}
 														 client={client} fromClient={fromClient}
 						/></div>
 						<div key="2"><ContractInfoPart formState={formState}
 													   changeForm={this.props.changeForm}/></div>
 						<div key="3"><ContractModulesPart formState={formState} changeForm={this.props.changeForm}
-														  view={this.props.view} comesFrom={this.props.comesFrom}/>
+														  view={this.props.view}/>
 						</div>
 						<div key="4">
 							<GridOptionnalContract lilLayout={lilLayout}
@@ -599,7 +600,8 @@ function mapStateToProps(state) {
 		crmContract: state.crmContract,
 		crmRechercheCollective: state.crmRechercheCollective,
 		crmClientList: state.crmClientList,
-		crmLogin: state.crmLogin
+		crmLogin: state.crmLogin,
+		crmDashboard: state.crmDashboard,
 	}
 }
 
@@ -653,6 +655,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		bindClientData: (client) => {
 			dispatch(bindClientData(client));
+		},
+		changeLoadingValidation: (newLoading) => {
+			dispatch(changeLoadingValidation(newLoading));
 		}
 	}
 };

@@ -50,7 +50,6 @@ export function* requestPostesContacts() {
 						store.dispatch(addArrayContacts(array));
 					}
 					store.dispatch(updatePostesContacts(response.data.message));
-					store.dispatch(changeLoading(false));
 				} else {
 					alert('Erreur lors du chargement des postes d\'un contact');
 				}
@@ -130,9 +129,7 @@ export function * requestContacts() {
 						}
 						return contact
 					});
-					console.log(array);
 					store.dispatch(updateContacts(array));
-					store.dispatch(changeLoading(false));
 				} else {
 					alert('Erreur lors du chargement des contact');
 				}

@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import {push} from 'react-router-redux';
 import {store} from '../store';
+import {changeLoadingLogin} from "../actions/crmDashboard";
 
 export function * loginFlow (){
 	while(true){
@@ -27,6 +28,7 @@ export function * loginFlow (){
 			password: password
 		})
 		.then(function (response) {
+			store.dispatch(changeLoadingLogin(true));
 			if(!!response.data.status && response.data.status=== "success"){
 				let _isAdmin =response.data.message.isAdmin;
 				let _cookie = response.data.message.cookie;
@@ -36,7 +38,7 @@ export function * loginFlow (){
 				}};
 				localStorage.setItem("cookieSession" ,_cookie);
 				store.dispatch(login(formStateAdm));
-				document.getElementById("errorPassword").style.display = "none";	
+				document.getElementById("errorPassword").style.display = "none";
 			}
 			else {
 				document.getElementById("errorPassword").style.display = "";			}
@@ -59,10 +61,10 @@ export function * logoutFlow() {
 					username:'',
 					password: '',
 					email:''
-		};	
+		};
 		store.dispatch(logout(formStateLogout));
 		 yield put(push("/"))
-		
+
 
 	}
 }

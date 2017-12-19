@@ -8,9 +8,7 @@ class ContractClientPart extends React.Component {
 		this._sousGroupe = this._sousGroupe.bind(this);
 		this._nombreEmployes = this._nombreEmployes.bind(this);
 		this._filterClients = this._filterClients.bind(this);
-		if (this.props.comesFrom === "client") {
-			document.getElementById("nomClient").setAttribute('disabled', true);
-		}
+
 		if(this.props.fromClient.idClient && !this.props.fromClient.update) {
 			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idClient:this.props.fromClient.idClient}});
 		}
@@ -76,10 +74,10 @@ class ContractClientPart extends React.Component {
 		}
 		else {
 			let input = '';
-			this.props.client.facultatif.forEach(champ => {
+			this.props.client.facultatif.fo(champ => {
 				if (champ.nom === 'Nombre d\'employés' && champ.valeur !== '' && !duplicate) {
 					duplicate = true;
-					input = <input key={champ.idRow}
+					return <input key={champ.idRow}
 								  type="textField"
 								  className="form-control col-sm-8"
 								  value={champ.valeur}
@@ -89,7 +87,7 @@ class ContractClientPart extends React.Component {
 				}
 				else if (champ.nom === 'Nombre d\'employés' && champ.valeur === '' && !duplicate) {
 					duplicate = true;
-					input = <input key={champ.idRow}
+					return <input key={champ.idRow}
 								  type="textField"
 								  className="form-control col-sm-8"
 								  value="Le nombre d'employés n'est pas précisé"

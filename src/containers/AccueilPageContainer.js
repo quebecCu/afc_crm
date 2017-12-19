@@ -40,6 +40,6 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(changeForm(newFormState))
 		}
 	}
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccueilPageContainer)

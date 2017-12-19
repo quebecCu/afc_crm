@@ -10,7 +10,7 @@ import {
 import axios from 'axios';
 import {store} from '../store';
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
-import {changeLoading} from "../actions/crmDashboard";
+import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
 
 
 let tokenToSend= localStorage.getItem("cookieSession");
@@ -285,10 +285,10 @@ export function * sendFile() {
 			newcontacts: arrayContacts
 		},config)
 			.then(function (response) {
+				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été créée avec succès');
-					//store.dispatch(changeViewCollective('customerFile'));
-					//store.dispatch(changeViewGrid('read'))
+					store.dispatch(changeViewCollective('customers'));
 				}
 				else if(response.data.status === "fail") {
 					alert(response.data.message);
@@ -347,9 +347,10 @@ export function * updateFile() {
 			delcontacts: delcontacts,
 		},config)
 			.then(function (response) {
+				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');
-					//store.dispatch(changeViewCollective('customerFile'));
+					store.dispatch(changeViewCollective('customers'));
 				}
 				else if(response.data.status === 'fail') {
 					alert(response.data.message);

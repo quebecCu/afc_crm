@@ -58,7 +58,13 @@ export class GridCreationClient extends Component {
 
 							</ResponsiveReactGridLayout>
 							<div className="form-group">
-								<input type="submit" value="Valider" className="btn btn-primary"/>
+								<button className="buttonload btn btn-primary" type="submit">
+									{
+										this.props.loadingValidation &&
+										<i className="fa fa-refresh fa-spin"/>
+									}
+									 Valider
+								</button>
 							</div>
 						</form>
 						{

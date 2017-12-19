@@ -9,7 +9,8 @@ import {
 import axios from 'axios';
 import {store} from '../store';
 import {getContactsSup} from "../actions/crmContacts";
-import {changeLoading} from "../actions/crmDashboard";
+import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
+import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 
 let tokenToSend= localStorage.getItem("cookieSession");
 if(tokenToSend === undefined)
@@ -97,10 +98,10 @@ export function * sendFile() {
 			nb_min_grand_grp: requiredFields.employesBigGroup
 		},config)
 			.then(function (response) {
+				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche fournisseur a été créée avec succès');
-					//store.dispatch(changeViewCollective('customerFile'));
-					//store.dispatch(changeViewGrid('read'))
+					store.dispatch(changeViewSuppliers(""));
 				}
 				else if(response.data.status === "fail") {
 					alert(response.data.message);
@@ -131,11 +132,6 @@ export function * updateFile() {
 		let facultatif = grid.map(champ => {
 			return {id: champ.idattrfournisseur, value: champ.value}
 		});
-		console.log(requiredFields);
-		console.log(newcontacts);
-		console.log(updatedContacts);
-		console.log(delcontacts);
-		console.log(facultatif);
 
 
 		//communication avec server
@@ -164,9 +160,10 @@ export function * updateFile() {
 			nb_min_grand_grp: requiredFields.employesBigGroup
 		},config)
 			.then(function (response) {
+				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');
-					//store.dispatch(changeViewCollective('customerFile'));
+					store.dispatch(changeViewSuppliers(""));
 				}
 				else if(response.data.status === 'fail') {
 					alert(response.data.message);

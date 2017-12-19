@@ -50,8 +50,7 @@ class ContractsContainer extends React.Component {
 			{
 
 				view === "create" &&
-				<CreateContractContainer comesFrom="blankContract"
-										 changeLoading={this.props.changeLoading}
+				<CreateContractContainer changeLoading={this.props.changeLoading}
 										 loading={loading}
 										 view={view}
 										 titrebouton="Créer le contrat"
@@ -59,8 +58,7 @@ class ContractsContainer extends React.Component {
 			}
 			{
 				view === "updatecontract" &&
-				<CreateContractContainer comesFrom="update"
-										 changeLoading={this.props.changeLoading}
+				<CreateContractContainer changeLoading={this.props.changeLoading}
 										 loading={loading}
 										 view={view}
 										 titrebouton="Modifier le contrat"

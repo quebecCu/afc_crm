@@ -22,8 +22,8 @@ class Login extends Component   {
 		this._login = this._login.bind(this);
 	}
 
-	
-	
+
+
 	_login(e) {
 		e.preventDefault();
 		this.props.onSubmit(this.props.formState);
@@ -63,7 +63,15 @@ class Login extends Component   {
 								<form method="POST" onSubmit = {this._login} id="login-form"  >
 									<input className= "form-control" type='text' name="username" id="usernameLogin" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
 									<input className= "form-control" type='password' name="password" id="passwordLogin" placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
-									<div className="form-group"><button type= "submit" className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>Login</button></div>
+									<div className="form-group">
+										<button type= "submit" className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>
+											{
+												this.props.loadingLogin&&
+												<i className="fa fa-refresh fa-spin"/>
+											}
+											Login
+										</button>
+									</div>
 								</form>
 								<div className="login-help">
 									<br/>
@@ -73,7 +81,7 @@ class Login extends Component   {
 							    <h3>Nom d'utilisateur ou mot de passe erroné</h3>
 							    <p>En cas de problemes, utilisez "Mots de passe oublié?".</p>
 							  </div>
-							  
+
 							</div>
 						</div>
 					</div>
@@ -111,7 +119,7 @@ class Login extends Component   {
 						</div>
 					</footer>
 				</div>
-				
+
 		);
 	}
 }
