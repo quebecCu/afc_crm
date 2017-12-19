@@ -26,6 +26,11 @@ export const SEND_DELETE_FIELD_CONTRACT = 'SEND_DELETE_FIELD_CONTRACT';
 export const SET_FROM_CLIENT = 'SET_FROM_CLIENT';
 export const GET_CONTRACT = 'GET_CONTRACT';
 export const SET_CONTRACT = 'SET_CONTRACT';
+export const SUBMIT_CONTRACT = 'SUBMIT_CONTRACT'
+
+export function createContract(contract){
+	return {type: SUBMIT_CONTRACT, contract}
+}
 
 export function changeViewContract (newView){
 	return {type: CHANGE_VIEW_CONTRACT, newView}

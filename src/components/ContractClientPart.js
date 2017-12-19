@@ -74,7 +74,7 @@ class ContractClientPart extends React.Component {
 		}
 		else {
 			let input = '';
-			this.props.client.facultatif.fo(champ => {
+			this.props.client.facultatif.forEach(champ => {
 				if (champ.nom === 'Nombre d\'employés' && champ.valeur !== '' && !duplicate) {
 					duplicate = true;
 					return <input key={champ.idRow}

@@ -3,8 +3,8 @@ import {take, fork} from 'redux-saga/effects';
 import {
 	changeBigLayout, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract,
 	GET_AGA, GET_CONTRACT, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
-	GET_TYPES_CONTRACT,
-	getEmployesAFC, getGrid,
+	GET_TYPES_CONTRACT, SUBMIT_CONTRACT,
+	getEmployesAFC, getGrid, createContract,
 	getListAssureurs,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
 	setContract,
@@ -26,6 +26,71 @@ let config = {
 		"Authorization": tokenToSend
 	}
 };
+
+export function * submitContract() {
+
+	while (true) {
+
+		let formState = yield take(SUBMIT_CONTRACT);
+		console.log(formState);
+
+		let {
+			idClient, idRepresentant,
+			idAssureur, idAGA, numPolice,
+			dateEmission, moisRenouv, notes,
+			historiqueTaux, remuneration,
+			modulesChoisis
+		} = formState.contract.contrat;
+
+		let {
+			facultatif
+		} = formState.contract;
+
+
+		var tokenToSend = localStorage.getItem("cookieSession");
+		if (tokenToSend === undefined)
+			tokenToSend = "";
+		var config = {
+			headers: {
+				"Authorization": tokenToSend
+			}
+		};
+
+		//communication avec server
+		var server = "http://localhost:3002/collectiveContracts/create";
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/create';
+
+		axios.post(backendUrl, {
+			idClient: idClient,
+			idRepresentant: idRepresentant,
+			idAssureur: idAssureur,
+			idAGA: idAGA,
+			numPolice: numPolice,
+			dateEmission: dateEmission,
+			moisRenouv: moisRenouv,
+			notes: notes,
+			historiqueTaux: historiqueTaux,
+			remuneration: remuneration,
+			modulesChoisis: modulesChoisis,
+			facultatif: facultatif
+		}, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					alert('Le contrat a été créé avec succès');
+				}
+				else if (response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
+					alert('Erreur lors de la création du contrat');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
 
 export function* requestAGA() {
 	while (true) {
@@ -412,4 +477,5 @@ export function* ContractsFlow() {
 	yield fork(requestSendUpdateField);
 	yield fork(requestSendDeleteField);
 	yield fork(requestGetContract);
+	yield fork(submitContract);
 }

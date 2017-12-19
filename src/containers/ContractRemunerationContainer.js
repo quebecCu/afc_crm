@@ -5,6 +5,7 @@ class ContractRemunerationContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this._onChangeConseiller = this._onChangeConseiller.bind(this);
+
 	}
 
 	componentDidMount() {

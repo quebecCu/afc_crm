@@ -7,7 +7,7 @@ import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {connect} from "react-redux";
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getGrid,
+	getGrid, createContract,
 	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../actions/crmContract";
 import {Responsive, WidthProvider} from 'react-grid-layout';
@@ -154,8 +154,8 @@ class CreateContractContainer extends React.Component {
 				notes: contract.notes,
 				historiqueTaux: { //Aller chercher la bonne année?
 					diff: '',
-					anneedep: '',
-					anneefin: '',
+					annee_dep: '',
+					annee_fin: '',
 					vie: '',
 					dma: '',
 					pac: '',
@@ -435,6 +435,10 @@ class CreateContractContainer extends React.Component {
 		}
 
 		this._validateForm();
+		//Si on est en create, on crée le bordel sinan na
+		if(this.props.view === "create"){
+			this.props.createContract(formState);
+		}
 	}
 
 	_validateForm() {
@@ -608,9 +612,11 @@ function mapStateToProps(state) {
 //fonctions
 const mapDispatchToProps = (dispatch) => {
 	return {
-
+		createContract: (contract) =>{
+			dispatch(createContract(contract));
+		},
 		changeForm: (newFormState) => {
-			dispatch(changeFormContract(newFormState))
+			dispatch(changeFormContract(newFormState));
 		},
 		getGrid: (facDisplay) => {
 			dispatch(getGrid(facDisplay));

@@ -12,10 +12,10 @@ class ContractTauxContainer extends React.Component{
 			<h4>Historique des taux</h4>
 			<div className="container">
 				<div className="row justify-content-md-center">
-					<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="anneedep"
+					<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="annee_dep"
 								   description="Année de départ" part="taux"
 								   formState={this.props.formState} changeForm={this.props.changeForm}/>
-					<ContractInput titre="Année de fin" unite="" format="AAAA" titreChamp="anneefin"
+					<ContractInput titre="Année de fin" unite="" format="AAAA" titreChamp="annee_fin"
 								   description="Année de départ" part="taux"
 								   formState={this.props.formState} changeForm={this.props.changeForm}/>
 				</div>

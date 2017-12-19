@@ -269,7 +269,7 @@ class ContractFile extends React.Component {
 							<TitreValeur valeur="Rémunérations"/></button>
 						<div id="wrapperTaux" className=" wrapper show  " style={{backgroundColor: 'white'}}>
 							{
-								contract.remuneration.map((element, index) => {
+								contract.historique_taux.map((element, index) => {
 									return <div className="w3-animate-zoom" key={index}>
 										<div className="unePartie">
 											<TitreValeur titre="Année de début" valeur={element.annee_dep}/>

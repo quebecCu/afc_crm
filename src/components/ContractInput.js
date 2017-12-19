@@ -7,6 +7,7 @@ class ContractInput extends React.Component{
 		this._checkValues=this._checkValues.bind(this);
 		this._getFieldValue=this._getFieldValue.bind(this);
 
+
 		if(this.props.titreChamp === "notes"){
 			this.type = "text";
 		}
@@ -34,6 +35,8 @@ class ContractInput extends React.Component{
 			let value = remuneration[titreChamp];
 			return value;
 		}
+
+
 	}
 
 	_onChangeField(event){
