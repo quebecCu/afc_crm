@@ -138,6 +138,7 @@ class ListContractsComponent extends React.Component {
 							</thead>
 							<tbody>
 							{
+								
 								this.props.listContracts.map((contract, index) => {
 									return (
 									<tr key={index} onClick={this._handleClick.bind(this, contract)}>
