@@ -191,8 +191,9 @@ export function* requestModules() {
 	while (true) {
 		yield take(GET_MODULES);
 		let server = "http://localhost:3002/collectiveContracts/modules";
-
-		axios.get(server, config)
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/modules';
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setModules(response.data.message));
@@ -211,7 +212,12 @@ export function* requestGrid() {
 		let user = yield take(GET_GRID);
 		let facDisplay = user.update;
 		let server = "http://localhost:3002/attributesManagement/contract";
-		axios.get(server, config)
+		
+		//communication avec server
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/contract';
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let grids = response.data.message;
@@ -288,7 +294,11 @@ export function* requestUpdateGridLayout() {
 		let menus = layouts.menus;
 
 		let server = "http://localhost:3002/attributesManagement/update/contract/display";
-		axios.post(server, {
+		
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/update/contract/display';
+		
+		axios.post(backendUrl, {
 			layout: layout,
 			menus: menus
 		}, config)
@@ -309,7 +319,10 @@ export function* requestTypes() {
 	while (true) {
 		yield take(GET_TYPES_CONTRACT);
 		let server = "http://localhost:3002/attributesManagement/types";
-		axios.get(server, config)
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
+		
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setTypesContract(response.data.message));
@@ -333,7 +346,11 @@ export function* requestSendNewField() {
 		} = field.newField;
 
 		let server = "http://localhost:3002/attributesManagement/create/contract";
-		axios.post(server, {
+		
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/contract';
+		
+		axios.post(backendUrl, {
 			description: form.description,
 			label: form.name,
 			idtype: form.type,
@@ -378,11 +395,11 @@ export function* requestSendUpdateField() {
 
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/contract";
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/provider';
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagementupdate/contract';
 
 
-		axios.post(server, {
+		axios.post(backendUrl, {
 			id: id,
 			label: name,
 			description: description,
@@ -421,10 +438,10 @@ export function* requestSendDeleteField() {
 
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/contract/" + id;
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/'+id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/contract/'+id;
 
-		axios.delete(server, config)
+		axios.delete(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(getGrid());
@@ -446,10 +463,10 @@ export function* requestGetContract() {
 
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/" + id;
-		//let backendUrl = window.location.host;
-		//backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/'+id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/'+id;
 
-		axios.get(server, config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setContract(response.data.message));
