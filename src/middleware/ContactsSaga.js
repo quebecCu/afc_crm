@@ -37,7 +37,7 @@ export function* requestPostesContacts() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let postes = response.data.message;
-					if(contacts) {
+					if(!!contacts) {
 						let array = contacts.map(contact => {
 							let poste = 1;
 							postes.forEach(element => {
@@ -77,7 +77,7 @@ export function* requestPostesContactsFournisseurs() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					let postes = response.data.message;
-					if(contacts) {
+					if(!!contacts) {
 						let array = contacts.map(contact => {
 							let poste = 1;
 							postes.forEach(element => {
@@ -119,6 +119,7 @@ export function * requestContacts() {
 				if (!!response.data.status && response.data.status === "success") {
 					let contacts = response.data.message;
 					store.dispatch(getPostesContacts(contacts));
+					if(!!contacts) {
 					let array = contacts.map((contact)=> {
 						for(let key in contact) {
 							if (contact.hasOwnProperty(key)) {
@@ -130,6 +131,7 @@ export function * requestContacts() {
 						return contact
 					});
 					store.dispatch(updateContacts(array));
+					}
 				} else {
 					alert('Erreur lors du chargement des contact');
 				}
