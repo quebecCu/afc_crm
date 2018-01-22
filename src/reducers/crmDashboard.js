@@ -16,13 +16,12 @@ export default function reducer (state = initialState, action ){
 
     switch (action.type){
 
-        case CHANGE_VIEW_DASH:
-            return {...state ,view: action.newView , error:''};
-		case CHANGE_LOADING:
-			return {...state ,loading: action.newLoading , error:''};
-        default:
+	    case CHANGE_VIEW_DASH:
+        return {...state ,view: action.newView , error:''};
+			case CHANGE_LOADING:
+				return {...state ,loading: action.newLoading , error:''};
+	        default:
             return state
-
     }
 
 }

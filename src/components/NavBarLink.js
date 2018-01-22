@@ -67,20 +67,42 @@ class NavBarLink extends Component {
     render() {
         let link;
         if(this.props.view === this.props.id && this.props.menu !== "subMenu") {
-            link = (<div onClick={this._handleClick} className="link active text-center" id={this.props.id}>
-                             {"  " + this.props.name}
-                        </div>)
+          link = (
+            <li className="nav-item active" data-toggle="tooltip" data-placement="right" title={this.props.name}>
+              <a
+                className="nav-link"
+                onClick={this._handleClick}
+                id={this.props.id}>
+  	            <span className="nav-link-text">{"  " + this.props.name}</span>
+  	          </a>
+            </li>
+          )
         }
         else if (this.props.menu === "subMenu") {
-			link = (<div onClick={this._handleClick} className="link text-center" id={this.props.id}>
-				<span className="fa fa-minus-circle" onClick={this._handleDelete}/>
-				{"  " + this.props.name}
-			</div>)
-		}
+    			link = (
+            <li>
+              <a
+                onClick={this._handleClick}
+                id={this.props.id}>
+    	            <span className="nav-link-text">
+                    <span className="fa fa-minus-circle" onClick={this._handleDelete}/>
+                    {"  " + this.props.name}
+                  </span>
+  	          </a>
+          </li>
+          )
+		    }
         else {
-            link = (<div onClick={this._handleClick} className="link text-center" id={this.props.id}>
-                 {"  " + this.props.name}
-            </div>)
+          link = (
+            <li className="nav-item" data-toggle="tooltip" data-placement="right" title={this.props.name}>
+              <a
+                className="nav-link"
+                onClick={this._handleClick}
+                id={this.props.id}>
+                <span className="nav-link-text">{"  " + this.props.name}</span>
+              </a>
+            </li>
+          )
         }
         return (
                 link

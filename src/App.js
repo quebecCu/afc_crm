@@ -9,7 +9,6 @@ import LoginPage from "./containers/LoginPage";
 import ResetPage from "./containers/ResetPage";
 import ResetPagePassword from "./containers/ResetPagePasswordContainer";
 import {history, store} from './store.js';
-import './style/App.css';
 
 class App extends Component {
 
