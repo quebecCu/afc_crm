@@ -1,4 +1,8 @@
 import React from 'react';
+import {changeSearchContracts, changeViewContract, getContract, getListContracts} from "../actions/crmContract";
+import ContractPage from "../containers/ContractPage";
+import {addSubContractNav, displaySubContractNav} from "../actions/crmNavBar";
+import {changeLoading} from "../actions/crmDashboard";
 import {connect} from "react-redux";
 
 class ListContractsComponent extends React.Component {
@@ -7,6 +11,7 @@ class ListContractsComponent extends React.Component {
 		this._handleChange = this._handleChange.bind(this);
 		this._hardReset = this._hardReset.bind(this);
 		this._filtre = this._filtre.bind(this);
+		this.props.getListContracts();
 	}
 
 	_handleClick(contract) {
@@ -124,6 +129,8 @@ class ListContractsComponent extends React.Component {
 
 	render(){
 		let {view, listContracts, searchContracts} = this.props.crmContract;
+		let {loading} = this.props.crmDashboard;
+		let {linksSubContract} = this.props.crmNavBar;
 		return (
 			<div className="text-center">
 				<div>
@@ -189,7 +196,37 @@ class ListContractsComponent extends React.Component {
 function mapStateToProps(state) {
 
 	return {
-		crmContract: state.crmContract
+		crmContract: state.crmContract,
+		crmDashboard: state.crmDashboard,
+		crmNavBar: state.crmNavBar
 	}
 }
-export default connect(mapStateToProps)(ListContractsComponent)
+
+//fonctions
+const mapDispatchToProps = (dispatch) => {
+	return {
+		changeViewContract: (newView) => {
+			dispatch(changeViewContract(newView));
+		},
+		getListContracts: () => {
+			dispatch(getListContracts());
+		},
+		changeSearchContracts: (search) => {
+			dispatch(changeSearchContracts(search));
+		},
+		changeLoading: (loading) => {
+			dispatch(changeLoading(loading));
+		},
+		getContract: (idContract) => {
+			dispatch(getContract(idContract));
+		},
+		displaySubContractNav: (display) => {
+			dispatch(displaySubContractNav(display));
+		},
+		addSubContractNav: (links) => {
+			dispatch(addSubContractNav(links));
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListContractsComponent)
