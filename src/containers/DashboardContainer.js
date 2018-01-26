@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import {withRouter} from 'react-router'
+import {Route,Link,Switch} from 'react-router-dom'
 import AccueilPageContainer from "./AccueilPageContainer";
-import NavBar from "./NavBar";
 import SuppliersPageContainer from "./SuppliersPageContainer";
+import PageCollectivesClients from '../components/PageCollectivesClients';
+import NavBar from "./NavBar";
 import ErrorPage from "../components/ErrorPage";
 import GestionUser from './GestionUser';
 import ContractsContainer from "./ContractsContainer";
+import ListContractsComponent from "../components/ListContractsComponent";
 import CollectivePageContainer from "./CollectivePageContainer";
 import {logout} from "../actions/crmLogin";
 
@@ -17,6 +21,7 @@ class DashboardContainer extends Component {
 	render() {
 		let {view} = this.props.crmDashboard;
 		let {isAdmin} = this.props.crmLogin;
+		const { match, location } = this.props
 
 		return (
 			<div>
@@ -26,35 +31,24 @@ class DashboardContainer extends Component {
 	    		<div className="container-fluid" id="main">
 			      <ol className="breadcrumb">
 			        <li className="breadcrumb-item">
-			          <a href="#">Tableau de bord</a>
+								<Link to={match.url}>
+				          Tableau de bord
+				        </Link>
 			        </li>
-							<li className="breadcrumb-item active">Accueil</li>
+							<li className="breadcrumb-item active">{location.pathname}</li>
 						</ol>
+						<Switch>
+				      <Route exact path={match.url} component={AccueilPageContainer}/>
+				      <Route path={match.url + "/collective/suppliers"} component={SuppliersPageContainer}/>
+							<Route path={match.url + "/collective/clients"} component={PageCollectivesClients}/>
+							<Route path={match.url + "/collective/contracts"} component={ListContractsComponent}/>
 							{
-								view === "Home" && (
-
-									<AccueilPageContainer/>
-								)
+								this.props.crmLogin.isAdmin === true
+								&&	<Route path={match.url + "/usersManagement"} component={GestionUser}/>
 							}
-						{
-							view === "collIns" && <CollectivePageContainer/>
-						}
-						{
-	            view === "suppliers" && <SuppliersPageContainer />
-						}
-						{
-							view === "usersManagement" && isAdmin === true &&
-							<GestionUser/>
-						}
-						{
-							view === "contracts" && <ContractsContainer />
-						}
-						{
-							view === "indIns" && <ErrorPage/>
-						}
-						{
-							view === "placements" && <ErrorPage/>
-						}
+							<Route
+								component={ErrorPage}/>
+				    </Switch>
 						<footer className="sticky-footer">
 							<div className="container">
 								<div className="text-center">
@@ -85,4 +79,4 @@ const mapDispatchToProps = (dispatch) => {
 	return {}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardContainer))

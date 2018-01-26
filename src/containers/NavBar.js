@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {changeLoading, changeViewDashboard} from "../actions/crmDashboard";
 import {connect} from "react-redux";
+import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom';
 import NavBarLink from "../components/NavBarLink";
 import NavBarLinkGroup from "../components/NavBarLinkGroup";
 import {logout} from "../actions/crmLogin";
@@ -50,6 +52,7 @@ class NavBar extends Component {
 	}
 
 	render() {
+		const { location } = this.props
 		return (
 		  <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 		    <span className="navbar-brand">AFC inc.</span>
@@ -58,129 +61,74 @@ class NavBar extends Component {
 		    </button>
 		    <div className="collapse navbar-collapse" id="navbarResponsive">
 		      <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-						<NavBarLink
-							name="Accueil"
-							id="Home"
-							handleClick={this.props.changeViewDashboard}
-							view={this.props.view}
-							/>
-						<NavBarLink
-							name="Assurances Individuelles"
-							id="indIns"
-							handleClick={this.props.changeViewDashboard}
-							view={this.props.view}
-							/>
-						<NavBarLinkGroup
-							name="Assurances Collectives"
-							id="collIns"
-							childs={[{name: "Clients",id:"clients"},{name: "Fournisseurs",id:"suppliers"}]}
-							handleClick={this.props.changeViewDashboard}
-							view={this.props.view}
-							resetView={this.props.changeViewCollective}
-							reset=""
-							/>
-						{
-							this.props.crmNavBar.displaySubCustomer === true
-							&& this.props.crmNavBar.linksSubCustomer.map(link => {
-								return (
-									<ul className="sidenav-second-level" id="subCustomer" key={"subCustomerMenu" + link.idCustomer}>
-										<NavBarLink
-											name={link.name}
-											id="collIns"
-											handleClick={this.props.changeViewDashboard}
-											view={this.props.view}
-											resetView={this.props.changeViewCollective}
-											reset={link.view}
-											displayUser={this.props.getClientRequest}
-											changeLoading={this.props.changeLoading}
-											idCustomer={link.idCustomer}
-											menu="subMenu"
-											deleteSub={this._deleteSubCustomer}
-											/>
-									</ul>
-								);
-							})
-						}
-						<NavBarLink
-							name="Contrats"
-							id="contracts"
-							handleClick={this.props.changeViewDashboard} view={this.props.view}
-							resetView={this.props.changeViewContract} reset=""
-							resetState={this.props.setFromClient} resetFor="contract"
-							/>
-						{
-							this.props.crmNavBar.displaySubContract === true
-							&& this.props.crmNavBar.linksSubContract.map(link => {
-								return (
-									<ul className="sidenav-second-level" id="subContract" key={"subContractMenu" + link.idContract}>
-										<NavBarLink
-											name={link.name}
-											id="contracts"
-											handleClick={this.props.changeViewDashboard}
-											view={this.props.view}
-											resetView={this.props.changeViewContract}
-											reset={link.view} displayUser={this.props.getContract}
-											changeLoading={this.props.changeLoading}
-											idContract={link.idContract} menu="subMenu"
-											deleteSub={this._deleteSubContract}/>
-									</ul>
-								)
-							})
-						}
-						<NavBarLink
-							name="Placements"
-							id="placements"
-							handleClick={this.props.changeViewDashboard}
-							view={this.props.view}/>
-						{
-							this.props.crmNavBar.displaySubSupplier === true
-							&& this.props.crmNavBar.linksSubSupplier.map(link => {
-								return (
-									<ul className="sidenav-second-level" id="subSupplier" key={"subSupplierMenu" + link.idSupplier}>
-										<li>
-											<NavBarLink
-												name={link.name}
-												id="suppliers"
-												handleClick={this.props.changeViewDashboard}
-												view={this.props.view}
-												resetView={this.props.changeViewSuppliers}
-												reset={link.view} displayUser={this.props.getSupplier}
-												changeLoading={this.props.changeLoading}
-												idSupplier={link.idSupplier}
-												menu="subMenu"
-												deleteSub={this._deleteSubSupplier}/>
-										</li>
-									</ul>
-								)
-							})
-						}
+						<li className={"nav-item " + (location.pathname === '/dashboard' ? 'active' : '' )} data-toggle="tooltip" data-placement="right" title="Accueil">
+              <Link
+                className="nav-link"
+                to={"/dashboard"}>
+  	            <span className="nav-link-text">Accueil</span>
+  	          </Link>
+            </li>
+						<li className={"nav-item " + (location.pathname.indexOf('/dashboard/individual') !== -1 ? 'active' : '' )} data-toggle="tooltip" data-placement="right" title="Assurances Individuelles">
+              <Link
+                className="nav-link"
+                to={"/dashboard/individual"}>
+  	            <span className="nav-link-text">Assurances Individuelles</span>
+  	          </Link>
+            </li>
+						<li className="nav-item" data-toggle="tooltip" data-placement="right" title="Assurances Collectives">
+	            <a
+	              className="nav-link nav-link-collapse collapsed"
+	              data-toggle="collapse"
+	              data-parent="#exampleAccordion"
+	              href="#collInsSub"
+	              id="collIns">
+		            <span className="nav-link-text">Assurances Collectives</span>
+		          </a>
+	            <ul className="sidenav-second-level collapse" id={"collInsSub"}>
+								<li className={(location.pathname.indexOf("/dashboard/collective/suppliers") !== -1 ? 'active' : '' )} key="suppliersCol">
+									<Link
+			              to={"/dashboard/collective/suppliers"}
+			              id="suppliersCol"
+			              >
+			              Fournisseurs
+			            </Link>
+			          </li>
+								<li className={(location.pathname.indexOf("/dashboard/collective/clients") !== -1 ? 'active' : '' )} key="clientsCol">
+									<Link
+			              to={"/dashboard/collective/clients"}
+			              id="clientsCol"
+			              >
+			              Clients
+			            </Link>
+			          </li>
+								<li className={(location.pathname.indexOf("/dashboard/collective/contracts") !== -1 ? 'active' : '' )} key="contractsCol">
+									<Link
+			              to={"/dashboard/collective/contracts"}
+			              id="contractsCol"
+			              >
+			              Contrats
+			            </Link>
+			          </li>
+	            </ul>
+	          </li>
+						<li className={"nav-item " + (location.pathname.indexOf("/dashboard/placements") !== -1 ? 'active' : '' )} data-toggle="tooltip" data-placement="right" title="Placements">
+              <Link
+                className="nav-link"
+                to={"/dashboard/placements"}>
+  	            <span className="nav-link-text">Placements</span>
+  	          </Link>
+            </li>
 						{
 							this.props.crmLogin.isAdmin === true
-							&& <NavBarLink
-										name="Gestion des utilisateurs"
-										id="usersManagement"
-									  handleClick={this.props.changeViewDashboard}
-										view={this.props.view}
-										resetView={this.props.changeViewUserManagement}
-										reset=""/>
-						}
-						{
-							this.props.crmLogin.isAdmin === true
-							&& this.props.crmNavBar.displaySubUser === true
-							&& this.props.crmNavBar.linksSubUser.map(link => {
-								return (
-									<ul className="sidenav-second-level" id="subUser" key={"subUserMenu" + link.idUser}>
-										<NavBarLink name={link.name} id="usersManagement"
-														handleClick={this.props.changeViewDashboard}
-														view={this.props.view}
-														resetView={this.props.changeViewUserManagement}
-														reset={link.view} displayUser={this.props.requestUserById}
-														changeLoading={this.props.changeLoading}
-														idUser={link.idUser} menu="subMenu"
-														deleteSub={this._deleteSubUser}/>
-									</ul>
+							&& (
+								<li className={"nav-item " + (location.pathname.indexOf("/dashboard/usersManagement") !== -1 ? 'active' : '' )} data-toggle="tooltip" data-placement="right" title="Gestion des utilisateurs">
+		              <Link
+		                className="nav-link"
+		                to={"/dashboard/usersManagement"}>
+		  	            <span className="nav-link-text">Gestion des utilisateurs</span>
+		  	          </Link>
+		            </li>
 								)
-							})
 						}
 		      </ul>
 		      <ul className="navbar-nav ml-auto">
@@ -280,4 +228,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));

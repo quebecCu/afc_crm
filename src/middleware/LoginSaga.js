@@ -74,7 +74,7 @@ export function * loginPush() {
 		yield take (LOGIN);
 		yield put({ type: SET_AUTH, newAuthState: true });
 
-		yield put(push("/Home"));
+		yield put(push("/dashboard"));
 
 	}
 }

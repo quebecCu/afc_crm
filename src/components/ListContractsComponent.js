@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 class ListContractsComponent extends React.Component {
 	constructor(props) {
@@ -122,6 +123,7 @@ class ListContractsComponent extends React.Component {
 	}
 
 	render(){
+		let {view, listContracts, searchContracts} = this.props.crmContract;
 		return (
 			<div className="text-center">
 				<div>
@@ -138,7 +140,7 @@ class ListContractsComponent extends React.Component {
 							</thead>
 							<tbody>
 							{
-								
+
 								this.props.listContracts.map((contract, index) => {
 									return (
 									<tr key={index} onClick={this._handleClick.bind(this, contract)}>
@@ -184,5 +186,10 @@ class ListContractsComponent extends React.Component {
 
 }
 
+function mapStateToProps(state) {
 
-export default (ListContractsComponent)
+	return {
+		crmContract: state.crmContract
+	}
+}
+export default connect(mapStateToProps)(ListContractsComponent)

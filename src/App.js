@@ -22,9 +22,9 @@ class App extends Component {
 							path="/"
 							component={LoginPage}/>
 						<PrivateRoute
-							exact
-							path="/Home"
-							component={DashboardContainer}/>
+							path="/dashboard"
+							component={DashboardContainer}
+							/>
 						<PublicRoute
 							exact
 							path="/Reset"
