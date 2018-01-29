@@ -17,38 +17,6 @@ import {getSupplier} from "../actions/crmGridLayoutSuppliers";
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
-		this._deleteSubUser = this._deleteSubUser.bind(this);
-		this._deleteSubCustomer = this._deleteSubCustomer.bind(this);
-		this._deleteSubSupplier = this._deleteSubSupplier.bind(this);
-		this._deleteSubContract = this._deleteSubContract.bind(this);
-	}
-
-	_deleteSubUser(idUser) {
-		let links = this.props.crmNavBar.linksSubUser.filter(link => {
-			return link.idUser !== idUser;
-		});
-		this.props.deleteSubUserNav(links, "");
-	}
-
-	_deleteSubCustomer(idCustomer) {
-		let links = this.props.crmNavBar.linksSubCustomer.filter(link => {
-			return link.idCustomer !== idCustomer;
-		});
-		this.props.deleteSubCustomerNav(links, "customers");
-	}
-
-	_deleteSubSupplier(idSupplier) {
-		let links = this.props.crmNavBar.linksSubSupplier.filter(link => {
-			return link.idSupplier !== idSupplier;
-		});
-		this.props.deleteSubSupplierNav(links, "");
-	}
-
-	_deleteSubContract(idContract) {
-		let links = this.props.crmNavBar.linksSubContract.filter(link => {
-			return link.idContract !== idContract;
-		});
-		this.props.deleteSubContractNav(links, "collContract");
 	}
 
 	render() {
@@ -187,28 +155,13 @@ const mapDispatchToProps = (dispatch) => {
 		addSubUserNav: (newSubUser) => {
 			dispatch(addSubUserNav(newSubUser));
 		},
-		deleteSubUserNav: (newSubUser, newView) => {
-			dispatch(addSubUserNav(newSubUser));
-			dispatch(changeViewUserManagement(newView));
-		},
 		getClientRequest: (idClient) => {
 			dispatch(getClientRequest(idClient));
-		},
-		addSubCustomerNav: (newSubCustomer) => {
-			dispatch(addSubCustomerNav(newSubCustomer));
-		},
-		deleteSubCustomerNav: (newSubCustomer, newView) => {
-			dispatch(addSubCustomerNav(newSubCustomer));
-			dispatch(changeViewCollective(newView));
 		},
 		changeLoading: (newLoading) => {
 			dispatch(changeLoading(newLoading));
 		},
 		changeViewSuppliers: (newView) => {
-			dispatch(changeViewSuppliers(newView));
-		},
-		deleteSubSupplierNav: (newSubSupplier, newView) => {
-			dispatch(addSubSupplierNav(newSubSupplier));
 			dispatch(changeViewSuppliers(newView));
 		},
 		getSupplier: (id) => {
@@ -220,10 +173,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		getContract: (id) => {
 			dispatch(getContract(id));
-		},
-		deleteSubContractNav: (newSubContract, newView) => {
-			dispatch(addSubContractNav(newSubContract));
-			dispatch(changeViewContract(newView));
 		},
 	}
 };

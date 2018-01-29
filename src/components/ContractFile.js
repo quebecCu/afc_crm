@@ -1,6 +1,10 @@
 import React from 'react';
-import TitreValeur from "../components/TitreValeur";
+import {connect} from "react-redux";
 import {Responsive, WidthProvider} from 'react-grid-layout';
+import TitreValeur from "../components/TitreValeur";
+import {getClientRequest} from "../actions/crmClientList";
+import {getSupplier} from "../actions/crmGridLayoutSuppliers";
+import {setFromClient} from "../actions/crmContract";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -163,34 +167,32 @@ class ContractFile extends React.Component {
 	}
 
 	render() {
-		let contract = this.props.contract;
-		let layout = this.props.lilLayout;
-		let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
-		console.log(layout);
+		let {contractDisplay, lilLayout} = this.props.crmContract;
+		let layouts = {lg: lilLayout, md: lilLayout, sm: lilLayout, xs: lilLayout, xxs: lilLayout};
 		return (
 			<div className="container">
 				<h1>Contrat</h1>
 				<div>
 					<button className="grandTitreClient" id="nomGroupe" onClick={this.dropDownClient}>
-						<TitreValeur titre="N° Police" valeur={contract.police}/></button>
+						<TitreValeur titre="N° Police" valeur={contractDisplay.police}/></button>
 					<div id="wrapperClient" className=" wrapper show  ">
 						<div className="unePartie w3-animate-zoom">
-							<a onClick={this._handleClient.bind(this, contract)}
+							<a onClick={this._handleClient.bind(this, contractDisplay)}
 							   style={{cursor: 'pointer'}}><TitreValeur titre="Client "
-																		valeur={contract.nomclient}/></a>
-							<a onClick={this._handleAssureur.bind(this, contract)}
+																		valeur={contractDisplay.nomclient}/></a>
+							<a onClick={this._handleAssureur.bind(this, contractDisplay)}
 							   style={{cursor: 'pointer'}}><TitreValeur titre="Assureur"
-																		valeur={contract.nomfournisseur}/></a>
+																		valeur={contractDisplay.nomfournisseur}/></a>
 							<TitreValeur titre="Représentant"
-										 valeur={contract.prenomrepresentant + " " + contract.nomrepresentant}/>
+										 valeur={contractDisplay.prenomrepresentant + " " + contractDisplay.nomrepresentant}/>
 						</div>
 						<div className="unePartie w3-animate-zoom">
-							<TitreValeur titre="AGA" valeur={contract.libellechambrecommerce}/>
-							<TitreValeur titre="Date de signature" valeur={contract.date_signature}/>
-							<TitreValeur titre="Mois de renouvellement" valeur={contract.mois_renouvellement}/>
+							<TitreValeur titre="AGA" valeur={contractDisplay.libellechambrecommerce}/>
+							<TitreValeur titre="Date de signature" valeur={contractDisplay.date_signature}/>
+							<TitreValeur titre="Mois de renouvellement" valeur={contractDisplay.mois_renouvellement}/>
 						</div>
 						<div className="unePartie w3-animate-zoom">
-							<TitreValeur titre="Notes" valeur={contract.notes}/>
+							<TitreValeur titre="Notes" valeur={contractDisplay.notes}/>
 						</div>
 						<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={layouts}
 												   cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
@@ -198,7 +200,7 @@ class ContractFile extends React.Component {
 												   breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
 						>
 							{
-								contract.facultatif.map(element => {
+								contractDisplay.facultatif.map(element => {
 									return (
 										<div key={element.idRow} className="form-group">
 											<TitreValeur key={element.idRow} titre={element.nom}
@@ -217,7 +219,7 @@ class ContractFile extends React.Component {
 							<TitreValeur valeur="Historique des taux"/></button>
 						<div id="wrapperContacts" className=" wrapper show  ">
 							{
-								contract.historique_taux.map((element, index) => {
+								contractDisplay.historique_taux.map((element, index) => {
 									return <div className="w3-animate-zoom" key={index}>
 										<div className="unePartie">
 											<TitreValeur titre="Année de début" valeur={element.annee_dep}/>
@@ -269,7 +271,7 @@ class ContractFile extends React.Component {
 							<TitreValeur valeur="Rémunérations"/></button>
 						<div id="wrapperTaux" className=" wrapper show  " style={{backgroundColor: 'white'}}>
 							{
-								contract.historique_taux.map((element, index) => {
+								contractDisplay.historique_taux.map((element, index) => {
 									return <div className="w3-animate-zoom" key={index}>
 										<div className="unePartie">
 											<TitreValeur titre="Année de début" valeur={element.annee_dep}/>
@@ -319,7 +321,7 @@ class ContractFile extends React.Component {
 							<TitreValeur valeur="Souscriptions"/></button>
 						<div id="wrapperSouscriptions" className=" wrapper show  " style={{backgroundColor: 'white'}}>
 							{
-								contract.souscriptions.map((element, index) => {
+								contractDisplay.souscriptions.map((element, index) => {
 									return <div className="w3-animate-zoom" key={index}>
 										<div className="unePartie">
 											<TitreValeur titre="Module" valeur={element.libelle}/>
@@ -347,7 +349,7 @@ class ContractFile extends React.Component {
 
 					<div className="form-group">
 						<button type="button" className="btn btn-primary"
-								onClick={this._handleModify} value={contract.idcontrat}>
+								onClick={this._handleModify} value={contractDisplay.idcontrat}>
 							Modifier le contrat
 						</button>
 					</div>
@@ -358,4 +360,31 @@ class ContractFile extends React.Component {
 	}
 }
 
-export default (ContractFile);
+function mapStateToProps(state) {
+	return {
+		crmLogin: state.crmLogin,
+		crmDashboard: state.crmDashboard,
+		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
+		crmContacts: state.crmContacts,
+		crmContract: state.crmContract,
+		crmNavBar: state.crmNavBar,
+		crmRechercheCollective: state.crmRechercheCollective
+	}
+}
+
+//fonctions
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getClientRequest: (id) => {
+			dispatch(getClientRequest(id));
+		},
+		getSupplier: (id) => {
+			dispatch(getSupplier(id));
+		},
+		setFromClient(client) {
+			dispatch(setFromClient(client));
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContractFile);

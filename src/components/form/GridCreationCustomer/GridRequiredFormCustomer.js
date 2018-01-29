@@ -76,7 +76,7 @@ class GridRequiredFormCustomer extends Component {
 			<div>
 				<div className="form-group row">
 					<div className="col-6">
-						<label htmlFor="nomEntreprise" className="control-label">Nom de l'entreprise</label>
+						<label htmlFor="nomEntreprise" className="control-label">Nom de lentreprise</label>
 						<input type="text" className="form-control" id="nomEntreprise" value={this.props.requiredFields.nomEntreprise}
 							   name="nomEntreprise" onChange={this._changeNomEntreprise} required/>
 					</div>

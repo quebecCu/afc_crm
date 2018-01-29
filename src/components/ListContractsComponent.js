@@ -1,9 +1,11 @@
 import React from 'react';
+import {connect} from "react-redux";
+import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom';
 import {changeSearchContracts, changeViewContract, getContract, getListContracts} from "../actions/crmContract";
 import ContractPage from "../containers/ContractPage";
 import {addSubContractNav, displaySubContractNav} from "../actions/crmNavBar";
 import {changeLoading} from "../actions/crmDashboard";
-import {connect} from "react-redux";
 
 class ListContractsComponent extends React.Component {
 	constructor(props) {
@@ -101,7 +103,7 @@ class ListContractsComponent extends React.Component {
 
 	_filtre() {
 		let inputNumeroPolice, inputNomAssureur, inputNomClient, inputMoisRenouvellement,
-			table, tr, td0, td1, td2, td3, i;
+			table, tr, td0, td1, td2, td3, td4, i;
 
 		inputNomClient = this.props.crmContract.searchContracts.nomClient.toUpperCase();
 		inputNumeroPolice = this.props.crmContract.searchContracts.numeroPolice.toUpperCase();
@@ -112,10 +114,10 @@ class ListContractsComponent extends React.Component {
 		tr = table.getElementsByTagName("tr");
 		// Loop through all table rows, and hide those who don't match the search query
 		for (i = 0; i < tr.length; i++) {
-			td0 = tr[i].getElementsByTagName("td")[0];
-			td1 = tr[i].getElementsByTagName("td")[1];
-			td2 = tr[i].getElementsByTagName("td")[2];
-			td3 = tr[i].getElementsByTagName("td")[3];
+			td0 = tr[i].getElementsByClassName("tableCellContract")[0];
+			td1 = tr[i].getElementsByClassName("tableCellContract")[1];
+			td2 = tr[i].getElementsByClassName("tableCellContract")[2];
+			td3 = tr[i].getElementsByClassName("tableCellContract")[3];
 			if (td0 || td1 || td2 || td3) {
 				if (td3.innerHTML.toUpperCase().indexOf(inputMoisRenouvellement) > -1 && td0.innerHTML.toUpperCase().indexOf(inputNumeroPolice) > -1
 					&& td2.innerHTML.toUpperCase().indexOf(inputNomAssureur) > -1 && td1.innerHTML.toUpperCase().indexOf(inputNomClient) > -1) {
@@ -131,6 +133,7 @@ class ListContractsComponent extends React.Component {
 		let {view, listContracts, searchContracts} = this.props.crmContract;
 		let {loading} = this.props.crmDashboard;
 		let {linksSubContract} = this.props.crmNavBar;
+		const { match } = this.props;
 		return (
 			<div className="card mb-3">
 				<div className="card-header">
@@ -159,7 +162,11 @@ class ListContractsComponent extends React.Component {
 							<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
 
 						</form>
-						<button onClick={this.props.handleClick} value="create">Créer contrat</button>
+						<Link
+							className="btn btn-primary"
+							to={match.url + "/create"}>
+							<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
+						</Link>
 					</div>
 					<div className="table-responsive">
 						<table className="table table-bordered table-hover" id="PageContractsTable">
@@ -169,6 +176,7 @@ class ListContractsComponent extends React.Component {
 									<th onClick={this._handleClickHead.bind(this, 1)}>Client</th>
 									<th onClick={this._handleClickHead.bind(this, 2)}>Assureur</th>
 									<th onClick={this._handleClickHead.bind(this, 3)}>Mois de renouvellement</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -177,10 +185,39 @@ class ListContractsComponent extends React.Component {
 								listContracts.map((contract, index) => {
 									return (
 									<tr key={index} onClick={this._handleClick.bind(this, contract)}>
-										<td>{contract.police}</td>
-										<td>{contract.nom_client}</td>
-										<td>{contract.nom_fournisseur}</td>
-										<td>{contract.mois_renouvellement}</td>
+										<td className="tableCellContract">{contract.police}</td>
+										<td className="tableCellContract">{contract.nom_client}</td>
+										<td className="tableCellContract">{contract.nom_fournisseur}</td>
+										<td className="tableCellContract">{contract.mois_renouvellement}</td>
+										<td>
+											<table style={{width: 100 + '%',height: 100 + '%'}}>
+												<tbody>
+													<tr>
+														<td className="text-right" style={{border:"none", padding: 0}}>
+															<Link
+								                className="btn btn-sm btn-primary"
+								                to={match.url + "/" + contract.police}>
+								  	            <i className="fa fa-eye" aria-hidden="true"></i>
+								  	          </Link>
+														</td>
+														<td className="text-center" style={{border:"none", padding: 0}}>
+															<Link
+																className="btn btn-sm btn-secondary"
+																to={match.url + "/" + contract.police + "/update"}>
+																<i className="fa fa-cog" aria-hidden="true"></i>
+															</Link>
+														</td>
+														<td className="text-left" style={{border:"none", padding: 0}}>
+															<Link
+								                className="btn btn-sm btn-danger"
+								                to={match.url + "/" + contract.police }>
+								  	            <i className="fa fa-times" aria-hidden="true"></i>
+								  	          </Link>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
 									</tr>
 									)
 								})
@@ -231,4 +268,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListContractsComponent)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListContractsComponent))

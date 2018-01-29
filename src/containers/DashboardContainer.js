@@ -5,13 +5,11 @@ import {Route,Link,Switch} from 'react-router-dom'
 import AccueilPageContainer from "./AccueilPageContainer";
 import SuppliersPageContainer from "./SuppliersPageContainer";
 import PageCollectivesClients from '../components/PageCollectivesClients';
+import ContractsContainer from "./ContractsContainer";
 import NavBar from "./NavBar";
 import ErrorPage from "../components/ErrorPage";
 import GestionUser from './GestionUser';
-import ContractsContainer from "./ContractsContainer";
-import ListContractsComponent from "../components/ListContractsComponent";
 import CollectivePageContainer from "./CollectivePageContainer";
-import {logout} from "../actions/crmLogin";
 
 class DashboardContainer extends Component {
 	componentDidMount() {
@@ -41,7 +39,7 @@ class DashboardContainer extends Component {
 				      <Route exact path={match.url} component={AccueilPageContainer}/>
 				      <Route path={match.url + "/collective/suppliers"} component={SuppliersPageContainer}/>
 							<Route path={match.url + "/collective/clients"} component={PageCollectivesClients}/>
-							<Route path={match.url + "/collective/contracts"} component={ListContractsComponent}/>
+							<Route path={match.url + "/collective/contracts"} component={ContractsContainer}/>
 							{
 								this.props.crmLogin.isAdmin === true
 								&&	<Route path={match.url + "/usersManagement"} component={GestionUser}/>
