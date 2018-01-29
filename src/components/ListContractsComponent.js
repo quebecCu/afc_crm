@@ -15,7 +15,7 @@ class ListContractsComponent extends React.Component {
 	}
 
 	_handleClick(contract) {
-		let links = this.props.linksSubContract;
+		let links = this.props.crmNavBar.linksSubContract;
 		let check = true;
 		links.forEach(link => {
 			if(link.idContract === contract.idcontrat) {
@@ -23,9 +23,9 @@ class ListContractsComponent extends React.Component {
 			}
 		});
 		if(check) {
-			this.props.listContracts.forEach((element, index) => {
+			this.props.crmContract.listContracts.forEach((element, index) => {
 				let duplicate = false;
-				this.props.listContracts.forEach((element2, index2)=> {
+				this.props.crmContract.listContracts.forEach((element2, index2)=> {
 					if(element.idcontrat === element2.idcontrat && index > index2) {
 						duplicate = true;
 					}
@@ -79,7 +79,7 @@ class ListContractsComponent extends React.Component {
 	}
 
 	_handleChange(event) {
-		let search = this.props.searchContracts;
+		let search = this.props.crmContract.searchContracts;
 		search[event.target.id] = event.target.value;
 		this.props.changeSearchContracts(search);
 		this._filtre();
@@ -103,10 +103,10 @@ class ListContractsComponent extends React.Component {
 		let inputNumeroPolice, inputNomAssureur, inputNomClient, inputMoisRenouvellement,
 			table, tr, td0, td1, td2, td3, i;
 
-		inputNomClient = this.props.searchContracts.nomClient.toUpperCase();
-		inputNumeroPolice = this.props.searchContracts.numeroPolice.toUpperCase();
-		inputNomAssureur = this.props.searchContracts.nomAssureur.toUpperCase();
-		inputMoisRenouvellement = this.props.searchContracts.moisRenouvellement.toUpperCase();
+		inputNomClient = this.props.crmContract.searchContracts.nomClient.toUpperCase();
+		inputNumeroPolice = this.props.crmContract.searchContracts.numeroPolice.toUpperCase();
+		inputNomAssureur = this.props.crmContract.searchContracts.nomAssureur.toUpperCase();
+		inputMoisRenouvellement = this.props.crmContract.searchContracts.moisRenouvellement.toUpperCase();
 
 		table = document.getElementById("PageContractsTable");
 		tr = table.getElementsByTagName("tr");
@@ -132,23 +132,49 @@ class ListContractsComponent extends React.Component {
 		let {loading} = this.props.crmDashboard;
 		let {linksSubContract} = this.props.crmNavBar;
 		return (
-			<div className="text-center">
-				<div>
-					<h1>Liste des contrats</h1>
+			<div className="card mb-3">
+				<div className="card-header">
+	      	<i className="fa fa-table"></i> Liste des contrats
+				</div>
+				<div className="card-body">
+					<div>
+						<form action="" id="recherche" className="container-fluid">
+							<input type="text" id="numeroPolice" placeholder="N° police"
+								   onChange={this._handleChange}
+								   value={searchContracts.numeroPolice}
+							/>
+							<input type="text" id="nomClient" placeholder="Nom client"
+								   onChange={this._handleChange}
+								   value={searchContracts.nomClient}
+							/>
+							<input type="text" id="nomAssureur" placeholder="Assureur"
+								   onChange={this._handleChange}
+								   value={searchContracts.nomAssureur}
+							/>
+							<input type="text" id="moisRenouvellement" placeholder="Mois renouvellement"
+								   onChange={this._handleChange}
+								   value={searchContracts.moisRenouvellement}
+							/>
+
+							<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
+
+						</form>
+						<button onClick={this.props.handleClick} value="create">Créer contrat</button>
+					</div>
 					<div className="table-responsive">
-						<table className="table" id="PageContractsTable">
-							<thead>
-							<tr>
-								<th onClick={this._handleClickHead.bind(this, 0)}>N° Police</th>
-								<th onClick={this._handleClickHead.bind(this, 1)}>Client</th>
-								<th onClick={this._handleClickHead.bind(this, 2)}>Assureur</th>
-								<th onClick={this._handleClickHead.bind(this, 3)}>Mois de renouvellement</th>
-							</tr>
+						<table className="table table-bordered table-hover" id="PageContractsTable">
+							<thead className="thead-default">
+								<tr>
+									<th onClick={this._handleClickHead.bind(this, 0)}>N° Police</th>
+									<th onClick={this._handleClickHead.bind(this, 1)}>Client</th>
+									<th onClick={this._handleClickHead.bind(this, 2)}>Assureur</th>
+									<th onClick={this._handleClickHead.bind(this, 3)}>Mois de renouvellement</th>
+								</tr>
 							</thead>
 							<tbody>
 							{
 
-								this.props.listContracts.map((contract, index) => {
+								listContracts.map((contract, index) => {
 									return (
 									<tr key={index} onClick={this._handleClick.bind(this, contract)}>
 										<td>{contract.police}</td>
@@ -162,32 +188,8 @@ class ListContractsComponent extends React.Component {
 							</tbody>
 						</table>
 					</div>
-					<div>
-						<form action="" id="recherche" className="container-fluid">
-							<input type="text" id="numeroPolice" placeholder="N° police"
-								   onChange={this._handleChange}
-								   value={this.props.searchContracts.numeroPolice}
-							/>
-							<input type="text" id="nomClient" placeholder="Nom client"
-								   onChange={this._handleChange}
-								   value={this.props.searchContracts.nomClient}
-							/>
-							<input type="text" id="nomAssureur" placeholder="Assureur"
-								   onChange={this._handleChange}
-								   value={this.props.searchContracts.nomAssureur}
-							/>
-							<input type="text" id="moisRenouvellement" placeholder="Mois renouvellement"
-								   onChange={this._handleChange}
-								   value={this.props.searchContracts.moisRenouvellement}
-							/>
-
-							<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
-
-						</form>
-					</div>
-					<button onClick={this.props.handleClick} value="create">Créer contrat</button>
 				</div>
-		</div>
+			</div>
 		);
 	}
 
