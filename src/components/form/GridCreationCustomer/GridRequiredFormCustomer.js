@@ -113,8 +113,8 @@ class GridRequiredFormCustomer extends Component {
 						<select className="form-control" id="province" name="province"
 							   onChange={this._changeProvince} value={this.props.requiredFields.province} required>
 							   {
-								this.props.releves.map(releve => {
-									return <option key={province.idProvince} value={proince.idProvince}>{province.nomProvince}</option>
+								this.props.provinces.map(province => {
+									return <option key={province.idProvince} value={province.idProvince}>{province.nomProvince}</option>
 								})
 							}
 						</select>

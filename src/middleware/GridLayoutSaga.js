@@ -5,7 +5,7 @@ import {
 	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
 	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChampTypes, getEtats,
 	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField, changeNewField, GET_GRID_MODIFY,
-	getGridModify, changeRequiredFields, DELETE_CUSTOMER
+	getGridModify, changeRequiredFields, DELETE_CUSTOMER,GET_PROVINCES,UPDATE_PROVINCES
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';

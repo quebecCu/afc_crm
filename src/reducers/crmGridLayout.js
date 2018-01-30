@@ -10,6 +10,7 @@ import {
 
 let initialState = {
 	releves: [],
+	provinces:[],
 	champTypes: [],
 	activites: [],
 	etats: [],
