@@ -135,95 +135,98 @@ class ListContractsComponent extends React.Component {
 		let {linksSubContract} = this.props.crmNavBar;
 		const { match } = this.props;
 		return (
-			<div className="card mb-3">
-				<div className="card-header">
-	      	<i className="fa fa-table"></i> Liste des contrats
-				</div>
-				<div className="card-body">
-					<div>
-						<form action="" id="recherche" className="container-fluid">
-							<input type="text" id="numeroPolice" placeholder="N° police"
-								   onChange={this._handleChange}
-								   value={searchContracts.numeroPolice}
-							/>
-							<input type="text" id="nomClient" placeholder="Nom client"
-								   onChange={this._handleChange}
-								   value={searchContracts.nomClient}
-							/>
-							<input type="text" id="nomAssureur" placeholder="Assureur"
-								   onChange={this._handleChange}
-								   value={searchContracts.nomAssureur}
-							/>
-							<input type="text" id="moisRenouvellement" placeholder="Mois renouvellement"
-								   onChange={this._handleChange}
-								   value={searchContracts.moisRenouvellement}
-							/>
-
-							<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
-
-						</form>
-						<Link
-							className="btn btn-primary"
-							to={match.url + "/create"}>
-							<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
-						</Link>
+			<div>
+				<h1 className="text-center">Assurances collectives</h1>
+				<div className="card mb-3">
+					<div className="card-header">
+		      	<i className="fa fa-table"></i> Liste des contrats
 					</div>
-					<div className="table-responsive">
-						<table className="table table-bordered table-hover" id="PageContractsTable">
-							<thead className="thead-default">
-								<tr>
-									<th onClick={this._handleClickHead.bind(this, 0)}>N° Police</th>
-									<th onClick={this._handleClickHead.bind(this, 1)}>Client</th>
-									<th onClick={this._handleClickHead.bind(this, 2)}>Assureur</th>
-									<th onClick={this._handleClickHead.bind(this, 3)}>Mois de renouvellement</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-							{
+					<div className="card-body">
+						<div>
+							<form action="" id="recherche" className="container-fluid">
+								<input type="text" id="numeroPolice" placeholder="N° police"
+									   onChange={this._handleChange}
+									   value={searchContracts.numeroPolice}
+								/>
+								<input type="text" id="nomClient" placeholder="Nom client"
+									   onChange={this._handleChange}
+									   value={searchContracts.nomClient}
+								/>
+								<input type="text" id="nomAssureur" placeholder="Assureur"
+									   onChange={this._handleChange}
+									   value={searchContracts.nomAssureur}
+								/>
+								<input type="text" id="moisRenouvellement" placeholder="Mois renouvellement"
+									   onChange={this._handleChange}
+									   value={searchContracts.moisRenouvellement}
+								/>
 
-								listContracts.map((contract, index) => {
-									return (
-									<tr key={index} onClick={this._handleClick.bind(this, contract)}>
-										<td className="tableCellContract">{contract.police}</td>
-										<td className="tableCellContract">{contract.nom_client}</td>
-										<td className="tableCellContract">{contract.nom_fournisseur}</td>
-										<td className="tableCellContract">{contract.mois_renouvellement}</td>
-										<td>
-											<table style={{width: 100 + '%',height: 100 + '%'}}>
-												<tbody>
-													<tr>
-														<td className="text-right" style={{border:"none", padding: 0}}>
-															<Link
-								                className="btn btn-sm btn-primary"
-								                to={match.url + "/" + contract.police}>
-								  	            <i className="fa fa-eye" aria-hidden="true"></i>
-								  	          </Link>
-														</td>
-														<td className="text-center" style={{border:"none", padding: 0}}>
-															<Link
-																className="btn btn-sm btn-secondary"
-																to={match.url + "/" + contract.police + "/update"}>
-																<i className="fa fa-cog" aria-hidden="true"></i>
-															</Link>
-														</td>
-														<td className="text-left" style={{border:"none", padding: 0}}>
-															<Link
-								                className="btn btn-sm btn-danger"
-								                to={match.url + "/" + contract.police }>
-								  	            <i className="fa fa-times" aria-hidden="true"></i>
-								  	          </Link>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
+								<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
+
+							</form>
+							<Link
+								className="btn btn-primary"
+								to={match.url + "/create"}>
+								<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
+							</Link>
+						</div>
+						<div className="table-responsive">
+							<table className="table table-bordered table-hover" id="PageContractsTable">
+								<thead className="thead-default">
+									<tr>
+										<th onClick={this._handleClickHead.bind(this, 0)}>N° Police</th>
+										<th onClick={this._handleClickHead.bind(this, 1)}>Client</th>
+										<th onClick={this._handleClickHead.bind(this, 2)}>Assureur</th>
+										<th onClick={this._handleClickHead.bind(this, 3)}>Mois de renouvellement</th>
+										<th>Actions</th>
 									</tr>
-									)
-								})
-							}
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+								{
+
+									listContracts.map((contract, index) => {
+										return (
+										<tr key={index} onClick={this._handleClick.bind(this, contract)}>
+											<td className="tableCellContract">{contract.police}</td>
+											<td className="tableCellContract">{contract.nom_client}</td>
+											<td className="tableCellContract">{contract.nom_fournisseur}</td>
+											<td className="tableCellContract">{contract.mois_renouvellement}</td>
+											<td>
+												<table style={{width: 100 + '%',height: 100 + '%'}}>
+													<tbody>
+														<tr>
+															<td className="text-right" style={{border:"none", padding: 0}}>
+																<Link
+									                className="btn btn-sm btn-primary"
+									                to={match.url + "/" + contract.police}>
+									  	            <i className="fa fa-eye" aria-hidden="true"></i>
+									  	          </Link>
+															</td>
+															<td className="text-center" style={{border:"none", padding: 0}}>
+																<Link
+																	className="btn btn-sm btn-secondary"
+																	to={match.url + "/" + contract.police + "/update"}>
+																	<i className="fa fa-cog" aria-hidden="true"></i>
+																</Link>
+															</td>
+															<td className="text-left" style={{border:"none", padding: 0}}>
+																<Link
+									                className="btn btn-sm btn-danger"
+									                to={match.url + "/" + contract.police }>
+									  	            <i className="fa fa-times" aria-hidden="true"></i>
+									  	          </Link>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+										)
+									})
+								}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
