@@ -3,7 +3,8 @@ import {
 	UPDATE_ACTIVITES,
 	UPDATE_CHAMP_TYPES,
 	UPDATE_ETATS, UPDATE_PROVENANCES,
-	UPDATE_RELEVES
+	UPDATE_RELEVES,
+	UPDATE_PROVINCES
 } from '../actions/crmGridLayout';
 
 //ajouter le reste dans l'import
@@ -55,6 +56,8 @@ export default function reducer (state = initialState, action ){
 			return {...state ,grid: action.newGrid , error:''};
 		case UPDATE_RELEVES:
 			return {...state,releves: action.releves, error:''};
+		case UPDATE_PROVINCES:
+			return {...state,provinces: action.provinces, error:''};	
 		case UPDATE_CHAMP_TYPES:
 			return {...state,champTypes: action.champTypes, error:''};
 		case UPDATE_ACTIVITES:

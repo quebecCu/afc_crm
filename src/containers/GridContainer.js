@@ -132,7 +132,7 @@ class CreationClient extends Component {
 	}
 
     render() {
-		let {grid, layouts, releves,
+		let {grid, layouts, releves, provinces,
 			champTypes, activites,
 			etats, provenances, requiredFields,
 			formNewField, formUpdateField} = this.props.crmGridLayout;
@@ -147,7 +147,7 @@ class CreationClient extends Component {
 										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										   handleChangeInput={this._handleChangeInput} title="Création d'une fiche client"
 										   isAdmin={isAdmin} releves={releves}
-										   champTypes={champTypes}
+										   champTypes={champTypes} provinces={provinces}
 										   activites={activites} etats={etats} provenances={provenances}
 										   changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
 										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}

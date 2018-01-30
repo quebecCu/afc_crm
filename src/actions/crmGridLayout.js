@@ -54,10 +54,10 @@ export function updateReleves(releves) {
 	return {type: UPDATE_RELEVES, releves}
 }
 export function getProvinces(id) {
-	return {type: GET_PROVENANCES, id}
+	return {type: GET_PROVINCES, id}
 }
 
-export function updateProvincess(provinces) {
+export function updateProvinces(provinces) {
 	return {type: UPDATE_PROVINCES, provinces}
 }
 export function createNewField(newField) {
