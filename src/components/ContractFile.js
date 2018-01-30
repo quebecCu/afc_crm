@@ -20,6 +20,9 @@ class ContractFile extends React.Component {
 		this.dropDownSouscriptions = this.dropDownSouscriptions.bind(this);
 		this._handleClient = this._handleClient.bind(this);
 		this._handleAssureur = this._handleAssureur.bind(this);
+		this.state = {
+      contract: null,
+    };
 	}
 
 	componentWillMount() {

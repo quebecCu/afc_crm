@@ -12,8 +12,8 @@ class ContractPage extends Component {
 		const { match } = this.props;
 		return (
 			<Switch>
-				<Route exact path={match.url} component={ContractFile}/>
-				<Route path={match.url + "/update"} component={CreateContractContainer}/>
+				<Route exact path={match.url} component={ContractFile} idContract="{match.params.idContrat}"/>
+				<Route path={match.url + "/update"} component={CreateContractContainer} idContract="{match.params.idContrat}"/>
 				<Route
 					component={ErrorPage}/>
 			</Switch>
