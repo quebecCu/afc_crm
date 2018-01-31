@@ -26,6 +26,7 @@ export const SEND_DELETE_FIELD_CONTRACT = 'SEND_DELETE_FIELD_CONTRACT';
 export const SET_FROM_CLIENT = 'SET_FROM_CLIENT';
 export const GET_CONTRACT = 'GET_CONTRACT';
 export const SET_CONTRACT = 'SET_CONTRACT';
+export const SET_SELECTEDTAUX = 'SET_SELECTEDTAUX';
 export const SUBMIT_CONTRACT = 'SUBMIT_CONTRACT'
 
 export function createContract(contract){
@@ -142,4 +143,8 @@ export function getContract(idContract) {
 
 export function setContract(contract) {
 	return {type: SET_CONTRACT, contract}
+}
+
+export function setSelectedTaux(taux) {
+	return {type: SET_SELECTEDTAUX, taux}
 }

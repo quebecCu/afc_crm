@@ -4,7 +4,8 @@ import {Responsive, WidthProvider} from 'react-grid-layout';
 import TitreValeur from "../components/TitreValeur";
 import {getClientRequest} from "../actions/crmClientList";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
-import {setFromClient} from "../actions/crmContract";
+import {store} from '../store';
+import {setFromClient,setSelectedTaux} from "../actions/crmContract";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -21,8 +22,13 @@ class ContractFile extends React.Component {
 		this._handleClient = this._handleClient.bind(this);
 		this._handleAssureur = this._handleAssureur.bind(this);
 		this.state = {
-      contract: null,
+      selectedTauxAnnee: this.props.crmContract.contractDisplay.historique_taux[0],
     };
+	}
+
+	componentDidMount() {
+		console.log(JSON.stringify(this.props.crmContract.contractDisplay.historique_taux[0]))
+		this.state.selectedTauxAnnee = this.props.crmContract.contractDisplay.historique_taux[0];
 	}
 
 	componentWillMount() {
@@ -150,6 +156,10 @@ class ContractFile extends React.Component {
 		this.forceUpdate();*/
 	}
 
+	_changeTauxAnnee(taux) {
+		store.dispatch(setSelectedTaux(taux));
+	}
+
 	_handleModify(event) {
 		let contract = this.props.contract;
 		this.props.clients.forEach(client => {
@@ -180,14 +190,14 @@ class ContractFile extends React.Component {
     );
   }
 
-	renderStaticAttribute(attributeName, attributeValue) {
+	renderStaticAttribute(attributeName, attributeValue, width) {
 		const inputStyle = {
 			padding: '6px 12px',
 		}
     return (
 			<div className="form-group row">
-				<label htmlFor="staticEmail" className="col-sm-2 col-form-label">{attributeName}: </label>
-				<div className="col-sm-10">
+				<label htmlFor="staticEmail" className={"col-form-label  " + (width === 6 ? "col-sm-6" : "col-sm-2")}>{attributeName}: </label>
+				<div className={(width === 6 ? "col-sm-6" : "col-sm-10")}>
 					<input style={inputStyle} type="text" readOnly className="form-control-plaintext" id="aga" value={attributeValue}/>
 				</div>
 			</div>
@@ -195,14 +205,15 @@ class ContractFile extends React.Component {
   }
 
 	render() {
-		let {contractDisplay, lilLayout} = this.props.crmContract;
+		let {contractDisplay, lilLayout, selectedTaux} = this.props.crmContract;
 		let layouts = {lg: lilLayout, md: lilLayout, sm: lilLayout, xs: lilLayout, xxs: lilLayout};
+
 		return (
 			<div>
 				<h1 className="text-center">Assurances collectives</h1>
 				<div className="card mb-3">
 					<div className="card-header">
-		      	<i className="fa fa-file"></i> Contrat
+		      	<i className="fa fa-file-o"></i> Contrat
 					</div>
 					<div className="card-body">
 						<div id="accordion">
@@ -220,28 +231,16 @@ class ContractFile extends React.Component {
 										{this.renderStaticAttribute("N° Police",contractDisplay.police)}
 										{this.renderLinkAttribute("Client",contractDisplay.nomclient)}
 										{this.renderLinkAttribute("Assureur",contractDisplay.nomfournisseur)}
-										{this.renderLinkAttribute("Repr&eacute;sentant",contractDisplay.nomrepresentant)}
+										{this.renderLinkAttribute("Représentant",contractDisplay.nomrepresentant)}
 										{this.renderStaticAttribute("AGA",contractDisplay.libellechambrecommerce)}
 										{this.renderStaticAttribute("Date de signature",contractDisplay.date_signature)}
 										{this.renderStaticAttribute("Mois de renouvellement",contractDisplay.mois_renouvellement)}
 										{this.renderStaticAttribute("Notes",contractDisplay.notes)}
-										<ResponsiveReactGridLayout className="layout w3-animate-zoom" layouts={layouts}
-																   cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-																   rowHeight={20}
-																   breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-										>
-											{
+										{
 												contractDisplay.facultatif.map(element => {
-													return (
-														<div key={element.idRow} className="form-group">
-															<TitreValeur key={element.idRow} titre={element.nom}
-																		 valeur={element.valeur}/>
-														</div>
-													);
-												})
-											}
-
-										</ResponsiveReactGridLayout>
+												return this.renderStaticAttribute(element.nom,element.valeur);
+											})
+										}
 						      </div>
 						    </div>
 						  </div>
@@ -255,7 +254,60 @@ class ContractFile extends React.Component {
 						    </div>
 						    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
 						      <div className="card-body">
-						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+										<div className="row">
+											<div className="col-md-2 col-xs-12">
+												<div className="dropdown">
+													<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														{selectedTaux.annee_dep} - {selectedTaux.annee_fin}
+													</button>
+												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												    {
+															contractDisplay.historique_taux.map((element, index) => {
+																return <button key={element.annee_dep} className={"dropdown-item " + (element.annee_dep === selectedTaux.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
+															})
+														}
+												  </div>
+												</div>
+											</div>
+											<div className="col-md-10 col-xs-12">
+												{
+													contractDisplay.historique_taux.map((element, index) => {
+														if (element.annee_dep === this.selectedTauxAnneDep){
+															return <div key={element.annee_dep} className="row">
+																<div className="col-sm-6">
+																	{this.renderStaticAttribute("Année de début",element.annee_dep,6)}
+																	{this.renderStaticAttribute("Année de fin",element.annee_fin,6)}
+																	{this.renderStaticAttribute("Nombre d'employés",element.nombre_employés,6)}
+																	{this.renderStaticAttribute("Différence",element.différence,6)}
+																	{this.renderStaticAttribute("Assurance vie",element.vie,6)}
+																	{this.renderStaticAttribute("DMA",element.dma,6)}
+																	{this.renderStaticAttribute("PAC",element.pac,6)}
+																	{this.renderStaticAttribute("CT vie",element.ct,6)}
+																	{this.renderStaticAttribute("LT",element.lt,6)}
+																	{this.renderStaticAttribute("AMC individuel",element.amc_ind,6)}
+																	{this.renderStaticAttribute("AMC mono",element.amc_mono,6)}
+																</div>
+																<div className="col-sm-6">
+																	{this.renderStaticAttribute("AMC couple",element.amc_couple,6)}
+																	{this.renderStaticAttribute("AMC famille",element.amc_fam,6)}
+																	{this.renderStaticAttribute("Dentaire individuel",element.dentaire_ind,6)}
+																	{this.renderStaticAttribute("Dentaire mono",element.dentaire_mono,6)}
+																	{this.renderStaticAttribute("Dentaire couple",element.dentaire_couple,6)}
+																	{this.renderStaticAttribute("Dentaire famille",element.dentaire_fam,6)}
+																	{this.renderStaticAttribute("MG individuel",element.mg_ind,6)}
+																	{this.renderStaticAttribute("MG mono",element.mg_mono,6)}
+																	{this.renderStaticAttribute("MG couple",element.mg_couple,6)}
+																	{this.renderStaticAttribute("MG famille",element.mg_fam,6)}
+																	{this.renderStaticAttribute("PAE",element.pae,6)}
+																	{this.renderStaticAttribute("Prime mensuelle",element.prime_mensuelle,6)}
+																	{this.renderStaticAttribute("Prime annuelle",element.prime_annuelle,6)}
+																</div>
+															</div>
+														}
+													})
+												}
+											</div>
+										</div>
 						      </div>
 						    </div>
 						  </div>
@@ -281,51 +333,7 @@ class ContractFile extends React.Component {
 								<button className="grandTitreContacts" onClick={this.dropDownContacts}>
 									<TitreValeur valeur="Historique des taux"/></button>
 								<div id="wrapperContacts" className=" wrapper show  ">
-									{
-										contractDisplay.historique_taux.map((element, index) => {
-											return <div className="w3-animate-zoom" key={index}>
-												<div className="unePartie">
-													<TitreValeur titre="Année de début" valeur={element.annee_dep}/>
-													<TitreValeur titre="Année de fin" valeur={element.annee_fin}/>
-													<TitreValeur titre="Nombre d'employés" valeur={element.nombre_employés}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="Différence" valeur={element.différence}/>
-													<TitreValeur titre="Assurance vie" valeur={element.vie}/>
-													<TitreValeur titre="DMA" valeur={element.dma}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="PAC" valeur={element.pac}/>
-													<TitreValeur titre="CT" valeur={element.ct}/>
-													<TitreValeur titre="LT" valeur={element.lt}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="AMC individuel" valeur={element.amc_ind}/>
-													<TitreValeur titre="AMC mono" valeur={element.amc_mono}/>
-													<TitreValeur titre="AMC couple" valeur={element.amc_couple}/>
-													<TitreValeur titre="AMC famille" valeur={element.amc_fam}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="Dentaire individuel" valeur={element.dentaire_ind}/>
-													<TitreValeur titre="Dentaire mono" valeur={element.dentaire_mono}/>
-													<TitreValeur titre="Dentaire couple" valeur={element.dentaire_couple}/>
-													<TitreValeur titre="Dentaire famille" valeur={element.dentaire_fam}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="MG individuel" valeur={element.mg_ind}/>
-													<TitreValeur titre="MG mono" valeur={element.mg_mono}/>
-													<TitreValeur titre="MG couple" valeur={element.mg_couple}/>
-													<TitreValeur titre="MG famille" valeur={element.mg_fam}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="PAE" valeur={element.pae}/>
-													<TitreValeur titre="Prime mensuelle" valeur={element.prime_mensuelle}/>
-													<TitreValeur titre="Prime annuelle" valeur={element.prime_annuelle}/>
-												</div>
-												<hr/>
-											</div>
-										})
-									}
+
 								</div>
 							</div>
 
