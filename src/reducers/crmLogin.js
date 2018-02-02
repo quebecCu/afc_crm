@@ -3,10 +3,10 @@ import {
 	SET_AUTH,
 	SENDING_REQUEST,
 	LOGIN,
-	LOGOUT 
+	LOGOUT
 }  from '../actions/crmLogin';
 
-//ajouter le reste dans l'import 
+//ajouter le reste dans l'import
 
 //pour le register e mail
 let initialState = {
@@ -29,7 +29,7 @@ export default function reducer (state = initialState, action ){
 
 	case CHANGE_FORM:
 		return {...state ,formState: action.newFormState , error:''};
-	
+
 	case LOGIN:
 		return {...state , isAdmin: action.isAdminState._auth.isAdmin ,cookie: action.isAdminState._auth.cookie, error:''};
 	case LOGOUT:

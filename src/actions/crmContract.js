@@ -27,6 +27,7 @@ export const SET_FROM_CLIENT = 'SET_FROM_CLIENT';
 export const GET_CONTRACT = 'GET_CONTRACT';
 export const SET_CONTRACT = 'SET_CONTRACT';
 export const SET_SELECTEDTAUX = 'SET_SELECTEDTAUX';
+export const SET_SELECTEDREMUNERATION = 'SET_SELECTEDREMUNERATION';
 export const SUBMIT_CONTRACT = 'SUBMIT_CONTRACT'
 
 export function createContract(contract){
@@ -147,4 +148,8 @@ export function setContract(contract) {
 
 export function setSelectedTaux(taux) {
 	return {type: SET_SELECTEDTAUX, taux}
+}
+
+export function setSelectedRemuneration(remuneration) {
+	return {type: SET_SELECTEDREMUNERATION, remuneration}
 }

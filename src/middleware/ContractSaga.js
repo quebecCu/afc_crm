@@ -7,7 +7,7 @@ import {
 	getEmployesAFC, getGrid, createContract,
 	getListAssureurs,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
-	setContract,setSelectedTaux, 
+	setContract, setSelectedTaux, setSelectedRemuneration,
 	setGrid,
 	setListContracts, setModules, setTypesContract, UPDATE_POS_LAYOUT,
 	updateAGA, updateEmployesAFC, updateListAssureurs,
@@ -471,6 +471,7 @@ export function* requestGetContract() {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setContract(response.data.message));
 					store.dispatch(setSelectedTaux(response.data.message.historique_taux[0]));
+					store.dispatch(setSelectedRemuneration(response.data.message.remuneration.history[0]));
 					store.dispatch(getGrid());
 				} else {
 					alert('Erreur lors de la récupération du contrat');

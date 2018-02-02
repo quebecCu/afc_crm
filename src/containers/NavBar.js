@@ -141,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(changeViewDashboard(newView));
 		},
 		logout: () => {
+			document.body.classList.remove("fixed-nav","sticky-footer","bg-dark");
 			dispatch(logout());
 		},
 		changeViewCollective: (newView) => {

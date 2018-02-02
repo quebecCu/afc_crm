@@ -4,31 +4,24 @@ import {Responsive, WidthProvider} from 'react-grid-layout';
 import TitreValeur from "../components/TitreValeur";
 import {getClientRequest} from "../actions/crmClientList";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
-import {store} from '../store';
-import {setFromClient,setSelectedTaux} from "../actions/crmContract";
+import {setFromClient,getContract,setSelectedTaux,setSelectedRemuneration} from "../actions/crmContract";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class ContractFile extends React.Component {
 	constructor(props) {
 		super(props);
+		this.props.getContract(this.props.idContract);
 		this.showContact = this.showContact.bind(this);
 		this.setContactsState = this.setContactsState.bind(this);
 		this.getPosition = this.getPosition.bind(this);
 		this._handleModify = this._handleModify.bind(this);
+		this._changeSelectedTaux = this._changeSelectedTaux.bind(this);
 		this.dropDownClient = this.dropDownClient.bind(this);
 		this.dropDownTaux = this.dropDownTaux.bind(this);
 		this.dropDownSouscriptions = this.dropDownSouscriptions.bind(this);
 		this._handleClient = this._handleClient.bind(this);
 		this._handleAssureur = this._handleAssureur.bind(this);
-		this.state = {
-      selectedTauxAnnee: this.props.crmContract.contractDisplay.historique_taux[0],
-    };
-	}
-
-	componentDidMount() {
-		console.log(JSON.stringify(this.props.crmContract.contractDisplay.historique_taux[0]))
-		this.state.selectedTauxAnnee = this.props.crmContract.contractDisplay.historique_taux[0];
 	}
 
 	componentWillMount() {
@@ -156,8 +149,12 @@ class ContractFile extends React.Component {
 		this.forceUpdate();*/
 	}
 
-	_changeTauxAnnee(taux) {
-		store.dispatch(setSelectedTaux(taux));
+	_changeSelectedTaux(taux) {
+		this.props.setSelectedTaux(taux);
+	}
+
+	_changeSelectedRemuneration(remuneration) {
+		this.props.setSelectedRemuneration(remuneration);
 	}
 
 	_handleModify(event) {
@@ -182,7 +179,7 @@ class ContractFile extends React.Component {
 	renderLinkAttribute(attributeName, attributeValue) {
     return (
 			<div className="form-group row">
-				<label htmlFor="staticEmail" className="col-sm-2 col-form-label">{attributeName}: </label>
+				<label htmlFor="staticEmail" className="col-sm-2 col-form-label"><strong>{attributeName}:</strong> </label>
 				<div className="col-sm-10">
 					<button type="button" className="btn btn-link">{attributeValue}</button>
 				</div>
@@ -190,13 +187,13 @@ class ContractFile extends React.Component {
     );
   }
 
-	renderStaticAttribute(attributeName, attributeValue, width) {
+	renderStaticAttribute(attributeName, attributeValue, width, key) {
 		const inputStyle = {
 			padding: '6px 12px',
 		}
     return (
-			<div className="form-group row">
-				<label htmlFor="staticEmail" className={"col-form-label  " + (width === 6 ? "col-sm-6" : "col-sm-2")}>{attributeName}: </label>
+			<div key={key} className="form-group row">
+				<label htmlFor="staticEmail" className={"col-form-label  " + (width === 6 ? "col-sm-6" : "col-sm-2")}><strong>{attributeName}:</strong> </label>
 				<div className={(width === 6 ? "col-sm-6" : "col-sm-10")}>
 					<input style={inputStyle} type="text" readOnly className="form-control-plaintext" id="aga" value={attributeValue}/>
 				</div>
@@ -205,7 +202,7 @@ class ContractFile extends React.Component {
   }
 
 	render() {
-		let {contractDisplay, lilLayout, selectedTaux} = this.props.crmContract;
+		let {contractDisplay, lilLayout, selectedTaux, selectedRemuneration} = this.props.crmContract;
 		let layouts = {lg: lilLayout, md: lilLayout, sm: lilLayout, xs: lilLayout, xxs: lilLayout};
 
 		return (
@@ -216,6 +213,15 @@ class ContractFile extends React.Component {
 		      	<i className="fa fa-file-o"></i> Contrat
 					</div>
 					<div className="card-body">
+						<div>
+							<div className="text-right">
+								<div className="btn-group" role="group" aria-label="Basic example">
+									<button type="button" className="btn btn-primary"><i className="fa fa-cog"></i> Modifier</button>
+									<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
+								</div>
+							</div>
+						</div>
+						<br/>
 						<div id="accordion">
 						  <div className="card">
 						    <div className="card-header" id="headingOne">
@@ -238,7 +244,7 @@ class ContractFile extends React.Component {
 										{this.renderStaticAttribute("Notes",contractDisplay.notes)}
 										{
 												contractDisplay.facultatif.map(element => {
-												return this.renderStaticAttribute(element.nom,element.valeur);
+												return this.renderStaticAttribute(element.nom,element.valeur,0,element.nom);
 											})
 										}
 						      </div>
@@ -263,49 +269,43 @@ class ContractFile extends React.Component {
 												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 												    {
 															contractDisplay.historique_taux.map((element, index) => {
-																return <button key={element.annee_dep} className={"dropdown-item " + (element.annee_dep === selectedTaux.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
+																return <button key={index} onClick={this._changeSelectedTaux.bind(this,element)} className={"dropdown-item " + (element.annee_dep === selectedTaux.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
 															})
 														}
 												  </div>
 												</div>
 											</div>
 											<div className="col-md-10 col-xs-12">
-												{
-													contractDisplay.historique_taux.map((element, index) => {
-														if (element.annee_dep === this.selectedTauxAnneDep){
-															return <div key={element.annee_dep} className="row">
-																<div className="col-sm-6">
-																	{this.renderStaticAttribute("Année de début",element.annee_dep,6)}
-																	{this.renderStaticAttribute("Année de fin",element.annee_fin,6)}
-																	{this.renderStaticAttribute("Nombre d'employés",element.nombre_employés,6)}
-																	{this.renderStaticAttribute("Différence",element.différence,6)}
-																	{this.renderStaticAttribute("Assurance vie",element.vie,6)}
-																	{this.renderStaticAttribute("DMA",element.dma,6)}
-																	{this.renderStaticAttribute("PAC",element.pac,6)}
-																	{this.renderStaticAttribute("CT vie",element.ct,6)}
-																	{this.renderStaticAttribute("LT",element.lt,6)}
-																	{this.renderStaticAttribute("AMC individuel",element.amc_ind,6)}
-																	{this.renderStaticAttribute("AMC mono",element.amc_mono,6)}
-																</div>
-																<div className="col-sm-6">
-																	{this.renderStaticAttribute("AMC couple",element.amc_couple,6)}
-																	{this.renderStaticAttribute("AMC famille",element.amc_fam,6)}
-																	{this.renderStaticAttribute("Dentaire individuel",element.dentaire_ind,6)}
-																	{this.renderStaticAttribute("Dentaire mono",element.dentaire_mono,6)}
-																	{this.renderStaticAttribute("Dentaire couple",element.dentaire_couple,6)}
-																	{this.renderStaticAttribute("Dentaire famille",element.dentaire_fam,6)}
-																	{this.renderStaticAttribute("MG individuel",element.mg_ind,6)}
-																	{this.renderStaticAttribute("MG mono",element.mg_mono,6)}
-																	{this.renderStaticAttribute("MG couple",element.mg_couple,6)}
-																	{this.renderStaticAttribute("MG famille",element.mg_fam,6)}
-																	{this.renderStaticAttribute("PAE",element.pae,6)}
-																	{this.renderStaticAttribute("Prime mensuelle",element.prime_mensuelle,6)}
-																	{this.renderStaticAttribute("Prime annuelle",element.prime_annuelle,6)}
-																</div>
-															</div>
-														}
-													})
-												}
+												<div className="row">
+													<div className="col-sm-6">
+														{this.renderStaticAttribute("Année de début",selectedTaux.annee_dep,6)}
+														{this.renderStaticAttribute("Nombre d'employés",selectedTaux.nombre_employés,6)}
+														{this.renderStaticAttribute("Différence",selectedTaux.différence,6)}
+														{this.renderStaticAttribute("Assurance vie",selectedTaux.vie,6)}
+														{this.renderStaticAttribute("DMA",selectedTaux.dma,6)}
+														{this.renderStaticAttribute("PAC",selectedTaux.pac,6)}
+														{this.renderStaticAttribute("CT vie",selectedTaux.ct,6)}
+														{this.renderStaticAttribute("LT",selectedTaux.lt,6)}
+														{this.renderStaticAttribute("AMC individuel",selectedTaux.amc_ind,6)}
+														{this.renderStaticAttribute("AMC mono",selectedTaux.amc_mono,6)}
+														{this.renderStaticAttribute("AMC couple",selectedTaux.amc_couple,6)}
+														{this.renderStaticAttribute("AMC famille",selectedTaux.amc_fam,6)}
+													</div>
+													<div className="col-sm-6">
+														{this.renderStaticAttribute("Année de fin",selectedTaux.annee_fin,6)}
+														{this.renderStaticAttribute("Dentaire individuel",selectedTaux.dentaire_ind,6)}
+														{this.renderStaticAttribute("Dentaire mono",selectedTaux.dentaire_mono,6)}
+														{this.renderStaticAttribute("Dentaire couple",selectedTaux.dentaire_couple,6)}
+														{this.renderStaticAttribute("Dentaire famille",selectedTaux.dentaire_fam,6)}
+														{this.renderStaticAttribute("MG individuel",selectedTaux.mg_ind,6)}
+														{this.renderStaticAttribute("MG mono",selectedTaux.mg_mono,6)}
+														{this.renderStaticAttribute("MG couple",selectedTaux.mg_couple,6)}
+														{this.renderStaticAttribute("MG famille",selectedTaux.mg_fam,6)}
+														{this.renderStaticAttribute("PAE",selectedTaux.pae,6)}
+														{this.renderStaticAttribute("Prime mensuelle",selectedTaux.prime_mensuelle,6)}
+														{this.renderStaticAttribute("Prime annuelle",selectedTaux.prime_annuelle,6)}
+													</div>
+												</div>
 											</div>
 										</div>
 						      </div>
@@ -315,115 +315,99 @@ class ContractFile extends React.Component {
 						    <div className="card-header" id="headingThree">
 						      <h5 className="mb-0">
 						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-						          Collapsible Group Item #3
+						          R&eacute;mun&eacute;rations
 						        </button>
 						      </h5>
 						    </div>
 						    <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
 						      <div className="card-body">
-						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+										<div className="row">
+											<div className="col-md-2 col-xs-12">
+												<div className="dropdown">
+													<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														{selectedRemuneration.annee_dep} - {selectedRemuneration.annee_fin}
+													</button>
+												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												    {
+															contractDisplay.remuneration.history.map((element, index) => {
+																return <button key={index} onClick={this._changeSelectedRemuneration.bind(this,element)} className={"dropdown-item " + (element.annee_dep === selectedRemuneration.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
+															})
+														}
+												  </div>
+												</div>
+											</div>
+											<div className="col-md-10 col-xs-12">
+												<div className="row">
+													<div className="col-sm-6">
+														{this.renderStaticAttribute("Année de début",selectedRemuneration.annee_dep,6)}
+														{this.renderStaticAttribute("Vie DMA PAC",selectedRemuneration.vie_dma_pac,6)}
+														{this.renderStaticAttribute("CT",selectedRemuneration.ct,6)}
+														{this.renderStaticAttribute("LT",selectedRemuneration.lt,6)}
+														{this.renderStaticAttribute("AMC",selectedRemuneration.amc,6)}
+														{this.renderStaticAttribute("Dentaire",selectedRemuneration.dentaire,6)}
+														{this.renderStaticAttribute("MG",selectedRemuneration.mg,6)}
+														{this.renderStaticAttribute("PAE",selectedRemuneration.pae,6)}
+														{this.renderStaticAttribute("Date payé base",selectedRemuneration.date_payée_base,6)}
+														{this.renderStaticAttribute("Montant payé base",selectedRemuneration.montant_payé_base,6)}
+														{this.renderStaticAttribute("Montant payé boni",selectedRemuneration.montant_payé_boni,6)}
+													</div>
+													<div className="col-sm-6">
+														{this.renderStaticAttribute("Année de fin",selectedRemuneration.annee_fin,6)}
+														{this.renderStaticAttribute("Pourcentage payable en pourcent",selectedRemuneration.pourcentage_payable_en_pourcent,6)}
+														{this.renderStaticAttribute("Montant dû",selectedRemuneration.montant_dû,6)}
+														{this.renderStaticAttribute("Montant payé",selectedRemuneration.montant_payé,6)}
+														{this.renderStaticAttribute("Rémunération totale",selectedRemuneration.rémunération_totale,6)}
+														{this.renderStaticAttribute("Date payée",selectedRemuneration.date_payée,6)}
+														{this.renderStaticAttribute("Notes",selectedRemuneration.notes,6)}
+														{this.renderStaticAttribute("Solde",selectedRemuneration.solde,6)}
+														{this.renderStaticAttribute("Conseiller n°",selectedRemuneration.idconseiller,6)}
+														{this.renderStaticAttribute("Nom conseiller",selectedRemuneration.nomconseiller,6)}
+														{this.renderStaticAttribute("Prénom conseiller",selectedRemuneration.prenomconseiller,6)}
+													</div>
+												</div>
+											</div>
+										</div>
 						      </div>
 						    </div>
 						  </div>
-						</div>
+							<div className="card">
+						    <div className="card-header" id="headingFour">
+						      <h5 className="mb-0">
+						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+						          Souscriptions
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseFour" className="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+						      <div className="card-body">
+										{
+											contractDisplay.souscriptions.map((element, index) => {
+												return <div key={index}>
+													{this.renderStaticAttribute("Module",element.libelle)}
+													{this.renderStaticAttribute("Notes du module",element.module_notes)}
+													<div>
 
-						<div>
+															{
+																element.subscriptions.map((element2, index2) => {
+																	return <details key={index2}> <summary>{element2.libelle}</summary>
+																			<div style={{paddingLeft: "20px"}}>
+																				{this.renderStaticAttribute("Notes de la souscription",element2.souscription_notes)}
+																				{this.renderStaticAttribute("Description",element2.description)}
+																				{this.renderStaticAttribute("Ext",element2.ext)}
+																				{this.renderStaticAttribute("Valeur",element2.valeur)}
+																			</div>
+																	  </details>
+																})
+															}
+													</div>
 
-							<div className="grandTitre">
-								<button className="grandTitreContacts" onClick={this.dropDownContacts}>
-									<TitreValeur valeur="Historique des taux"/></button>
-								<div id="wrapperContacts" className=" wrapper show  ">
-
-								</div>
-							</div>
-
-							<div className="grandTitre">
-								<button className="grandTitreContacts" onClick={this.dropDownTaux}>
-									<TitreValeur valeur="Rémunérations"/></button>
-								<div id="wrapperTaux" className=" wrapper show  " style={{backgroundColor: 'white'}}>
-									{
-										contractDisplay.historique_taux.map((element, index) => {
-											return <div className="w3-animate-zoom" key={index}>
-												<div className="unePartie">
-													<TitreValeur titre="Année de début" valeur={element.annee_dep}/>
-													<TitreValeur titre="Année de fin" valeur={element.annee_fin}/>
-													<TitreValeur titre="Vie DMA PAC" valeur={element.vie_dma_pac}/>
+													<hr/>
 												</div>
-												<div className="unePartie">
-													<TitreValeur titre="CT" valeur={element.ct}/>
-													<TitreValeur titre="LT" valeur={element.lt}/>
-													<TitreValeur titre="AMC" valeur={element.amc}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="Dentaire" valeur={element.dentaire}/>
-													<TitreValeur titre="MG" valeur={element.mg}/>
-													<TitreValeur titre="PAE" valeur={element.pae}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="Date payé base" valeur={element.date_payée_base}/>
-													<TitreValeur titre="Montant payé base" valeur={element.montant_payé_base}/>
-													<TitreValeur titre="Montant payé boni" valeur={element.montant_payé_boni}/>
-													<TitreValeur titre="Pourcentage payable en pourcent"
-																 valeur={element.pourcentage_payable_en_pourcent}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="Montant dû" valeur={element.montant_dû}/>
-													<TitreValeur titre="Montant payé" valeur={element.montant_payé}/>
-													<TitreValeur titre="Rémunération totale"
-																 valeur={element.rémunération_totale}/>
-													<TitreValeur titre="Date payée" valeur={element.date_payée}/>
-												</div>
-												<div className="unePartie">
-													<TitreValeur titre="Notes" valeur={element.notes}/>
-													<TitreValeur titre="Solde" valeur={element.solde}/>
-													<TitreValeur titre="Conseiller n°" valeur={element.idconseiller}/>
-													<TitreValeur titre="Nom conseiller" valeur={element.nomconseiller}/>
-													<TitreValeur titre="Prénom conseiller" valeur={element.prenomconseiller}/>
-												</div>
-												<hr/>
-											</div>
-										})
-									}
-								</div>
-							</div>
-
-							<div className="grandTitre">
-								<button className="grandTitreContacts" onClick={this.dropDownSouscriptions}>
-									<TitreValeur valeur="Souscriptions"/></button>
-								<div id="wrapperSouscriptions" className=" wrapper show  " style={{backgroundColor: 'white'}}>
-									{
-										contractDisplay.souscriptions.map((element, index) => {
-											return <div className="w3-animate-zoom" key={index}>
-												<div className="unePartie">
-													<TitreValeur titre="Module" valeur={element.libelle}/>
-													<TitreValeur titre="Notes du module" valeur={element.module_notes}/>
-												</div>
-												{
-													element.subscriptions.map((element2, index2) => {
-														return <div className="unePartie" key={index2}>
-															<TitreValeur titre="Souscription" valeur={element2.libelle}/>
-															<TitreValeur titre="Notes de la souscription"
-																		 valeur={element2.souscription_notes}/>
-															<TitreValeur titre="description" valeur={element2.description}/>
-															<TitreValeur titre="Ext" valeur={element2.ext}/>
-															<TitreValeur titre="Valeur" valeur={element2.valeur}/>
-														</div>
-
-													})
-												}
-												<hr/>
-											</div>
-										})
-									}
-								</div>
-							</div>
-
-							<div className="form-group">
-								<button type="button" className="btn btn-primary"
-										onClick={this._handleModify} value={contractDisplay.idcontrat}>
-									Modifier le contrat
-								</button>
-							</div>
+											})
+										}
+						      </div>
+						    </div>
+						  </div>
 						</div>
 					</div>
 				</div>
@@ -456,6 +440,15 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setFromClient(client) {
 			dispatch(setFromClient(client));
+		},
+		getContract: (idContract) => {
+			dispatch(getContract(idContract));
+		},
+		setSelectedTaux: (taux) => {
+			dispatch(setSelectedTaux(taux));
+		},
+		setSelectedRemuneration: (remuneration) => {
+			dispatch(setSelectedRemuneration(remuneration));
 		}
 	}
 };

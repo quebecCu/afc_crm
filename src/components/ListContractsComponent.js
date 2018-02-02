@@ -142,33 +142,44 @@ class ListContractsComponent extends React.Component {
 		      	<i className="fa fa-table"></i> Liste des contrats
 					</div>
 					<div className="card-body">
-						<div>
-							<form action="" id="recherche" className="container-fluid">
-								<input type="text" id="numeroPolice" placeholder="N° police"
+						<div className="row">
+							<div className="col-sm-12 col-md-4">
+								<div className="dataTables_length" id="dataTable_length">
+									<Link
+										className="btn btn-primary"
+										to={match.url + "/create"}>
+										<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
+									</Link>
+								</div>
+							</div>
+							<div className="col-sm-12 col-md-8">
+								<div className="form-group row">
+							    <div className="col-sm-3">
+										<input type="text" className="form-control" id="numeroPolice" placeholder="N° police"
 									   onChange={this._handleChange}
 									   value={searchContracts.numeroPolice}
-								/>
-								<input type="text" id="nomClient" placeholder="Nom client"
+										 />
+							    </div>
+									<div className="col-sm-3">
+										<input type="text" className="form-control" id="nomClient" placeholder="Nom client"
 									   onChange={this._handleChange}
 									   value={searchContracts.nomClient}
-								/>
-								<input type="text" id="nomAssureur" placeholder="Assureur"
+										 />
+							    </div>
+									<div className="col-sm-3">
+										<input type="text" className="form-control" id="nomAssureur" placeholder="Assureur"
 									   onChange={this._handleChange}
 									   value={searchContracts.nomAssureur}
-								/>
-								<input type="text" id="moisRenouvellement" placeholder="Mois renouvellement"
+										 />
+							    </div>
+									<div className="col-sm-3">
+										<input type="text" className="form-control " id="moisRenouvellement" placeholder="Mois renouvellement"
 									   onChange={this._handleChange}
 									   value={searchContracts.moisRenouvellement}
-								/>
-
-								<input type="reset" value="Reset" id="reset" onClick={this._hardReset}/>
-
-							</form>
-							<Link
-								className="btn btn-primary"
-								to={match.url + "/create"}>
-								<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
-							</Link>
+										 />
+							    </div>
+							  </div>
+							</div>
 						</div>
 						<div className="table-responsive">
 							<table className="table table-bordered table-hover" id="PageContractsTable">
@@ -186,7 +197,7 @@ class ListContractsComponent extends React.Component {
 
 									listContracts.map((contract, index) => {
 										return (
-										<tr key={index} onClick={this._handleClick.bind(this, contract)}>
+										<tr key={index}>
 											<td className="tableCellContract">{contract.police}</td>
 											<td className="tableCellContract">{contract.nom_client}</td>
 											<td className="tableCellContract">{contract.nom_fournisseur}</td>
@@ -198,7 +209,7 @@ class ListContractsComponent extends React.Component {
 															<td className="text-right" style={{border:"none", padding: 0}}>
 																<Link
 									                className="btn btn-sm btn-primary"
-									                to={match.url + "/" + contract.police}>
+									                to={match.url + "/" + contract.idcontrat}>
 									  	            <i className="fa fa-eye" aria-hidden="true"></i>
 									  	          </Link>
 															</td>
