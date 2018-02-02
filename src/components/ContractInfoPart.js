@@ -58,7 +58,8 @@ class ContractInfoPart extends React.Component {
 
 	render(){
 		return <div>
-			<h4>Renseignement généraux sur le contrat</h4>
+			<h5>Renseignement généraux sur le contrat</h5>
+			<br/>
 			<div className="form-group row">
 				<label id="assureurLabel" className="col-sm-3 col-form-label">Nom assureur</label>
 					<div className="col-sm-8">

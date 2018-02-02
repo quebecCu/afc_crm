@@ -115,36 +115,38 @@ class ContractClientPart extends React.Component {
 
 	render() {
 		return <div>
-			<h4>Informations sur le client</h4>
+			<h5>Informations sur le client</h5>
+			<br/>
 			<div className="form-group row">
 				<label id="nomClientLabel" className="col-sm-3 col-form-label">Nom client</label>
-				{
-					!this.props.fromClient.idClient &&
-					<SuggestionClients clients={this._filterClients()}
-									   getClient={this.props.getClient}
-									   changeForm={this.props.changeForm}
-									   formState={this.props.formState}
-					/>
-				}
-				{
-					this.props.fromClient.idClient && this.props.fromClient.update &&
-					<SuggestionClients clients={this._filterClients()}
-									   getClient={this.props.getClient}
-									   client={this.props.fromClient}
-									   changeForm={this.props.changeForm}
-									   formState={this.props.formState}
-					/>
-				}
-				{
-					this.props.fromClient.idClient && !this.props.fromClient.update &&
-					<input type="textField"
-						   className="form-control col-sm-8"
-						   value={this.props.fromClient.name}
-						   id="nomClient"
-						   disabled
-					/>
-				}
-
+				<div className="col-sm-8">
+					{
+						!this.props.fromClient.idClient &&
+						<SuggestionClients clients={this._filterClients()}
+										   getClient={this.props.getClient}
+										   changeForm={this.props.changeForm}
+										   formState={this.props.formState}
+						/>
+					}
+					{
+						this.props.fromClient.idClient && this.props.fromClient.update &&
+						<SuggestionClients clients={this._filterClients()}
+										   getClient={this.props.getClient}
+										   client={this.props.fromClient}
+										   changeForm={this.props.changeForm}
+										   formState={this.props.formState}
+						/>
+					}
+					{
+						this.props.fromClient.idClient && !this.props.fromClient.update &&
+						<input type="textField"
+							   className="form-control col-sm-8"
+							   value={this.props.fromClient.name}
+							   id="nomClient"
+							   disabled
+						/>
+					}
+				</div>
 			</div>
 			<div className="form-group row">
 				<label id="sousGroupeLabel" className="col-sm-3 col-form-label">Sous groupe</label>

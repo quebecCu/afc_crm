@@ -9,7 +9,6 @@ class ContractTauxContainer extends React.Component{
 
 	render(){
 		return <div>
-			<h4>Historique des taux</h4>
 			<div className="container">
 				<div className="row justify-content-md-center">
 					<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="annee_dep"

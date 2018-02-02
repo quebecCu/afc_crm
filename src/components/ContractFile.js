@@ -250,6 +250,44 @@ class ContractFile extends React.Component {
 						      </div>
 						    </div>
 						  </div>
+							<div className="card">
+						    <div className="card-header" id="headingFour">
+						      <h5 className="mb-0">
+						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+						          Souscriptions
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseFour" className="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+						      <div className="card-body">
+										{
+											contractDisplay.souscriptions.map((element, index) => {
+												return <div key={index}>
+													{this.renderStaticAttribute("Module",element.libelle)}
+													{this.renderStaticAttribute("Notes du module",element.module_notes)}
+													<div>
+
+															{
+																element.subscriptions.map((element2, index2) => {
+																	return <details key={index2}> <summary>{element2.libelle}</summary>
+																			<div style={{paddingLeft: "20px"}}>
+																				{this.renderStaticAttribute("Notes de la souscription",element2.souscription_notes)}
+																				{this.renderStaticAttribute("Description",element2.description)}
+																				{this.renderStaticAttribute("Ext",element2.ext)}
+																				{this.renderStaticAttribute("Valeur",element2.valeur)}
+																			</div>
+																	  </details>
+																})
+															}
+													</div>
+
+													<hr/>
+												</div>
+											})
+										}
+						      </div>
+						    </div>
+						  </div>
 						  <div className="card">
 						    <div className="card-header" id="headingTwo">
 						      <h5 className="mb-0">
@@ -367,44 +405,6 @@ class ContractFile extends React.Component {
 												</div>
 											</div>
 										</div>
-						      </div>
-						    </div>
-						  </div>
-							<div className="card">
-						    <div className="card-header" id="headingFour">
-						      <h5 className="mb-0">
-						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-						          Souscriptions
-						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseFour" className="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-						      <div className="card-body">
-										{
-											contractDisplay.souscriptions.map((element, index) => {
-												return <div key={index}>
-													{this.renderStaticAttribute("Module",element.libelle)}
-													{this.renderStaticAttribute("Notes du module",element.module_notes)}
-													<div>
-
-															{
-																element.subscriptions.map((element2, index2) => {
-																	return <details key={index2}> <summary>{element2.libelle}</summary>
-																			<div style={{paddingLeft: "20px"}}>
-																				{this.renderStaticAttribute("Notes de la souscription",element2.souscription_notes)}
-																				{this.renderStaticAttribute("Description",element2.description)}
-																				{this.renderStaticAttribute("Ext",element2.ext)}
-																				{this.renderStaticAttribute("Valeur",element2.valeur)}
-																			</div>
-																	  </details>
-																})
-															}
-													</div>
-
-													<hr/>
-												</div>
-											})
-										}
 						      </div>
 						    </div>
 						  </div>

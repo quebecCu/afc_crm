@@ -36,7 +36,6 @@ class CreateContractContainer extends React.Component {
 		this._changeIdModifyField = this._changeIdModifyField.bind(this);
 		this._handleModifyField = this._handleModifyField.bind(this);
 		this._deleteField = this._deleteField.bind(this);
-		this.props.changeLoading(true);
 		this.props.requests();
 		this.props.bindClientData({
 			facultatif: []
@@ -201,7 +200,7 @@ class CreateContractContainer extends React.Component {
 			};
 
 			let dateDep = parseInt(contract.date_signature[0] + contract.date_signature[1] + contract.date_signature[2] + contract.date_signature[3], 10);
-			contract.remuneration.forEach(element => {
+			contract.remuneration.history.forEach(element => {
 				if (parseInt(element.annee_dep, 10) === dateDep) {
 					toUpdate.remuneration.vie = element.vie;
 					toUpdate.remuneration.ct = element.ct;
@@ -495,40 +494,44 @@ class CreateContractContainer extends React.Component {
 			{
 				!this.props.loading &&
 				<div>
-					<ResponsiveReactGridLayout className="layout" layouts={layouts} rowHeight={40}
-											   breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-											   cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-											   compactType={null}
-											   autoSize={true}
-											   onDragStop={this._handleDrag} onResizeStop={this._handleDrag}
-					>
-						<div key="1"><ContractClientPart changeForm={this.props.changeForm}
-														 clients={dossiersState} getClient={this.props.getClientRequest}
-														 formState={formState}
-														 client={client} fromClient={fromClient}
-						/></div>
-						<div key="2"><ContractInfoPart formState={formState}
-													   changeForm={this.props.changeForm}/></div>
-						<div key="3"><ContractModulesPart formState={formState} changeForm={this.props.changeForm}
-														  view={this.props.view}/>
+					<div className="card mb-3">
+						<div className="card-header">
+			      	<i className="fa fa-file-o"></i> Informations g&eacute;n&eacute;rales
 						</div>
-						<div key="4">
-							<GridOptionnalContract lilLayout={lilLayout}
-												   bigLayout={bigLayout}
-												   formState={formState}
-												   isAdmin={isAdmin}
-												   newField={newField}
-												   types={types}
-												   changeNewField={this.props.changeNewFieldContract}
-												   setGrid={this.props.setGrid}
-												   changeLilLayout={this.props.changeLilLayout}
-												   updatePosLayout={this.props.updatePosLayout}
-												   handleSubmitChamp={this._handleSubmitChamp}
-							/>
+						<div className="card-body">
+							<div className="row">
+								<div className="col-xs-12 col-sm-6">
+									<ContractClientPart changeForm={this.props.changeForm}
+																 clients={dossiersState} getClient={this.props.getClientRequest}
+																 formState={formState}
+																 client={client} fromClient={fromClient}
+																 />
+								</div>
+								<div className="col-xs-12 col-sm-6">
+									<ContractInfoPart formState={formState}
+																   changeForm={this.props.changeForm}/>
+								</div>
+							</div>
 						</div>
-					</ResponsiveReactGridLayout>
+					</div>
+					<div className="card mb-3">
+						<div className="card-header">
+							<i className="fa fa-file-o"></i> Modules
+						</div>
+						<div className="card-body">
+							<ContractModulesPart formState={formState} changeForm={this.props.changeForm}
+															view={this.props.view}/>
+						</div>
+					</div>
+					<div className="card mb-3">
+						<div className="card-header">
+							<i className="fa fa-file-o"></i> Historique des taux
+						</div>
+						<div className="card-body">
+							<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
+						</div>
+					</div>
 
-					<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
 					<ContractRemunerationContainer formState={formState} changeForm={this.props.changeForm}/>
 
 					<ModalForModalites/>
@@ -661,9 +664,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		bindClientData: (client) => {
 			dispatch(bindClientData(client));
-		},
-		changeLoadingValidation: (newLoading) => {
-			dispatch(changeLoadingValidation(newLoading));
 		}
 	}
 };

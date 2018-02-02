@@ -112,74 +112,77 @@ class ModuleCreation extends React.Component {
 
 	//select list sur les types de module. Une fois le module sélec, ca va loop dans ses modalités
 	render() {
-		return <div className="d-flex flex-column">
-			<div className="p-2"><select
-				id={"module" + this.props.idComponent}
-				name="module"
-				className="form-control"
-				onChange={this._onChangeModule}
-				value={this.value}
-			>
-				<option id={"optionNull" + this.props.idComponent} value=""> -- select an option --</option>
-				{
-					//Si l'id de la modalité est dans le formState.modulesToDisplay, set disabled
-					this.props.formState.modules.map((element) => {
-						let isSelectedAlready = false;
-						if (this.props.formState.modulesToDisplay.length !== 0) {
-							for (let i = 0; i < this.props.formState.modulesToDisplay.length; i++) {
-								if (parseInt(this.props.formState.modulesToDisplay[i], 10) === element.idModule) {
-									isSelectedAlready = true;
+		return <div className="col-sm-6">
+			<div className="card">
+				<div className="card-header">Module</div>
+			  <div className="card-body">
+					<select
+						id={"module" + this.props.idComponent}
+						name="module"
+						className="form-control"
+						onChange={this._onChangeModule}
+						value={this.value}
+					>
+						<option id={"optionNull" + this.props.idComponent} value=""> -- select an option --</option>
+						{
+							//Si l'id de la modalité est dans le formState.modulesToDisplay, set disabled
+							this.props.formState.modules.map((element) => {
+								let isSelectedAlready = false;
+								if (this.props.formState.modulesToDisplay.length !== 0) {
+									for (let i = 0; i < this.props.formState.modulesToDisplay.length; i++) {
+										if (parseInt(this.props.formState.modulesToDisplay[i], 10) === element.idModule) {
+											isSelectedAlready = true;
+										}
+									}
 								}
-							}
-						}
-						if (isSelectedAlready) {
-							return (<option
-								key={element.idModule}
-								id={element.idModule}
-								value={element.idModule}
-								disabled
+								if (isSelectedAlready) {
+									return (<option
+										key={element.idModule}
+										id={element.idModule}
+										value={element.idModule}
+										disabled
 
-							>
-								{
-									element.nom
+									>
+										{
+											element.nom
+										}
+									</option>)
 								}
-							</option>)
-						}
-						else {
-							return (<option
-								key={element.idModule}
-								id={element.idModule}
-								value={element.idModule}
+								else {
+									return (<option
+										key={element.idModule}
+										id={element.idModule}
+										value={element.idModule}
 
-							>
-								{
-									element.nom
+									>
+										{
+											element.nom
+										}
+									</option>)
 								}
-							</option>)
-						}
 
 
-					})}
-			</select>
+							})}
+					</select>
+					{
+						(this.isSelected && this.value !== "") &&
+						<div className="d-flex flex-wrap">
+							<ModalitesDisplay idModule={this.idModule} view={this.props.view}
+											  formState={this.props.formState} changeForm={this.props.changeForm}/>
+						</div>
+					}
+					<textarea id={"textarea" + this.props.idComponent} placeholder="Notes relatives au module "
+							  value={this.notes}
+							  onChange={this._onChangeNotes} className="form-control"
+					/>
+					{
+						(this.props.idComponent !== 0) &&
+						<div style={{width: 50}}>
+							<button id={this.props.idComponent} onClick={this._handleClickMoins} className="btn btn-danger">Supprimer ce module</button>
+						</div>
+					}
+			  </div>
 			</div>
-			{
-				(this.isSelected && this.value !== "") &&
-				<div className="d-flex flex-wrap">
-					<ModalitesDisplay idModule={this.idModule} view={this.props.view}
-									  formState={this.props.formState} changeForm={this.props.changeForm}/>
-				</div>
-			}
-			<textarea id={"textarea" + this.props.idComponent} placeholder="Notes relatives au module "
-					  value={this.notes}
-					  onChange={this._onChangeNotes} className="form-control"
-			/>
-			<hr/>
-			{
-				(this.props.idComponent !== 0) &&
-				<div style={{width: 50}}>
-					<button id={this.props.idComponent} onClick={this._handleClickMoins}>Supprimer ce module</button>
-				</div>
-			}
 		</div>
 	}
 }

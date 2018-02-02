@@ -47,7 +47,8 @@ class ContractModulesPart extends React.Component{
 
 	render(){
 		let toReturn = this._modulesToReturn();
-		return <div>
+		return <div className="row">
+
 			<ModuleCreation idComponent = {0} formState = {this.props.formState}
 							view={this.props.view}
 							changeForm = {this.props.changeForm}/>
@@ -57,10 +58,18 @@ class ContractModulesPart extends React.Component{
 			}
 			{
 				parseInt(this.props.formState.intModulesToDisplay,10) === this.props.formState.modulesToDisplay.length &&
-				<button id="ajouter" onClick={this._handleClickPlus}>Ajouter un module</button>
+				<div className="col-sm-6">
+					<div onClick={this._handleClickPlus} className="card text-white bg-info mb-3">
+						<div className="card-body text-center">
+							<h5 className="card-title">
+								<i className="fa fa-plus"></i><br/>
+								Ajouter un module
+							</h5>
+						</div>
+					</div>
+				</div>
 			}
-
-		</div>;
+		</div>
 	}
 }
 

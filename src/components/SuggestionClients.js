@@ -91,6 +91,7 @@ class SuggestionClients extends React.Component {
 
 		return (
 			<Autosuggest
+				className="form-control"
 				suggestions={suggestions}
 				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 				onSuggestionsClearRequested={this.onSuggestionsClearRequested}
