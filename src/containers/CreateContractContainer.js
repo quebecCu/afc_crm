@@ -517,6 +517,25 @@ class CreateContractContainer extends React.Component {
 					</div>
 					<div className="card mb-3">
 						<div className="card-header">
+			      	<i className="fa fa-file-o"></i> Informations suppl&eacute;mentaires
+						</div>
+						<div className="card-body">
+							<GridOptionnalContract lilLayout={lilLayout}
+												   bigLayout={bigLayout}
+												   formState={formState}
+												   isAdmin={isAdmin}
+												   newField={newField}
+												   types={types}
+												   changeNewField={this.props.changeNewFieldContract}
+												   setGrid={this.props.setGrid}
+												   changeLilLayout={this.props.changeLilLayout}
+												   updatePosLayout={this.props.updatePosLayout}
+												   handleSubmitChamp={this._handleSubmitChamp}
+							/>
+						</div>
+					</div>
+					<div className="card mb-3">
+						<div className="card-header">
 							<i className="fa fa-file-o"></i> Modules
 						</div>
 						<div className="card-body">
