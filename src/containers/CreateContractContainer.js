@@ -494,6 +494,7 @@ class CreateContractContainer extends React.Component {
 			{
 				!this.props.loading &&
 				<div>
+					<h1 className="text-center">Cr&eacute;ation contrat collectif</h1>
 					<div className="card mb-3">
 						<div className="card-header">
 			      	<i className="fa fa-file-o"></i> Informations g&eacute;n&eacute;rales
