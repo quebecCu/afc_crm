@@ -27,9 +27,6 @@ class CreateContractContainer extends React.Component {
 		this._resetStyle = this._resetStyle.bind(this);
 		this._onClickValidate = this._onClickValidate.bind(this);
 		this._validateForm = this._validateForm.bind(this);
-		this._handleStatic = this._handleStatic.bind(this);
-		this._handleNonStatic = this._handleNonStatic.bind(this);
-		this._handleDrag = this._handleDrag.bind(this);
 		this._handleSubmitChamp = this._handleSubmitChamp.bind(this);
 		this._changeNameModifyField = this._changeNameModifyField.bind(this);
 		this._changeDescModifyField = this._changeDescModifyField.bind(this);
@@ -307,27 +304,6 @@ class CreateContractContainer extends React.Component {
 		document.getElementById("moisRenouvHelp").style.display = "none";
 	}
 
-	_handleStatic() {
-		let {bigLayout} = this.props.crmContract;
-		let layout = bigLayout.map(div => {
-			return {...div, static: true};
-		});
-		this.props.changeBigLayout(layout);
-	}
-
-	_handleNonStatic() {
-		let {bigLayout} = this.props.crmContract;
-		let layout = bigLayout.map(div => {
-			return {...div, static: false};
-		});
-		this.props.changeBigLayout(layout);
-	}
-
-	_handleDrag(newItem) {
-		let {lilLayout} = this.props.crmContract;
-		this.props.updatePosLayout(lilLayout, newItem);
-	}
-
 	//On crée un nouveau champ !
 	_handleSubmitChamp(event) {
 		event.preventDefault();
@@ -520,18 +496,18 @@ class CreateContractContainer extends React.Component {
 			      	<i className="fa fa-file-o"></i> Informations suppl&eacute;mentaires
 						</div>
 						<div className="card-body">
-							<GridOptionnalContract lilLayout={lilLayout}
-												   bigLayout={bigLayout}
-												   formState={formState}
-												   isAdmin={isAdmin}
-												   newField={newField}
-												   types={types}
-												   changeNewField={this.props.changeNewFieldContract}
-												   setGrid={this.props.setGrid}
-												   changeLilLayout={this.props.changeLilLayout}
-												   updatePosLayout={this.props.updatePosLayout}
-												   handleSubmitChamp={this._handleSubmitChamp}
-							/>
+								<GridOptionnalContract lilLayout={lilLayout}
+													   bigLayout={bigLayout}
+													   formState={formState}
+													   isAdmin={isAdmin}
+													   newField={newField}
+													   types={types}
+													   changeNewField={this.props.changeNewFieldContract}
+													   setGrid={this.props.setGrid}
+													   changeLilLayout={this.props.changeLilLayout}
+													   updatePosLayout={this.props.updatePosLayout}
+													   handleSubmitChamp={this._handleSubmitChamp}
+								/>
 						</div>
 					</div>
 					<div className="card mb-3">
@@ -612,11 +588,11 @@ class CreateContractContainer extends React.Component {
 					}
 				</div>
 			}
+			<div className="mx-auto" >
+			  <button className="btn btn-primary mx-auto" id="validateForm" onClick={this._onClickValidate}>Valider</button>
+			</div>
 
-			<button onClick={this._handleStatic}>Rendre le grid static</button>
-			<button onClick={this._handleNonStatic}>Rendre le grid non-static</button>
 
-			<button id="validateForm" onClick={this._onClickValidate}>{this.props.titrebouton}</button>
 		</div>;
 	}
 }

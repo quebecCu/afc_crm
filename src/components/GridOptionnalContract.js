@@ -29,7 +29,7 @@ class OptionnalItem extends React.Component<PlanetProps> {
         }}
       >
         {dragHandle(<div className="dragHandle" />)}
-        <h4>{ item.label }</h4>
+        <p>{ item.label }</p>
 				{
 					item.libelletype === 'Booléen' &&
 					<select className="form-control" id={item.label} name={item.label}
@@ -87,20 +87,28 @@ class GridOptionnalContract extends React.Component {
 	}
 
 	render(){
-		return <div>
-			<DraggableList
-            itemKey="idattrcontratcoll"
-            template={OptionnalItem}
-            list={this.props.formState.facultatif}
-            onMoveEnd={newList => this._handleChange(newList)}
-            container={()=>this.state.useContainer ? this._container : document.body}
-          />
-			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}
-									   newField={this.props.newField}
-									   formState={this.props.formState}
-									   types={this.props.types}
-									   handleSubmitChamp={this.props.handleSubmitChamp}
-			/>
+		return <div className="container">
+        <div className="row">
+          <div className="offset-md-3 col-md-6 ">
+  			     <DraggableList
+                itemKey="idattrcontratcoll"
+                template={OptionnalItem}
+                list={this.props.formState.facultatif}
+                onMoveEnd={newList => this._handleChange(newList)}
+                container={()=>this.state.useContainer ? this._container : document.body}
+              />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6 col-sm-offset-3">
+      			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}
+  					   newField={this.props.newField}
+  					   formState={this.props.formState}
+  					   types={this.props.types}
+  					   handleSubmitChamp={this.props.handleSubmitChamp}
+      			/>
+        </div>
+      </div>
 		</div>;
 	}
 }
