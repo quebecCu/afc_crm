@@ -121,7 +121,7 @@ class GridRequiredFormCustomer extends Component {
 					</div>
 					<div className="col-6">
 						<label htmlFor="codePostal" className="control-label">Code Postal</label>
-						<input type="text" className="form-control" id="codePostal" name="codePostal"
+						<input type="text" className="form-control" id="codePostal" name="codePostal" size= "6"
 							   onChange={this._changeCodePostal} value={this.props.requiredFields.codePostal}
 							   placeholder= "J1J 2H4 " required/>
 					</div>
@@ -193,6 +193,8 @@ class GridRequiredFormCustomer extends Component {
 			</div>
 		);
 	}
+
+
 }
 
 export default GridRequiredFormCustomer;

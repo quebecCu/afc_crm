@@ -6,6 +6,7 @@ import {changeViewDashboard} from "../actions/crmDashboard";
 import CreationFournisseur from "./GridContainerSuppliers";
 import SupplierPage from "./SupplierPage";
 import {requestGridFour} from "../actions/crmGridLayoutSuppliers";
+import DossiersComponent from "../components/DossiersComponent";
 
 
 class suppliersPageContainer extends Component {
@@ -25,6 +26,7 @@ class suppliersPageContainer extends Component {
 		event.preventDefault();
 		this.props.changeViewDashboard(event.target.className);
 	}
+	
 
 
 	render() {
@@ -49,6 +51,8 @@ class suppliersPageContainer extends Component {
 		);
 	}
 }
+
+
 
 function mapStateToProps (state) {
 

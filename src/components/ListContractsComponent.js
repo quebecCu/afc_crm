@@ -120,6 +120,15 @@ class ListContractsComponent extends React.Component {
 			}
 		}
 	}
+	_print(event) {
+		document.getElementById("PageContractsTable").style.height = "auto";
+        window.print();
+            // var getMyFrame = document.getElementById(PageFournisseursTable);
+             //getMyFrame.focus();
+             //getMyFrame.contentWindow.print();
+        
+        
+	}
 
 	render(){
 		return (
@@ -176,6 +185,8 @@ class ListContractsComponent extends React.Component {
 
 						</form>
 					</div>
+					<button  value="print" id="print" onClick={this._print}>
+				   <a className="glyphicon glyphicon-print"> </a> Imprimer la liste </button>
 					<button onClick={this.props.handleClick} value="create">Créer contrat</button>
 				</div>
 		</div>
