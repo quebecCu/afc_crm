@@ -27,10 +27,9 @@ class ContractRemunerationContainer extends React.Component {
 
 	render() {
 		return <div>
-			<h4>Rémunération</h4>
-			<div className="container" style={{paddingBottom:0, marginBottom:0}}>
-				<div className="row col-12" style={{paddingBottom:0, marginBottom:0}}>
-					<div className="col-4" style={{paddingBottom:0, marginBottom:0}}>
+			<div className="container">
+				<div className="row">
+					<div className="col-xs-12 col-sm-6 col-md-4">
 
 						<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie"
 									   description="Taux de commission: Vie, DMA, PAC" part="remuneration"
@@ -51,7 +50,8 @@ class ContractRemunerationContainer extends React.Component {
 									   description="Taux de commission: maladies graves" part="remuneration"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
-					<div className="col-4">
+					<br/>
+					<div className="col-xs-12 col-sm-6 col-md-4">
 
 						<ContractInput titre="PAE" unite="%" format="XX,X" titreChamp="pae"
 									   description="Taux de commission: PAE" part="remuneration"
@@ -72,25 +72,29 @@ class ContractRemunerationContainer extends React.Component {
 									   description="Rémunération totale" part="remuneration"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
-					<div className="col-4">
-
-						<div className="form-group row">
-							<label id="representantLabel" className="col-form-label col-3">Conseiller</label>
-							<div className="col-9"><select
-								id="conseiller"
-								name="conseiller"
-								className="form-control col-sm-8"
-								value={this.props.formState.contrat.remuneration.idConseiller}
-								onChange={this._onChangeConseiller}
-							>
-								<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
-								{
-									this.props.formState.employesAFC.map((employe, index) => {
-										return <option key={index}
-													   value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
-									})
-								}
-							</select></div>
+					<br/>
+					<div className="col-xs-12 col-sm-6 col-md-4">
+						<div>
+							<div>
+								<label id="representantLabel" className="col-form-label">Conseiller</label>
+							</div>
+							<div>
+								<select
+									id="conseiller"
+									name="conseiller"
+									className="form-control"
+									value={this.props.formState.contrat.remuneration.idConseiller}
+									onChange={this._onChangeConseiller}
+								>
+									<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
+									{
+										this.props.formState.employesAFC.map((employe, index) => {
+											return <option key={index}
+														   value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
+										})
+									}
+								</select>
+							</div>
 						</div>
 						<ContractInput titre="Split" unite="%" format="XX,X" titreChamp="split"
 									   description="Pourcentage payable en %"
@@ -109,11 +113,10 @@ class ContractRemunerationContainer extends React.Component {
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
 				</div>
+				<ContractInput titre="Notes" unite="" format="Informations supplémentaires" titreChamp="notes"
+							   description="Informations supplémentaires" part="remuneration"
+							   formState={this.props.formState} changeForm={this.props.changeForm}/>
 			</div>
-			<ContractInput titre="Notes" unite="" format="Informations supplémentaires" titreChamp="notes"
-						   description="Informations supplémentaires" part="remuneration"
-						   formState={this.props.formState} changeForm={this.props.changeForm}/>
-
 		</div>
 	}
 }

@@ -213,12 +213,10 @@ class ContractFile extends React.Component {
 		      	<i className="fa fa-file-o"></i> Contrat
 					</div>
 					<div className="card-body">
-						<div>
-							<div className="text-right">
-								<div className="btn-group" role="group" aria-label="Basic example">
-									<button type="button" className="btn btn-primary"><i className="fa fa-cog"></i> Modifier</button>
-									<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
-								</div>
+						<div className="text-right">
+							<div className="btn-group" role="group" aria-label="Basic example">
+								<button type="button" className="btn btn-primary"><i className="fa fa-cog"></i> Modifier</button>
+								<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
 							</div>
 						</div>
 						<br/>
@@ -227,7 +225,7 @@ class ContractFile extends React.Component {
 						    <div className="card-header" id="headingOne">
 						      <h5 className="mb-0">
 						        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						          G&eacute;n&eacute;ral
+						          Information G&eacute;n&eacute;rale
 						        </button>
 						      </h5>
 						    </div>

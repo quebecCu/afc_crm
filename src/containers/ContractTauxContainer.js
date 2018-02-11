@@ -18,8 +18,8 @@ class ContractTauxContainer extends React.Component{
 								   description="Année de départ" part="taux"
 								   formState={this.props.formState} changeForm={this.props.changeForm}/>
 				</div>
-				<div className="row col-12">
-					<div className="col-4">
+				<div className="row">
+					<div className="col-xs-12 col-sm-6 col-md-4">
 						<ContractInput titre="Différence" unite="%" format="XX.X" titreChamp="diff"
 									   description="Augmentation/diminution de prime en %" part="taux"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
@@ -42,7 +42,7 @@ class ContractTauxContainer extends React.Component{
 									   description="Programme d'aide aux employés" part="taux"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
-					<div className="col-4">
+					<div className="col-xs-12 col-sm-6 col-md-4">
 						<ContractInput titre="Vie" unite="$" format="X XXX.XX" titreChamp="vie"
 									   description="Assurance vie de l'employé" part="taux"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
@@ -65,7 +65,7 @@ class ContractTauxContainer extends React.Component{
 									   description="Indiquer la prime mensuelle" part="taux"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
-					<div className="col-4">
+					<div className="col-xs-12 col-sm-6 col-md-4">
 						<ContractInput titre="DMA" unite="$" format="X XXX.XX" titreChamp="dma"
 									   description="Décès et perte de membres accidentel" part="taux"
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
@@ -89,9 +89,7 @@ class ContractTauxContainer extends React.Component{
 									   formState={this.props.formState} changeForm={this.props.changeForm}/>
 					</div>
 				</div>
-
 			</div>
-
 		</div>;
 
 	}

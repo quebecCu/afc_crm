@@ -29,21 +29,21 @@ class GridMethodOnFieldContract extends Component {
 		return (
 			<div>
 				<hr/>
-				<form onSubmit={this.props.handleSubmitChamp} className="col-4 offset-4">
+				<form onSubmit={this.props.handleSubmitChamp}>
 					<div className="form-group">
-						<label htmlFor="champNom" style={{fontSize: 13}} className="control-label">Nom du nouveau champ </label>
+						<label htmlFor="champNom" className="control-label">Nom du nouveau champ </label>
 						<input type="text" name="champNom" id="champNom"
 							   className="form-control" onChange={this._changeName}
 							   value={this.props.newField.name} required/>
 					</div>
 					<div className="form-group">
-						<label htmlFor="champDescription" style={{fontSize: 13}} className="control-label">Description du nouveau champ </label>
+						<label htmlFor="champDescription" className="control-label">Description du nouveau champ </label>
 						<input type="text" name="champDescription" id="champDescription"
 							   className="form-control" onChange={this._changeDescription}
 							   value={this.props.newField.description} required/>
 					</div>
 					<div className="form-group">
-						<label className="control-label " htmlFor="champType">Type du nouveau champ</label>
+						<label className="control-label" htmlFor="champType">Type du nouveau champ</label>
 						<select className="form-control" id="champType" name="champType"
 								onChange={this._changeType} value={this.props.newField.type} required>
 							{
