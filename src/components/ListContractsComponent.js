@@ -200,8 +200,8 @@ class ListContractsComponent extends React.Component {
 										to={match.url + "/create"}>
 										<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
 									</Link>
-									<button  value="toPdf" id="toPdf" onClick={this._convert} type="button" class="btn btn-danger">Convertir la liste en PDF </button>
-									<button  value="print" id="print" onClick={this._print}  type="button" class="btn btn-success">Imprimer la liste </button>
+									<button  value="toPdf" id="toPdf" onClick={this._convert} type="button" className="btn btn-danger">Convertir la liste en PDF </button>
+									<button  value="print" id="print" onClick={this._print}  type="button" className="btn btn-success">Imprimer la liste </button>
 								</div>
 							</div>
 							<div className="col-sm-12 col-md-8">

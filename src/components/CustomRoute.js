@@ -47,7 +47,7 @@ export const PublicRoute = ({ component: Component, ...rest }) => (
 		!checkAuthRouter() ? (
 			<Component {...props} />
 		) : (
-				<Redirect to="/Home" />
+				<Redirect to="/dashboard" />
 			)
 	)} />
 );
