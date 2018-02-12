@@ -26,7 +26,7 @@ export class GridCreationClient extends Component {
 					<div>
 						<form action='/' onSubmit={this.props.handleSubmit}>
 							<GridRequiredFormCustomer requiredFields={this.props.requiredFields} releves={this.props.releves}
-													  activites={this.props.activites}
+													  activites={this.props.activites} provinces={this.props.provinces}
 													  etats={this.props.etats} provenances={this.props.provenances}
 													  changeRequiredFields={this.props.changeRequiredFields}/>
 							<ResponsiveReactGridLayout className="layout" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}

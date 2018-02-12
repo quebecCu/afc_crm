@@ -5,7 +5,7 @@ import {
 	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
 	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChampTypes, getEtats,
 	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField, changeNewField, GET_GRID_MODIFY,
-	getGridModify, changeRequiredFields, DELETE_CUSTOMER
+	getGridModify, changeRequiredFields, DELETE_CUSTOMER,GET_PROVINCES,UPDATE_PROVINCES,getProvinces, updateProvinces
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
@@ -98,7 +98,42 @@ export function * requestReleves (){
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateReleves(response.data.message));
 					if(view.id) {
-						store.dispatch(getChampTypes({id: view.id.id, releves: response.data.message, grid: view.id.grid}))
+						store.dispatch(getProvinces({id: view.id.id, 
+													releves: response.data.message, 
+													grid: view.id.grid}))
+					}
+					else {
+						store.dispatch(getProvinces())
+					}
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+
+
+//Récupère les valeurs de la liste des provinces
+export function * requestProvinces (){
+	while(true){
+
+		let view = yield take(GET_PROVINCES);
+		//communication avec server
+		let server = "http://localhost:3002/clients/provinces";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/provinces';
+
+		axios.get(backendUrl, config)
+			.then(function (response) {
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateProvinces(response.data.message));
+					if(view.id) {
+						store.dispatch(getChampTypes({id: view.id.id,
+													 releves: view.data.releves, 
+													 provinces: response.data.message,
+													  grid: view.id.grid}))
 					}
 					else {
 						store.dispatch(getChampTypes())
@@ -130,6 +165,7 @@ export function * requestChampTypes (){
 						store.dispatch(getActivites({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							grid: view.data.grid
 						}));
 					}
@@ -163,6 +199,7 @@ export function * requestActivites (){
 						store.dispatch(getEtats({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							activites: response.data.message,
 							grid: view.data.grid
 						}));
@@ -197,6 +234,7 @@ export function * requestEtats (){
 						store.dispatch(getProvenances({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							activites: view.data.activites,
 							etats: response.data.message,
 							grid: view.data.grid
@@ -232,6 +270,7 @@ export function * requestProvenances (){
 						store.dispatch(getGridModify({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							activites: view.data.activites,
 							etats: view.data.etats,
 							provenances: response.data.message,
@@ -544,8 +583,8 @@ export function * sendDeleteField() {
 export function * getGridLayoutToModify() {
 	while(true) {
 		let client = yield take(GET_GRID_MODIFY);
-		let {id, releves, activites, etats, provenances, grid} = client.data;
-		let releve, activite, etat, provenance = '';
+		let {id, releves, activites, etats, provenances,provinces, grid} = client.data;
+		let releve, activite, etat, provenance, province= '';
 
 		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
@@ -579,6 +618,12 @@ export function * getGridLayoutToModify() {
 					releves.forEach(type => {
 						if(type.modeenvoiereleve === champs.releve) {
 							releve = type.idreleve;
+						}
+					});
+
+					provinces.forEach(type => {
+						if(type.nomProvince === champs.province) {
+							province = type.idProvince;
 						}
 					});
 
@@ -631,6 +676,7 @@ export function * GridFlow () {
 	yield fork (sendFile);
 	yield fork (updateFile);
 	yield fork (requestReleves);
+	yield fork (requestProvinces);
 	yield fork (createNewField);
 	yield fork (requestChampTypes);
 	yield fork (requestActivites);

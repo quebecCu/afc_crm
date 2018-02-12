@@ -128,6 +128,15 @@ class ListContractsComponent extends React.Component {
 			}
 		}
 	}
+	_print(event) {
+		document.getElementById("PageContractsTable").style.height = "auto";
+        window.print();
+            // var getMyFrame = document.getElementById(PageFournisseursTable);
+             //getMyFrame.focus();
+             //getMyFrame.contentWindow.print();
+        
+        
+	}
 
 	render(){
 		let {view, listContracts, searchContracts} = this.props.crmContract;
@@ -239,6 +248,12 @@ class ListContractsComponent extends React.Component {
 							</table>
 						</div>
 					</div>
+<<<<<<< HEAD
+=======
+					<button  value="print" id="print" onClick={this._print}>
+				   <a className="glyphicon glyphicon-print"> </a> Imprimer la liste </button>
+					<button onClick={this.props.handleClick} value="create">Créer contrat</button>
+>>>>>>> 63692e41e52fff0c72d7bf9b37650c0ce87e4780
 				</div>
 			</div>
 		);

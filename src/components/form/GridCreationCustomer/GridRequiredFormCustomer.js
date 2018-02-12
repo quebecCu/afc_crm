@@ -78,7 +78,8 @@ class GridRequiredFormCustomer extends Component {
 					<div className="col-6">
 						<label htmlFor="nomEntreprise" className="control-label">Nom de lentreprise</label>
 						<input type="text" className="form-control" id="nomEntreprise" value={this.props.requiredFields.nomEntreprise}
-							   name="nomEntreprise" onChange={this._changeNomEntreprise} required/>
+							   name="nomEntreprise" onChange={this._changeNomEntreprise}
+							   placeholder= "Mega entreprise" required/>
 					</div>
 					<div className="col-6">
 						<label className="control-label " htmlFor="releve">Relevé</label>
@@ -96,36 +97,47 @@ class GridRequiredFormCustomer extends Component {
 					<div className="col-6">
 						<label htmlFor="rue" className="control-label">Rue</label>
 						<input type="text" className="form-control" id="rue" name="rue"
-							   onChange={this._changeRue} value={this.props.requiredFields.rue} required/>
+							   onChange={this._changeRue} value={this.props.requiredFields.rue} 
+							   placeholder= "154 rue laurier" required/>
 					</div>
 					<div className="col-6">
 						<label htmlFor="ville" className="control-label">Ville</label>
 						<input type="text" className="form-control" id="ville" name="ville"
-							   onChange={this._changeVille} value={this.props.requiredFields.ville} required/>
+							   onChange={this._changeVille} value={this.props.requiredFields.ville} 
+							   placeholder= "Sherbrooke"required/>
 					</div>
 				</div>
 				<div className="form-group row">
 					<div className="col-6">
 						<label htmlFor="province" className="control-label">Province</label>
-						<input type="text" className="form-control" id="province" name="province"
-							   onChange={this._changeProvince} value={this.props.requiredFields.province} required/>
+						<select className="form-control" id="province" name="province"
+							   onChange={this._changeProvince} value={this.props.requiredFields.province} required>
+							   {
+								this.props.provinces.map(province => {
+									return <option key={province.idprovince} value={province.idprovince}>{province.nomprovince}</option>
+								})
+							}
+						</select>
 					</div>
 					<div className="col-6">
 						<label htmlFor="codePostal" className="control-label">Code Postal</label>
-						<input type="text" className="form-control" id="codePostal" name="codePostal"
-							   onChange={this._changeCodePostal} value={this.props.requiredFields.codePostal} required/>
+						<input type="text" className="form-control" id="codePostal" name="codePostal" size= "6"
+							   onChange={this._changeCodePostal} value={this.props.requiredFields.codePostal}
+							   placeholder= "J1J 2H4 " required/>
 					</div>
 				</div>
 				<div className="form-group row">
 					<div className="col-6">
 						<label htmlFor="telephonePrincipal" className="control-label">Téléphone principal</label>
 						<input type="text" className="form-control" id="telephonePrincipal"
-							   name="telephonePrincipal" onChange={this._changeTel} value={this.props.requiredFields.telephone} required/>
+							   name="telephonePrincipal" onChange={this._changeTel} value={this.props.requiredFields.telephone} 
+							   placeholder= "(819)-000-0000 "required/>
 					</div>
 					<div className="col-6">
 						<label htmlFor="telephoneExtension" className="control-label">Extension du tél. principal</label>
 						<input type="text" className="form-control" id="telephoneExtension"
-							   name="telephoneExtension" onChange={this._changeExtension} value={this.props.requiredFields.extension} required/>
+							   name="telephoneExtension" onChange={this._changeExtension} value={this.props.requiredFields.extension} 
+							   placeholder= "1234 "/>
 					</div>
 				</div>
 
@@ -181,6 +193,8 @@ class GridRequiredFormCustomer extends Component {
 			</div>
 		);
 	}
+
+
 }
 
 export default GridRequiredFormCustomer;

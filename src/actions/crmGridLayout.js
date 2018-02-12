@@ -5,6 +5,8 @@ export const CREATE_CUSTOMER_FILE = 'CREATE_CUSTOMER_FILE';
 export const UPDATE_CUSTOMER_FILE = 'UPDATE_CUSTOMER_FILE';
 export const GET_RELEVES = 'GET_RELEVES';
 export const UPDATE_RELEVES = 'UPDATE_RELEVES';
+export const GET_PROVINCES = 'GET_PROVINCES';
+export const UPDATE_PROVINCES = 'UPDATE_PROVINCES';
 export const CREATE_NEW_FIELD = 'CREATE_NEW_FIELD';
 export const GET_CHAMP_TYPES = 'GET_CHAMP_TYPES';
 export const UPDATE_CHAMP_TYPES = 'UPDATE_CHAMP_TYPES';
@@ -51,7 +53,13 @@ export function getReleves(id) {
 export function updateReleves(releves) {
 	return {type: UPDATE_RELEVES, releves}
 }
+export function getProvinces(id) {
+	return {type: GET_PROVINCES, id}
+}
 
+export function updateProvinces(provinces) {
+	return {type: UPDATE_PROVINCES, provinces}
+}
 export function createNewField(newField) {
 	return {type: CREATE_NEW_FIELD, newField}
 }
