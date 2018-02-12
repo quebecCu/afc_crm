@@ -41,7 +41,7 @@ class CreateContractContainer extends React.Component {
 		let {formState, contractDisplay, fromClient} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
-		if (!this.props.idContrat) {
+		if (!this.props.idContract) {
 			this.props.getGrid();
 			this.props.changeForm({
 				...formState, intModulesToDisplay: 1, modulesToDisplay: [], contrat: {
@@ -474,7 +474,15 @@ class CreateContractContainer extends React.Component {
 					<h1 className="text-center">Assurances collectives</h1>
 					<div className="card mb-3">
 						<div className="card-header">
-							<i className="fa fa-file-o"></i> Cr&eacute;ation d'un contrat
+							<i className="fa fa-file-o"></i>
+								{
+									!this.props.idContract
+									&& <span> Cr&eacute;ation d'un contrat</span>
+								}
+								{
+									this.props.idContract
+									&& <span> Modification d'un contrat</span>
+								}
 						</div>
 						<div className="card-body">
 							<div id="accordion">

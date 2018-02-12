@@ -4,7 +4,7 @@ import {withRouter} from 'react-router'
 import {Route,Link,Switch} from 'react-router-dom'
 import AccueilPageContainer from "./AccueilPageContainer";
 import SuppliersPageContainer from "./SuppliersPageContainer";
-import PageCollectivesClients from '../components/PageCollectivesClients';
+import CollectiveClientsContainer from './CollectiveClientsContainer';
 import ContractsContainer from "./ContractsContainer";
 import NavBar from "./NavBar";
 import ErrorPage from "../components/ErrorPage";
@@ -38,7 +38,7 @@ class DashboardContainer extends Component {
 						<Switch>
 				      <Route exact path={match.url} component={AccueilPageContainer}/>
 				      <Route path={match.url + "/collective/suppliers"} component={SuppliersPageContainer}/>
-							<Route path={match.url + "/collective/clients"} component={PageCollectivesClients}/>
+							<Route path={match.url + "/collective/clients"} component={CollectiveClientsContainer}/>
 							<Route path={match.url + "/collective/contracts"} component={ContractsContainer}/>
 							{
 								this.props.crmLogin.isAdmin === true

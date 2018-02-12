@@ -8,7 +8,7 @@ import NavBarLinkGroup from "../components/NavBarLinkGroup";
 import {logout} from "../actions/crmLogin";
 import {changeViewCollective} from "../actions/crmCollectiveContainer";
 import {changeViewUserManagement, requestUserById} from "../actions/crmUserManagement";
-import {changeViewContract, getContract, setFromClient} from "../actions/crmContract";
+import {changeViewContract, setFromClient} from "../actions/crmContract";
 import {addSubContractNav, addSubCustomerNav, addSubSupplierNav, addSubUserNav} from "../actions/crmNavBar";
 import {getClientRequest} from "../actions/crmClientList";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
@@ -171,9 +171,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setFromClient: (fromClient) => {
 			dispatch(setFromClient(fromClient));
-		},
-		getContract: (id) => {
-			dispatch(getContract(id));
 		},
 	}
 };

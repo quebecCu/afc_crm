@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom';
-import {changeSearchContracts, changeViewContract, getContract, getListContracts} from "../actions/crmContract";
+import {changeSearchContracts, changeViewContract, getListContracts} from "../actions/crmContract";
 import ContractPage from "../containers/ContractPage";
 import {addSubContractNav, displaySubContractNav} from "../actions/crmNavBar";
 import {changeLoading} from "../actions/crmDashboard";
@@ -14,33 +14,6 @@ class ListContractsComponent extends React.Component {
 		this._hardReset = this._hardReset.bind(this);
 		this._filtre = this._filtre.bind(this);
 		this.props.getListContracts();
-	}
-
-	_handleClick(contract) {
-		let links = this.props.crmNavBar.linksSubContract;
-		let check = true;
-		links.forEach(link => {
-			if(link.idContract === contract.idcontrat) {
-				check = false;
-			}
-		});
-		if(check) {
-			this.props.crmContract.listContracts.forEach((element, index) => {
-				let duplicate = false;
-				this.props.crmContract.listContracts.forEach((element2, index2)=> {
-					if(element.idcontrat === element2.idcontrat && index > index2) {
-						duplicate = true;
-					}
-				});
-				if(!duplicate && contract.idcontrat === element.idcontrat) {
-					links.push({name: element.police, view: 'display', idContract: contract.idcontrat});
-				}
-			});
-			this.props.addSubContractNav(links);
-		}
-		this.props.changeViewContract("display");
-		this.props.displaySubContractNav(true);
-		this.props.getContract(contract.idcontrat);
 	}
 
 	_handleClickHead(n) {
@@ -205,29 +178,27 @@ class ListContractsComponent extends React.Component {
 											<td>
 												<table style={{width: 100 + '%',height: 100 + '%'}}>
 													<tbody>
-														<tr>
-															<td className="text-right" style={{border:"none", padding: 0}}>
-																<Link
-									                className="btn btn-sm btn-primary"
-									                to={match.url + "/" + contract.idcontrat}>
-									  	            <i className="fa fa-eye" aria-hidden="true"></i>
-									  	          </Link>
-															</td>
-															<td className="text-center" style={{border:"none", padding: 0}}>
-																<Link
-																	className="btn btn-sm btn-secondary"
-																	to={match.url + "/" + contract.police + "/update"}>
-																	<i className="fa fa-cog" aria-hidden="true"></i>
-																</Link>
-															</td>
-															<td className="text-left" style={{border:"none", padding: 0}}>
-																<Link
-									                className="btn btn-sm btn-danger"
-									                to={match.url + "/" + contract.police }>
-									  	            <i className="fa fa-times" aria-hidden="true"></i>
-									  	          </Link>
-															</td>
-														</tr>
+														<td className="text-right" style={{border:"none", padding: 0}}>
+															<Link
+								                className="btn btn-sm btn-primary"
+								                to={match.url + "/" + contract.idcontrat}>
+								  	            <i className="fa fa-eye" aria-hidden="true"></i>
+								  	          </Link>
+														</td>
+														<td className="text-center" style={{border:"none", padding: 0}}>
+															<Link
+																className="btn btn-sm btn-secondary"
+																to={match.url + "/" + contract.idcontrat + "/update"}>
+																<i className="fa fa-cog" aria-hidden="true"></i>
+															</Link>
+														</td>
+														<td className="text-left" style={{border:"none", padding: 0}}>
+															<Link
+								                className="btn btn-sm btn-danger"
+								                to={match.url + "/" + contract.idcontrat + "/delete"}>
+								  	            <i className="fa fa-times" aria-hidden="true"></i>
+								  	          </Link>
+														</td>
 													</tbody>
 												</table>
 											</td>
@@ -269,9 +240,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		changeLoading: (loading) => {
 			dispatch(changeLoading(loading));
-		},
-		getContract: (idContract) => {
-			dispatch(getContract(idContract));
 		},
 		displaySubContractNav: (display) => {
 			dispatch(displaySubContractNav(display));
