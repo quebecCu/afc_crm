@@ -23,7 +23,6 @@ class PageCollectivesClients extends Component {
 		return (
 			<div className="container-fluid text-center">
 				<h1>Assurances collectives</h1>
-				<h2>Clients</h2>
 				{
 					loading && <LoadingAnimation/>
 
@@ -31,13 +30,20 @@ class PageCollectivesClients extends Component {
 				{
 					!loading &&
 					<div>
-						<ClientListContainer dossiersState={dossiersState} changeLoading={this.props.changeLoading}
-											 handleClick={this.props.handleClick}/>
-						<RechercheComponent
-							onSubmit={this.props.searchRequestColl}
-							formState={formState}
-							changeFormColl={this.props.changeFormColl}/>
-						<button onClick={this.props.handleClick} className="newCustomer" id="createNewCx">Créer une fiche client</button>
+						<div className="card mb-3">
+							<div className="card-header">
+				      	<i className="fa fa-table"></i> Liste des clients
+							</div>
+							<div className="card-body">
+								<button onClick={this.props.handleClick} className="newCustomer" id="createNewCx">Créer une fiche client</button>
+								<RechercheComponent
+									onSubmit={this.props.searchRequestColl}
+									formState={formState}
+									changeFormColl={this.props.changeFormColl}/>
+								<ClientListContainer dossiersState={dossiersState} changeLoading={this.props.changeLoading}
+													 handleClick={this.props.handleClick}/>
+							</div>
+						</div>
 					</div>
 				}
 			</div>

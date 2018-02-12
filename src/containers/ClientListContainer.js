@@ -105,28 +105,29 @@ class ClientListContainer extends Component {
 	render() {
 		let {linksSubCustomer} = this.props.crmNavBar;
 		this.table = (
-			<div id="print-content" style={{ height: 'auto', width: '100%',textAlign:'center'}}>
-				<table id="PageCollectivesClientsTable" className="table" >
-					<thead >
-					<tr >
-						<th onClick={this.handleClick0} style={{width: 'auto'}}>Nom du groupe</th>
-						<th onClick={this.handleClick1} style={{width: 'auto'}}>Décideur</th>
-						<th onClick={this.handleClick2} style={{width: 'auto'}}>Statut</th>
-						<th onClick={this.handleClick3} style={{width: 'auto'}} >Prospect</th>
-						<th onClick={this.handleClick4} style={{width: 'auto'}}>Mois de renouvellement</th>
-						<th onClick={this.handleClick5} style={{width: 'auto'}}>No police</th>
-						<th onClick={this.handleClick6} style={{width: 'auto'}}>Assureur</th>
-					</tr>
-					</thead>
-					<DossiersComponent collective={this.props.dossiersState}
-									   handleClick={this._handleClientClick}
-									   displaySub={this.props.displaySubCustomerNav}
-									   addSub={this.props.addSubCustomerNav}
-									   links={linksSubCustomer}
-									   changeLoading={this.props.changeLoading}/>
-				</table>
-
-			
+			<div id="print-content" style={{overflow: 'auto', height: '450px', width: 'auto'}}>
+				<div className="table-responsive">
+					<table id="PageCollectivesClientsTable" className="table table-bordered table-hover"  >
+						<thead className="thead-default">
+							<tr >
+								<th onClick={this.handleClick0} style={{width: 'auto'}}>Nom du groupe</th>
+								<th onClick={this.handleClick1} style={{width: 'auto'}}>Décideur</th>
+								<th onClick={this.handleClick2} style={{width: 'auto'}}>Statut</th>
+								<th onClick={this.handleClick3} style={{width: 'auto'}} >Prospect</th>
+								<th onClick={this.handleClick4} style={{width: 'auto'}}>Mois de renouvellement</th>
+								<th onClick={this.handleClick5} style={{width: 'auto'}}>No police</th>
+								<th onClick={this.handleClick6} style={{width: 'auto'}}>Assureur</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<DossiersComponent collective={this.props.dossiersState}
+										   handleClick={this._handleClientClick}
+										   displaySub={this.props.displaySubCustomerNav}
+										   addSub={this.props.addSubCustomerNav}
+										   links={linksSubCustomer}
+										   changeLoading={this.props.changeLoading}/>
+					</table>
+				</div>
 			</div>
 		);
 		return this.table;

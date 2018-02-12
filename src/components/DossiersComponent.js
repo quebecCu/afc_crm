@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom';
 
 class DossiersComponent extends Component {
 
@@ -86,6 +88,7 @@ class DossiersComponent extends Component {
 	}
 
 	render() {
+		const { match } = this.props;
 		if (this.props.historique) {
 			this.rows = (
 				<tbody>
@@ -105,7 +108,7 @@ class DossiersComponent extends Component {
 				<tbody>
 				{this.props.collective.map((element, index) => {
 					return (
-						<tr className = 'customer' onClick={this.handleClick.bind(this, element)} key={index}>
+						<tr className="customer" key={index}>
 							<td>{element.nom_groupe}</td>
 							<td>{element.responsable}</td>
 							<td>{element.etat}</td>
@@ -113,6 +116,33 @@ class DossiersComponent extends Component {
 							<td>{element.mois_renouvellement}</td>
 							<td>{element.no_police}</td>
 							<td>{element.fournisseur}</td>
+							<td>
+								<table style={{width: 100 + '%',height: 100 + '%'}}>
+									<tbody>
+										<td className="text-right" style={{border:"none", padding: 0}}>
+											<Link
+												className="btn btn-sm btn-primary"
+												to={match.url + "/" + element.id}>
+												<i className="fa fa-eye" aria-hidden="true"></i>
+											</Link>
+										</td>
+										<td className="text-center" style={{border:"none", padding: 0}}>
+											<Link
+												className="btn btn-sm btn-secondary"
+												to={match.url + "/" + element.id + "/update"}>
+												<i className="fa fa-cog" aria-hidden="true"></i>
+											</Link>
+										</td>
+										<td className="text-left" style={{border:"none", padding: 0}}>
+											<Link
+												className="btn btn-sm btn-danger"
+												to={match.url + "/" + element.id + "/delete"}>
+												<i className="fa fa-times" aria-hidden="true"></i>
+											</Link>
+										</td>
+									</tbody>
+								</table>
+							</td>
 						</tr>
 					);
 				})}
@@ -163,4 +193,4 @@ class DossiersComponent extends Component {
 	}
 }
 
-export default (DossiersComponent);
+export default withRouter(DossiersComponent);

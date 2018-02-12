@@ -17,6 +17,7 @@ import {sendingRequestColl} from "../actions/crmRechercheCollective";
 import LoadingAnimation from "../components/LoadingAnimation";
 import ModalForModalites from "../components/modal/ModalForModalites";
 import {changeLoadingValidation} from "../actions/crmDashboard";
+import {getContract} from "../actions/crmContract";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -40,7 +41,7 @@ class CreateContractContainer extends React.Component {
 		let {formState, contractDisplay, fromClient} = this.props.crmContract;
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
-		if (this.props.view === "create") {
+		if (!this.props.idContract) {
 			this.props.getGrid();
 			this.props.changeForm({
 				...formState, intModulesToDisplay: 1, modulesToDisplay: [], contrat: {
@@ -103,6 +104,7 @@ class CreateContractContainer extends React.Component {
 			})
 		}
 		else {
+			this.props.getContract(this.props.idContract);
 			let contract = JSON.parse(JSON.stringify(contractDisplay));
 			let facDisplay = contract.facultatif;
 			this.props.getGrid(facDisplay);
@@ -457,143 +459,195 @@ class CreateContractContainer extends React.Component {
 	}
 
 	render() {
-		let {formState, bigLayout, lilLayout, newField, types, updateField, fromClient} = this.props.crmContract;
+		let {formState, newField, types, updateField, fromClient} = this.props.crmContract;
 		let {dossiersState} = this.props.crmRechercheCollective;
 		let {client} = this.props.crmClientList;
 		let {isAdmin} = this.props.crmLogin;
-		let layout = bigLayout;
-		let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
-		return <div>
+		return (
+		<div>
 			{
 				this.props.loading && <LoadingAnimation/>
 			}
 			{
 				!this.props.loading &&
 				<div>
-					<h1 className="text-center">Cr&eacute;ation contrat collectif</h1>
+					<h1 className="text-center">Assurances collectives</h1>
 					<div className="card mb-3">
 						<div className="card-header">
-			      	<i className="fa fa-file-o"></i> Informations g&eacute;n&eacute;rales
+							<i className="fa fa-file-o"></i>
+								{
+									!this.props.idContract
+									&& <span> Cr&eacute;ation d'un contrat</span>
+								}
+								{
+									this.props.idContract
+									&& <span> Modification d'un contrat</span>
+								}
 						</div>
 						<div className="card-body">
-							<div className="row">
-								<div className="col-xs-12 col-sm-6">
-									<ContractClientPart changeForm={this.props.changeForm}
-																 clients={dossiersState} getClient={this.props.getClientRequest}
-																 formState={formState}
-																 client={client} fromClient={fromClient}
-																 />
-								</div>
-								<div className="col-xs-12 col-sm-6">
-									<ContractInfoPart formState={formState}
-																   changeForm={this.props.changeForm}/>
-								</div>
+							<div id="accordion">
+							  <div className="card">
+							    <div className="card-header" id="headingOne">
+							      <h5 className="mb-0">
+							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							          Information G&eacute;n&eacute;rale
+							        </button>
+							      </h5>
+							    </div>
+
+							    <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+							      <div className="card-body">
+											<div className="row">
+												<div className="col-xs-12 col-sm-6">
+													<ContractClientPart changeForm={this.props.changeForm}
+																				 clients={dossiersState} getClient={this.props.getClientRequest}
+																				 formState={formState}
+																				 client={client} fromClient={fromClient}
+																				 />
+												</div>
+												<div className="col-xs-12 col-sm-6">
+													<ContractInfoPart formState={formState}
+																				   changeForm={this.props.changeForm}/>
+												</div>
+											</div>
+							      </div>
+							    </div>
+							  </div>
+								<div className="card">
+							    <div className="card-header" id="headingTwo">
+							      <h5 className="mb-0">
+							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+							          Information Sp&eacute;cifique
+							        </button>
+							      </h5>
+							    </div>
+
+							    <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+							      <div className="card-body">
+											<GridOptionnalContract
+																   formState={formState}
+																   isAdmin={isAdmin}
+																   newField={newField}
+																   types={types}
+																   changeNewField={this.props.changeNewFieldContract}
+																   setGrid={this.props.setGrid}
+																   changeLilLayout={this.props.changeLilLayout}
+																   updatePosLayout={this.props.updatePosLayout}
+																   handleSubmitChamp={this._handleSubmitChamp}
+											/>
+							      </div>
+							    </div>
+							  </div>
+								<div className="card">
+							    <div className="card-header" id="headingThree">
+							      <h5 className="mb-0">
+							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+							          Modules
+							        </button>
+							      </h5>
+							    </div>
+							    <div id="collapseThree" className="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+							      <div className="card-body">
+											<ContractModulesPart formState={formState}
+												changeForm={this.props.changeForm}
+												view={this.props.view}
+											/>
+							      </div>
+							    </div>
+							  </div>
+								<div className="card">
+							    <div className="card-header" id="headingFour">
+							      <h5 className="mb-0">
+							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+							          Historique des taux
+							        </button>
+							      </h5>
+							    </div>
+							    <div id="collapseFour" className="collapse show" aria-labelledby="headingFour" data-parent="#accordion">
+							      <div className="card-body">
+											<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
+							      </div>
+							    </div>
+							  </div>
+								<div className="card">
+							    <div className="card-header" id="headingFive">
+							      <h5 className="mb-0">
+							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+							          R&eacute;mun&eacute;ration
+							        </button>
+							      </h5>
+							    </div>
+							    <div id="collapseFive" className="collapse show" aria-labelledby="headingFive" data-parent="#accordion">
+							      <div className="card-body">
+											<ContractRemunerationContainer formState={formState} changeForm={this.props.changeForm}/>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<ModalForModalites/>
+							{
+								formState.facultatif.map(element => {
+									return (
+										<div className="modal fade" id={element.idattrcontratcoll + "modal"}
+											 key={element.idattrcontratcoll + "modal"}
+											 tabIndex="-100" role="dialog" aria-labelledby="myModalLabel">
+											<div className="modal-dialog" role="document">
+												<div className="modal-content">
+													<div className="modal-header">
+														<h4 className="modal-title" id="myModalLabel">Modification du champ
+															: {element.label}</h4>
+														<button type="button" className="close" data-dismiss="modal"
+																aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div className="modal-body">
+														<form onSubmit={this._handleModifyField}>
+															<div className="form-group">
+																<label htmlFor="modificationNomChamp" className="control-label">Nouveau
+																	titre du champ</label>
+																<input type="text" className="form-control"
+																	   id="modificationNomChamp"
+																	   name="modificationNomChamp"
+																	   onChange={this._changeNameModifyField}
+																	   value={updateField.name} required/>
+															</div>
+															<div className="form-group">
+																<label htmlFor="modificationDescChamp"
+																	   className="control-label">Nouvelle description du
+																	champ</label>
+																<input type="text" className="form-control"
+																	   id="modificationDescChamp"
+																	   name="modificationDescChamp"
+																	   onChange={this._changeDescModifyField}
+																	   value={updateField.description} required/>
+															</div>
+															<button type="button" className="btn btn-danger"
+																	data-dismiss="modal"
+																	value={element.idattrcontratcoll}
+																	onClick={this._deleteField}>Supprimer le champ
+															</button>
+															<button type="submit" className="btn btn-primary"
+																	value={element.idattrcontratcoll}
+																	onClick={this._changeIdModifyField}>Modifier le champ
+															</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									);
+								})
+							}
+							<div style={{padding: 20 + "px"}} className="text-center" >
+							  <button className="btn btn-primary mx-auto" id="validateForm" onClick={this._onClickValidate}>Valider</button>
 							</div>
 						</div>
 					</div>
-					<div className="card mb-3">
-						<div className="card-header">
-			      	<i className="fa fa-file-o"></i> Informations suppl&eacute;mentaires
-						</div>
-						<div className="card-body">
-								<GridOptionnalContract lilLayout={lilLayout}
-													   bigLayout={bigLayout}
-													   formState={formState}
-													   isAdmin={isAdmin}
-													   newField={newField}
-													   types={types}
-													   changeNewField={this.props.changeNewFieldContract}
-													   setGrid={this.props.setGrid}
-													   changeLilLayout={this.props.changeLilLayout}
-													   updatePosLayout={this.props.updatePosLayout}
-													   handleSubmitChamp={this._handleSubmitChamp}
-								/>
-						</div>
-					</div>
-					<div className="card mb-3">
-						<div className="card-header">
-							<i className="fa fa-file-o"></i> Modules
-						</div>
-						<div className="card-body">
-							<ContractModulesPart formState={formState} changeForm={this.props.changeForm}
-															view={this.props.view}/>
-						</div>
-					</div>
-					<div className="card mb-3">
-						<div className="card-header">
-							<i className="fa fa-file-o"></i> Historique des taux
-						</div>
-						<div className="card-body">
-							<ContractTauxContainer formState={formState} changeForm={this.props.changeForm}/>
-						</div>
-					</div>
-
-					<ContractRemunerationContainer formState={formState} changeForm={this.props.changeForm}/>
-
-					<ModalForModalites/>
-
-					{
-						formState.facultatif.map(element => {
-							return (
-								<div className="modal fade" id={element.idattrcontratcoll + "modal"}
-									 key={element.idattrcontratcoll + "modal"}
-									 tabIndex="-100" role="dialog" aria-labelledby="myModalLabel">
-									<div className="modal-dialog" role="document">
-										<div className="modal-content">
-											<div className="modal-header">
-												<h4 className="modal-title" id="myModalLabel">Modification du champ
-													: {element.label}</h4>
-												<button type="button" className="close" data-dismiss="modal"
-														aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div className="modal-body">
-												<form onSubmit={this._handleModifyField}>
-													<div className="form-group">
-														<label htmlFor="modificationNomChamp" className="control-label">Nouveau
-															titre du champ</label>
-														<input type="text" className="form-control"
-															   id="modificationNomChamp"
-															   name="modificationNomChamp"
-															   onChange={this._changeNameModifyField}
-															   value={updateField.name} required/>
-													</div>
-													<div className="form-group">
-														<label htmlFor="modificationDescChamp"
-															   className="control-label">Nouvelle description du
-															champ</label>
-														<input type="text" className="form-control"
-															   id="modificationDescChamp"
-															   name="modificationDescChamp"
-															   onChange={this._changeDescModifyField}
-															   value={updateField.description} required/>
-													</div>
-													<button type="button" className="btn btn-danger"
-															data-dismiss="modal"
-															value={element.idattrcontratcoll}
-															onClick={this._deleteField}>Supprimer le champ
-													</button>
-													<button type="submit" className="btn btn-primary"
-															value={element.idattrcontratcoll}
-															onClick={this._changeIdModifyField}>Modifier le champ
-													</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							);
-						})
-					}
 				</div>
 			}
-			<div className="mx-auto" >
-			  <button className="btn btn-primary mx-auto" id="validateForm" onClick={this._onClickValidate}>Valider</button>
-			</div>
-
-
-		</div>;
+		</div>
+	)
 	}
 }
 
@@ -660,6 +714,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		bindClientData: (client) => {
 			dispatch(bindClientData(client));
+		},
+		getContract: (idContract) => {
+			dispatch(getContract(idContract));
 		}
 	}
 };

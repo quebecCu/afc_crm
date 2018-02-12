@@ -89,7 +89,7 @@ class GridOptionnalContract extends React.Component {
 	render(){
 		return <div className="container">
         <div className="row">
-          <div className="offset-md-3 col-md-6 ">
+          <div className="col-md-6 offset-md-3">
   			     <DraggableList
                 itemKey="idattrcontratcoll"
                 template={OptionnalItem}
@@ -100,7 +100,7 @@ class GridOptionnalContract extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6 col-sm-offset-3">
+          <div className="col-sm-6 offset-md-3">
       			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}
   					   newField={this.props.newField}
   					   formState={this.props.formState}

@@ -131,22 +131,27 @@ class ContractInput extends React.Component{
 
 	render(){
 		let value = this._getFieldValue();
-		return <div className="form-group row">
-				<label className="col-form-label col-3">{this.props.titre + " "}</label>
-				<div className="col-8">
-					<div className="tooltipp" style={{cursor:"pointer", position: 'absolute', right: '2px', top: 0}}>
-						<span className="fa fa-info"/>
+		return <div>
+				<div>
+					<label className="col-form-label">{this.props.titre + " "}</label>
+					<div className="tooltipp" style={{marginLeft: "7px", cursor:"pointer"}}>
+						 <span className="fa fa-info"/>
 						<span className="tooltipptext">{this.props.description}</span>
 					</div>
-					<input type={this.type} placeholder={this.props.format} className="form-control"
-						onChange={this._onChangeField} id={"input"+this.props.titreChamp+this.props.part}
-						value={value}/>
-					<p id={"verif"+this.props.part+this.props.titreChamp}
-					   className="help-block text-danger" style={{display:"none"}} >
-						Format {this.props.format}
-					</p>
 				</div>
-				<div className="col-1" style={{paddingLeft:'5px'}}>{this.props.unite}</div>
+				<div className="row">
+					<div className="col-10">
+
+						<input type={this.type} placeholder={this.props.format} className="form-control"
+							onChange={this._onChangeField} id={"input"+this.props.titreChamp+this.props.part}
+							value={value}/>
+					</div>
+					<div className="col-1" style={{paddingLeft:'5px'}}>{this.props.unite}</div>
+				</div>
+				<p id={"verif"+this.props.part+this.props.titreChamp}
+					 className="help-block text-danger" style={{display:"none"}} >
+					Format {this.props.format}
+				</p>
 			</div>
 	}
 
