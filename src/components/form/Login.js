@@ -82,9 +82,9 @@ class Login extends Component   {
 									<br/>
 									<button className="btn btn-secondary btn-block" onClick={this._forgotten} id="loginButtonForgotten" > Mot de passe oublié?</button>
 								</div>
-								<div id="errorPassword" className=" w3-container w3-panel w3-red " style={{display: 'none'}}>
-									<h3>Nom d'utilisateur ou mot de passe erroné</h3>
-									<p>En cas de problemes, utilisez "Mots de passe oublié?".</p>
+								<div id="errorPassword" className=" w3-container w3-panel w3-red "   style={{display: 'none'}}>
+							    <h3>Mot de passe erroné</h3>
+							    <p>En cas de problemes, utilisez "Mots de passe oublié?".</p>
 								</div>
 			        </form>
 			      </div>

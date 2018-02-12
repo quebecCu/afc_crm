@@ -15,7 +15,6 @@ class AccueilPageContainer extends Component {
 			<PageAccueil
 				formState={formState}
 			/>
-
 		)
 	}
 }

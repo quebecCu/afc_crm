@@ -6,6 +6,9 @@ import {connect} from "react-redux";
 import {addSubCustomerNav, displaySubCustomerNav} from "../actions/crmNavBar";
 import {changeLoading} from "../actions/crmDashboard";
 
+
+
+
 class ClientListContainer extends Component {
 
 	constructor(props) {
@@ -102,8 +105,8 @@ class ClientListContainer extends Component {
 	render() {
 		let {linksSubCustomer} = this.props.crmNavBar;
 		this.table = (
-			<div id="print-content" style={{overflow: 'auto', height: '450px', width: 'auto'}}>
-				<table id="PageCollectivesClientsTable" className="table"  >
+			<div id="print-content" style={{ height: 'auto', width: '100%',textAlign:'center'}}>
+				<table id="PageCollectivesClientsTable" className="table" >
 					<thead >
 					<tr >
 						<th onClick={this.handleClick0} style={{width: 'auto'}}>Nom du groupe</th>
@@ -122,6 +125,8 @@ class ClientListContainer extends Component {
 									   links={linksSubCustomer}
 									   changeLoading={this.props.changeLoading}/>
 				</table>
+
+			
 			</div>
 		);
 		return this.table;

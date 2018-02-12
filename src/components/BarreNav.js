@@ -57,7 +57,7 @@ export class BarreNav extends Component {
 		return (
 			<div id="pageNavBar">
 				<div id="navBar">
-					<h2>AFC inc.</h2>
+					<h2>AFC inc. <img src="http://avantagesfinanciers.com/wp-content/uploads/2016/04/Logo-bon.png"/></h2>
 					<ul>
 						{
 							liens.map(element => {

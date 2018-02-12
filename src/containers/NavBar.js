@@ -79,7 +79,7 @@ class NavBar extends Component {
 			          </li>
 	            </ul>
 	          </li>
-						<li className={"nav-item " + (location.pathname.indexOf("/dashboard/placements") !== -1 ? 'active' : '' )} data-toggle="tooltip" data-placement="right" title="Placements">
+						<li className={"nav-item " + (location.pathname.indexOf("/dashboard/collective/placements") !== -1 ? 'active' : '' )} data-toggle="tooltip" data-placement="right" title="Placements">
               <Link
                 className="nav-link"
                 to={"/dashboard/placements"}>

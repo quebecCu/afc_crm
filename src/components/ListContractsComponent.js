@@ -6,6 +6,8 @@ import {changeSearchContracts, changeViewContract, getContract, getListContracts
 import ContractPage from "../containers/ContractPage";
 import {addSubContractNav, displaySubContractNav} from "../actions/crmNavBar";
 import {changeLoading} from "../actions/crmDashboard";
+import jsPDF from 'jspdf'
+import { autoTable } from 'jspdf-autotable';
 
 class ListContractsComponent extends React.Component {
 	constructor(props) {
@@ -15,6 +17,45 @@ class ListContractsComponent extends React.Component {
 		this._filtre = this._filtre.bind(this);
 		this.props.getListContracts();
 	}
+
+	_print(event) {
+		var divToPrint = document.getElementById('PageContractsTable');
+		var htmlToPrint = '' +
+			'<style type="text/css">' +
+			'table {' +
+			'border-collapse: collapse;' +
+			'}' +
+			'table, th, td {'+
+				'border: 1px solid black;'+
+			'}'+
+			'</style>';
+		htmlToPrint += divToPrint.outerHTML;
+		var newWin = window.open("");
+		newWin.document.write("<h3> Liste des contrats: </h3>");
+		newWin.document.write(htmlToPrint);
+		newWin.print();
+		newWin.close();
+	}
+
+	_convert(event) {
+
+		var doc = new jsPDF('p', 'pt','a4');
+
+		var res = doc.autoTableHtmlToJson(document.getElementById("PageContractsTable"), false);
+
+		doc.autoTable(res.columns, res.data, {
+
+			margin: {horizontal:5,top: 25},
+			styles: {overflow: 'linebreak'},
+			addPageContent: function(data) {
+				doc.text("Liste des contrats:", 5, 20);
+			}
+		  } );
+
+		doc.save('liste-contrats.pdf');
+
+	}
+
 
 	_handleClick(contract) {
 		let links = this.props.crmNavBar.linksSubContract;
@@ -159,6 +200,8 @@ class ListContractsComponent extends React.Component {
 										to={match.url + "/create"}>
 										<i className="fa fa-plus" aria-hidden="true"></i> Créer contrat
 									</Link>
+									<button  value="toPdf" id="toPdf" onClick={this._convert} type="button" class="btn btn-danger">Convertir la liste en PDF </button>
+									<button  value="print" id="print" onClick={this._print}  type="button" class="btn btn-success">Imprimer la liste </button>
 								</div>
 							</div>
 							<div className="col-sm-12 col-md-8">

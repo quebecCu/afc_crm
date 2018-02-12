@@ -16,7 +16,6 @@ class LoginPage extends Component   {
 		//gestion derreur sur la div login
 
 		return(
-
                 <Login onSubmit = {this.props.loginRequest}
                        formState = {formState}
                        isLoading = {isLoading}

@@ -167,7 +167,7 @@ class ContractClientPart extends React.Component {
 				}
 			</div>
 			<div className="form-group row">
-				<label id="nbEmployesLabel" className="col-sm-3 col-form-label">Nombre d'employés</label>
+				<label id="nbEmployesLabel" className="col-sm-3 col-form-label">Nombre demployés</label>
 				{
 					!this.props.fromClient.idClient && this._nombreEmployes()
 				}

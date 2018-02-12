@@ -6,15 +6,14 @@ class PageAccueil extends Component {
 
     render() {
         return (
-
-            <div>
-              <div className="jumbotron">
-                <h1 className="display-4">Bonjour {this.props.formState.username}</h1>
-                <p className="lead">Bienvenue sur votre page d'accueil.</p>
-              </div>
-              <h2 className="titre-historique">Derniers dossiers consultés</h2>
-              <HistoriqueContainer page='PageAccueil' history={this.props.history}/>
+          <div>
+            <div className="jumbotron">
+              <h1 className="display-4">Bonjour {localStorage.getItem('username')}</h1>
+              <p className="lead">Bienvenue sur votre page d'accueil.</p>
             </div>
+            <h2 className="titre-historique">Derniers dossiers consultés</h2>
+            <HistoriqueContainer page='PageAccueil' history={this.props.history}/>
+          </div>
         );
     }
 }
