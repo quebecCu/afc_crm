@@ -229,27 +229,29 @@ class ListContractsComponent extends React.Component {
 											<td>
 												<table style={{width: 100 + '%',height: 100 + '%'}}>
 													<tbody>
-														<td className="text-right" style={{border:"none", padding: 0}}>
-															<Link
-								                className="btn btn-sm btn-primary"
-								                to={match.url + "/" + contract.idcontrat}>
-								  	            <i className="fa fa-eye" aria-hidden="true"></i>
-								  	          </Link>
-														</td>
-														<td className="text-center" style={{border:"none", padding: 0}}>
-															<Link
-																className="btn btn-sm btn-secondary"
-																to={match.url + "/" + contract.idcontrat + "/update"}>
-																<i className="fa fa-cog" aria-hidden="true"></i>
-															</Link>
-														</td>
-														<td className="text-left" style={{border:"none", padding: 0}}>
-															<Link
-								                className="btn btn-sm btn-danger"
-								                to={match.url + "/" + contract.idcontrat + "/delete"}>
-								  	            <i className="fa fa-times" aria-hidden="true"></i>
-								  	          </Link>
-														</td>
+														<tr>
+															<td className="text-right" style={{border:"none", padding: 0}}>
+																<Link
+									                className="btn btn-sm btn-primary"
+									                to={match.url + "/" + contract.idcontrat}>
+									  	            <i className="fa fa-eye" aria-hidden="true"></i>
+									  	          </Link>
+															</td>
+															<td className="text-center" style={{border:"none", padding: 0}}>
+																<Link
+																	className="btn btn-sm btn-secondary"
+																	to={match.url + "/" + contract.idcontrat + "/update"}>
+																	<i className="fa fa-cog" aria-hidden="true"></i>
+																</Link>
+															</td>
+															<td className="text-left" style={{border:"none", padding: 0}}>
+																<Link
+									                className="btn btn-sm btn-danger"
+									                to={match.url + "/" + contract.idcontrat + "/delete"}>
+									  	            <i className="fa fa-times" aria-hidden="true"></i>
+									  	          </Link>
+															</td>
+														</tr>
 													</tbody>
 												</table>
 											</td>

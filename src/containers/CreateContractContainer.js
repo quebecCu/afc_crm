@@ -333,7 +333,7 @@ class CreateContractContainer extends React.Component {
 		let {formState} = this.props.crmContract;
 		//let isValid = this._validateForm();
 		//si on est sur un update, on vérifie les tableaux initiaux/modifié pour envoyer au backend du toupdate, todelete ou tocreate
-		if (this.props.view === "updatecontract") {
+		if (this.props.idContract) {
 			let modulesInitiaux = JSON.parse(JSON.stringify(formState.contrat.modulesInitiaux));
 			let modulesModifies = JSON.parse(JSON.stringify(formState.contrat.modulesChoisis));
 			let modulesToUpdate = [];
@@ -413,7 +413,7 @@ class CreateContractContainer extends React.Component {
 
 		this._validateForm();
 		//Si on est en create, on crée le bordel sinan na
-		if(this.props.view === "create"){
+		if(!this.props.idContract){
 			this.props.createContract(formState);
 		}
 	}
