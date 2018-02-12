@@ -23,6 +23,96 @@ let config ={
 		}
 };
 
+
+
+
+
+//Envoie les champs au back-end (Création d'un client)
+export function * sendFile() {
+	while(true) {
+		let file = yield take(CREATE_CUSTOMER_FILE);
+		let {
+			grid,
+			requiredFields,
+			arrayContacts
+		} = file.file;
+		let facultatif = grid.map(champ => {
+			return {id: champ.idattrentreprise, value: champ.value}
+		});
+
+		//communication avec server
+		let server = "http://localhost:3002/clients/create";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/create';
+
+		axios.post(backendUrl, {
+			idreleve: requiredFields.releve,
+			nom: requiredFields.nomEntreprise,
+			tel_princ: requiredFields.telephone,
+			ext_tel_princ: requiredFields.extension,
+			idactivite: requiredFields.activite,
+			rue: requiredFields.rue,
+			ville: requiredFields.ville,
+			province: requiredFields.province,
+			codepostal: requiredFields.codePostal,
+			idetat: requiredFields.etat,
+			idprovenance: requiredFields.provenance,
+			prospect: requiredFields.prospect,
+			notes: requiredFields.notes,
+			facultatif: facultatif,
+			newcontacts: arrayContacts
+		},config)
+			.then(function (response) {
+				store.dispatch(changeLoadingValidation(false));
+				if (!!response.data.status && response.data.status === "success") {
+					alert('La fiche client a été créée avec succès');
+					store.dispatch(changeViewCollective('customers'));
+				}
+				else if (response.data.status === "fail") {
+					
+					// Modification de soumar
+					
+					if (requiredFields.ville.length>50){
+						alert ("La longueur de ville doit être inférieur à 50!"); 
+					}
+					
+					else
+					if (requiredFields.codePostal.length>7){
+						alert ("La longueur du code postal doit être inférieur à 7!"); 
+					}
+				
+					else
+					if (requiredFields.telephone.length>20){
+						alert ("La longueur du nunéro de téléphone doit être inférieur à 20!"); 
+					}	
+
+					else
+					if (requiredFields.extension.length>5){
+						alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!"); 
+					}
+					
+					else{
+						alert(response.data.message);
+					}
+					//Fin modification de Soumar
+					
+				}
+				else {
+					alert('Erreur lors de la création de la fiche client');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+
+
+
+
+
+
 //Récupère les champs du back-end
 export function * getGridLayout (){
 	while(true){
@@ -249,60 +339,6 @@ export function * requestProvenances (){
 	}
 }
 
-//Envoie les champs au back-end (Création d'un client)
-export function * sendFile() {
-	while(true) {
-		let file = yield take(CREATE_CUSTOMER_FILE);
-		let {
-			grid,
-			requiredFields,
-			arrayContacts
-		} = file.file;
-		let facultatif = grid.map(champ => {
-			return {id: champ.idattrentreprise, value: champ.value}
-		});
-
-		//communication avec server
-		let server = "http://localhost:3002/clients/create";
-		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/create';
-
-		axios.post(backendUrl, {
-			idreleve: requiredFields.releve,
-			nom: requiredFields.nomEntreprise,
-			tel_princ: requiredFields.telephone,
-			ext_tel_princ: requiredFields.extension,
-			idactivite: requiredFields.activite,
-			rue: requiredFields.rue,
-			ville: requiredFields.ville,
-			province: requiredFields.province,
-			codepostal: requiredFields.codePostal,
-			idetat: requiredFields.etat,
-			idprovenance: requiredFields.provenance,
-			prospect: requiredFields.prospect,
-			notes: requiredFields.notes,
-			facultatif: facultatif,
-			newcontacts: arrayContacts
-		},config)
-			.then(function (response) {
-				store.dispatch(changeLoadingValidation(false));
-				if (!!response.data.status && response.data.status === "success") {
-					alert('La fiche client a été créée avec succès');
-					store.dispatch(changeViewCollective('customers'));
-				}
-				else if(response.data.status === "fail") {
-					alert(response.data.message);
-				}
-				else {
-					alert('Erreur lors de la création de la fiche client');
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
-}
-
 //Envoie les champs au back-end (Modification d'un client)
 export function * updateFile() {
 	while(true) {
@@ -353,7 +389,31 @@ export function * updateFile() {
 					store.dispatch(changeViewCollective('customers'));
 				}
 				else if(response.data.status === 'fail') {
-					alert(response.data.message);
+						// Modification de soumar
+					
+						if (requiredFields.ville.length>50){
+							alert ("La longueur de ville doit être inférieur à 50!"); 
+						}
+						
+						else
+						if (requiredFields.codePostal.length>7){
+							alert ("La longueur du code postal doit être inférieur à 7!"); 
+						}
+					
+						else
+						if (requiredFields.telephone.length>20){
+							alert ("La longueur du nunéro de téléphone doit être inférieur à 20!"); 
+						}	
+	
+						else
+						if (requiredFields.extension.length>5){
+							alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!"); 
+						}
+						
+						else{
+							alert(response.data.message);
+						}
+						//Fin modification de Soumar
 				}
 				else {
 					alert('Erreur lors de la modification de la fiche client');
