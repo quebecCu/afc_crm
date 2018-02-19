@@ -179,8 +179,8 @@ class ContractFile extends React.Component {
 	renderLinkAttribute(attributeName, attributeValue) {
     return (
 			<div className="form-group row">
-				<label htmlFor="staticEmail" className="col-sm-2 col-form-label"><strong>{attributeName}:</strong> </label>
-				<div className="col-sm-10">
+				<label htmlFor="staticEmail" className="col-sm-6 col-form-label"><strong>{attributeName}:</strong> </label>
+				<div className="col-sm-6">
 					<button type="button" className="btn btn-link">{attributeValue}</button>
 				</div>
 			</div>
@@ -232,20 +232,44 @@ class ContractFile extends React.Component {
 
 						    <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 						      <div className="card-body">
-										{this.renderStaticAttribute("N° Police",contractDisplay.police)}
-										{this.renderLinkAttribute("Client",contractDisplay.nomclient)}
-										{this.renderLinkAttribute("Assureur",contractDisplay.nomfournisseur)}
-										{this.renderLinkAttribute("Représentant",contractDisplay.nomrepresentant)}
-										{this.renderStaticAttribute("AGA",contractDisplay.libellechambrecommerce)}
-										{this.renderStaticAttribute("Date de signature",contractDisplay.date_signature)}
-										{this.renderStaticAttribute("Mois de renouvellement",contractDisplay.mois_renouvellement)}
-										{this.renderStaticAttribute("Notes",contractDisplay.notes)}
-										{
-												contractDisplay.facultatif.map(element => {
-												return this.renderStaticAttribute(element.nom,element.valeur,0,element.nom);
-											})
-										}
+										<div className="row">
+											<div className="col-sm-6">
+												{this.renderStaticAttribute("N° Police",contractDisplay.police,6)}
+												{this.renderLinkAttribute("Client",contractDisplay.nomclient,6)}
+												{this.renderLinkAttribute("Assureur",contractDisplay.nomfournisseur,6)}
+												{this.renderLinkAttribute("Représentant",contractDisplay.nomrepresentant,6)}
+											</div>
+											<div className="col-sm-6">
+												{this.renderStaticAttribute("AGA",contractDisplay.libellechambrecommerce,6)}
+												{this.renderStaticAttribute("Date de signature",contractDisplay.date_signature,6)}
+												{this.renderStaticAttribute("Mois de renouvellement",contractDisplay.mois_renouvellement,6)}
+												{this.renderStaticAttribute("Notes",contractDisplay.notes,6)}
+											</div>
+										</div>
 						      </div>
+						    </div>
+						  </div>
+							<div className="card">
+						    <div className="card-header" id="headingFour">
+						      <h5 className="mb-0">
+						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+						          Informations complémentaires
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseFour" className="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+						      <div className="card-body">
+										<div className="row">
+											{
+													contractDisplay.facultatif.map(element => {
+													return <div className="col-sm-6">
+														{this.renderStaticAttribute(element.nom,element.valeur,6,element.nom)}
+													</div>;
+												})
+											}
+										</div>
+						      </div>
+
 						    </div>
 						  </div>
 							<div className="card">

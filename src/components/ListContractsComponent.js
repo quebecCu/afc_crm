@@ -141,6 +141,7 @@ class ListContractsComponent extends React.Component {
 			}
 		}
 	}
+
 	_print(event) {
 		document.getElementById("PageContractsTable").style.height = "auto";
         window.print();

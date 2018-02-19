@@ -72,7 +72,7 @@ class ClientListContainer extends Component {
 		dir = "asc";
 		while (switching) {
 			switching = false;
-			rows = table.getElementsByTagName("TR");
+			rows = table.getElementsByTagName("customer");
 			for (i = 1; i < (rows.length - 1); i++) {
 				shouldSwitch = false;
 				x = rows[i].getElementsByTagName("TD")[n];
@@ -109,7 +109,7 @@ class ClientListContainer extends Component {
 				<div className="table-responsive">
 					<table id="PageCollectivesClientsTable" className="table table-bordered table-hover"  >
 						<thead className="thead-default">
-							<tr >
+							<tr id="thead-tr">
 								<th onClick={this.handleClick0} style={{width: 'auto'}}>Nom du groupe</th>
 								<th onClick={this.handleClick1} style={{width: 'auto'}}>Décideur</th>
 								<th onClick={this.handleClick2} style={{width: 'auto'}}>Statut</th>

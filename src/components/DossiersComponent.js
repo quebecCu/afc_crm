@@ -69,7 +69,7 @@ class DossiersComponent extends Component {
 			inputProspect = document.getElementById("prospects").value.toUpperCase();   */
 
 			table = document.getElementById("PageCollectivesClientsTable");
-			tr = table.getElementsByTagName("tr");
+			tr = table.getElementsByClassName("customer");
 			// Loop through all table rows, and hide those who don't match the search query
 			for (i = 0; i < tr.length; i++) {
 				td0 = tr[i].getElementsByTagName("td")[0];
@@ -119,27 +119,29 @@ class DossiersComponent extends Component {
 							<td>
 								<table style={{width: 100 + '%',height: 100 + '%'}}>
 									<tbody>
-										<td className="text-right" style={{border:"none", padding: 0}}>
-											<Link
-												className="btn btn-sm btn-primary"
-												to={match.url + "/" + element.id}>
-												<i className="fa fa-eye" aria-hidden="true"></i>
-											</Link>
-										</td>
-										<td className="text-center" style={{border:"none", padding: 0}}>
-											<Link
-												className="btn btn-sm btn-secondary"
-												to={match.url + "/" + element.id + "/update"}>
-												<i className="fa fa-cog" aria-hidden="true"></i>
-											</Link>
-										</td>
-										<td className="text-left" style={{border:"none", padding: 0}}>
-											<Link
-												className="btn btn-sm btn-danger"
-												to={match.url + "/" + element.id + "/delete"}>
-												<i className="fa fa-times" aria-hidden="true"></i>
-											</Link>
-										</td>
+										<tr>
+											<td className="text-right" style={{border:"none", padding: 0}}>
+												<Link
+													className="btn btn-sm btn-primary"
+													to={match.url + "/" + element.id}>
+													<i className="fa fa-eye" aria-hidden="true"></i>
+												</Link>
+											</td>
+											<td className="text-center" style={{border:"none", padding: 0}}>
+												<Link
+													className="btn btn-sm btn-secondary"
+													to={match.url + "/" + element.id + "/update"}>
+													<i className="fa fa-cog" aria-hidden="true"></i>
+												</Link>
+											</td>
+											<td className="text-left" style={{border:"none", padding: 0}}>
+												<Link
+													className="btn btn-sm btn-danger"
+													to={match.url + "/" + element.id + "/delete"}>
+													<i className="fa fa-times" aria-hidden="true"></i>
+												</Link>
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</td>
