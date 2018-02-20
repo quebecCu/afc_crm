@@ -18,11 +18,6 @@ export class GridCreationClient extends Component {
         return (
             <div>
                 <h1>{this.props.title}</h1>
-				{
-					this.props.loading && <LoadingAnimation/>
-				}
-				{
-					!this.props.loading &&
 					<div>
 						<form action='/' onSubmit={this.props.handleSubmit}>
 							<GridRequiredFormCustomer requiredFields={this.props.requiredFields} releves={this.props.releves}
@@ -77,7 +72,6 @@ export class GridCreationClient extends Component {
 											   changeNewField={this.props.changeNewField}/>
 						}
 					</div>
-				}
 
             </div>
 

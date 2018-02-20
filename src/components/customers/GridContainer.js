@@ -1,32 +1,34 @@
 import React, { Component } from 'react';
-import {GridCreationClient} from "../form/GridCreationCustomer/GridCreationClient";
+import {GridCreationClient} from "./GridCreationCustomer/GridCreationClient";
 import {connect} from "react-redux";
 import {
-	changeGrid, changeLayout, createCustomerFile, createNewField, requestGrid,
+	changeGrid, changeLayout, changeIdDisplay, createCustomerFile, createNewField, requestGrid,
 	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../../actions/crmGridLayout";
+import {getClientRequest} from "../../actions/crmClientList";
 import {changeLoading, changeLoadingValidation} from "../../actions/crmDashboard";
 
 class CreationClient extends Component {
     constructor(props) {
-        super(props);
-        this._handleStatic = this._handleStatic.bind(this);
-        this._handleSubmitCreate = this._handleSubmitCreate.bind(this);
-		this._handleSubmitUpdate = this._handleSubmitUpdate.bind(this);
-        this._handleSubmitChamp = this._handleSubmitChamp.bind(this);
-        this._handleDrag = this._handleDrag.bind(this);
-        this._handleNonStatic = this._handleNonStatic.bind(this);
-        this._handleChangeInput = this._handleChangeInput.bind(this);
-        this._handleModifyField = this._handleModifyField.bind(this);
-		window.scrollTo(0,0);
-        if(this.props.view === 'newCustomer') {
-			this.props.requestGrid();
-		}
-		else {
-			let {idToDisplay} = this.props.crmGridLayout;
-			this.props.requestGrid(idToDisplay);
-		}
+      super(props);
+      this._handleStatic = this._handleStatic.bind(this);
+      this._handleSubmitCreate = this._handleSubmitCreate.bind(this);
+			this._handleSubmitUpdate = this._handleSubmitUpdate.bind(this);
+      this._handleSubmitChamp = this._handleSubmitChamp.bind(this);
+      this._handleDrag = this._handleDrag.bind(this);
+      this._handleNonStatic = this._handleNonStatic.bind(this);
+      this._handleChangeInput = this._handleChangeInput.bind(this);
+      this._handleModifyField = this._handleModifyField.bind(this);
+			window.scrollTo(0,0);
+      if(!this.props.idClient) {
+				this.props.requestGrid();
+			}
+			else {
+				this.props.getClientRequest(this.props.idClient);
+				this.props.requestGrid(this.props.idClient);
+				this.props.changeIdDisplay(this.props.idClient); 
+			}
     }
 
 	//Rends les champs static
@@ -158,13 +160,13 @@ class CreationClient extends Component {
 					/>
 				}
 				{
-					this.props.view === 'customerFile'
+					this.props.idClient
 					&& <GridCreationClient handleStatic={this._handleStatic} handleSubmit={this._handleSubmitUpdate} layouts={layouts}
 										   handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 										   handleSubmitChamp={this._handleSubmitChamp} grid={grid}
 										   handleChangeInput={this._handleChangeInput} title="Modification d'une fiche client"
 										   isAdmin={isAdmin} releves={releves}
-										   champTypes={champTypes}
+										   champTypes={champTypes} provinces={provinces}
 										   activites={activites} etats={etats} provenances={provenances}
 										   changeRequiredFields={this.props.changeRequiredFields} requiredFields={requiredFields}
 										   handleModifyField={this._handleModifyField} changeNewField={this.props.changeNewField}
@@ -198,8 +200,14 @@ const  mapDispatchToProps = (dispatch) => {
 		changeGrid: (newGrid) => {
 			dispatch(changeGrid(newGrid));
 		},
+		changeIdDisplay: (newId) => {
+			dispatch(changeIdDisplay(newId))
+		},
 		requestGrid: (id) => {
 			dispatch(requestGrid(id));
+		},
+		getClientRequest: (idClient) => {
+			dispatch(getClientRequest(idClient));
 		},
 		createCustomerFile: (file) => {
 			dispatch(createCustomerFile(file));
