@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ContactsContainer from "../../../containers/ContactsContainer";
+import ContactsContainer from "../../ContactsContainer";
 
 class GridRequiredFormCustomer extends Component {
 	constructor(props) {
@@ -97,13 +97,13 @@ class GridRequiredFormCustomer extends Component {
 					<div className="col-6">
 						<label htmlFor="rue" className="control-label">Rue</label>
 						<input type="text" className="form-control" id="rue" name="rue"
-							   onChange={this._changeRue} value={this.props.requiredFields.rue} 
+							   onChange={this._changeRue} value={this.props.requiredFields.rue}
 							   placeholder= "154 rue laurier" required/>
 					</div>
 					<div className="col-6">
 						<label htmlFor="ville" className="control-label">Ville</label>
 						<input type="text" className="form-control" id="ville" name="ville"
-							   onChange={this._changeVille} value={this.props.requiredFields.ville} 
+							   onChange={this._changeVille} value={this.props.requiredFields.ville}
 							   placeholder= "Sherbrooke"required/>
 					</div>
 				</div>
@@ -130,13 +130,13 @@ class GridRequiredFormCustomer extends Component {
 					<div className="col-6">
 						<label htmlFor="telephonePrincipal" className="control-label">Téléphone principal</label>
 						<input type="text" className="form-control" id="telephonePrincipal"
-							   name="telephonePrincipal" onChange={this._changeTel} value={this.props.requiredFields.telephone} 
+							   name="telephonePrincipal" onChange={this._changeTel} value={this.props.requiredFields.telephone}
 							   placeholder= "(819)-000-0000 "required/>
 					</div>
 					<div className="col-6">
 						<label htmlFor="telephoneExtension" className="control-label">Extension du tél. principal</label>
 						<input type="text" className="form-control" id="telephoneExtension"
-							   name="telephoneExtension" onChange={this._changeExtension} value={this.props.requiredFields.extension} 
+							   name="telephoneExtension" onChange={this._changeExtension} value={this.props.requiredFields.extension}
 							   placeholder= "1234 "/>
 					</div>
 				</div>

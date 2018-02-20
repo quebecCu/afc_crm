@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ContactsContainer from "../../../containers/ContactsContainer";
+import ContactsContainer from "../../ContactsContainer";
 
 class GridRequiredFormProvider extends Component {
 	constructor(props) {
@@ -81,13 +81,13 @@ class GridRequiredFormProvider extends Component {
 					<div className="col-6">
 						<label htmlFor="rue" className="control-label">Rue</label>
 						<input type="text" className="form-control" id="rue" name="rue"
-							   onChange={this._changeRue} value={this.props.requiredFields.rue} 
+							   onChange={this._changeRue} value={this.props.requiredFields.rue}
 							   placeholder="75 boul  Saint Laurent"required/>
 					</div>
 					<div className="col-6">
 						<label htmlFor="ville" className="control-label">Ville</label>
 						<input type="text" className="form-control" id="ville" name="ville"
-							   onChange={this._changeVille} value={this.props.requiredFields.ville} 
+							   onChange={this._changeVille} value={this.props.requiredFields.ville}
 							   placeholder="Sherbrooke"required/>
 					</div>
 				</div>
@@ -112,7 +112,7 @@ class GridRequiredFormProvider extends Component {
 
 					</select>
 					</div>
-						
+
 					<div className="col-6">
 						<label htmlFor="codePostal" className="control-label">Code Postal</label>
 						<input type="text" className="form-control" id="codePostal" name="codePostal"
