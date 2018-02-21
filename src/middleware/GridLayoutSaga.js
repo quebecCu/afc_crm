@@ -69,33 +69,33 @@ export function * sendFile() {
 					store.dispatch(changeViewCollective('customers'));
 				}
 				else if (response.data.status === "fail") {
-					
+
 					// Modification de soumar
-					
+
 					if (requiredFields.ville.length>50){
-						alert ("La longueur de ville doit être inférieur à 50!"); 
+						alert ("La longueur de ville doit être inférieur à 50!");
 					}
-					
+
 					else
 					if (requiredFields.codePostal.length>7){
-						alert ("La longueur du code postal doit être inférieur à 7!"); 
+						alert ("La longueur du code postal doit être inférieur à 7!");
 					}
-				
+
 					else
 					if (requiredFields.telephone.length>20){
-						alert ("La longueur du nunéro de téléphone doit être inférieur à 20!"); 
-					}	
+						alert ("La longueur du nunéro de téléphone doit être inférieur à 20!");
+					}
 
 					else
 					if (requiredFields.extension.length>5){
-						alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!"); 
+						alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!");
 					}
-					
+
 					else{
 						alert(response.data.message);
 					}
 					//Fin modification de Soumar
-					
+
 				}
 				else {
 					alert('Erreur lors de la création de la fiche client');
@@ -188,8 +188,8 @@ export function * requestReleves (){
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateReleves(response.data.message));
 					if(view.id) {
-						store.dispatch(getProvinces({id: view.id.id, 
-													releves: response.data.message, 
+						store.dispatch(getProvinces({id: view.id.id,
+													releves: response.data.message,
 													grid: view.id.grid}))
 					}
 					else {
@@ -219,11 +219,11 @@ export function * requestProvinces (){
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateProvinces(response.data.message));
-					if(view.id) {
-						store.dispatch(getChampTypes({id: view.id.id,
-													 releves: view.data.releves, 
+					if(view.data) {
+						store.dispatch(getChampTypes({id: view.data.id,
+													 releves: view.data.releves,
 													 provinces: response.data.message,
-													  grid: view.id.grid}))
+													  grid: view.data.grid}))
 					}
 					else {
 						store.dispatch(getChampTypes())
@@ -429,26 +429,26 @@ export function * updateFile() {
 				}
 				else if(response.data.status === 'fail') {
 						// Modification de soumar
-					
+
 						if (requiredFields.ville.length>50){
-							alert ("La longueur de ville doit être inférieur à 50!"); 
+							alert ("La longueur de ville doit être inférieur à 50!");
 						}
-						
+
 						else
 						if (requiredFields.codePostal.length>7){
-							alert ("La longueur du code postal doit être inférieur à 7!"); 
+							alert ("La longueur du code postal doit être inférieur à 7!");
 						}
-					
+
 						else
 						if (requiredFields.telephone.length>20){
-							alert ("La longueur du nunéro de téléphone doit être inférieur à 20!"); 
-						}	
-	
+							alert ("La longueur du nunéro de téléphone doit être inférieur à 20!");
+						}
+
 						else
 						if (requiredFields.extension.length>5){
-							alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!"); 
+							alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!");
 						}
-						
+
 						else{
 							alert(response.data.message);
 						}

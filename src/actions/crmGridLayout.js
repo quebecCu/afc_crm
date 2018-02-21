@@ -53,8 +53,8 @@ export function getReleves(id) {
 export function updateReleves(releves) {
 	return {type: UPDATE_RELEVES, releves}
 }
-export function getProvinces(id) {
-	return {type: GET_PROVINCES, id}
+export function getProvinces(data) {
+	return {type: GET_PROVINCES, data}
 }
 
 export function updateProvinces(provinces) {
