@@ -19,11 +19,11 @@ class PageClient extends Component {
 		return (
 			<Switch>
 				<Route exact path={match.url} render={(props) => (
-				  <FicheClient {...props} idClient={match.params.idContract} />
+				  <FicheClient {...props} idClient={match.params.idClient} />
 					)}/>
 				/>
 				<Route path={match.url + "/update"} render={(props) => (
-				  <CreationClient {...props} idClient={match.params.idContract} />
+				  <CreationClient {...props} idClient={match.params.idClient} />
 					)}/>
 				<Route
 					component={ErrorPage}/>

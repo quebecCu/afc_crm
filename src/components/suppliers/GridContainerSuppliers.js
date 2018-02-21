@@ -13,10 +13,10 @@ import {changeLoading, changeLoadingValidation} from "../../actions/crmDashboard
 class CreationFournisseur extends Component {
     constructor(props) {
         super(props);
-		window.scrollTo(0,0);
+				window.scrollTo(0,0);
         this._handleStatic = this._handleStatic.bind(this);
         this._handleSubmitCreate = this._handleSubmitCreate.bind(this);
-		this._handleSubmitUpdate = this._handleSubmitUpdate.bind(this);
+				this._handleSubmitUpdate = this._handleSubmitUpdate.bind(this);
         this._handleSubmitChamp = this._handleSubmitChamp.bind(this);
         this._handleDrag = this._handleDrag.bind(this);
         this._handleNonStatic = this._handleNonStatic.bind(this);

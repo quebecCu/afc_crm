@@ -3,10 +3,9 @@ import {GridCreationClient} from "./GridCreationCustomer/GridCreationClient";
 import {connect} from "react-redux";
 import {
 	changeGrid, changeLayout, changeIdDisplay, createCustomerFile, createNewField, requestGrid,
-	updateCustomerFile,
+	updateCustomerFile, getGridModify,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../../actions/crmGridLayout";
-import {getClientRequest} from "../../actions/crmClientList";
 import {changeLoading, changeLoadingValidation} from "../../actions/crmDashboard";
 
 class CreationClient extends Component {
@@ -25,9 +24,8 @@ class CreationClient extends Component {
 				this.props.requestGrid();
 			}
 			else {
-				this.props.getClientRequest(this.props.idClient);
+				this.props.getGridModify(this.props.idClient);
 				this.props.requestGrid(this.props.idClient);
-				this.props.changeIdDisplay(this.props.idClient); 
 			}
     }
 
@@ -134,12 +132,12 @@ class CreationClient extends Component {
 	}
 
     render() {
-		let {grid, layouts, releves, provinces,
-			champTypes, activites,
-			etats, provenances, requiredFields,
-			formNewField, formUpdateField} = this.props.crmGridLayout;
-		let {isAdmin} = this.props.crmLogin;
-		let {loading, loadingValidation} = this.props.crmDashboard;
+				let {grid, layouts, releves, provinces,
+					champTypes, activites,
+					etats, provenances, requiredFields,
+					formNewField, formUpdateField} = this.props.crmGridLayout;
+				let {isAdmin} = this.props.crmLogin;
+				let {loading, loadingValidation} = this.props.crmDashboard;
         return (
         	<div>
 				{
@@ -206,8 +204,8 @@ const  mapDispatchToProps = (dispatch) => {
 		requestGrid: (id) => {
 			dispatch(requestGrid(id));
 		},
-		getClientRequest: (idClient) => {
-			dispatch(getClientRequest(idClient));
+		getGridModify: (idClient) => {
+			dispatch(getGridModify(idClient));
 		},
 		createCustomerFile: (file) => {
 			dispatch(createCustomerFile(file));
