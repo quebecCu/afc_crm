@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GridCreationFournisseur} from "../form/GridCreationProvider/GridCreationFournisseur";
+import {GridCreationFournisseur} from "./GridCreationProvider/GridCreationFournisseur";
 import {connect} from "react-redux";
 import {
 	changeGridFour, changeLayoutFour, changeNewFieldSup, changeRequiredSup, changeUpdateFieldSup, createNewFieldSup,
