@@ -18,7 +18,7 @@ class CollectiveClientsContainer extends React.Component {
 			<Switch>
 				<Route exact path={match.url} component={PageCollectivesClients}/>
 				<Route path={match.url + "/create"} component={CreationClient}/>
-				<Route path={match.url + "/:idContract"} component={PageClient}/>
+				<Route path={match.url + "/:idClient"} component={PageClient}/>
 				<Route component={ErrorPage}/>
 			</Switch>
 		);
