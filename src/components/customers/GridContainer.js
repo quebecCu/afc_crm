@@ -3,9 +3,10 @@ import {GridCreationClient} from "./GridCreationCustomer/GridCreationClient";
 import {connect} from "react-redux";
 import {
 	changeGrid, changeLayout, changeIdDisplay, createCustomerFile, createNewField, requestGrid,
-	updateCustomerFile, getGridModify,
+	updateCustomerFile,
 	changeRequiredFields, updatePositions, updateField, changeNewField, deleteField, changeUpdateField
 } from "../../actions/crmGridLayout";
+import {getClientRequest} from "../../actions/crmClientList";
 import {changeLoading, changeLoadingValidation} from "../../actions/crmDashboard";
 
 class CreationClient extends Component {
@@ -24,7 +25,6 @@ class CreationClient extends Component {
 				this.props.requestGrid();
 			}
 			else {
-				this.props.getGridModify(this.props.idClient);
 				this.props.requestGrid(this.props.idClient);
 			}
     }
@@ -204,8 +204,8 @@ const  mapDispatchToProps = (dispatch) => {
 		requestGrid: (id) => {
 			dispatch(requestGrid(id));
 		},
-		getGridModify: (idClient) => {
-			dispatch(getGridModify(idClient));
+		getClientRequest: (idClient) => {
+			dispatch(getClientRequest(idClient));
 		},
 		createCustomerFile: (file) => {
 			dispatch(createCustomerFile(file));
