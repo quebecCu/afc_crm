@@ -410,7 +410,7 @@ export function * updateFile() {
 			idactivite: requiredFields.activite,
 			rue: requiredFields.rue,
 			ville: requiredFields.ville,
-			province: requiredFields.province,
+			idProvince: requiredFields.province,
 			codepostal: requiredFields.codePostal,
 			idetat: requiredFields.etat,
 			idprovenance: requiredFields.provenance,

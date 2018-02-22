@@ -111,7 +111,7 @@ class GridRequiredFormCustomer extends Component {
 					<div className="col-6">
 						<label htmlFor="province" className="control-label">Province</label>
 						<select className="form-control" id="province" name="province"
-							   onChange={this._changeProvince} value={this.props.requiredFields.province} required>
+							   onChange={this._changeProvince} required>
 							   {
 								this.props.provinces.map(province => {
 									return <option key={province.idprovince} value={province.idprovince}>{province.nomprovince}</option>
