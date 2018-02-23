@@ -9,14 +9,13 @@ import ContactsComponent from "./form/ContactsComponent";
 class ContactsContainer extends Component   {
 	constructor(props) {
 		super(props);
-		let {view} = this.props.crmDashboard;
-		if(view ==='collIns') {
+		if(this.props.isClient === 'true') {
 			this.props.getPostesContact();
 		}
-		else if (view === 'suppliers') {
+		else if (this.props.isSupplier === 'true') {
 			this.props.getPostesContactSup();
 		}
-		if(this.props.crmCollectiveContainer.view === 'newCustomer' ||
+		if(this.props.modification !== 'true' ||
 			this.props.crmSuppliersContainer.view === 'newSupplier') {
 			this.props.addArrayContacts([
 				{
@@ -31,7 +30,7 @@ class ContactsContainer extends Component   {
 				}
 			]);
 		}
-		else if(this.props.crmCollectiveContainer.view === 'customerFile') {
+		else if(this.props.modification === 'true') {
 			this.props.getContacts(this.props.crmGridLayout.idToDisplay);
 		}
 		this._addContact = this._addContact.bind(this);
@@ -68,7 +67,7 @@ class ContactsContainer extends Component   {
 												  contacts={arrayContacts}
 												  delcontacts={delcontacts}
 												  idContact={index}
-												  view={view}
+													isClient={this.props.isClient}
 												  changeForm={this.props.changeFormState}
 												  deleteContact={this.props.deleteContact}
 						/>

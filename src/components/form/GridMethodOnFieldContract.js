@@ -28,7 +28,6 @@ class GridMethodOnFieldContract extends Component {
 	render() {
 		return (
 			<div>
-				<hr/>
 				<form onSubmit={this.props.handleSubmitChamp}>
 					<div className="form-group">
 						<label htmlFor="champNom" className="control-label">Nom du nouveau champ </label>

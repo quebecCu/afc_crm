@@ -99,6 +99,7 @@ class GridOptionnalContract extends React.Component {
               />
           </div>
         </div>
+  			<hr/>
         <div className="row">
           <div className="col-sm-6 offset-md-3">
       			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}

@@ -517,7 +517,7 @@ class CreateContractContainer extends React.Component {
 							    <div className="card-header" id="headingTwo">
 							      <h5 className="mb-0">
 							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-							          Information Sp&eacute;cifique
+							          Information Compl&eacute;mentaires
 							        </button>
 							      </h5>
 							    </div>

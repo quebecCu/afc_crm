@@ -189,7 +189,7 @@ class GridRequiredFormCustomer extends Component {
 					<textarea className="form-control" id="notes" name="notes"
 							  onChange={this._changeNotes} value={this.props.requiredFields.notes} required/>
 				</div>
-				<ContactsContainer/>
+				<ContactsContainer isClient="true" modification="true"/>
 			</div>
 		);
 	}

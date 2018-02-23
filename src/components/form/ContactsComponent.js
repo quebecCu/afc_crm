@@ -108,7 +108,7 @@ class ContactsComponent extends Component   {
 						</select>
 					</div>
 					{
-						this.props.view === 'collIns' &&
+						this.props.isClient === 'true' &&
 						<div className="col-6">
 							<label className="control-label " htmlFor="decideur">Décideur</label>
 							<select className="form-control" id="decideur" name="decideur"

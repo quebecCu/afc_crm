@@ -26,6 +26,7 @@ class CreationClient extends Component {
 			}
 			else {
 				this.props.requestGrid(this.props.idClient);
+				this.props.changeIdDisplay(this.props.idClient); 
 			}
     }
 
