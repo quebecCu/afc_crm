@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ContactsContainer from "../../ContactsContainer";
 
 class GridRequiredFormProvider extends Component {
 	constructor(props) {
@@ -95,20 +94,20 @@ class GridRequiredFormProvider extends Component {
 					<div className="col-6">
 						<label htmlFor="province" className="control-label">Province</label>
 						<select className="form-control" id="province" name="province"
-							   onChange={this._changeProvince} value={this.props.requiredFields.province} required>
-							   <option value="QC">QC</option>
-						       <option value="PE">PE</option>
-							   <option value="MB">MB</option>
-							   <option value="NB">NB</option>
-							   <option value="NS">NS</option>
-							   <option value="ON">ON</option>
-							   <option value="SK">SK</option>
-							   <option value="NL">NL</option>
-							   <option value="NU">NU</option>
-							   <option value="NT">NT</option>
-							   <option value="YT">YT</option>
-							   <option value="AB">AB</option>
-							   <option value="BC">BC</option>
+							   onChange={this._changeProvince} required>
+							   <option value="1">QC</option>
+						     <option value="2">PE</option>
+							   <option value="3">MB</option>
+							   <option value="4">NB</option>
+							   <option value="5">NS</option>
+							   <option value="6">ON</option>
+							   <option value="7">SK</option>
+							   <option value="8">NL</option>
+							   <option value="9">NU</option>
+							   <option value="10">NT</option>
+							   <option value="11">YT</option>
+							   <option value="12">AB</option>
+							   <option value="13">BC</option>
 
 					</select>
 					</div>
@@ -169,7 +168,6 @@ class GridRequiredFormProvider extends Component {
 							   name="employesBigGroup" value={this.props.requiredFields.employesBigGroup} onChange={this._changeEmployesBigGroup} required/>
 					</div>
 				</div>
-				<ContactsContainer/>
 			</div>
 		);
 	}

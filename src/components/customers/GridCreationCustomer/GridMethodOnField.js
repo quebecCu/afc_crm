@@ -82,11 +82,6 @@ class GridMethodOnField extends Component {
 						);
 					})
 				}
-				<div className="form-group">
-					<button onClick={this.props.handleStatic}>Ancrer les champs</button>
-					<button onClick={this.props.handleNonStatic}>Changer la position des boutons</button>
-				</div>
-
 				<hr/>
 					<form onSubmit={this.props.handleSubmitChamp} className="col-4 offset-4">
 						<div className="form-group">

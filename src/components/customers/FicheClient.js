@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router'
 import TitreValeur from "../TitreValeur";
 //import '../style/FicheClient.css';
 import {Responsive, WidthProvider} from 'react-grid-layout';
@@ -104,25 +105,13 @@ class FicheClient extends React.Component {
 		this.forceUpdate();*/
 	}
 
-	_handleModify(event) { 
-		this.props.handleClick("customerFile"); 
-		this.props.changeIdDisplay(event.target.value); 
+	_handleModify(match, history, event) {
+		history.push(match.url + "/update");
 	}
 
 	_handleDelete(event) {
 		this.props.deleteCustomer(event.target.value);
 	}
-
-	renderLinkAttribute(attributeName, attributeValue) {
-    return (
-			<div className="form-group row">
-				<label htmlFor="staticEmail" className="col-sm-6 col-form-label"><strong>{attributeName}:</strong> </label>
-				<div className="col-sm-6">
-					<button type="button" className="btn btn-link">{attributeValue}</button>
-				</div>
-			</div>
-    );
-  }
 
 	renderStaticAttribute(attributeName, attributeValue, width, key) {
 		const inputStyle = {
@@ -144,6 +133,7 @@ class FicheClient extends React.Component {
 		let {layouts} = this.props.crmGridLayout;
 		let {contacts} = this.props.crmContacts;
 		let client = this.props.crmClientList.client;
+		const { match, history } = this.props;
 		return (
 			<div className="container">
 				<h1 className="text-center">Assurances collectives</h1>
@@ -164,7 +154,7 @@ class FicheClient extends React.Component {
 									value={client.idclient}>
 								<i className="fa fa-plus"></i> Créer un contrat avec ce client
 							</button>
-							<button type="button" className="btn btn-primary" onClick={this._handleModify}><i className="fa fa-cog"></i> Modifier</button>
+							<button type="button" className="btn btn-primary" onClick={this._handleModify.bind(this, match, history)}><i className="fa fa-cog"></i> Modifier</button>
 							<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
 						</div>
 						<br/>
@@ -261,10 +251,10 @@ class FicheClient extends React.Component {
 																{this.renderStaticAttribute("Extension",contact.ext_tel_principal,6)}
 																{this.renderStaticAttribute("Mail",contact.mail,6)}
 																{
-																	client.prospect && this.renderStaticAttribute("Décideur","Oui",6)
+																	contact.estdecideur && this.renderStaticAttribute("Décideur","Oui",6)
 																} 
 																{ 
-																	!client.prospect && this.renderStaticAttribute("Décideur","Non",6)
+																	!contact.estdecideur && this.renderStaticAttribute("Décideur","Non",6)
 																} 
 															</div> 
 														</div> 
@@ -317,4 +307,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FicheClient);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FicheClient));

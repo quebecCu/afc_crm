@@ -53,19 +53,18 @@ export class GridCreationClient extends Component {
 										</div>
 										<div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
 											<div className="card-body">
-												<ResponsiveReactGridLayout className="layout" layouts={this.props.layouts} cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-																			 breakpoints={{lg: 1000, md: 900, sm: 768, xs: 480, xxs: 0}} autoSize={true}
-																			 onDragStop={this.props.handleDrag} onResizeStop={this.props.handleDrag} compactType={null}>
+												<div className="row">
 													{
 														this.props.grid.map(element => {
 															return (
-																<div key={element.idattrentreprise} className="form-group">
-																	<label htmlFor={element.label} className="control-label">{element.label}</label>
+																<div key={element.idattrentreprise} className="col-xs-12 col-sm-6 form-group">
+																	<label htmlFor={element.idattrentreprise} className="control-label">{element.label}</label>
+																	<br/>
 																	<input type="text" name={element.idattrentreprise} id={element.idattrentreprise} className="form-control"
 																			 value={element.value} onChange={this.props.handleChangeInput}
 																			 placeholder={element.valeur_defaut}/>
 
-																	<div className="tooltipp" style={{cursor:"pointer", position: 'absolute', left: '2px', top: 0}}>
+																	<div className="tooltipp" style={{cursor:"pointer", position: 'absolute', right: '25px', top: 0}}>
 																		<span className="fa fa-info"/>
 																		<span className="tooltipptext">{element.description}</span>
 																	</div>
@@ -79,8 +78,7 @@ export class GridCreationClient extends Component {
 															);
 														})
 													}
-
-												</ResponsiveReactGridLayout>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -94,7 +92,7 @@ export class GridCreationClient extends Component {
 										</div>
 										<div id="collapseThree" className="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
 											<div className="card-body">
-												<ContactsContainer isClient="true" modification="true"/>
+												<ContactsContainer isClient="true" modification={this.props.getContacts}/>
 											</div>
 										</div>
 									</div>

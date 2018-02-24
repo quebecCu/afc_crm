@@ -1,52 +1,27 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
+import {withRouter} from 'react-router'
+import {Route,Link,Switch} from 'react-router-dom'
+import ErrorPage from "../ErrorPage";
+import CreationFournisseur from "./GridContainerSuppliers";
 import SupplierFile from "./SupplierFile";
-import {changeViewSuppliers} from "../../actions/crmSuppliersContainer";
-import {changeLoading} from "../../actions/crmDashboard";
 
 class SupplierPage extends Component {
 
 	render() {
-		let {isAdmin} = this.props.crmLogin;
-		let {layouts} = this.props.crmGridSuppliersLayout;
-		let {contacts} = this.props.crmContacts;
-		let {loading} = this.props.crmDashboard;
+		const { match } = this.props;
 		return (
-			<div>
-					<SupplierFile requiredFields={this.props.crmGridSuppliersLayout.requiredFields}
-								  isAdmin={isAdmin}
-								  layouts={layouts} contacts={contacts}
-								  changeView={this.props.changeViewSuppliers}
-								  optionnalFields={this.props.crmGridSuppliersLayout.grid}
-								  loading={loading}
-								  changeLoading={this.props.changeLoading}
-					/>
-			</div>
+			<Switch>
+				<Route exact path={match.url} render={(props) => (
+					<SupplierFile {...props} idSupplier={match.params.idSupplier} />
+				)}/>
+				<Route path={match.url + "/update"} render={(props) => (
+				  <CreationFournisseur {...props} idSupplier={match.params.idSupplier} />
+					)}/>
+				<Route
+					component={ErrorPage}/>
+			</Switch>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-
-	return {
-		crmLogin: state.crmLogin,
-		crmDashboard: state.crmDashboard,
-		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
-		crmContacts: state.crmContacts,
-
-	}
-}
-
-//fonctions
-const mapDispatchToProps = (dispatch) => {
-	return {
-		changeViewSuppliers : (newView) => {
-			dispatch(changeViewSuppliers(newView));
-		},
-		changeLoading: (boolean) => {
-			dispatch(changeLoading(boolean));
-		}
-	}
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SupplierPage);
+export default withRouter(SupplierPage);

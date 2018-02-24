@@ -87,7 +87,7 @@ class SupplierListContainer extends Component {
 
 	render() {
 			this.table = (
-				<div id="print-content" style={{overflow: 'auto', height: '420px', width: 'auto'}}>
+				<div id="print-content" style={{overflow: 'auto', height: 'auto', width: 'auto'}}>
 					<div className="table-responsive">
 						<table id="PageFournisseursTable" className="table table-bordered table-hover">
 							<thead className="thead-default">

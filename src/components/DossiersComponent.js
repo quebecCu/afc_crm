@@ -5,6 +5,10 @@ import {Link} from 'react-router-dom';
 
 class DossiersComponent extends Component {
 
+	handleClick(dossier, event) {
+		console.log("wazzah")
+	}
+
 	handleClickClient(match, history, client, event) {
 		history.push(match.url + "/" + client.id);
 	}

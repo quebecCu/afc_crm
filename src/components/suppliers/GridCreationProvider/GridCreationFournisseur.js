@@ -6,6 +6,7 @@ import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridRequiredFormProvider from "./GridRequiredFormProvider";
 import GridMethodOnFieldProvider from "./GridMethodOnFieldProvider";
 import LoadingAnimation from "../../LoadingAnimation";
+import ContactsContainer from "../../ContactsContainer";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 export class GridCreationFournisseur extends Component {
@@ -15,92 +16,109 @@ export class GridCreationFournisseur extends Component {
 	}
     render() {
         return (
-            <div>
-                <h1>{this.props.title}</h1>
-				{
-					this.props.loading && <LoadingAnimation/>
-				}
-				{
-					!this.props.loading &&
-					<div>
-						<form action='/' onSubmit={this.props.handleSubmit}>
-
-							<GridRequiredFormProvider requiredFields={this.props.requiredFields}
-													  changeRequiredSup={this.props.changeRequiredSup}
-							/>
-							<ResponsiveReactGridLayout className="layout" layouts={this.props.layouts}
-													   cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-													   breakpoints={{lg: 1000, md: 900, sm: 768, xs: 480, xxs: 0}}
-													   autoSize={true}
-													   onDragStop={this.props.handleDrag} compactType={null}
-													   onResizeStop={this.props.handleDrag}
-							>
-								{
-									this.props.grid.map(element => {
-										return (
-											<div key={element.idattrfournisseur} className="form-group">
-												<label htmlFor={element.label}
-													   className="control-label">{element.label}</label>
-												<input type="text" name={element.label} id={element.label}
-													   className="form-control"
-													   value={element.value} onChange={this.props.handleChangeInput}
-													   placeholder={element.valeur_defaut}
-												/>
-												<div className="tooltipp" style={{
-													cursor: "pointer",
-													position: 'absolute',
-													left: '2px',
-													top: 0
-												}}>
-													<span className="fa fa-info"/>
-													<span className="tooltipptext">{element.description}</span>
-												</div>
-												{
-													this.props.isAdmin &&
-													<span className="fa fa-pencil" style={{
-														cursor: "pointer",
-														position: 'absolute',
-														right: '2px',
-														top: 0
-													}}
-														  data-toggle="modal"
-														  data-target={"#" + element.idattrfournisseur + "modal"}/>
-												}
-											</div>
-										);
-									})
-								}
-
-							</ResponsiveReactGridLayout>
-							<div className="form-group">
-								<button className="buttonload btn btn-primary" type="submit">
-									{
-										this.props.loadingValidation &&
-										<i className="fa fa-refresh fa-spin"/>
-									}
-									Valider
-								</button>
+          <div>
+						<h1 className="text-center">Assurances collectives</h1>
+						<div className="card mb-3">
+							<div className="card-header">
+								<i className="fa fa-file-o"></i> {this.props.title}
 							</div>
-						</form>
+							<div className="card-body">
+								<div id="accordion">
+									<div className="card">
+										<div className="card-header" id="headingOne">
+											<h5 className="mb-0">
+												<button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+													Information G&eacute;n&eacute;rale
+												</button>
+											</h5>
+										</div>
 
-						{
-							this.props.isAdmin &&
-							<GridMethodOnFieldProvider changeUpdateField={this.props.changeUpdateField}
-													   formUpdateField={this.props.formUpdateField}
-													   formNewField={this.props.formNewField}
-													   deleteField={this.props.deleteField}
-													   grid={this.props.grid}
-													   handleModifyField={this.props.handleModifyField}
-													   handleStatic={this.props.handleStatic}
-													   handleNonStatic={this.props.handleNonStatic}
-													   handleSubmitChamp={this.props.handleSubmitChamp}
-													   champTypes={this.props.champTypes}
-													   changeNewField={this.props.changeNewField}/>
-						}
+										<div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+											<div className="card-body">
+												<GridRequiredFormProvider requiredFields={this.props.requiredFields}
+																			changeRequiredSup={this.props.changeRequiredSup}
+												/>
+											</div>
+										</div>
+									</div>
+									<div className="card">
+										<div className="card-header" id="headingTwo">
+											<h5 className="mb-0">
+												<button className="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+													Information Compl&eacute;mentaire
+												</button>
+											</h5>
+										</div>
+										<div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+											<div className="card-body">
+												<div className="row">
+													{
+														this.props.grid.map(element => {
+															return (
+																<div key={element.idattrfournisseur} className="col-xs-12 col-sm-6 form-group">
+																	<label htmlFor={element.label} className="control-label">{element.label}</label>
+																	<br/>
+																	<input type="text" name={element.label} id={element.label}
+																		   className="form-control"
+																		   value={element.value} onChange={this.props.handleChangeInput}
+																		   placeholder={element.valeur_defaut}/>
+																	<div className="tooltipp" style={{
+																			cursor: "pointer",
+																			position: 'absolute',
+																			right: '25px',
+																			top: 0
+																		}}>
+																		<span className="fa fa-info"/>
+																		<span className="tooltipptext">{element.description}</span>
+																	</div>
+																	{
+																		this.props.isAdmin &&
+																		<span className="fa fa-pencil" style={{
+																			cursor: "pointer",
+																			position: 'absolute',
+																			right: '2px',
+																			top: 0
+																		}}
+																			  data-toggle="modal"
+																			  data-target={"#" + element.idattrfournisseur + "modal"}/>
+																	}
+
+																</div>
+															);
+														})
+													}
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="card">
+										<div className="card-header" id="headingThree">
+											<h5 className="mb-0">
+												<button className="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+													Contacts
+												</button>
+											</h5>
+										</div>
+										<div id="collapseThree" className="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+											<div className="card-body">
+												<ContactsContainer isSupplier="true" modification={this.props.getContacts}/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br/>
+								<div className="form-group text-center">
+									<button className="buttonload btn btn-primary" type="submit" onClick={this.props.handleSubmit}>
+										{
+											this.props.loadingValidation &&
+											<i className="fa fa-refresh fa-spin"/>
+										}
+										Valider
+									</button>
+								</div>
+							</div>
+						</div>
 					</div>
-				}
-            </div>
-
         )
     }
 }

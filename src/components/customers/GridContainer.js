@@ -155,7 +155,7 @@ class CreationClient extends Component {
 										   formNewField={formNewField} deleteField={this.props.deleteField}
 										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}
 										   changeLoading={this.props.changeLoading} loading={loading}
-										   loadingValidation={loadingValidation}
+										   loadingValidation={loadingValidation} getContacts="false"
 					/>
 				}
 				{
@@ -172,7 +172,7 @@ class CreationClient extends Component {
 										   formNewField={formNewField} deleteField={this.props.deleteField}
 										   formUpdateField={formUpdateField} changeUpdateField={this.props.changeUpdateField}
 										   changeLoading={this.props.changeLoading} loading={loading}
-										   loadingValidation={loadingValidation}
+										   loadingValidation={loadingValidation} getContacts="true"
 					/>
 				}
 			</div>

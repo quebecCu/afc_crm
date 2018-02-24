@@ -23,9 +23,9 @@ class CreationFournisseur extends Component {
         this._handleChangeInput = this._handleChangeInput.bind(this);
         this._handleModifyField = this._handleModifyField.bind(this);
 
-		if(this.props.view === 'newSupplier') {
-			this.props.requestGridFour();
-		}
+				if(!this.props.idSupplier) {
+					this.props.requestGridFour();
+				}
 
     }
 
@@ -139,7 +139,7 @@ class CreationFournisseur extends Component {
         return (
         	<div>
 				{
-					this.props.view === 'newSupplier'
+					!this.props.idSupplier
 					&& <GridCreationFournisseur handleStatic={this._handleStatic} handleSubmit={this._handleSubmitCreate} layouts={layouts}
 												handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 												handleSubmitChamp={this._handleSubmitChamp} grid={grid}
@@ -151,11 +151,11 @@ class CreationFournisseur extends Component {
 												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
 												handleModifyField={this._handleModifyField}
 												changeLoading={this.props.changeLoading} loading={loading}
-												loadingValidation={loadingValidation}
+												loadingValidation={loadingValidation} getContacts="false"
 						/>
 				}
 				{
-					this.props.view === 'updateSupplier'
+					this.props.idSupplier
 					&& <GridCreationFournisseur handleStatic={this._handleStatic} handleSubmit={this._handleSubmitUpdate} layouts={layouts}
 												handleDrag={this._handleDrag} handleNonStatic={this._handleNonStatic}
 												handleSubmitChamp={this._handleSubmitChamp} grid={grid}
@@ -167,7 +167,7 @@ class CreationFournisseur extends Component {
 												deleteField={this.props.deleteFieldSup} champTypes={champTypes}
 												handleModifyField={this._handleModifyField}
 												changeLoading={this.props.changeLoading} loading={loading}
-												loadingValidation={loadingValidation}
+												loadingValidation={loadingValidation} getContacts="true"
 					/>
 				}
 			</div>

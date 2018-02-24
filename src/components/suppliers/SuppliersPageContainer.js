@@ -23,7 +23,7 @@ class suppliersPageContainer extends Component {
 			<Switch>
 				<Route exact path={match.url} component={PageFournisseurs}/>
 				<Route path={match.url + "/create"} component={CreationFournisseur}/>
-				<Route path={match.url + "/:idClient"} component={SupplierPage}/>
+				<Route path={match.url + "/:idSupplier"} component={SupplierPage}/>
 				<Route component={ErrorPage}/>
 			</Switch>
 		);

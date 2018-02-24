@@ -160,7 +160,7 @@ class ListContractsComponent extends React.Component {
 		let {linksSubContract} = this.props.crmNavBar;
 		const { match, history } = this.props;
 		return (
-			<div>
+			<div className="container-fluid">
 				<h1 className="text-center">Assurances collectives</h1>
 				<div className="card mb-3">
 					<div className="card-header">
