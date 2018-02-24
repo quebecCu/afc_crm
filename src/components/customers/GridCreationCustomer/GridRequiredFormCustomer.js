@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ContactsContainer from "../../ContactsContainer";
 
 class GridRequiredFormCustomer extends Component {
 	constructor(props) {
@@ -189,7 +188,6 @@ class GridRequiredFormCustomer extends Component {
 					<textarea className="form-control" id="notes" name="notes"
 							  onChange={this._changeNotes} value={this.props.requiredFields.notes} required/>
 				</div>
-				<ContactsContainer isClient="true" modification="true"/>
 			</div>
 		);
 	}

@@ -58,7 +58,10 @@ class ContactsContainer extends Component   {
 		let {view} = this.props.crmDashboard;
 		return(
 			<div>
-				<h3>Contacts <span className="fa fa-plus-square" onClick={this._addContact}/></h3>
+				<div>
+					<button className="btn btn-info" onClick={this._addContact}><i className="fa fa-plus-square"></i> Ajouter un contact</button>
+				</div>
+				<br/>
 				{
 					arrayContacts.map((contact, index) => {
 						return <ContactsComponent postes={postes}

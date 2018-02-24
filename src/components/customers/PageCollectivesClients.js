@@ -98,6 +98,7 @@ class PageCollectivesClients extends Component {
 											changeFormColl={this.props.changeFormColl}/>
 									</div>
 								</div>
+								<br/>
 								<ClientListContainer dossiersState={dossiersState} changeLoading={this.props.changeLoading}
 													 handleClick={this.props.handleClick}/>
 							</div>

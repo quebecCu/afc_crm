@@ -148,15 +148,17 @@ class ListContractsComponent extends React.Component {
             // var getMyFrame = document.getElementById(PageFournisseursTable);
              //getMyFrame.focus();
              //getMyFrame.contentWindow.print();
+	}
 
-
+	handleClickContrat(match, history, contract, event) {
+		history.push(match.url + "/" + contract.idcontrat);
 	}
 
 	render(){
 		let {view, listContracts, searchContracts} = this.props.crmContract;
 		let {loading} = this.props.crmDashboard;
 		let {linksSubContract} = this.props.crmNavBar;
-		const { match } = this.props;
+		const { match, history } = this.props;
 		return (
 			<div>
 				<h1 className="text-center">Assurances collectives</h1>
@@ -206,6 +208,7 @@ class ListContractsComponent extends React.Component {
 							  </div>
 							</div>
 						</div>
+						<br/>
 						<div className="table-responsive">
 							<table className="table table-bordered table-hover" id="PageContractsTable">
 								<thead className="thead-default">
@@ -214,7 +217,6 @@ class ListContractsComponent extends React.Component {
 										<th onClick={this._handleClickHead.bind(this, 1)}>Client</th>
 										<th onClick={this._handleClickHead.bind(this, 2)}>Assureur</th>
 										<th onClick={this._handleClickHead.bind(this, 3)}>Mois de renouvellement</th>
-										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -222,40 +224,12 @@ class ListContractsComponent extends React.Component {
 
 									listContracts.map((contract, index) => {
 										return (
-										<tr key={index}>
+										<tr className="contrat" onClick={this.handleClickContrat.bind(this, match, history, contract)}  key={index}>
 											<td className="tableCellContract">{contract.police}</td>
 											<td className="tableCellContract">{contract.nom_client}</td>
 											<td className="tableCellContract">{contract.nom_fournisseur}</td>
 											<td className="tableCellContract">{contract.mois_renouvellement}</td>
-											<td>
-												<table style={{width: 100 + '%',height: 100 + '%'}}>
-													<tbody>
-														<tr>
-															<td className="text-right" style={{border:"none", padding: 0}}>
-																<Link
-									                className="btn btn-sm btn-primary"
-									                to={match.url + "/" + contract.idcontrat}>
-									  	            <i className="fa fa-eye" aria-hidden="true"></i>
-									  	          </Link>
-															</td>
-															<td className="text-center" style={{border:"none", padding: 0}}>
-																<Link
-																	className="btn btn-sm btn-secondary"
-																	to={match.url + "/" + contract.idcontrat + "/update"}>
-																	<i className="fa fa-cog" aria-hidden="true"></i>
-																</Link>
-															</td>
-															<td className="text-left" style={{border:"none", padding: 0}}>
-																<Link
-									                className="btn btn-sm btn-danger"
-									                to={match.url + "/" + contract.idcontrat + "/delete"}>
-									  	            <i className="fa fa-times" aria-hidden="true"></i>
-									  	          </Link>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</td>
+
 										</tr>
 										)
 									})

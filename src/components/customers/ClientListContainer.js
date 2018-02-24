@@ -107,7 +107,7 @@ class ClientListContainer extends Component {
 		this.table = (
 			<div id="print-content" style={{overflow: 'auto', height: '450px', width: 'auto'}}>
 				<div className="table-responsive">
-					<table id="PageCollectivesClientsTable" className="table table-bordered table-hover"  >
+					<table id="PageCollectivesClientsTable" className="table table-bordered table-hover">
 						<thead className="thead-default">
 							<tr id="thead-tr">
 								<th onClick={this.handleClick0} style={{width: 'auto'}}>Nom du groupe</th>
@@ -117,7 +117,6 @@ class ClientListContainer extends Component {
 								<th onClick={this.handleClick4} style={{width: 'auto'}}>Mois de renouvellement</th>
 								<th onClick={this.handleClick5} style={{width: 'auto'}}>No police</th>
 								<th onClick={this.handleClick6} style={{width: 'auto'}}>Assureur</th>
-								<th>Actions</th>
 							</tr>
 						</thead>
 						<DossiersComponent collective={this.props.dossiersState}

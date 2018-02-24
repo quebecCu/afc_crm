@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import HistoriqueContainer from "../HistoriqueContainer";
+import SupplierListContainer from "./SupplierListContainer";
 import { connect  } from 'react-redux';
 import {changeFormFour, sendingRequestFour, searchFour} from '../../actions/crmRechercheFournisseur';
 import SearchCompSuppliers from "./SearchCompSuppliers";
+import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom';
 
 import jsPDF from 'jspdf'
 import { autoTable } from 'jspdf-autotable';
@@ -49,24 +51,45 @@ class PageFournisseurs extends Component {
         this.props.sendingRequestFour();
     }
     render() {
-        let { formState, dossiersState, searchList } = this.props.crmRechercheFournisseur;
-        <iframe id="ifmcontentstoprint" style="height: 0px; width: 0px; position: absolute"></iframe>
-        return(
-
-            <div className="container-fluid text-center">
-                <h1>Fournisseurs</h1>
-
-                <HistoriqueContainer page="PageFournisseurs" dossiersState={dossiersState}/>
-                <SearchCompSuppliers
-                    formState = {formState}
-                    searchList = {searchList}
-                    changeForm = {this.props.changeFormFour}
-                    searchFour = {this.props.searchFour}/>
-                    <button onClick={this._convert} className="newSupplier">Convertir en PDF</button>
-                    <button onClick={this.props.handleClick} className="newSupplier">Créer un nouveau fournisseur</button><br />
-                    <button onClick={this._print}>Imprimer la liste des fournisseurs</button>
-            </div>
-        );
+      const { match } = this.props;
+      let { formState, dossiersState, searchList } = this.props.crmRechercheFournisseur;
+      <iframe id="ifmcontentstoprint" style="height: 0px; width: 0px; position: absolute"></iframe>
+      return(
+          <div className="container-fluid">
+            <h1>Assurances collectives</h1>
+            <div className="card mb-3">
+							<div className="card-header text-left">
+				      	<i className="fa fa-table"></i> Liste des fournisseurs
+							</div>
+							<div className="card-body">
+								<div className="row">
+									<div className="col-sm-12 col-md-4">
+											<Link
+												className="btn btn-primary"
+												to={match.url + "/create"}>
+												<i className="fa fa-plus" aria-hidden="true"></i> Créer fournisseur
+											</Link>
+											<button value="toPdf" id="toPdf" onClick={this._convert} className="btn btn-danger">
+												Convertir la liste en PDF
+											</button>
+											<button value="print" id="print" onClick={this._print} className="btn btn-success">
+												Imprimer la liste
+											</button>
+									</div>
+									<div className="col-sm-12 col-md-8">
+                    <SearchCompSuppliers
+                        formState = {formState}
+                        searchList = {searchList}
+                        changeForm = {this.props.changeFormFour}
+                        searchFour = {this.props.searchFour}/>
+									</div>
+								</div>
+								<br/>
+								<SupplierListContainer dossiersState={dossiersState}/>
+							</div>
+						</div>
+          </div>
+      );
     }
 }
 
@@ -94,4 +117,4 @@ const  mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (PageFournisseurs)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (PageFournisseurs))

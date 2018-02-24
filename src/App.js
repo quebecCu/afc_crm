@@ -9,6 +9,7 @@ import LoginPage from "./components/LoginPage";
 import ResetPage from "./components/ResetPage";
 import ResetPagePassword from "./components/ResetPagePasswordContainer";
 import {history, store} from './store.js';
+import './style/App.css'
 
 class App extends Component {
 

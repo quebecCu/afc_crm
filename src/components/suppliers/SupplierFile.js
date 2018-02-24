@@ -86,11 +86,6 @@ class SupplierFile extends React.Component {
 		return (
 			<div className="container">
 				<h1>Fiche fournisseur</h1>
-				{
-					this.props.loading && <LoadingAnimation/>
-				}
-				{
-					!this.props.loading &&
 						<div>
 							<button  className="grandTitreClient" id="nomGroupe"  onClick={this.dropDownClient}  >
 								<TitreValeur titre="Nom du groupe" valeur={supplier.nomEntreprise} /></button>
@@ -191,10 +186,9 @@ class SupplierFile extends React.Component {
 								</button>
 							</div>
 						</div>
-				}
+
 			</div>
 		)
-
 	}
 }
 

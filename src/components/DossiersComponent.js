@@ -1,56 +1,16 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router'
+import { Router } from 'react-router'
 import {Link} from 'react-router-dom';
 
 class DossiersComponent extends Component {
 
-	handleClick(client, event) {
-		if (this.props.collective) {
-			this.props.displaySub(true);
-			let links = this.props.links;
-			let check = true;
-			links.forEach(link => {
-				if(link.idCustomer === client.id) {
-					check = false;
-				}
-			});
-			if(check) {
-				this.props.collective.forEach(element => {
-					if(client.id === element.id) {
-						links.push({name: element.nom_groupe, view: 'customer', idCustomer: client.id});
-					}
-				});
-				this.props.addSub(links);
-			}
-			this.props.changeLoading(true);
-			this.props.handleClick(client, event);
-		}
-		else if(this.props.fournisseur) {
-			this.props.displaySub(true);
-			let links = this.props.links;
-			let check = true;
-			links.forEach(link => {
-				if(link.idSupplier === client.id) {
-					check = false;
-				}
-			});
-			if(check) {
-				this.props.fournisseur.forEach((element, index) => {
-					let duplicate = false;
-					this.props.fournisseur.forEach((element2, index2)=> {
-						if(element.id === element2.id && index > index2) {
-							duplicate = true;
-						}
-					});
-					if(!duplicate && client.id === element.id) {
-						links.push({name: element.nom, view: 'supplierFile', idSupplier: client.id});
-					}
-				});
-				this.props.addSub(links);
-			}
-			//this.props.changeLoading(true);
-			this.props.handleClick(client.id);
-		}
+	handleClickClient(match, history, client, event) {
+		history.push(match.url + "/" + client.id);
+	}
+
+	handleClickSupplier(match, history, supplier, event) {
+		history.push(match.url + "/" + supplier.id);
 	}
 
 	componentDidUpdate() {
@@ -88,7 +48,7 @@ class DossiersComponent extends Component {
 	}
 
 	render() {
-		const { match } = this.props;
+		const { match, history } = this.props;
 		if (this.props.historique) {
 			this.rows = (
 				<tbody>
@@ -108,7 +68,7 @@ class DossiersComponent extends Component {
 				<tbody>
 				{this.props.collective.map((element, index) => {
 					return (
-						<tr className="customer" key={index}>
+						<tr className="customer" key={index} onClick={this.handleClickClient.bind(this, match, history, element)}>
 							<td>{element.nom_groupe}</td>
 							<td>{element.responsable}</td>
 							<td>{element.etat}</td>
@@ -116,35 +76,6 @@ class DossiersComponent extends Component {
 							<td>{element.mois_renouvellement}</td>
 							<td>{element.no_police}</td>
 							<td>{element.fournisseur}</td>
-							<td>
-								<table style={{width: 100 + '%',height: 100 + '%'}}>
-									<tbody>
-										<tr>
-											<td className="text-right" style={{border:"none", padding: 0}}>
-												<Link
-													className="btn btn-sm btn-primary"
-													to={match.url + "/" + element.id}>
-													<i className="fa fa-eye" aria-hidden="true"></i>
-												</Link>
-											</td>
-											<td className="text-center" style={{border:"none", padding: 0}}>
-												<Link
-													className="btn btn-sm btn-secondary"
-													to={match.url + "/" + element.id + "/update"}>
-													<i className="fa fa-cog" aria-hidden="true"></i>
-												</Link>
-											</td>
-											<td className="text-left" style={{border:"none", padding: 0}}>
-												<Link
-													className="btn btn-sm btn-danger"
-													to={match.url + "/" + element.id + "/delete"}>
-													<i className="fa fa-times" aria-hidden="true"></i>
-												</Link>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
 						</tr>
 					);
 				})}
@@ -161,7 +92,7 @@ class DossiersComponent extends Component {
 				});
 				if(!duplicate) {
 					row.push(
-						<tr onClick={this.handleClick.bind(this, element)} key={index}>
+						<tr className="supplier" onClick={this.handleClickSupplier.bind(this, match, history, element)} key={index}>
 							<td>{element.nom}</td>
 							{
 								element.petit_groupe && <td>{element.nb_min_petit_groupe}</td>

@@ -105,7 +105,7 @@ class CreateContractContainer extends React.Component {
 		}
 		else {
 			this.props.getContract(this.props.idContract);
-			let contract = JSON.parse(JSON.stringify(contractDisplay));
+			let contract = contractDisplay;
 			let facDisplay = contract.facultatif;
 			this.props.getGrid(facDisplay);
 
@@ -282,14 +282,6 @@ class CreateContractContainer extends React.Component {
 	}
 
 	_resetStyle() {
-		document.getElementById("assureurLabel").className = "col-sm-3 col-form-label";
-		document.getElementById("assureur").className = "form-control";
-		document.getElementById("AGALabel").className = "col-sm-3 col-form-label";
-		document.getElementById("AGA").className = "form-control";
-		document.getElementById("dateEmissionLabel").className = "col-sm-3 col-form-label";
-		document.getElementById("dateEmission").className = "form-control";
-		document.getElementById("moisRenouvLabel").className = "col-sm-3 col-form-label";
-		document.getElementById("moisRenouv").className = "form-control";
 		document.getElementById("assureurHelp").style.display = "none";
 		document.getElementById("AGAHelp").style.display = "none";
 		document.getElementById("numPoliceHelp").style.display = "none";
@@ -586,7 +578,8 @@ class CreateContractContainer extends React.Component {
 							</div>
 							<ModalForModalites/>
 							{
-								formState.facultatif.map(element => {
+								this.props.isAdmin &&
+									formState.facultatif.map(element => {
 									return (
 										<div className="modal fade" id={element.idattrcontratcoll + "modal"}
 											 key={element.idattrcontratcoll + "modal"}
@@ -604,8 +597,7 @@ class CreateContractContainer extends React.Component {
 													<div className="modal-body">
 														<form onSubmit={this._handleModifyField}>
 															<div className="form-group">
-																<label htmlFor="modificationNomChamp" className="control-label">Nouveau
-																	titre du champ</label>
+																<label htmlFor="modificationNomChamp" className="control-label">Nouveau titre du champ</label>
 																<input type="text" className="form-control"
 																	   id="modificationNomChamp"
 																	   name="modificationNomChamp"
@@ -614,8 +606,7 @@ class CreateContractContainer extends React.Component {
 															</div>
 															<div className="form-group">
 																<label htmlFor="modificationDescChamp"
-																	   className="control-label">Nouvelle description du
-																	champ</label>
+																	   className="control-label">Nouvelle description du champ</label>
 																<input type="text" className="form-control"
 																	   id="modificationDescChamp"
 																	   name="modificationDescChamp"

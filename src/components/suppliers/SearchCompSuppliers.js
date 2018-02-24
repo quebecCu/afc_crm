@@ -124,20 +124,30 @@ class SearchCompSuppliers extends Component {
 
 		return (
 			<form action="" id="formFournisseurs">
-
-				<div id="rechercheFournisseur">
-					Rechercher un fournisseur:
-					<input type="text" id="AssuranceName" placeholder="Nom entreprise"
-						   onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise}/>
-					<input type="number" id="EmployesLilGroup" placeholder="Nombre d'employés pour petits groupes"
-						   onChange={this._changeEmployesLilGroup} value={this.props.formState.employesLilGroup} />
-					<input type="number" id="EmployesBigGroup" placeholder="Nombre d'employés pour grands groupes"
-						   onChange={this._changeEmployesBigGroup} value={this.props.formState.employesBigGroup}/>
-					<input type="text" id="ContactName" placeholder="Nom d'un contact" onChange={this._changeNomContact}
-						   value={this.props.formState.nomContact}/>
-					<input type="text" id="Code" placeholder="Code" onChange={this._changeCode}
-						   value={this.props.formState.code}/>
-					<input type="reset" value="Reset" onClick={this._reset}/>
+				<div id="rechercheFournisseur" className="form-group row">
+					<div className="col-sm-4">
+						<input type="text" className="form-control" id="AssuranceName" placeholder="Nom entreprise"
+							   onChange={this._changeNomEntreprise} value={this.props.formState.nomEntreprise}/>
+					</div>
+						<div className="col-sm-4">
+						<input type="number" className="form-control" id="EmployesLilGroup" placeholder="Nombre d'employés pour petits groupes"
+							   onChange={this._changeEmployesLilGroup} value={this.props.formState.employesLilGroup} />
+					</div>
+					<div className="col-sm-4">
+						<input type="number" className="form-control" id="EmployesBigGroup" placeholder="Nombre d'employés pour grands groupes"
+					   		onChange={this._changeEmployesBigGroup} value={this.props.formState.employesBigGroup}/>
+					</div>
+						<div className="col-sm-4">
+						<input type="text" className="form-control" id="ContactName" placeholder="Nom d'un contact" onChange={this._changeNomContact}
+					   		value={this.props.formState.nomContact}/>
+					</div>
+						<div className="col-sm-4">
+						<input type="text" className="form-control" id="Code" placeholder="Code" onChange={this._changeCode}
+							  value={this.props.formState.code}/>
+					</div>
+					<div className="col-sm-4">
+						<input type="reset" className="btn btn-secondary" value="Reset" onClick={this._reset}/>
+					</div>
 				</div>
 			</form>
 		);

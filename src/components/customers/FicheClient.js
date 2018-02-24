@@ -153,21 +153,19 @@ class FicheClient extends React.Component {
 					</div>
 					<div className="card-body">
 						<div className="text-right">
-							<div className="btn-group" role="group" aria-label="Basic example">
-								{
-									isAdmin && <button type="button" className="btn btn-danger"
-																  onClick={this._handleDelete} value={client.idclient}>
-																Passer la fiche client en annulé
-															</button>
-								}
-								<button type="button" className="btn btn-secondary"
-										onClick={this._handleContract}
-										value={client.idclient}>
-									Créer un contrat avec ce client
-								</button>
-								<button type="button" className="btn btn-primary" onClick={this._handleModify}><i className="fa fa-cog"></i> Modifier</button>
-								<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
-							</div>
+							{
+								isAdmin && <button type="button" className="btn btn-danger"
+															  onClick={this._handleDelete} value={client.idclient}>
+															Passer la fiche client en annulé
+														</button>
+							}
+							<button type="button" className="btn btn-secondary"
+									onClick={this._handleContract}
+									value={client.idclient}>
+								<i className="fa fa-plus"></i> Créer un contrat avec ce client
+							</button>
+							<button type="button" className="btn btn-primary" onClick={this._handleModify}><i className="fa fa-cog"></i> Modifier</button>
+							<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
 						</div>
 						<br/>
 						<div id="accordion">

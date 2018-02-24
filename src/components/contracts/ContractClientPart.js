@@ -39,7 +39,7 @@ class ContractClientPart extends React.Component {
 					duplicate = true;
 					input =  <input key={champ.idRow}
 								  type="textField"
-								  className="form-control col-sm-8"
+								  className="form-control"
 								  value={champ.valeur}
 								  id="sousGroupe"
 								  disabled
@@ -49,7 +49,7 @@ class ContractClientPart extends React.Component {
 					duplicate = true;
 					input = <input key={champ.idRow}
 								  type="textField"
-								  className="form-control col-sm-8"
+								  className="form-control"
 								  value="Le client n'a pas de sous-groupe"
 								  id="sousGroupe"
 								  disabled
@@ -66,7 +66,7 @@ class ContractClientPart extends React.Component {
 		if (this.props.client.facultatif.length === 0) {
 			return <input
 				type="textField"
-				className="form-control col-sm-8"
+				className="form-control"
 				placeholder="Nombre d'employés"
 				id="nbEmployes"
 				disabled
@@ -79,7 +79,7 @@ class ContractClientPart extends React.Component {
 					duplicate = true;
 					return <input key={champ.idRow}
 								  type="textField"
-								  className="form-control col-sm-8"
+								  className="form-control"
 								  value={champ.valeur}
 								  id="nbEmployes"
 								  disabled
@@ -89,7 +89,7 @@ class ContractClientPart extends React.Component {
 					duplicate = true;
 					return <input key={champ.idRow}
 								  type="textField"
-								  className="form-control col-sm-8"
+								  className="form-control"
 								  value="Le nombre d'employés n'est pas précisé"
 								  id="nbEmployes"
 								  disabled
@@ -117,9 +117,10 @@ class ContractClientPart extends React.Component {
 		return <div>
 			<h5>Informations sur le client</h5>
 			<br/>
-			<div className="form-group row">
-				<label id="nomClientLabel" className="col-sm-3 col-form-label">Nom client</label>
-				<div className="col-sm-8">
+			<div className="form-group">
+				<label id="nomClientLabel" className="col-form-label">Nom client</label>
+				<br/>
+				<div>
 					{
 						!this.props.fromClient.idClient &&
 						<SuggestionClients clients={this._filterClients()}
@@ -148,8 +149,9 @@ class ContractClientPart extends React.Component {
 					}
 				</div>
 			</div>
-			<div className="form-group row">
-				<label id="sousGroupeLabel" className="col-sm-3 col-form-label">Sous groupe</label>
+			<div className="form-group">
+				<label id="sousGroupeLabel" className="col-form-label">Sous groupe</label>
+				<br/>
 				{
 					!this.props.fromClient.idClient && this._sousGroupe()
 				}
@@ -159,15 +161,16 @@ class ContractClientPart extends React.Component {
 				{
 					this.props.fromClient.idClient && !this.props.fromClient.update &&
 					<input type="textField"
-						   className="form-control col-sm-8"
+						   className="form-control"
 						   value={this.props.fromClient.sousGroupe}
 						   id="sousGroupe"
 						   disabled
 					/>
 				}
 			</div>
-			<div className="form-group row">
-				<label id="nbEmployesLabel" className="col-sm-3 col-form-label">Nombre demployés</label>
+			<div className="form-group">
+				<label id="nbEmployesLabel" className="col-form-label">Nombre demployés</label>
+				<br/>
 				{
 					!this.props.fromClient.idClient && this._nombreEmployes()
 				}
@@ -177,19 +180,20 @@ class ContractClientPart extends React.Component {
 				{
 					this.props.fromClient.idClient && !this.props.fromClient.update &&
 					<input type="textField"
-						   className="form-control col-sm-8"
+						   className="form-control"
 						   value={this.props.fromClient.nombreEmployes}
 						   id="nbEmployes"
 						   disabled
 					/>
 				}
 			</div>
-			<div className="form-group row">
-				<label id="representantLabel" className="col-sm-3 col-form-label">Représentant (chez AFC)</label>
+			<div className="form-group">
+				<label id="representantLabel" className="col-form-label">Représentant (chez AFC)</label>
+				<br/>
 				<select
 					id="representant"
 					name="representant"
-					className="form-control col-sm-8"
+					className="form-control"
 					value={this.props.formState.contrat.idRepresentant}
 					onChange={this._onChangeRepresentant}
 				>
