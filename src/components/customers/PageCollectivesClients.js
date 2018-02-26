@@ -64,7 +64,7 @@ class PageCollectivesClients extends Component {
 		const { match } = this.props;
 		return (
 			<div className="container-fluid">
-				<h1>Assurances collectives</h1>
+				<h1 className="text-center">Assurances collectives</h1>
 				{
 					loading && <LoadingAnimation/>
 

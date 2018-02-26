@@ -4,10 +4,6 @@ import {Route,Link,Switch} from 'react-router-dom'
 import ErrorPage from "../ErrorPage";
 import FicheClient from "./FicheClient";
 import CreationClient from "./GridContainer";
-import {changeIdDisplay, deleteCustomer, requestGrid} from "../../actions/crmGridLayout";
-import LoadingAnimation from "../LoadingAnimation";
-import {changeViewDashboard} from "../../actions/crmDashboard";
-import {changeViewContract, setFromClient} from "../../actions/crmContract";
 
 class PageClient extends Component {
 	constructor(props) {

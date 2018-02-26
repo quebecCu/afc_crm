@@ -1,6 +1,6 @@
 import {take, fork, put} from 'redux-saga/effects';
 import {
-	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, logout
+	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, logout, CHECK_IF_LOGGED
 } from '../actions/crmLogin';
 //importer le salt pour le username et password
 //import genSalt from '../salt';
@@ -39,6 +39,7 @@ export function * loginFlow (){
 
 				localStorage.setItem("cookieSession" ,_cookie);
 				localStorage.setItem("username", username);
+				localStorage.setItem("isAdmin", _isAdmin);
 
 				store.dispatch(login(formStateAdm));
 				document.getElementById("errorPassword").style.display = "none";
@@ -80,9 +81,17 @@ export function * loginPush() {
 	}
 }
 
+export function * checkIfLogged() {
+	while(true) {
+		yield take (CHECK_IF_LOGGED);
+		yield put({ type: SET_AUTH, newAuthState: true });
+	}
+}
+
 export function * AuthFlow () {
 	yield fork (loginFlow);
 	yield fork (logoutFlow);
 	yield fork (loginPush);
+	yield fork (checkIfLogged);
 	//yield fork (registerFlow);
 }

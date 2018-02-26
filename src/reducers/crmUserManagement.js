@@ -9,7 +9,8 @@ let initialState = {
 	formState: {
 		users: [],
 		userToDisplay: {userPerms:[]},
-		operations:[]
+		operations:[],
+		user:{userPerms:[]}
 	},
 	errors: '',
 };

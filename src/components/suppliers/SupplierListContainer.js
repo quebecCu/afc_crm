@@ -99,13 +99,7 @@ class SupplierListContainer extends Component {
 								<th onClick={this.handleClickF4}>Code</th>
 							</tr>
 							</thead>
-							<DossiersComponent fournisseur={this.props.dossiersState}
-											   handleClick={this.props.getViewSuppliers}
-											   changeView={this.props.changeViewSuppliers}
-											   displaySub={this.props.displaySubSupplier}
-											   links={this.props.crmNavBar.linksSubSupplier}
-											   addSub={this.props.addSubSupplier}
-							/>
+							<DossiersComponent fournisseur={this.props.dossiersState}	/>
 						</table>
 					</div>
 				</div>

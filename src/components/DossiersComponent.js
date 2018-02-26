@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {withRouter} from 'react-router'
-import { Router } from 'react-router'
-import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router';
 
 class DossiersComponent extends Component {
 
@@ -9,11 +7,11 @@ class DossiersComponent extends Component {
 		console.log("wazzah")
 	}
 
-	handleClickClient(match, history, client, event) {
+	handleClickClient(match, history, client) {
 		history.push(match.url + "/" + client.id);
 	}
 
-	handleClickSupplier(match, history, supplier, event) {
+	handleClickSupplier(match, history, supplier) {
 		history.push(match.url + "/" + supplier.id);
 	}
 

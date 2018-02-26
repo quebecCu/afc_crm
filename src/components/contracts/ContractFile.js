@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
+import {withRouter} from 'react-router'
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import TitreValeur from "../TitreValeur";
 import {getClientRequest} from "../../actions/crmClientList";
@@ -175,6 +176,10 @@ class ContractFile extends React.Component {
 		this.props.changeViewContract("updatecontract");
 		//this.props.changeIdDisplay(event.target.value);
 	}
+	
+	_handleModify(match, history, event) {
+		history.push(match.url + "/update");
+	}
 
 	renderLinkAttribute(attributeName, attributeValue) {
     return (
@@ -204,6 +209,7 @@ class ContractFile extends React.Component {
 	render() {
 		let {contractDisplay, lilLayout, selectedTaux, selectedRemuneration} = this.props.crmContract;
 		let layouts = {lg: lilLayout, md: lilLayout, sm: lilLayout, xs: lilLayout, xxs: lilLayout};
+		const { match, history } = this.props;
 
 		return (
 			<div>
@@ -215,7 +221,7 @@ class ContractFile extends React.Component {
 					<div className="card-body">
 						<div className="text-right">
 							<div className="btn-group" role="group" aria-label="Basic example">
-								<button type="button" className="btn btn-primary"><i className="fa fa-cog"></i> Modifier</button>
+								<button type="button" className="btn btn-primary" onClick={this._handleModify.bind(this, match, history)}><i className="fa fa-cog"></i> Modifier</button>
 								<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
 							</div>
 						</div>
@@ -475,4 +481,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContractFile);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ContractFile));

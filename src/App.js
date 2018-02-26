@@ -9,10 +9,27 @@ import LoginPage from "./components/LoginPage";
 import ResetPage from "./components/ResetPage";
 import ResetPagePassword from "./components/ResetPagePasswordContainer";
 import {history, store} from './store.js';
+import {checkIfLogged} from './actions/crmLogin';
 import './style/App.css'
 
 class App extends Component {
-
+	constructor(props){
+			super(props);
+			if (localStorage.getItem('cookieSession')){
+				let _isAdmin;
+				if (localStorage.getItem('isAdmin') === "true"){
+					_isAdmin = true;
+				}else{
+					_isAdmin = false;
+				}
+				let formStateAdm = {_auth:{
+					cookie: localStorage.getItem('cookieSession'),
+					isAdmin: _isAdmin
+				}};
+				store.dispatch(checkIfLogged(formStateAdm));
+			}
+	}
+	
 	render() {
 		return (
 			<Provider store={store}>

@@ -10,70 +10,76 @@ import CreateUserPermissions from './CreateUserPermissions';
 class CreateUser extends React.Component{
 
     constructor(props){
-        super(props);
-        this.props.getOperations();
-        this.props.getDefaultPerms();
-        this.props.getRoles();
-        this._handleClick = this._handleClick.bind(this);
-        this._validateForm = this._validateForm.bind(this);
-        this._resetStyle=this._resetStyle.bind(this);
-		if(this.props.view === "UpdateUser"){
-			let newRole = JSON.parse(JSON.stringify(this.props.user.role));
-			let newName = JSON.parse(JSON.stringify(this.props.user.lastname));
-			let newLastName = JSON.parse(JSON.stringify(this.props.user.name));
-			let newLogin = JSON.parse(JSON.stringify(this.props.user.login));
-			let newMail = JSON.parse(JSON.stringify(this.props.user.mail));
-			let newUserPerms = JSON.parse(JSON.stringify(this.props.user.userPerms));
-			let userID=JSON.parse(JSON.stringify(this.props.user.id));
-			let userTitre = JSON.parse(JSON.stringify(this.props.user.titre));
-			this.props.changeForm({
-				id:userID,
-				titre:userTitre,
-				role: newRole,
-				nom: newName,
-				prenom:newLastName,
-				login: newLogin,
-				mail: newMail,
-				userPerms: newUserPerms,
-				roles:[],
-				operations:[],
-				mdpProv:''
-			});
-		}
-		else{
-			this.props.changeForm({...this.props.formState,
-				role: '',
-				titre: '',
-				nom: '',
-				prenom:'',
-				login: '',
-				mail: '',
-				mdpProv: '',
-				userPerms: [],
-				roles:[],
-				operations:[],
-			});
-		}
-
-
+      super(props);
+      this.props.getOperations();
+      this.props.getDefaultPerms();
+      this.props.getRoles();
+      this._handleClick = this._handleClick.bind(this);
+      this._validateForm = this._validateForm.bind(this);
+      this._resetStyle=this._resetStyle.bind(this);
+  		if(this.props.idUser) {
+        this.state = {
+          title: "Modification d'un utilisateur",
+          view: "updateUser",
+          button: "Modifier l'utilisateur"
+        };
+        let user = this.props.crmUserManagement.formState.userToDisplay;
+  			let newRole = user.role;
+  			let newName = user.lastname;
+  			let newLastName = user.name;
+  			let newLogin = user.login;
+  			let newMail = user.mail;
+  			let newUserPerms = user.userPerms;
+  			let userID= user.id;
+  			let userTitre = user.titre;
+  			this.props.changeForm({
+  				id:userID,
+  				titre:userTitre,
+  				role: newRole,
+  				nom: newName,
+  				prenom:newLastName,
+  				login: newLogin,
+  				mail: newMail,
+  				userPerms: newUserPerms,
+  				roles:[],
+  				operations:[],
+  				mdpProv:''
+  			});
+  		}else{
+        this.state = {
+          title: "Création d'un utilisateur",
+          view: "CreateUser",
+          button: "Créer l'utilisateur"
+        };
+  			this.props.changeForm({...this.props.formState,
+  				role: '',
+  				titre: '',
+  				nom: '',
+  				prenom:'',
+  				login: '',
+  				mail: '',
+  				mdpProv: '',
+  				userPerms: [],
+  				roles:[],
+  				operations:[],
+  			});
+  		}
     }
 
     componentDidMount(){
-		document.getElementById("nameHelp").style.display = "none";
-		document.getElementById("roleHelp").style.display = "none";
-		document.getElementById("nameHelp").style.display = "none";
-		document.getElementById("lastNameHelp").style.display = "none";
-		document.getElementById("loginHelp").style.display = "none";
-		if(this.props.view==="CreateUser"){
-			document.getElementById("mdpHelp").style.display = "none";
-		}
-		document.getElementById("titreHelp").style.display="none";
-		document.getElementById("mailHelp").style.display = "none";
-		document.getElementById("mailInvalid").style.display = "none";
-		document.getElementById("loginInvalid").style.display = "none";
-
-
-	}
+  		document.getElementById("nameHelp").style.display = "none";
+  		document.getElementById("roleHelp").style.display = "none";
+  		document.getElementById("nameHelp").style.display = "none";
+  		document.getElementById("lastNameHelp").style.display = "none";
+  		document.getElementById("loginHelp").style.display = "none";
+  		if(!this.props.idUser){
+  			document.getElementById("mdpHelp").style.display = "none";
+  		}
+  		document.getElementById("titreHelp").style.display="none";
+  		document.getElementById("mailHelp").style.display = "none";
+  		document.getElementById("mailInvalid").style.display = "none";
+  		document.getElementById("loginInvalid").style.display = "none";
+  	}
 
 
 
@@ -81,13 +87,12 @@ class CreateUser extends React.Component{
 		let {formState} = this.props.crmCreateUser;
 		let isValid = this._validateForm();
 		if(isValid){
-			if(this.props.view === "CreateUser"){
+			if(!this.props.idUser){
 				this.props.submitUser(formState);
 			}
 			else{//Cas où on est en modification de l'utilisateur
 				this.props.updateUser(formState);
 			}
-			this.props.changeView("");
 		}
 	}
 
@@ -186,56 +191,68 @@ class CreateUser extends React.Component{
 	}
 
     render() {
-        let {formState} = this.props.crmCreateUser;
-        return <div><div className="page-header" style={{paddingBottom:20}}><h1>{this.props.title}</h1></div>
-            <FormCreateUser formState={formState}
-							view={this.props.view}
-							user={this.props.user}
-                            changeForm={this.props.changeForm}
-                            submitUser={this.props.submitUser}/>
-            <CreateUserPermissions formState={formState}
-								   view={this.props.view}
-								   user={this.props.user}
-                                   changeForm={this.props.changeForm}
-								   updateUserPerms={this.props.updateUserPerms}/>
-			<button onClick={this._handleClick}>{this.props.button}</button>
-        </div>;
+      let {formState} = this.props.crmCreateUser;
+      let user = this.props.crmUserManagement.formState.userToDisplay;
+      return (
+        <div className="container-fluid">
+  				<h1 className="text-center">Gestion des utilisateurs</h1>
+  				<div className="card mb-3">
+  					<div className="card-header">
+  		      	<i className="fa fa-file-o"></i> {this.state.title}
+  					</div>
+  					<div className="card-body">
+              <FormCreateUser formState={formState}
+  					    view={this.state.view}
+  							user={user}
+                changeForm={this.props.changeForm}
+                submitUser={this.props.submitUser}/>
+              <CreateUserPermissions formState={formState}
+  					     view={this.state.view}
+    					   user={user}
+                 changeForm={this.props.changeForm}
+    					   updateUserPerms={this.props.updateUserPerms}/>
+              <div className="text-center">
+                <button className="btn btn-primary" onClick={this._handleClick}>{this.state.button}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     }
 }
 
 function mapStateToProps (state) {
     return{
-        crmCreateUser: state.crmCreateUser
+      crmUserManagement: state.crmUserManagement,
+      crmCreateUser: state.crmCreateUser
     }
 }
 
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
-
-    return{
-
-        changeForm : (newFormState) => {
-            dispatch(changeFormCreateUser(newFormState))
-        },
-        submitUser : (formData) => {
-            dispatch(submitUser(formData))
-        },
-        getOperations: () =>{
-            dispatch(getOperations())
-        },
-        getDefaultPerms: () => {
-            dispatch(getDefaultPerms())
-        },
-        updateUserPerms: (position, newValue) =>{
-            dispatch(updateUserPerms(position, newValue))
-        },
-        getRoles : () => {
-            dispatch(getRoles())
-        },
+  return{
+    changeForm : (newFormState) => {
+        dispatch(changeFormCreateUser(newFormState))
+    },
+    submitUser : (formData) => {
+        dispatch(submitUser(formData))
+    },
+    getOperations: () =>{
+        dispatch(getOperations())
+    },
+    getDefaultPerms: () => {
+        dispatch(getDefaultPerms())
+    },
+    updateUserPerms: (position, newValue) =>{
+        dispatch(updateUserPerms(position, newValue))
+    },
+    getRoles : () => {
+        dispatch(getRoles())
+    },
 		updateUser: (updatedUser) =>{
 			dispatch(updateUser(updatedUser));
 		}
-    }
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps) (CreateUser);

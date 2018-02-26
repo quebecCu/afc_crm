@@ -130,7 +130,7 @@ export function* sendFile() {
 												alert("il faut que le champs du nombre d'employés pour grands groupes soit un nombre!");
 											else
 												alert(response.data.message);
-					// Fin modification de Soumar	
+					// Fin modification de Soumar
 
 				}
 				else {
@@ -220,8 +220,8 @@ export function* updateFile() {
 
 											else
 												alert(response.data.message);
-												
-					// Fin modification de Soumar	
+
+					// Fin modification de Soumar
 
 
 
@@ -432,7 +432,7 @@ export function* requestSupplier() {
 						nomEntreprise: supplier.nom,
 						rue: supplier.rue,
 						ville: supplier.ville,
-						province: supplier.province,
+						province: supplier.nomprovince,
 						codePostal: supplier.codepostal,
 						telephone: supplier.tel_principal,
 						extension: supplier.ext_tel_principal,

@@ -1,13 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router'
+import {withRouter} from 'react-router';
 import TitreValeur from "../TitreValeur";
 //import '../style/FicheClient.css';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import {changeIdDisplay, deleteCustomer, requestGrid} from "../../actions/crmGridLayout";
 import {getClientRequest} from "../../actions/crmClientList";
 import {setFromClient} from "../../actions/crmContract";
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class FicheClient extends React.Component {
 	constructor(props) {
