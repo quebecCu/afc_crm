@@ -100,7 +100,7 @@ class RechercheComponent extends Component {
 		inputMoisRenouvellement = document.getElementById("moisRenouvellement").value.toUpperCase();
 
 		table = document.getElementById("PageCollectivesClientsTable");
-		tr = document.getElementById("thead-tr");
+		tr = document.getElementsByClassName("customer");
 		// Loop through all table rows, and hide those who don't match the search query
 		for (i = 0; i < tr.length; i++) {
 			td0 = tr[i].getElementsByTagName("td")[0];
