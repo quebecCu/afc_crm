@@ -248,9 +248,6 @@ function mapStateToProps(state) {
 //fonctions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		changeLoading: (boolean) => {
-			dispatch(changeLoading(boolean));
-		},
 		getSupplier: (id) => {
 			dispatch(getSupplier(id));
 		},

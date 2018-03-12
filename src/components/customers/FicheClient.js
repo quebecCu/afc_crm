@@ -2,8 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import TitreValeur from "../TitreValeur";
-//import '../style/FicheClient.css';
-import {Responsive, WidthProvider} from 'react-grid-layout';
 import {changeIdDisplay, deleteCustomer, requestGrid} from "../../actions/crmGridLayout";
 import {getClientRequest} from "../../actions/crmClientList";
 import {setFromClient} from "../../actions/crmContract";
@@ -26,25 +24,8 @@ class FicheClient extends React.Component {
 		this.setContactsState();
 	}
 
-	_handleContract(event) {
-		this.props.changeViewContract("create");
-		this.props.changeViewDashboard("contracts");
-		let nombreEmployes= 0;
-		let sousGroupe = '';
-		this.props.optionnalFields.forEach(element => {
-			if (element.idRow === 1) {
-				nombreEmployes = element.valeur;
-			}
-			if (element.idRow === 6) {
-				sousGroupe = element.valeur;
-			}
-		});
-		this.props.setFromClient({
-			idClient: event.target.value,
-			name: this.props.client.nom,
-			sousGroupe: sousGroupe,
-			nombreEmployes: nombreEmployes
-		});
+	_handleContract(idclient, history) {
+		history.push("/dashboard/collective/contracts/create/" + idclient)
 	}
 
 
@@ -149,8 +130,7 @@ class FicheClient extends React.Component {
 														</button>
 							}
 							<button type="button" className="btn btn-secondary"
-									onClick={this._handleContract}
-									value={client.idclient}>
+									onClick={this._handleContract.bind(this, client.idclient, history)}>
 								<i className="fa fa-plus"></i> Créer un contrat avec ce client
 							</button>
 							<button type="button" className="btn btn-primary" onClick={this._handleModify.bind(this, match, history)}><i className="fa fa-cog"></i> Modifier</button>

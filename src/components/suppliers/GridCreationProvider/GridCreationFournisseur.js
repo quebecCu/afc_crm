@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import '../../../style/grid-layout.css';
-import '../../../style/grid-rezisable.css';
-import '../../../style/GridCreationClient.css';
-import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridRequiredFormProvider from "./GridRequiredFormProvider";
 import GridMethodOnFieldProvider from "./GridMethodOnFieldProvider";
 import LoadingAnimation from "../../LoadingAnimation";
 import ContactsContainer from "../../ContactsContainer";
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 export class GridCreationFournisseur extends Component {
 	constructor(props) {
 		super(props);
-		this.props.changeLoading(true);
 	}
     render() {
         return (

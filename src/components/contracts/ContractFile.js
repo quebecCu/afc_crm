@@ -1,13 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {withRouter} from 'react-router'
-import {Responsive, WidthProvider} from 'react-grid-layout';
+import {withRouter} from 'react-router';
 import TitreValeur from "../TitreValeur";
 import {getClientRequest} from "../../actions/crmClientList";
 import {getSupplier} from "../../actions/crmGridLayoutSuppliers";
 import {setFromClient,getContract,setSelectedTaux,setSelectedRemuneration} from "../../actions/crmContract";
-
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class ContractFile extends React.Component {
 	constructor(props) {
@@ -180,13 +177,23 @@ class ContractFile extends React.Component {
 	_handleModify(match, history, event) {
 		history.push(match.url + "/update");
 	}
+	
+	_navigateTo(attributeType, id, history){
+		let beg;
+		if (attributeType === "usersManagement"){
+			beg = "/dashboard/";
+		}else{
+			beg = "/dashboard/collective/";
+		}
+		history.push(beg + attributeType + "/" + id);
+	}
 
-	renderLinkAttribute(attributeName, attributeValue) {
+	renderLinkAttribute(attributeName, attributeValue, attributeType, id, history) {
     return (
 			<div className="form-group row">
 				<label htmlFor="staticEmail" className="col-sm-6 col-form-label"><strong>{attributeName}:</strong> </label>
 				<div className="col-sm-6">
-					<button type="button" className="btn btn-link">{attributeValue}</button>
+					<button type="button" className="btn btn-link" onClick={this._navigateTo.bind(this, attributeType, id, history)}>{attributeValue}</button>
 				</div>
 			</div>
     );
@@ -208,7 +215,6 @@ class ContractFile extends React.Component {
 
 	render() {
 		let {contractDisplay, lilLayout, selectedTaux, selectedRemuneration} = this.props.crmContract;
-		let layouts = {lg: lilLayout, md: lilLayout, sm: lilLayout, xs: lilLayout, xxs: lilLayout};
 		const { match, history } = this.props;
 
 		return (
@@ -241,9 +247,10 @@ class ContractFile extends React.Component {
 										<div className="row">
 											<div className="col-sm-6">
 												{this.renderStaticAttribute("N° Police",contractDisplay.police,6)}
-												{this.renderLinkAttribute("Client",contractDisplay.nomclient,6)}
-												{this.renderLinkAttribute("Assureur",contractDisplay.nomfournisseur,6)}
-												{this.renderLinkAttribute("Représentant",contractDisplay.nomrepresentant,6)}
+												{this.renderLinkAttribute("Client",contractDisplay.nomclient,"clients",contractDisplay.idclient,history)}
+												{this.renderLinkAttribute("Assureur",contractDisplay.nomfournisseur,"suppliers",contractDisplay.idfournisseur,history)}
+												{this.props.crmLogin.isAdmin === true && this.renderLinkAttribute("Représentant",contractDisplay.nomrepresentant,"usersManagement",contractDisplay.idrepresentant,history)}
+												{this.props.crmLogin.isAdmin === false && this.renderStaticAttribute("Représentant",contractDisplay.nomrepresentant,6)}
 											</div>
 											<div className="col-sm-6">
 												{this.renderStaticAttribute("AGA",contractDisplay.libellechambrecommerce,6)}
@@ -452,7 +459,6 @@ function mapStateToProps(state) {
 		crmGridSuppliersLayout: state.crmGridSuppliersLayout,
 		crmContacts: state.crmContacts,
 		crmContract: state.crmContract,
-		crmNavBar: state.crmNavBar,
 		crmRechercheCollective: state.crmRechercheCollective
 	}
 }

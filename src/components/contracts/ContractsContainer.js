@@ -18,6 +18,7 @@ class ContractsContainer extends React.Component {
 			<Switch>
 				<Route exact path={match.url} component={ListContractsComponent}/>
 				<Route path={match.url + "/create"} component={CreateContractContainer}/>
+				<Route path={match.url + "/create/:idClient"} component={CreateContractContainer}/>
 				<Route path={match.url + "/:idContract"} component={ContractPage}/>
 				<Route
 					component={ErrorPage}/>

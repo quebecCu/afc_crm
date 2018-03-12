@@ -1,16 +1,16 @@
 import React from 'react';
+import {connect} from "react-redux";
+import {withRouter} from 'react-router';
 import ContractClientPart from './ContractClientPart.js';
 import ContractInfoPart from './ContractInfoPart';
 import ContractModulesPart from './ContractModulesPart';
 import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
-import {connect} from "react-redux";
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
 	getGrid, createContract,
 	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../../actions/crmContract";
-import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridOptionnalContract from "./GridOptionnalContract";
 import {bindClientData, getClientRequest} from "../../actions/crmClientList";
 import {sendingRequestColl} from "../../actions/crmRechercheCollective";
@@ -18,9 +18,6 @@ import LoadingAnimation from "../LoadingAnimation";
 import ModalForModalites from "../modal/ModalForModalites";
 import {changeLoadingValidation} from "../../actions/crmDashboard";
 import {getContract} from "../../actions/crmContract";
-
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
-
 
 class CreateContractContainer extends React.Component {
 	constructor(props) {
@@ -43,6 +40,9 @@ class CreateContractContainer extends React.Component {
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		if (!this.props.idContract) {
 			this.props.getGrid();
+			if (this.props.match.params.idClient){
+				alert("yah")
+			}
 			this.props.changeForm({
 				...formState, intModulesToDisplay: 1, modulesToDisplay: [], contrat: {
 					...formState.contrat,
@@ -102,12 +102,10 @@ class CreateContractContainer extends React.Component {
 					}
 				}
 			})
-		}
-		else {
-			this.props.getContract(this.props.idContract);
+		} else {
+			this.props.getContractToUpdate(this.props.idContract);
 			let contract = contractDisplay;
 			let facDisplay = contract.facultatif;
-			this.props.getGrid(facDisplay);
 
 			let modulesChoisis = contract.souscriptions;
 			let modulesToUpdate = [];
@@ -451,7 +449,7 @@ class CreateContractContainer extends React.Component {
 	}
 
 	render() {
-		let {formState, newField, types, updateField, fromClient} = this.props.crmContract;
+		let {contractDisplay, formState, newField, types, updateField, fromClient} = this.props.crmContract;
 		let {dossiersState} = this.props.crmRechercheCollective;
 		let {client} = this.props.crmClientList;
 		let {isAdmin} = this.props.crmLogin;
@@ -711,4 +709,4 @@ const mapDispatchToProps = (dispatch) => {
 		}
 	}
 };
-export default connect(mapStateToProps, mapDispatchToProps)(CreateContractContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateContractContainer));

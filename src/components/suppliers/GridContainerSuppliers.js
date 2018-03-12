@@ -5,7 +5,7 @@ import {
 	changeGridFour, changeLayoutFour, changeNewFieldSup, changeRequiredSup, changeUpdateFieldSup, createNewFieldSup,
 	createSuppliersFile, deleteFieldSup,
 	requestGridFour, updateFieldSup,
-	updatePositionsSup,
+	updatePositionsSup, getSupplier,
 	updateSuppliersFile
 } from "../../actions/crmGridLayoutSuppliers";
 import {changeLoading, changeLoadingValidation} from "../../actions/crmDashboard";
@@ -25,6 +25,8 @@ class CreationFournisseur extends Component {
 
 				if(!this.props.idSupplier) {
 					this.props.requestGridFour();
+				}else{
+					this.props.getSupplier(this.props.idSupplier);
 				}
 
     }
@@ -213,6 +215,9 @@ const  mapDispatchToProps = (dispatch) => {
 		},
 		createSuppliersFile: (file) => {
 			dispatch(createSuppliersFile(file));
+		},
+		getSupplier: (id) => {
+			dispatch(getSupplier(id));
 		},
 		updateSuppliersFile: (file) => {
 			dispatch(updateSuppliersFile(file));

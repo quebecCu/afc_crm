@@ -11,6 +11,7 @@ import { store } from '../store';
 import { getContactsSup } from "../actions/crmContacts";
 import { changeLoading, changeLoadingValidation } from "../actions/crmDashboard";
 import { changeViewSuppliers } from "../actions/crmSuppliersContainer";
+import { history } from '../store.js';
 
 let tokenToSend = localStorage.getItem("cookieSession");
 if (tokenToSend === undefined)
@@ -189,8 +190,8 @@ export function* updateFile() {
 			.then(function (response) {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
-					alert('La fiche client a été modifiée avec succès');
-					store.dispatch(changeViewSuppliers(""));
+					alert('La fiche fournisseur a été modifiée avec succès');
+					history.push('/dashboard/collective/suppliers');
 				}
 				else if (response.data.status === 'fail') {
 
@@ -227,7 +228,7 @@ export function* updateFile() {
 
 				}
 				else {
-					alert('Erreur lors de la modification de la fiche client');
+					alert('Erreur lors de la modification de la fiche fournisseur');
 				}
 			})
 			.catch(function (error) {
