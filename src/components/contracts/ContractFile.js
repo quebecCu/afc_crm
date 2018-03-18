@@ -398,13 +398,19 @@ class ContractFile extends React.Component {
 											<div className="col-md-2 col-xs-12">
 												<div className="dropdown">
 													<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														{selectedRemuneration.annee_dep} - {selectedRemuneration.annee_fin}
+
+														{ (selectedRemuneration !== undefined) ? 
+														<div>
+			 											{selectedRemuneration.annee_dep} - {selectedRemuneration.annee_fin} 
+														</div>
+													: null }
+
 													</button>
 												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												    {
+												    {  (selectedRemuneration !== undefined) ?
 															contractDisplay.remuneration.history.map((element, index) => {
 																return <button key={index} onClick={this._changeSelectedRemuneration.bind(this,element)} className={"dropdown-item " + (element.annee_dep === selectedRemuneration.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
-															})
+															}) : null
 														}
 												  </div>
 												</div>
@@ -412,6 +418,8 @@ class ContractFile extends React.Component {
 											<div className="col-md-10 col-xs-12">
 												<div className="row">
 													<div className="col-sm-6">
+													{ (selectedRemuneration !== undefined) ? 
+													<div> 
 														{this.renderStaticAttribute("Année de début",selectedRemuneration.annee_dep,6)}
 														{this.renderStaticAttribute("Vie DMA PAC",selectedRemuneration.vie_dma_pac,6)}
 														{this.renderStaticAttribute("CT",selectedRemuneration.ct,6)}
@@ -423,8 +431,13 @@ class ContractFile extends React.Component {
 														{this.renderStaticAttribute("Date payé base",selectedRemuneration.date_payée_base,6)}
 														{this.renderStaticAttribute("Montant payé base",selectedRemuneration.montant_payé_base,6)}
 														{this.renderStaticAttribute("Montant payé boni",selectedRemuneration.montant_payé_boni,6)}
+														</div>
+													:null 			
+													}
 													</div>
 													<div className="col-sm-6">
+													{ (selectedRemuneration !== undefined) ? 
+														<div> 
 														{this.renderStaticAttribute("Année de fin",selectedRemuneration.annee_fin,6)}
 														{this.renderStaticAttribute("Pourcentage payable en pourcent",selectedRemuneration.pourcentage_payable_en_pourcent,6)}
 														{this.renderStaticAttribute("Montant dû",selectedRemuneration.montant_dû,6)}
@@ -436,7 +449,11 @@ class ContractFile extends React.Component {
 														{this.renderStaticAttribute("Conseiller n°",selectedRemuneration.idconseiller,6)}
 														{this.renderStaticAttribute("Nom conseiller",selectedRemuneration.nomconseiller,6)}
 														{this.renderStaticAttribute("Prénom conseiller",selectedRemuneration.prenomconseiller,6)}
+														</div>
+													:null 			
+													}
 													</div>
+													
 												</div>
 											</div>
 										</div>
