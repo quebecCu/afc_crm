@@ -8,7 +8,7 @@ import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getGrid, createContract,
+	getGrid, createContract, getContractToUpdate,
 	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../../actions/crmContract";
 import GridOptionnalContract from "./GridOptionnalContract";
@@ -17,7 +17,6 @@ import {sendingRequestColl} from "../../actions/crmRechercheCollective";
 import LoadingAnimation from "../LoadingAnimation";
 import ModalForModalites from "../modal/ModalForModalites";
 import {changeLoadingValidation} from "../../actions/crmDashboard";
-import {getContract} from "../../actions/crmContract";
 
 class CreateContractContainer extends React.Component {
 	constructor(props) {
@@ -104,156 +103,156 @@ class CreateContractContainer extends React.Component {
 			})
 		} else {
 			this.props.getContractToUpdate(this.props.idContract);
-			let contract = contractDisplay;
-			let facDisplay = contract.facultatif;
-
-			let modulesChoisis = contract.souscriptions;
-			let modulesToUpdate = [];
-			let intModulesToDisplay = modulesChoisis.length;
-			let modulesToDisplay = [];
-			modulesChoisis.forEach((element, index) => {
-				modulesToDisplay.push(element.id.toString());
-				let modalitesToUpdate = [];
-				element.subscriptions.forEach(subs => {
-					/*let subsToPush={
-						idModalite:subs.id,
-						souscription_notes:subs.souscription_notes,
-						valeur:subs.valeur,
-						idValeur: ''//aller chercher dans le backend :(
-					};*/
-					modalitesToUpdate.push({
-						idModalite: subs.id,
-						souscription_notes: subs.souscription_notes,
-						valeur: subs.valeur,
-						idValeur: subs.idvaleur
-					});
-				});
-				//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
-				modulesToUpdate.push({
-					idModule: element.id,
-					module_notes: element.module_notes,
-					modalites: modalitesToUpdate
-				});
-			});
-
-
-			let toUpdate = {
-				idAssureur: contract.idfournisseur,
-				idAGA: contract.idchambrecommerce,//LOOOOP,
-				idContract: contract.idcontrat,
-				idClient: fromClient.idClient,
-				modulesChoisis: modulesToUpdate,
-				modulesInitiaux: modulesToUpdate,
-				numPolice: contract.police,
-				dateEmission: contract.date_signature,
-				moisRenouv: contract.mois_renouvellement,
-				notes: contract.notes,
-				historiqueTaux: { //Aller chercher la bonne année?
-					diff: '',
-					annee_dep: '',
-					annee_fin: '',
-					vie: '',
-					dma: '',
-					pac: '',
-					ct: '',
-					lt: '',
-					amc_ind: '',
-					amc_mono: '',
-					amc_couple: '',
-					amc_fam: '',
-					dent_ind: '',
-					dent_mono: '',
-					dent_couple: '',
-					dent_fam: '',
-					mg_ind: '',
-					mg_mono: '',
-					mg_couple: '',
-					mg_fam: '',
-					pae: '',
-					prime_ms: '',
-					prime_an: ''
-				},
-				remuneration: { //idem avec année depart et annee fin ?
-					vie: '',
-					ct: '',
-					lt: '',
-					amc: '',
-					dent: '',
-					mg: '',
-					pae: '',
-					notes: '',
-					recu: '',
-					base: '',
-					boni: '',
-					total: '',
-					gtotal: '',
-					idConseiller: '',
-					split: '',
-					bdu: '',
-					paye: '',
-					dpaye: '',
-					solde: ''
-				}
-			};
-
-			let dateDep = parseInt(contract.date_signature[0] + contract.date_signature[1] + contract.date_signature[2] + contract.date_signature[3], 10);
-			contract.remuneration.history.forEach(element => {
-				if (parseInt(element.annee_dep, 10) === dateDep) {
-					toUpdate.remuneration.vie = element.vie;
-					toUpdate.remuneration.ct = element.ct;
-					toUpdate.remuneration.lt = element.lt;
-					toUpdate.remuneration.dent = element.dentaire;
-					toUpdate.remuneration.mg = element.mg;
-					toUpdate.remuneration.pae = element.pae;
-					toUpdate.remuneration.notes = element.notes;
-					toUpdate.remuneration.recu = element.date_payée_base;
-					toUpdate.remuneration.base = element.montant_payé_base;
-					toUpdate.remuneration.boni = element.montant_payé_boni;
-					toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
-					toUpdate.remuneration.total = element.rémunération_totale;
-					toUpdate.remuneration.idConseiller = element.idconseiller;
-					toUpdate.remuneration.bdu = element.montant_dû;
-					toUpdate.remuneration.paye = element.montant_payé;
-					toUpdate.remuneration.dpaye = element.date_payée;
-
-				}
-			});
-
-			contract.historique_taux.forEach(element => {
-				if (parseInt(element.annee_dep, 10) === dateDep) {
-					toUpdate.historiqueTaux.diff = element.différence;
-					toUpdate.historiqueTaux.anneedep = element.annee_dep;
-					toUpdate.historiqueTaux.anneefin = element.annee_fin;
-					toUpdate.historiqueTaux.vie = element.vie;
-					toUpdate.historiqueTaux.dma = element.dma;
-					toUpdate.historiqueTaux.pac = element.pac;
-					toUpdate.historiqueTaux.ct = element.ct;
-					toUpdate.historiqueTaux.lt = element.lt;
-					toUpdate.historiqueTaux.amc_ind = element.amc_ind;
-					toUpdate.historiqueTaux.amc_mono = element.amc_mono;
-					toUpdate.historiqueTaux.amc_couple = element.amc_couple;
-					toUpdate.historiqueTaux.amc_fam = element.amc_fam;
-					toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
-					toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
-					toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
-					toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
-					toUpdate.historiqueTaux.mg_ind = element.mg_ind;
-					toUpdate.historiqueTaux.mg_mono = element.mg_mono;
-					toUpdate.historiqueTaux.mg_couple = element.mg_couple;
-					toUpdate.historiqueTaux.mg_fam = element.mg_fam;
-					toUpdate.historiqueTaux.pae = element.pae;
-					toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
-					toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
-				}
-			});
-
-			console.log(toUpdate);
-			this.props.changeForm({
-				...formState,
-				intModulesToDisplay: intModulesToDisplay,
-				modulesToDisplay: modulesToDisplay,
-				contrat: toUpdate
-			});
+			// let contract = contractDisplay;
+			// let facDisplay = contract.facultatif;
+			//
+			// let modulesChoisis = contract.souscriptions;
+			// let modulesToUpdate = [];
+			// let intModulesToDisplay = modulesChoisis.length;
+			// let modulesToDisplay = [];
+			// modulesChoisis.forEach((element, index) => {
+			// 	modulesToDisplay.push(element.id.toString());
+			// 	let modalitesToUpdate = [];
+			// 	element.subscriptions.forEach(subs => {
+			// 		/*let subsToPush={
+			// 			idModalite:subs.id,
+			// 			souscription_notes:subs.souscription_notes,
+			// 			valeur:subs.valeur,
+			// 			idValeur: ''//aller chercher dans le backend :(
+			// 		};*/
+			// 		modalitesToUpdate.push({
+			// 			idModalite: subs.id,
+			// 			souscription_notes: subs.souscription_notes,
+			// 			valeur: subs.valeur,
+			// 			idValeur: subs.idvaleur
+			// 		});
+			// 	});
+			// 	//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
+			// 	modulesToUpdate.push({
+			// 		idModule: element.id,
+			// 		module_notes: element.module_notes,
+			// 		modalites: modalitesToUpdate
+			// 	});
+			// });
+			//
+			//
+			// let toUpdate = {
+			// 	idAssureur: contract.idfournisseur,
+			// 	idAGA: contract.idchambrecommerce,//LOOOOP,
+			// 	idContract: contract.idcontrat,
+			// 	idClient: fromClient.idClient,
+			// 	modulesChoisis: modulesToUpdate,
+			// 	modulesInitiaux: modulesToUpdate,
+			// 	numPolice: contract.police,
+			// 	dateEmission: contract.date_signature,
+			// 	moisRenouv: contract.mois_renouvellement,
+			// 	notes: contract.notes,
+			// 	historiqueTaux: { //Aller chercher la bonne année?
+			// 		diff: '',
+			// 		annee_dep: '',
+			// 		annee_fin: '',
+			// 		vie: '',
+			// 		dma: '',
+			// 		pac: '',
+			// 		ct: '',
+			// 		lt: '',
+			// 		amc_ind: '',
+			// 		amc_mono: '',
+			// 		amc_couple: '',
+			// 		amc_fam: '',
+			// 		dent_ind: '',
+			// 		dent_mono: '',
+			// 		dent_couple: '',
+			// 		dent_fam: '',
+			// 		mg_ind: '',
+			// 		mg_mono: '',
+			// 		mg_couple: '',
+			// 		mg_fam: '',
+			// 		pae: '',
+			// 		prime_ms: '',
+			// 		prime_an: ''
+			// 	},
+			// 	remuneration: { //idem avec année depart et annee fin ?
+			// 		vie: '',
+			// 		ct: '',
+			// 		lt: '',
+			// 		amc: '',
+			// 		dent: '',
+			// 		mg: '',
+			// 		pae: '',
+			// 		notes: '',
+			// 		recu: '',
+			// 		base: '',
+			// 		boni: '',
+			// 		total: '',
+			// 		gtotal: '',
+			// 		idConseiller: '',
+			// 		split: '',
+			// 		bdu: '',
+			// 		paye: '',
+			// 		dpaye: '',
+			// 		solde: ''
+			// 	}
+			// };
+			//
+			// let dateDep = parseInt(contract.date_signature[0] + contract.date_signature[1] + contract.date_signature[2] + contract.date_signature[3], 10);
+			// contract.remuneration.history.forEach(element => {
+			// 	if (parseInt(element.annee_dep, 10) === dateDep) {
+			// 		toUpdate.remuneration.vie = element.vie;
+			// 		toUpdate.remuneration.ct = element.ct;
+			// 		toUpdate.remuneration.lt = element.lt;
+			// 		toUpdate.remuneration.dent = element.dentaire;
+			// 		toUpdate.remuneration.mg = element.mg;
+			// 		toUpdate.remuneration.pae = element.pae;
+			// 		toUpdate.remuneration.notes = element.notes;
+			// 		toUpdate.remuneration.recu = element.date_payée_base;
+			// 		toUpdate.remuneration.base = element.montant_payé_base;
+			// 		toUpdate.remuneration.boni = element.montant_payé_boni;
+			// 		toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
+			// 		toUpdate.remuneration.total = element.rémunération_totale;
+			// 		toUpdate.remuneration.idConseiller = element.idconseiller;
+			// 		toUpdate.remuneration.bdu = element.montant_dû;
+			// 		toUpdate.remuneration.paye = element.montant_payé;
+			// 		toUpdate.remuneration.dpaye = element.date_payée;
+			//
+			// 	}
+			// });
+			//
+			// contract.historique_taux.forEach(element => {
+			// 	if (parseInt(element.annee_dep, 10) === dateDep) {
+			// 		toUpdate.historiqueTaux.diff = element.différence;
+			// 		toUpdate.historiqueTaux.anneedep = element.annee_dep;
+			// 		toUpdate.historiqueTaux.anneefin = element.annee_fin;
+			// 		toUpdate.historiqueTaux.vie = element.vie;
+			// 		toUpdate.historiqueTaux.dma = element.dma;
+			// 		toUpdate.historiqueTaux.pac = element.pac;
+			// 		toUpdate.historiqueTaux.ct = element.ct;
+			// 		toUpdate.historiqueTaux.lt = element.lt;
+			// 		toUpdate.historiqueTaux.amc_ind = element.amc_ind;
+			// 		toUpdate.historiqueTaux.amc_mono = element.amc_mono;
+			// 		toUpdate.historiqueTaux.amc_couple = element.amc_couple;
+			// 		toUpdate.historiqueTaux.amc_fam = element.amc_fam;
+			// 		toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
+			// 		toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
+			// 		toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
+			// 		toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
+			// 		toUpdate.historiqueTaux.mg_ind = element.mg_ind;
+			// 		toUpdate.historiqueTaux.mg_mono = element.mg_mono;
+			// 		toUpdate.historiqueTaux.mg_couple = element.mg_couple;
+			// 		toUpdate.historiqueTaux.mg_fam = element.mg_fam;
+			// 		toUpdate.historiqueTaux.pae = element.pae;
+			// 		toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
+			// 		toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
+			// 	}
+			// });
+			//
+			// console.log(toUpdate);
+			// this.props.changeForm({
+			// 	...formState,
+			// 	intModulesToDisplay: intModulesToDisplay,
+			// 	modulesToDisplay: modulesToDisplay,
+			// 	contrat: toUpdate
+			// });
 
 
 		}
@@ -704,8 +703,8 @@ const mapDispatchToProps = (dispatch) => {
 		bindClientData: (client) => {
 			dispatch(bindClientData(client));
 		},
-		getContract: (idContract) => {
-			dispatch(getContract(idContract));
+		getContractToUpdate: (idContract) => {
+			dispatch(getContractToUpdate(idContract));
 		}
 	}
 };

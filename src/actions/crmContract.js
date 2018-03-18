@@ -26,6 +26,7 @@ export const SEND_DELETE_FIELD_CONTRACT = 'SEND_DELETE_FIELD_CONTRACT';
 export const SET_FROM_CLIENT = 'SET_FROM_CLIENT';
 export const GET_CONTRACT = 'GET_CONTRACT';
 export const SET_CONTRACT = 'SET_CONTRACT';
+export const GET_CONTRACT_TO_UPDATE = 'GET_CONTRACT_TO_UPDATE';
 export const SET_SELECTEDTAUX = 'SET_SELECTEDTAUX';
 export const SET_SELECTEDREMUNERATION = 'SET_SELECTEDREMUNERATION';
 export const SUBMIT_CONTRACT = 'SUBMIT_CONTRACT'
@@ -144,6 +145,10 @@ export function getContract(idContract) {
 
 export function setContract(contract) {
 	return {type: SET_CONTRACT, contract}
+}
+
+export function getContractToUpdate(idContract) {
+	return {type: GET_CONTRACT_TO_UPDATE, idContract}
 }
 
 export function setSelectedTaux(taux) {
