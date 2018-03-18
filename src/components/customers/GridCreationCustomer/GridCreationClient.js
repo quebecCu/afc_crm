@@ -79,6 +79,16 @@ export class GridCreationClient extends Component {
 														})
 													}
 												</div>
+												{
+													this.props.isAdmin && <div>
+														<GridMethodOnField changeUpdateField={this.props.changeUpdateField} formUpdateField={this.props.formUpdateField}
+																		 formNewField={this.props.formNewField} deleteField={this.props.deleteField}
+																		 grid={this.props.grid} handleModifyField={this.props.handleModifyField}
+																		 handleStatic={this.props.handleStatic} handleNonStatic={this.props.handleNonStatic}
+																		 handleSubmitChamp={this.props.handleSubmitChamp} champTypes={this.props.champTypes}
+																		 changeNewField={this.props.changeNewField}/>
+													 </div>
+												}
 											</div>
 										</div>
 									</div>
@@ -106,17 +116,6 @@ export class GridCreationClient extends Component {
 										}
 										 Valider
 									</button>
-								</div>
-								<div>
-									{
-										this.props.isAdmin &&
-										<GridMethodOnField changeUpdateField={this.props.changeUpdateField} formUpdateField={this.props.formUpdateField}
-														   formNewField={this.props.formNewField} deleteField={this.props.deleteField}
-														   grid={this.props.grid} handleModifyField={this.props.handleModifyField}
-														   handleStatic={this.props.handleStatic} handleNonStatic={this.props.handleNonStatic}
-														   handleSubmitChamp={this.props.handleSubmitChamp} champTypes={this.props.champTypes}
-														   changeNewField={this.props.changeNewField}/>
-									}
 								</div>
 							</div>
 						</div>

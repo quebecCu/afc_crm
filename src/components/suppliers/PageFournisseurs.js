@@ -56,7 +56,7 @@ class PageFournisseurs extends Component {
       <iframe id="ifmcontentstoprint" style="height: 0px; width: 0px; position: absolute"></iframe>
       return(
           <div className="container-fluid">
-            <h1>Assurances collectives</h1>
+            <h1 className="text-center">Assurances collectives</h1>
             <div className="card mb-3">
 							<div className="card-header text-left">
 				      	<i className="fa fa-table"></i> Liste des fournisseurs
