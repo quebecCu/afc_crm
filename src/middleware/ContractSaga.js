@@ -486,8 +486,8 @@ export function* requestGetContract() {
 
 export function* requestGetContractToUpdate() {
 	while (true) {
-		let contract = yield take(GET_CONTRACT_TO_UPDATE);
-		let id = contract.idContract;
+		let contrat = yield take(GET_CONTRACT_TO_UPDATE);
+		let id = contrat.idContract;
 
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/" + id;
@@ -640,12 +640,12 @@ export function* requestGetContractToUpdate() {
 						}
 					});
 					console.log(toUpdate);
-					this.props.changeFormContract({
+					store.dispatch(changeFormContract({
 						...crmContract.formState,
 						intModulesToDisplay: intModulesToDisplay,
 						modulesToDisplay: modulesToDisplay,
 						contrat: toUpdate
-					});
+					}));
 				} else {
 					alert('Erreur lors de la récupération du contrat');
 				}
@@ -669,5 +669,6 @@ export function* ContractsFlow() {
 	yield fork(requestSendUpdateField);
 	yield fork(requestSendDeleteField);
 	yield fork(requestGetContract);
+	yield fork(requestGetContractToUpdate);
 	yield fork(submitContract);
 }

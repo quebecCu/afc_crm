@@ -35,6 +35,10 @@ class CreateContractContainer extends React.Component {
 			facultatif: []
 		});
 		let {formState, contractDisplay, fromClient} = this.props.crmContract;
+		this.state = {
+      crmContract: this.props.crmContract
+    };
+
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		if (!this.props.idContract) {
@@ -448,7 +452,7 @@ class CreateContractContainer extends React.Component {
 	}
 
 	render() {
-		let {contractDisplay, formState, newField, types, updateField, fromClient} = this.props.crmContract;
+		let {contractDisplay, formState, newField, types, updateField, fromClient} = this.state.crmContract;
 		let {dossiersState} = this.props.crmRechercheCollective;
 		let {client} = this.props.crmClientList;
 		let {isAdmin} = this.props.crmLogin;

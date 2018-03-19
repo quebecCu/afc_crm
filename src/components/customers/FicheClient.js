@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import TitreValeur from "../TitreValeur";
 import {changeIdDisplay, deleteCustomer, requestGrid} from "../../actions/crmGridLayout";
 import {getClientRequest} from "../../actions/crmClientList";
 import {setFromClient} from "../../actions/crmContract";
