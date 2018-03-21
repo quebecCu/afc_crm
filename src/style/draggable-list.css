@@ -1,0 +1,21 @@
+
+.itemDraggable {
+  border: 1px solid black;
+  transform-origin: 30% 50% 0px;
+  padding: 20px;
+  background: white;
+  max-height: 100%;
+}
+.itemDraggable .dragHandle {
+  visibility: hidden;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  cursor: move;
+  width: 20px;
+  height: 16px;
+  background: url('./images/grippy.png') 30% 50% no-repeat no-repeat;
+}
+.itemDraggable:hover .dragHandle, .itemDraggable.dragged .dragHandle {
+  visibility: visible;
+}

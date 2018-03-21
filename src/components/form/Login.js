@@ -7,7 +7,9 @@ import  '../../style/footer.css';
 //import { connect  } from 'react-redux';
 import {store} from '../../store';
 import {push} from 'react-router-redux';
+import GoogleMap from "../GoogleMaps"
 //import Img from 'react-image';
+
 
 class Login extends Component   {
 	constructor(props) {
@@ -49,77 +51,83 @@ class Login extends Component   {
 	render() {
 
 		return (
-				<div className="container-fluid">
-					<div id ="logoCo" className="row">
+			<div>
+				<div className="container" style={{paddingTop: 30 + 'px'}}>
+					<div id="logoCo" className="row">
 						<div className="col text-center">
-							<img src={logoCo} alt="logoCompany" width="300" height="200" />
+							<img src={logoCo} alt="logoCompany" width="250px;" className="img-fluid" />
 						</div>
 					</div>
-
-					<div className="row" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-						<div className="col text-center">
-							<div className="loginmodal-container">
-								<h1> Connexion </h1><br/>
-								<form method="POST" onSubmit = {this._login} id="login-form"  >
-									<input className= "form-control" type='text' name="username" id="usernameLogin" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
-									<input className= "form-control" type='password' name="password" id="passwordLogin" placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
-									<div className="form-group">
-										<button type= "submit" className="btn btn-primary btn-lg" id="loginButton" disabled={this.props.isloading ? true : false }>
-											{
-												this.props.loadingLogin&&
-												<i className="fa fa-refresh fa-spin"/>
-											}
-											Login
-										</button>
-									</div>
-								</form>
+			    <div className="card card-login mx-auto mt-5">
+			      <div className="card-header">Connexion</div>
+			      <div className="card-body">
+			        <form method="POST" onSubmit = {this._login} id="login-form"  >
+			          <div className="form-group">
+			            <label htmlFor="usernameLogin">Nom d'utilisateur</label>
+			            <input className="form-control" name="username" id="usernameLogin" type="text" placeholder="Nom d'utilisateur" onChange={this._changeUsername} value={this.props.formState.username} required />
+			          </div>
+			          <div className="form-group">
+			            <label htmlFor="passwordLogin">Mot de passe</label>
+			            <input className="form-control" type='password' name="password" id="passwordLogin" placeholder="Mot de passe" onChange={this._changePassword} value={this.props.formState.password}  required />
+			          </div>
+			          <button type="submit" className="btn btn-primary btn-block" id="loginButton" disabled={this.props.isloading ? true : false }>
+									{
+										this.props.loadingLogin&&
+										<i className="fa fa-refresh fa-spin"/>
+									}
+									Connexion
+								</button>
+								<hr/>
 								<div className="login-help">
 									<br/>
-									<button className="btn btn-primary btn-lg" onClick = {this._forgotten} id="loginButton" > Mot de passe oublié?</button>
+									<button className="btn btn-secondary btn-block" onClick={this._forgotten} id="loginButtonForgotten" > Mot de passe oublié?</button>
 								</div>
-								<div id="errorPassword" className=" w3-container w3-panel w3-red "   style={{display: 'none'}}>
-							    <h3>Nom d'utilisateur ou mot de passe erroné</h3>
+								<br/>
+								<div id="errorPassword" className="alert alert-danger" role="alert" style={{display: 'none'}}>
+							    <h4>Mot de passe erroné</h4>
 							    <p>En cas de problemes, utilisez "Mots de passe oublié?".</p>
-							  </div>
+								</div>
+			        </form>
+			      </div>
+			    </div>
+			  </div>
+				<footer style={{marginTop: 30 + 'px'}}>
+					<div className="row">
+						<div className="col-xs-12 col-md-4 text-center">
+							<div>
+								<i className="fa fa-map-marker" ></i>
+								<p><span >
+								4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
+							</div>
+						</div>
 
+						<div className="col-xs-12 col-md-4 text-center">
+							<div>
+								<i className="fa fa-phone"></i>
+								<p><a href="tel:5149691087">+1 (819) 823-1443</a></p>
+							</div>
+						</div>
+
+						<div className="col-xs-12 col-md-4 text-center">
+							<div>
+								<i className="fa fa-envelope"></i>
+								<p><a href="mailto:crm.udes@gmail.com">crm.udes@gmail.com</a></p>
 							</div>
 						</div>
 					</div>
-
-					<footer className="footer-distributed row">
-						<div className="col text-center">
-							<div className="footer-left">
-								<div>
-									<i className="fa fa-map-marker" ></i>
-									<p><span >
-									4645 Boul Bourque </span> Sherbrooke, QC J1N 2G6</p>
-								</div>
-								<br/><br/>
-								<a  className="material-icons"> &#xe52e;</a><a href = "http://maps.google.com/?q= 4645 Boul Bourque Sherbrooke, QC J1N 2G6"> Obtenir un intineraire</a>
-							</div>
-
-							<div className="footer-center">
-								<div>
-									<i className="fa fa-phone"></i>
-									<p><a href="tel:5149691087">+1 (819) 823-1443</a></p>
-								</div>
-							</div>
-
-							<div className="footer-right">
-								<div>
-									<i className="fa fa-envelope"></i>
-									<p><a href="mailto:crm.udes@gmail.com">crm.udes@gmail.com</a></p>
-								</div>
-								<div className="footer-icons">
-									<a href="https://ca.linkedin.com/in/alainproulx"><i className="fa fa-linkedin"></i></a>
-									<a href="https://github.com/azizou69004/CRM-UDES-2017"><i className="fa fa-github"></i></a>
-								</div>
-							</div>
-							<p className="footer-copyright">  © 2017 CRM Application UDES. All rights reserved </p>
-						</div>
-					</footer>
-				</div>
-
+					<br/>
+					<div className="google-map">
+						<GoogleMap
+							  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+							  loadingElement={<div style={{ height: `100%` }} />}
+							  containerElement={<div style={{ height: `270px` }} />}
+							  mapElement={<div style={{ height: `100%` }} />}
+							/>
+		      </div>
+				</footer>
+				<br/>
+				<p className="text-center">  © 2018 CRM Application UDES. All rights reserved </p>
+			</div>
 		);
 	}
 }

@@ -2,19 +2,20 @@ import {take, fork} from 'redux-saga/effects';
 
 import {
 	changeBigLayout, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract,
-	GET_AGA, GET_CONTRACT, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
+	GET_AGA, GET_CONTRACT, GET_CONTRACT_TO_UPDATE, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
 	GET_TYPES_CONTRACT, SUBMIT_CONTRACT,
 	getEmployesAFC, getGrid, createContract,
 	getListAssureurs,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
-	setContract,
-	setGrid,
+	setContract, setSelectedTaux, setSelectedRemuneration,
+	setGrid, changeFormContract,
 	setListContracts, setModules, setTypesContract, UPDATE_POS_LAYOUT,
 	updateAGA, updateEmployesAFC, updateListAssureurs,
 } from '../actions/crmContract';
 
 import axios from 'axios';
 import {store} from '../store';
+import crmContract from '../reducers/crmContract'
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
 
 let tokenToSend = localStorage.getItem("cookieSession");
@@ -212,11 +213,11 @@ export function* requestGrid() {
 		let user = yield take(GET_GRID);
 		let facDisplay = user.update;
 		let server = "http://localhost:3002/attributesManagement/contract";
-		
+
 		//communication avec server
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/contract';
-		
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -294,10 +295,10 @@ export function* requestUpdateGridLayout() {
 		let menus = layouts.menus;
 
 		let server = "http://localhost:3002/attributesManagement/update/contract/display";
-		
+
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/update/contract/display';
-		
+
 		axios.post(backendUrl, {
 			layout: layout,
 			menus: menus
@@ -321,7 +322,7 @@ export function* requestTypes() {
 		let server = "http://localhost:3002/attributesManagement/types";
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
-		
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -346,10 +347,10 @@ export function* requestSendNewField() {
 		} = field.newField;
 
 		let server = "http://localhost:3002/attributesManagement/create/contract";
-		
+
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/contract';
-		
+
 		axios.post(backendUrl, {
 			description: form.description,
 			label: form.name,
@@ -470,7 +471,181 @@ export function* requestGetContract() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(setContract(response.data.message));
+					store.dispatch(setSelectedTaux(response.data.message.historique_taux[0]));
+					store.dispatch(setSelectedRemuneration(response.data.message.remuneration.history[0]));
 					store.dispatch(getGrid());
+				} else {
+					alert('Erreur lors de la récupération du contrat');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function* requestGetContractToUpdate() {
+	while (true) {
+		let contrat = yield take(GET_CONTRACT_TO_UPDATE);
+		let id = contrat.idContract;
+
+		//communication avec server
+		let server = "http://localhost:3002/collectiveContracts/" + id;
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/'+id;
+
+		axios.get(backendUrl, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					let contract = response.data.message;
+					let facDisplay = contract.facultatif;
+
+					let modulesChoisis = contract.souscriptions;
+					let modulesToUpdate = [];
+					let intModulesToDisplay = modulesChoisis.length;
+					let modulesToDisplay = [];
+					modulesChoisis.forEach((element, index) => {
+						modulesToDisplay.push(element.id.toString());
+						let modalitesToUpdate = [];
+						element.subscriptions.forEach(subs => {
+							/*let subsToPush={
+								idModalite:subs.id,
+								souscription_notes:subs.souscription_notes,
+								valeur:subs.valeur,
+								idValeur: ''//aller chercher dans le backend :(
+							};*/
+							modalitesToUpdate.push({
+								idModalite: subs.id,
+								souscription_notes: subs.souscription_notes,
+								valeur: subs.valeur,
+								idValeur: subs.idvaleur
+							});
+						});
+						//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
+						modulesToUpdate.push({
+							idModule: element.id,
+							module_notes: element.module_notes,
+							modalites: modalitesToUpdate
+						});
+					});
+
+
+					let toUpdate = {
+						idAssureur: contract.idfournisseur,
+						idAGA: contract.idchambrecommerce,//LOOOOP,
+						idContract: contract.idcontrat,
+						idClient: contract.idClient,
+						modulesChoisis: modulesToUpdate,
+						modulesInitiaux: modulesToUpdate,
+						numPolice: contract.police,
+						dateEmission: contract.date_signature,
+						moisRenouv: contract.mois_renouvellement,
+						notes: contract.notes,
+						historiqueTaux: { //Aller chercher la bonne année?
+							diff: '',
+							annee_dep: '',
+							annee_fin: '',
+							vie: '',
+							dma: '',
+							pac: '',
+							ct: '',
+							lt: '',
+							amc_ind: '',
+							amc_mono: '',
+							amc_couple: '',
+							amc_fam: '',
+							dent_ind: '',
+							dent_mono: '',
+							dent_couple: '',
+							dent_fam: '',
+							mg_ind: '',
+							mg_mono: '',
+							mg_couple: '',
+							mg_fam: '',
+							pae: '',
+							prime_ms: '',
+							prime_an: ''
+						},
+						remuneration: { //idem avec année depart et annee fin ?
+							vie: '',
+							ct: '',
+							lt: '',
+							amc: '',
+							dent: '',
+							mg: '',
+							pae: '',
+							notes: '',
+							recu: '',
+							base: '',
+							boni: '',
+							total: '',
+							gtotal: '',
+							idConseiller: '',
+							split: '',
+							bdu: '',
+							paye: '',
+							dpaye: '',
+							solde: ''
+						}
+					};
+
+					let dateDep = parseInt(contract.date_signature[0] + contract.date_signature[1] + contract.date_signature[2] + contract.date_signature[3], 10);
+					contract.remuneration.history.forEach(element => {
+						if (parseInt(element.annee_dep, 10) === dateDep) {
+							toUpdate.remuneration.vie = element.vie;
+							toUpdate.remuneration.ct = element.ct;
+							toUpdate.remuneration.lt = element.lt;
+							toUpdate.remuneration.dent = element.dentaire;
+							toUpdate.remuneration.mg = element.mg;
+							toUpdate.remuneration.pae = element.pae;
+							toUpdate.remuneration.notes = element.notes;
+							toUpdate.remuneration.recu = element.date_payée_base;
+							toUpdate.remuneration.base = element.montant_payé_base;
+							toUpdate.remuneration.boni = element.montant_payé_boni;
+							toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
+							toUpdate.remuneration.total = element.rémunération_totale;
+							toUpdate.remuneration.idConseiller = element.idconseiller;
+							toUpdate.remuneration.bdu = element.montant_dû;
+							toUpdate.remuneration.paye = element.montant_payé;
+							toUpdate.remuneration.dpaye = element.date_payée;
+
+						}
+					});
+
+					contract.historique_taux.forEach(element => {
+						if (parseInt(element.annee_dep, 10) === dateDep) {
+							toUpdate.historiqueTaux.diff = element.différence;
+							toUpdate.historiqueTaux.anneedep = element.annee_dep;
+							toUpdate.historiqueTaux.anneefin = element.annee_fin;
+							toUpdate.historiqueTaux.vie = element.vie;
+							toUpdate.historiqueTaux.dma = element.dma;
+							toUpdate.historiqueTaux.pac = element.pac;
+							toUpdate.historiqueTaux.ct = element.ct;
+							toUpdate.historiqueTaux.lt = element.lt;
+							toUpdate.historiqueTaux.amc_ind = element.amc_ind;
+							toUpdate.historiqueTaux.amc_mono = element.amc_mono;
+							toUpdate.historiqueTaux.amc_couple = element.amc_couple;
+							toUpdate.historiqueTaux.amc_fam = element.amc_fam;
+							toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
+							toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
+							toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
+							toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
+							toUpdate.historiqueTaux.mg_ind = element.mg_ind;
+							toUpdate.historiqueTaux.mg_mono = element.mg_mono;
+							toUpdate.historiqueTaux.mg_couple = element.mg_couple;
+							toUpdate.historiqueTaux.mg_fam = element.mg_fam;
+							toUpdate.historiqueTaux.pae = element.pae;
+							toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
+							toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
+						}
+					});
+					console.log(toUpdate);
+					store.dispatch(changeFormContract({
+						...crmContract.formState,
+						intModulesToDisplay: intModulesToDisplay,
+						modulesToDisplay: modulesToDisplay,
+						contrat: toUpdate
+					}));
 				} else {
 					alert('Erreur lors de la récupération du contrat');
 				}
@@ -494,5 +669,6 @@ export function* ContractsFlow() {
 	yield fork(requestSendUpdateField);
 	yield fork(requestSendDeleteField);
 	yield fork(requestGetContract);
+	yield fork(requestGetContractToUpdate);
 	yield fork(submitContract);
 }

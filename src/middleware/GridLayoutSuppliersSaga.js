@@ -1,4 +1,4 @@
-import {take, fork} from 'redux-saga/effects';
+import { take, fork } from 'redux-saga/effects';
 import {
 	REQUEST_GRID_FOUR, CREATE_FOURNISSEUR_FILE,
 	UPDATE_FOURNISSEUR_FILE, changeGridFour, changeLayoutFour, UPDATE_POSITIONS_SUP, changeNewFieldSup,
@@ -7,24 +7,25 @@ import {
 	GET_GRID_MODIFY_SUP
 } from '../actions/crmGridLayoutSuppliers';
 import axios from 'axios';
-import {store} from '../store';
-import {getContactsSup} from "../actions/crmContacts";
-import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
-import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
+import { store } from '../store';
+import { getContactsSup } from "../actions/crmContacts";
+import { changeLoading, changeLoadingValidation } from "../actions/crmDashboard";
+import { changeViewSuppliers } from "../actions/crmSuppliersContainer";
+import { history } from '../store.js';
 
-let tokenToSend= localStorage.getItem("cookieSession");
-if(tokenToSend === undefined)
-	tokenToSend="";
+let tokenToSend = localStorage.getItem("cookieSession");
+if (tokenToSend === undefined)
+	tokenToSend = "";
 
-let config ={
-		headers: {
-			"Authorization": tokenToSend
-		}
+let config = {
+	headers: {
+		"Authorization": tokenToSend
+	}
 };
 
 //Récupère les champs du back-end
-export function * getGridLayout (){
-	while(true){
+export function* getGridLayout() {
+	while (true) {
 
 		yield take(REQUEST_GRID_FOUR);
 
@@ -33,12 +34,12 @@ export function * getGridLayout (){
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider';
 
-		axios.get(backendUrl,config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 
-				if(!!response.data.message && response.data.status === "success"){
-					let grid = response.data.message.map( champ => {
-						return {...champ, value: ''};
+				if (!!response.data.message && response.data.status === "success") {
+					let grid = response.data.message.map(champ => {
+						return { ...champ, value: '' };
 					});
 					store.dispatch(changeGridFour(grid));
 					let layout = response.data.message.map(champ => {
@@ -52,7 +53,7 @@ export function * getGridLayout (){
 							static: true
 						};
 					});
-					store.dispatch(changeLayoutFour({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
+					store.dispatch(changeLayoutFour({ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }));
 					store.dispatch(getChampTypesSup());
 				}
 			})
@@ -63,8 +64,8 @@ export function * getGridLayout (){
 }
 
 //Envoie les champs au back-end (Création d'un fournisseur)
-export function * sendFile() {
-	while(true) {
+export function* sendFile() {
+	while (true) {
 		let file = yield take(CREATE_FOURNISSEUR_FILE);
 		let {
 			grid,
@@ -72,7 +73,7 @@ export function * sendFile() {
 			arrayContacts
 		} = file.file;
 		let facultatif = grid.map(champ => {
-			return {id: champ.idattrfournisseur, value: champ.value}
+			return { id: champ.idattrfournisseur, value: champ.value }
 		});
 
 		//communication avec server
@@ -96,15 +97,42 @@ export function * sendFile() {
 			grand_grp: requiredFields.bigGroup,
 			nb_min_petit_grp: requiredFields.employesLilGroup,
 			nb_min_grand_grp: requiredFields.employesBigGroup
-		},config)
+		}, config)
 			.then(function (response) {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche fournisseur a été créée avec succès');
 					store.dispatch(changeViewSuppliers(""));
 				}
-				else if(response.data.status === "fail") {
-					alert(response.data.message);
+				else if (response.data.status === "fail") {
+
+					// Modification de soumar
+
+					if (requiredFields.ville.length > 50)
+						alert("La longueur de ville doit etre inférieure à 50!");
+
+					else
+						if (requiredFields.codePostal.length > 7)
+							alert("La longueur du code postal doit etre inférieure à 7!");
+						else
+							if (requiredFields.telephone.length > 20)
+								alert("La longueur de telephone doit etre inférieure à 20!");
+							else
+								if (requiredFields.extension.length > 3)
+									alert("La longueur de l'extension de téléphone doit etre inférieure à 3!");
+								else
+									if (requiredFields.code.length > 20)
+										alert("La longueur du code doit etre inférieure à 20!");
+									else
+										if (isNaN(requiredFields.employesLilGroup))
+											alert("il faut que le champs du nombre d'employés pour petits groupes soit un nombre!");
+										else
+											if (isNaN(requiredFields.employesBigGroup))
+												alert("il faut que le champs du nombre d'employés pour grands groupes soit un nombre!");
+											else
+												alert(response.data.message);
+					// Fin modification de Soumar
+
 				}
 				else {
 					alert('Erreur lors de la création de la fiche fournisseur');
@@ -117,8 +145,8 @@ export function * sendFile() {
 }
 
 //Envoie les champs et leurs positions au back-end (Modification d'un fournisseur)
-export function * updateFile() {
-	while(true) {
+export function* updateFile() {
+	while (true) {
 		let file = yield take(UPDATE_FOURNISSEUR_FILE);
 		let {
 			grid,
@@ -130,7 +158,7 @@ export function * updateFile() {
 		console.log("update file");
 
 		let facultatif = grid.map(champ => {
-			return {id: champ.idattrfournisseur, value: champ.value}
+			return { id: champ.idattrfournisseur, value: champ.value }
 		});
 
 
@@ -158,18 +186,49 @@ export function * updateFile() {
 			grand_grp: requiredFields.bigGroup,
 			nb_min_petit_grp: requiredFields.employesLilGroup,
 			nb_min_grand_grp: requiredFields.employesBigGroup
-		},config)
+		}, config)
 			.then(function (response) {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
-					alert('La fiche client a été modifiée avec succès');
-					store.dispatch(changeViewSuppliers(""));
+					alert('La fiche fournisseur a été modifiée avec succès');
+					history.push('/dashboard/collective/suppliers');
 				}
-				else if(response.data.status === 'fail') {
-					alert(response.data.message);
+				else if (response.data.status === 'fail') {
+
+					// Modification de soumar
+
+					if (requiredFields.ville.length > 50)
+						alert("La longueur de ville doit etre inférieure à 50!");
+
+					else
+						if (requiredFields.codePostal.length > 7)
+							alert("La longueur du code postal doit etre inférieure à 7!");
+						else
+							if (requiredFields.telephone.length > 20)
+								alert("La longueur de telephone doit etre inférieure à 20!");
+							else
+								if (requiredFields.extension.length > 3)
+									alert("La longueur de l'extension de téléphone doit etre inférieure à 3!");
+								else
+									if (requiredFields.code.length > 20)
+										alert("La longueur du code doit etre inférieure à 20!");
+									else
+										if (isNaN(requiredFields.employesLilGroup))
+											alert("il faut que le champs du nombre d'employés pour petits groupes soit un nombre!");
+										else
+											if (isNaN(requiredFields.employesBigGroup))
+												alert("il faut que le champs du nombre d'employés pour grands groupes soit un nombre!");
+
+											else
+												alert(response.data.message);
+
+					// Fin modification de Soumar
+
+
+
 				}
 				else {
-					alert('Erreur lors de la modification de la fiche client');
+					alert('Erreur lors de la modification de la fiche fournisseur');
 				}
 			})
 			.catch(function (error) {
@@ -179,8 +238,8 @@ export function * updateFile() {
 }
 
 //on envoie la position des champs
-export function * updatePositions() {
-	while(true) {
+export function* updatePositions() {
+	while (true) {
 		let positions = yield take(UPDATE_POSITIONS_SUP);
 		let {
 			newItem,
@@ -193,7 +252,7 @@ export function * updatePositions() {
 
 		axios.post(backendUrl, {
 			layout: newItem,
-		},config)
+		}, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 				} else {
@@ -207,8 +266,8 @@ export function * updatePositions() {
 }
 
 //Envoie le nouveau champ crée au back-end
-export function * createNewField() {
-	while(true) {
+export function* createNewField() {
+	while (true) {
 		let champ = yield take(CREATE_NEW_FIELD_SUP);
 		let {
 			form,
@@ -235,7 +294,7 @@ export function * createNewField() {
 			minwidth: 3,
 			width: 3
 
-		},config)
+		}, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(changeNewFieldSup(
@@ -258,8 +317,8 @@ export function * createNewField() {
 }
 
 //on envoie les infos d'un champ à modifier
-export function * sendUpdateField() {
-	while(true) {
+export function* sendUpdateField() {
+	while (true) {
 		let field = yield take(UPDATE_FIELD_SUP);
 		let {
 			descField,
@@ -280,7 +339,7 @@ export function * sendUpdateField() {
 			forme: null,
 			valeur_defaut: null,
 			ext: null
-		},config)
+		}, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert("La modification du champ est un succès");
@@ -290,7 +349,7 @@ export function * sendUpdateField() {
 					}));
 					store.dispatch(requestGridFour());
 				}
-				else if(response.data.status === "fail") {
+				else if (response.data.status === "fail") {
 					alert(response.data.message);
 				}
 				else {
@@ -304,17 +363,17 @@ export function * sendUpdateField() {
 }
 
 //on supprime un champ
-export function * sendDeleteField() {
-	while(true) {
+export function* sendDeleteField() {
+	while (true) {
 		let field = yield take(DELETE_FIELD_SUP);
 		let id = field.field;
 
 		//communication avec server
-		let server = "http://localhost:3002/attributesManagement/provider/"+id;
+		let server = "http://localhost:3002/attributesManagement/provider/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/' + id;
 
-		axios.delete(backendUrl,config)
+		axios.delete(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					store.dispatch(requestGridFour());
@@ -330,19 +389,19 @@ export function * sendDeleteField() {
 }
 
 //Récupère les types de champ que l'administrateur peut créer
-export function * requestChampTypes (){
-	while(true){
+export function* requestChampTypes() {
+	while (true) {
 
-		 yield take(GET_CHAMP_TYPES_SUP);
+		yield take(GET_CHAMP_TYPES_SUP);
 
 		//communication avec server
-			let server = "http://localhost:3002/attributesManagement/types";
+		let server = "http://localhost:3002/attributesManagement/types";
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
 
-		axios.get(backendUrl,config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
-				if(!!response.data.message && response.data.status === "success"){
+				if (!!response.data.message && response.data.status === "success") {
 					store.dispatch(updateChampTypesSup(response.data.message));
 					store.dispatch(changeLoading(false));
 				}
@@ -374,7 +433,7 @@ export function* requestSupplier() {
 						nomEntreprise: supplier.nom,
 						rue: supplier.rue,
 						ville: supplier.ville,
-						province: supplier.province,
+						province: supplier.nomprovince,
 						codePostal: supplier.codepostal,
 						telephone: supplier.tel_principal,
 						extension: supplier.ext_tel_principal,
@@ -399,8 +458,8 @@ export function* requestSupplier() {
 }
 
 //Récupère les champs du back-end
-export function * getGridLayoutModify (){
-	while(true){
+export function* getGridLayoutModify() {
+	while (true) {
 
 		let data = yield take(GET_GRID_MODIFY_SUP);
 		let facultatifs = data.data;
@@ -409,15 +468,15 @@ export function * getGridLayoutModify (){
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider';
 
-		axios.get(backendUrl,config)
+		axios.get(backendUrl, config)
 			.then(function (response) {
 
-				if(!!response.data.message && response.data.status === "success"){
+				if (!!response.data.message && response.data.status === "success") {
 					let facultatif = [];
 					response.data.message.forEach(champ => {
 						let duplicate = false;
 						facultatifs.forEach(champ2 => {
-							if(champ2.idRow === champ.idattrfournisseur) {
+							if (champ2.idRow === champ.idattrfournisseur) {
 								duplicate = true;
 								facultatif.push({
 									...champ,
@@ -425,7 +484,7 @@ export function * getGridLayoutModify (){
 								});
 							}
 						});
-						if(!duplicate) {
+						if (!duplicate) {
 							facultatif.push({
 								...champ,
 								value: ''
@@ -444,7 +503,7 @@ export function * getGridLayoutModify (){
 							static: true
 						};
 					});
-					store.dispatch(changeLayoutFour({lg: layout, md: layout, sm: layout, xs: layout, xxs: layout}));
+					store.dispatch(changeLayoutFour({ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }));
 					store.dispatch(getChampTypesSup());
 				}
 			})
@@ -455,15 +514,15 @@ export function * getGridLayoutModify (){
 }
 
 
-export function * GridFlowSup () {
-	yield fork (getGridLayout);
-	yield fork (sendFile);
-	yield fork (updateFile);
-	yield fork (updatePositions);
-	yield fork (createNewField);
-	yield fork (requestChampTypes);
-	yield fork (sendDeleteField);
-	yield fork (sendUpdateField);
-	yield fork (requestSupplier);
-	yield fork (getGridLayoutModify);
+export function* GridFlowSup() {
+	yield fork(getGridLayout);
+	yield fork(sendFile);
+	yield fork(updateFile);
+	yield fork(updatePositions);
+	yield fork(createNewField);
+	yield fork(requestChampTypes);
+	yield fork(sendDeleteField);
+	yield fork(sendUpdateField);
+	yield fork(requestSupplier);
+	yield fork(getGridLayoutModify);
 }
