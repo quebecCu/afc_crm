@@ -183,6 +183,7 @@ let initialState = {
 	      }
 	   ]
 	},
+	chambre:{}, 
 	selectedTaux: {},
 	selectedRemuneration: {},
 	listContracts: [],
@@ -228,6 +229,7 @@ let initialState = {
 				modalites:[{idValeur:1,idModalite:5,valeur:"edrg"},
 					{idValeur:1,idModalite:4,valeur:23}]}
 				],
+			chambreDeCommerce:'',	
 			numPolice:'',
 			dateEmission:'',
 			moisRenouv:'',
@@ -290,6 +292,8 @@ export default function reducer (state = initialState, action){
 			return {...state, formState: action.newForm, errors:'' };
 		case UPDATE_AGA:
 			return {...state, formState:{...state.formState, AGA:action.listAGA}, errors:'' };
+		/* ADD AGA */  
+	
 		case UPDATE_EMPLOYES_AFC:
 			return {...state, formState:{...state.formState, employesAFC:action.listEmployes}, errors:'' };
 		case UPDATE_LIST_ASSUREURS:
@@ -320,6 +324,7 @@ export default function reducer (state = initialState, action){
 			return {...state, selectedTaux: action.taux, errors:''};
 		case SET_SELECTEDREMUNERATION:
 			return {...state, selectedRemuneration: action.remuneration, errors:''};
+
 		default:
 			return state;
 	}

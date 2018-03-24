@@ -9,6 +9,7 @@ class ContractInfoPart extends React.Component {
 		this._onChangeDateEmission=this._onChangeDateEmission.bind(this);
 		this._onChangeMoisRenouv=this._onChangeMoisRenouv.bind(this);
 		this._onChangeNotes=this._onChangeNotes.bind(this);
+		this._onChangeChambreDeCommerce=this._onChangeChambreDeCommerce.bind(this); 
 		this._assureurs = this._assureurs.bind(this);
 	}
 
@@ -34,6 +35,10 @@ class ContractInfoPart extends React.Component {
 
 	_onChangeNotes(event){
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,notes:event.target.value}});
+	}
+
+	_onChangeChambreDeCommerce(event){
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,chambreDeCommerce:event.target.value}});
 	}
 
 	_assureurs() {
@@ -97,6 +102,22 @@ class ContractInfoPart extends React.Component {
 				</select>
 				<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
 			</div>
+			
+			 {/* ajouter la chambre de commerce */ }
+			<div className="form-group">
+			<label id="chambreCommerceLabel" className="col-form-label">Ajouter une chambre de commerce </label>
+				<br/>
+				<textarea
+					className="form-control"
+					value={this.props.formState.contrat.chambreDeCommerce}
+					placeholder="Chambre de commerce"
+					id="chambreDeCommerce"
+					onChange={this._onChangeChambreDeCommerce}
+				/>
+			</div>
+			
+			{/* fin ajouter la chambre de commerce */ }
+
 			<div className="form-group">
 				<label id="numPoliceLabel" className="col-form-label">Numéro de police</label>
 				<br/>

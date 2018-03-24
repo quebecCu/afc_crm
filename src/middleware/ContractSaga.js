@@ -5,7 +5,7 @@ import {
 	GET_AGA, GET_CONTRACT, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
 	GET_TYPES_CONTRACT, SUBMIT_CONTRACT,
 	getEmployesAFC, getGrid, createContract,
-	getListAssureurs,
+	getListAssureurs,ajouterChambreCommerce,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
 	setContract, setSelectedTaux, setSelectedRemuneration,
 	setGrid,
@@ -27,6 +27,7 @@ let config = {
 	}
 };
 
+
 export function * submitContract() {
 
 	while (true) {
@@ -36,9 +37,9 @@ export function * submitContract() {
 
 		let {
 			idClient, idRepresentant,
-			idAssureur, idAGA, numPolice,
-			dateEmission, moisRenouv, notes,
-			historiqueTaux, remuneration,
+			idAssureur, idAGA, chambreDeCommerce, 
+			numPolice, dateEmission, moisRenouv, notes,
+			historiqueTaux, remuneration, 
 			modulesChoisis
 		} = formState.contract.contrat;
 
@@ -66,6 +67,7 @@ export function * submitContract() {
 			idRepresentant: idRepresentant,
 			idAssureur: idAssureur,
 			idAGA: idAGA,
+			chambreDeCommerce:chambreDeCommerce, 
 			numPolice: numPolice,
 			dateEmission: dateEmission,
 			moisRenouv: moisRenouv,
@@ -80,6 +82,8 @@ export function * submitContract() {
 					alert('Le contrat a été créé avec succès');
 				}
 				else if (response.data.status === "fail") {
+						
+					//else 	
 					alert(response.data.message);
 				}
 				else {

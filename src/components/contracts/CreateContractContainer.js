@@ -8,7 +8,7 @@ import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getGrid, createContract,
+	getGrid, createContract,ajouterChambreCommerce,
 	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../../actions/crmContract";
 import GridOptionnalContract from "./GridOptionnalContract";
@@ -641,7 +641,6 @@ class CreateContractContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-
 	return {
 		crmContract: state.crmContract,
 		crmRechercheCollective: state.crmRechercheCollective,

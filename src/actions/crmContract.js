@@ -28,7 +28,9 @@ export const GET_CONTRACT = 'GET_CONTRACT';
 export const SET_CONTRACT = 'SET_CONTRACT';
 export const SET_SELECTEDTAUX = 'SET_SELECTEDTAUX';
 export const SET_SELECTEDREMUNERATION = 'SET_SELECTEDREMUNERATION';
-export const SUBMIT_CONTRACT = 'SUBMIT_CONTRACT'
+export const SUBMIT_CONTRACT = 'SUBMIT_CONTRACT';
+export const SUBMIT_CHAMBRE_COMMERCE = 'SUBMIT_CHAMBRE_COMMERCE';
+
 
 export function createContract(contract){
 	return {type: SUBMIT_CONTRACT, contract}
