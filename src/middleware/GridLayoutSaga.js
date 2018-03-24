@@ -43,7 +43,7 @@ export function * sendFile() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/create";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/create';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/create';
 
 		axios.post(backendUrl, {
 			idreleve: requiredFields.releve,
@@ -123,7 +123,7 @@ export function * getGridLayout (){
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/customer";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/customer';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/customer';
 
 		axios.get(backendUrl,config)
 			.then(function (response) {
@@ -181,7 +181,7 @@ export function * requestReleves (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/statementSendingModes";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/statementSendingModes';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/statementSendingModes';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -213,7 +213,7 @@ export function * requestProvinces (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/provinces";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/provinces';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/provinces';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -245,7 +245,7 @@ export function * requestChampTypes (){
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/types";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/types';
 
 		axios.get(backendUrl,config)
 			.then(function (response) {
@@ -279,7 +279,7 @@ export function * requestActivites (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/activities";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/activities';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/activities';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -314,7 +314,7 @@ export function * requestEtats (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/states";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/states';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/states';
 
 		axios.get(backendUrl,config)
 			.then(function (response) {
@@ -350,7 +350,7 @@ export function * requestProvenances (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/provenances";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/provenances';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/provenances';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -399,7 +399,7 @@ export function * updateFile() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/update";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/update';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/update';
 
 		axios.post(backendUrl, {
 			idclient: idToDisplay,
@@ -472,7 +472,7 @@ export function * deleteCustomerFile() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/'+id;
 
 		axios.delete(backendUrl,config)
 			.then(function (response) {
@@ -503,7 +503,7 @@ export function * createNewField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/create/customer";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/customer';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/create/customer';
 
 		axios.post(backendUrl, {
 			description: form.description,
@@ -551,7 +551,7 @@ export function * updatePositions() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer/display";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/customer/display';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/customer/display';
 
 		axios.post(backendUrl, {
 			layout: newItem,
@@ -580,7 +580,7 @@ export function * sendUpdateField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/customer';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/customer';
 
 		axios.post(backendUrl, {
 			id: id,
@@ -622,7 +622,7 @@ export function * sendDeleteField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/customer/"+id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/customer/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/customer/'+id;
 
 		axios.delete(backendUrl,config)
 			.then(function (response) {
@@ -649,7 +649,7 @@ export function * getGridLayoutToModify() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/clients/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/clients/'+id;
 
 		axios.get(server,config)
 			.then(function (response) {

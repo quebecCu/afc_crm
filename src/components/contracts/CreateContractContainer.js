@@ -452,7 +452,7 @@ class CreateContractContainer extends React.Component {
 	}
 
 	render() {
-		let {contractDisplay, formState, newField, types, updateField, fromClient} = this.state.crmContract;
+		let {contractDisplay, formState, newField, types, updateField, fromClient} = this.props.crmContract;
 		let {dossiersState} = this.props.crmRechercheCollective;
 		let {client} = this.props.crmClientList;
 		let {isAdmin} = this.props.crmLogin;

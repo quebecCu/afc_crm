@@ -60,7 +60,7 @@ export function * submitContract() {
 		//communication avec server
 		var server = "http://localhost:3002/collectiveContracts/create";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/create';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/create';
 
 		axios.post(backendUrl, {
 			idClient: idClient,
@@ -100,7 +100,7 @@ export function* requestAGA() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/aga";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -124,7 +124,7 @@ export function* requestlistContracts() {
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -147,7 +147,7 @@ export function* requestAFC() {
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/employesafc";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -171,7 +171,7 @@ export function* requestFourniseurs() {
 		//communication avec server
 		let server = "http://localhost:3002/providers";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -193,7 +193,7 @@ export function* requestModules() {
 		yield take(GET_MODULES);
 		let server = "http://localhost:3002/collectiveContracts/modules";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/modules';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/modules';
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -216,7 +216,7 @@ export function* requestGrid() {
 
 		//communication avec server
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/contract';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/contract';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -297,7 +297,7 @@ export function* requestUpdateGridLayout() {
 		let server = "http://localhost:3002/attributesManagement/update/contract/display";
 
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/update/contract/display';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/update/contract/display';
 
 		axios.post(backendUrl, {
 			layout: layout,
@@ -321,7 +321,7 @@ export function* requestTypes() {
 		yield take(GET_TYPES_CONTRACT);
 		let server = "http://localhost:3002/attributesManagement/types";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/types';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -349,7 +349,7 @@ export function* requestSendNewField() {
 		let server = "http://localhost:3002/attributesManagement/create/contract";
 
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/contract';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/create/contract';
 
 		axios.post(backendUrl, {
 			description: form.description,
@@ -397,7 +397,7 @@ export function* requestSendUpdateField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/contract";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagementupdate/contract';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagementupdate/contract';
 
 
 		axios.post(backendUrl, {
@@ -440,7 +440,7 @@ export function* requestSendDeleteField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/contract/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/contract/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/contract/'+id;
 
 		axios.delete(backendUrl, config)
 			.then(function (response) {
@@ -465,7 +465,7 @@ export function* requestGetContract() {
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/'+id;
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -492,7 +492,7 @@ export function* requestGetContractToUpdate() {
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/collectiveContracts/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/'+id;
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -641,11 +641,11 @@ export function* requestGetContractToUpdate() {
 					});
 					console.log(toUpdate);
 					store.dispatch(changeFormContract({
-						...crmContract.formState,
 						intModulesToDisplay: intModulesToDisplay,
 						modulesToDisplay: modulesToDisplay,
 						contrat: toUpdate
 					}));
+					store.dispatch(getGrid());
 				} else {
 					alert('Erreur lors de la récupération du contrat');
 				}

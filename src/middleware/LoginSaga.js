@@ -19,7 +19,7 @@ export function * loginFlow (){
 		let server = "http://localhost:3002/login";
 		//changer la location de la variable server pour plus de securite
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/login';
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/login';
 
 		axios.post(backendUrl, {
 			username: username,

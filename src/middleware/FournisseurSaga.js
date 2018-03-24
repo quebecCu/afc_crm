@@ -20,7 +20,7 @@ export function * getListFournisseurs (){
 		let server = "http://localhost:3002/providers";
 
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl==='localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers';
+		backendUrl = backendUrl==='localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/providers';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {

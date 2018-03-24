@@ -43,7 +43,7 @@ export function* createUser() {
 		//communication avec server
 		var server = "http://localhost:3002/users/create";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/create';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/create';
 
 		axios.post(backendUrl, {
 			role: role,
@@ -99,7 +99,7 @@ export function* updateUser() {
 		//communication avec server
 		var server = "http://localhost:3002/users/update/";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/update/';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/update/';
 
 		axios.post(backendUrl, {
 			id: id,
@@ -147,7 +147,7 @@ export function* deleteUser() {
 		//communication avec server
 		var server = "http://localhost:3002/users/user/" + id.id;
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/user/' + id.id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/user/' + id.id;
 
 		axios.delete(backendUrl, config)
 			.then(function (response) {
@@ -178,7 +178,7 @@ export function* getOperations() {
 		}
 		var server = "http://localhost:3002/users/operations";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/operations';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/operations';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -211,7 +211,7 @@ export function* getDefaultPerms() {
 		}
 		var server = "http://localhost:3002/users/defaultPerms";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/defaultPerms';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/defaultPerms';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -234,7 +234,7 @@ export function* getRoles() {
 		//communication avec server
 		var server = "http://localhost:3002/users/getRoles";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
 
 		var tokenToSend = localStorage.getItem("cookieSession");
 		if (tokenToSend === undefined)
@@ -265,7 +265,7 @@ export function* getListUsers() {
 
 		var server = "http://localhost:3002/users/list";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/list';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/list';
 
 		var tokenToSend = localStorage.getItem("cookieSession");
 		if (tokenToSend === undefined)
@@ -305,7 +305,7 @@ export function* requestUserToDisplay() {
 		};
 		let server = "http://localhost:3002/users/user/" + user.id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/users/user/' + user.id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/user/' + user.id;
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
