@@ -5,7 +5,7 @@ import {
 	GET_AGA, GET_CONTRACT, GET_CONTRACT_TO_UPDATE, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
 	GET_TYPES_CONTRACT, SUBMIT_CONTRACT,
 	getEmployesAFC, getGrid, createContract,
-	getListAssureurs,ajouterChambreCommerce,
+	getListAssureurs,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
 	setContract, setSelectedTaux, setSelectedRemuneration,
 	setGrid, changeFormContract,
@@ -16,6 +16,7 @@ import {
 import axios from 'axios';
 import {store} from '../store';
 import crmContract from '../reducers/crmContract'
+import { history } from '../store.js';
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
 
 let tokenToSend = localStorage.getItem("cookieSession");
@@ -28,7 +29,6 @@ let config = {
 	}
 };
 
-
 export function * submitContract() {
 
 	while (true) {
@@ -38,9 +38,9 @@ export function * submitContract() {
 
 		let {
 			idClient, idRepresentant,
-			idAssureur, idAGA, chambreDeCommerce, 
-			numPolice, dateEmission, moisRenouv, notes,
-			historiqueTaux, remuneration, 
+			idAssureur, idAGA, numPolice,
+			dateEmission, moisRenouv, notes,
+			historiqueTaux, remuneration,
 			modulesChoisis
 		} = formState.contract.contrat;
 
@@ -68,7 +68,6 @@ export function * submitContract() {
 			idRepresentant: idRepresentant,
 			idAssureur: idAssureur,
 			idAGA: idAGA,
-			chambreDeCommerce:chambreDeCommerce, 
 			numPolice: numPolice,
 			dateEmission: dateEmission,
 			moisRenouv: moisRenouv,
@@ -81,10 +80,9 @@ export function * submitContract() {
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('Le contrat a été créé avec succès');
+					history.push('/dashboard/collective/contracts');
 				}
 				else if (response.data.status === "fail") {
-						
-					//else 	
 					alert(response.data.message);
 				}
 				else {
