@@ -62,6 +62,7 @@ class ContractInfoPart extends React.Component {
 
 
 	render(){
+		alert(this.props.formState.contrat.numPolice)
 		return <div>
 			<h5>Renseignement généraux sur le contrat</h5>
 			<br/>

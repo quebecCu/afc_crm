@@ -29,7 +29,7 @@ class App extends Component {
 				store.dispatch(checkIfLogged(formStateAdm));
 			}
 	}
-	
+
 	render() {
 		return (
 			<Provider store={store}>
@@ -51,8 +51,6 @@ class App extends Component {
 							exact
 							path="/ResetPassword/:token"
 							component={ResetPagePassword}/>
-						<Route
-							component={ErrorPage}/>
 					</Switch>
 				</ConnectedRouter>
 			</Provider>

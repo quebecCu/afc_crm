@@ -24,7 +24,7 @@ export function* getClient() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/' + id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/' + id;
 
 
 		axios.get(backendUrl, config)

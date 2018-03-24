@@ -10,7 +10,6 @@ import axios from 'axios';
 import { store } from '../store';
 import { getContactsSup } from "../actions/crmContacts";
 import { changeLoading, changeLoadingValidation } from "../actions/crmDashboard";
-import { changeViewSuppliers } from "../actions/crmSuppliersContainer";
 import { history } from '../store.js';
 
 let tokenToSend = localStorage.getItem("cookieSession");
@@ -32,7 +31,7 @@ export function* getGridLayout() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/provider";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/provider';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -79,7 +78,7 @@ export function* sendFile() {
 		//communication avec server
 		let server = "http://localhost:3002/providers/create";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/create';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/providers/create';
 
 
 		axios.post(backendUrl, {
@@ -102,7 +101,7 @@ export function* sendFile() {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche fournisseur a été créée avec succès');
-					store.dispatch(changeViewSuppliers(""));
+					history.push('/dashboard/collective/suppliers');
 				}
 				else if (response.data.status === "fail") {
 
@@ -165,7 +164,7 @@ export function* updateFile() {
 		//communication avec server
 		let server = "http://localhost:3002/providers/update";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/update';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/providers/update';
 
 
 		axios.post(backendUrl, {
@@ -248,7 +247,7 @@ export function* updatePositions() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/provider/display";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/provider/display';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/provider/display';
 
 		axios.post(backendUrl, {
 			layout: newItem,
@@ -278,7 +277,7 @@ export function* createNewField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/create/provider";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/provider';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/create/provider';
 
 
 		axios.post(backendUrl, {
@@ -329,7 +328,7 @@ export function* sendUpdateField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/provider";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/provider';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/provider';
 
 
 		axios.post(backendUrl, {
@@ -371,7 +370,7 @@ export function* sendDeleteField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/provider/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider/' + id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/provider/' + id;
 
 		axios.delete(backendUrl, config)
 			.then(function (response) {
@@ -397,7 +396,7 @@ export function* requestChampTypes() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/types";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/types';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -422,7 +421,7 @@ export function* requestSupplier() {
 		//communication avec server
 		let server = "http://localhost:3002/providers/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/providers/' + id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/providers/' + id;
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -466,7 +465,7 @@ export function* getGridLayoutModify() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/provider";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/provider';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/provider';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
