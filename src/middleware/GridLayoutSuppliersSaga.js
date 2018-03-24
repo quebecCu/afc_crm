@@ -10,7 +10,6 @@ import axios from 'axios';
 import { store } from '../store';
 import { getContactsSup } from "../actions/crmContacts";
 import { changeLoading, changeLoadingValidation } from "../actions/crmDashboard";
-import { changeViewSuppliers } from "../actions/crmSuppliersContainer";
 import { history } from '../store.js';
 
 let tokenToSend = localStorage.getItem("cookieSession");
@@ -102,7 +101,7 @@ export function* sendFile() {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche fournisseur a été créée avec succès');
-					store.dispatch(changeViewSuppliers(""));
+					history.push('/dashboard/collective/suppliers');
 				}
 				else if (response.data.status === "fail") {
 

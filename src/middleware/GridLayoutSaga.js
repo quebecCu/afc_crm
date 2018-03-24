@@ -9,7 +9,7 @@ import {
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
-import {changeViewCollective} from "../actions/crmCollectiveContainer";
+import { history } from '../store.js';
 import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
 
 
@@ -66,7 +66,7 @@ export function * sendFile() {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été créée avec succès');
-					store.dispatch(changeViewCollective('customers'));
+					history.push('/dashboard/collective/clients');
 				}
 				else if (response.data.status === "fail") {
 
@@ -425,7 +425,7 @@ export function * updateFile() {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');
-					store.dispatch(changeViewCollective('customers'));
+					history.push('/dashboard/collective/clients');
 				}
 				else if(response.data.status === 'fail') {
 						// Modification de soumar
@@ -477,7 +477,7 @@ export function * deleteCustomerFile() {
 		axios.delete(backendUrl,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					store.dispatch(changeViewCollective("customers"));
+				history.push('/dashboard/collective/clients');
 					alert("Fiche client supprimé avec succès");
 				} else {
 					alert('Erreur lors de la supression d\'un client');
