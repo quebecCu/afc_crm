@@ -11,6 +11,7 @@ class ContractInfoPart extends React.Component {
 		this._onChangeNotes=this._onChangeNotes.bind(this);
 		this._onChangeChambreDeCommerce=this._onChangeChambreDeCommerce.bind(this); 
 		this._assureurs = this._assureurs.bind(this);
+		this.state = {addAga: false};
 	}
 
 	_onChangeAssureur(event){
@@ -18,6 +19,10 @@ class ContractInfoPart extends React.Component {
 	}
 
 	_onChangeAGA(event){
+		if (event.target.value == 9999){
+			this.state.addAga = true; 
+		}
+		else this.state.addAga = false; 
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idAGA:event.target.value}});
 	}
 
@@ -38,7 +43,7 @@ class ContractInfoPart extends React.Component {
 	}
 
 	_onChangeChambreDeCommerce(event){
-		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,chambreDeCommerce:event.target.value}});
+		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, chambreDeCommerce:event.target.value}});
 	}
 
 	_assureurs() {
@@ -62,7 +67,7 @@ class ContractInfoPart extends React.Component {
 
 
 	render(){
-		alert(this.props.formState.contrat.numPolice)
+	
 		return <div>
 			<h5>Renseignement généraux sur le contrat</h5>
 			<br/>
@@ -94,29 +99,30 @@ class ContractInfoPart extends React.Component {
 					className="form-control"
 					onChange={this._onChangeAGA}
 				>
-					<option disabled value=""> -- Veuillez sélectionner une valeur -- </option>
+					<option selected disabled value=""> -- Veuillez sélectionner une valeur -- </option>
 					{
 						this.props.formState.AGA.map((aga, index) => {
 							return <option key={index} value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
 						})
 					}
+					<option value="9999"> Autre </option>
 				</select>
 				<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
 			</div>
 			
-			 {/* ajouter la chambre de commerce */ }
+			 { /* ajouter la chambre de commerce */ }
+			 {(this.state.addAga !== false) ? 		
 			<div className="form-group">
 			<label id="chambreCommerceLabel" className="col-form-label">Ajouter une chambre de commerce </label>
-				<br/>
+				<br/>				
 				<textarea
 					className="form-control"
-					value={this.props.formState.contrat.chambreDeCommerce}
 					placeholder="Chambre de commerce"
 					id="chambreDeCommerce"
 					onChange={this._onChangeChambreDeCommerce}
 				/>
 			</div>
-			
+			:null }
 			{/* fin ajouter la chambre de commerce */ }
 
 			<div className="form-group">
