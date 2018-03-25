@@ -18,6 +18,28 @@ export function* getClient() {
 			}
 		};
 
+		store.dispatch(bindClientData(
+			{
+				facultatif: [],
+				optionnalFields: [],
+				idclient:0,
+				provenance:"",
+				etat:"",
+				releve:"",
+				forme_type:"",
+				nom:"",
+				tel_principal:"",
+				ext_tel_principal:"",
+				date_creation:"",
+				prospect:"",
+				notes:"",
+				rue:"",
+				province: "",
+				codepostal: "",
+				ville: ""
+			}
+		));
+
 		let clientReq = yield take(GET_CLIENT_REQ);
 		let id = clientReq.idClient;
 
