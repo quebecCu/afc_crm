@@ -19,8 +19,9 @@ class GridOptionnalContract extends React.Component {
 		return <div className="container">
         <div className="row">
           {
+						this.props.formState.facultatif &&
             this.props.formState.facultatif.map(element => {
-              return <div className="col-xs-12 col-md-6">
+              return <div key={element.label} className="col-xs-12 col-md-6">
                 <div className="form-group">
                   <label id="representantLabel" className="col-form-label">{ element.label }</label>
                   <br/>

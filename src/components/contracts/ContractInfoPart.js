@@ -49,17 +49,19 @@ class ContractInfoPart extends React.Component {
 	_assureurs() {
 		let assureurs = [];
 
-		this.props.formState.listAssureurs.forEach( (element, index) => {
-			let duplicate = false;
-			this.props.formState.listAssureurs.forEach((element2, index2)=> {
-				if(element.id === element2.id && index > index2) {
-					duplicate = true;
+		if (this.props.formState.listAssureurs){
+			this.props.formState.listAssureurs.forEach( (element, index) => {
+				let duplicate = false;
+				this.props.formState.listAssureurs.forEach((element2, index2)=> {
+					if(element.id === element2.id && index > index2) {
+						duplicate = true;
+					}
+				});
+				if(!duplicate) {
+					assureurs.push(<option key={index} value={element.id}>{element.nom}</option>);
 				}
 			});
-			if(!duplicate) {
-				assureurs.push(<option key={index} value={element.id}>{element.nom}</option>);
-			}
-		});
+		}
 
 		return assureurs;
 	}
@@ -101,6 +103,7 @@ class ContractInfoPart extends React.Component {
 				>
 					<option selected disabled value=""> -- Veuillez sélectionner une valeur -- </option>
 					{
+						this.props.formState.AGA &&
 						this.props.formState.AGA.map((aga, index) => {
 							return <option key={index} value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
 						})

@@ -88,6 +88,7 @@ class ContractRemunerationContainer extends React.Component {
 								>
 									<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
 									{
+										this.props.formState.employesAFC && 
 										this.props.formState.employesAFC.map((employe, index) => {
 											return <option key={index}
 														   value={employe.idemploye}>{employe.prenom} {employe.nom}</option>

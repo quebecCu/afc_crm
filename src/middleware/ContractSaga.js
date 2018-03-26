@@ -5,7 +5,7 @@ import {
 	GET_AGA, GET_CONTRACT, GET_CONTRACT_TO_UPDATE, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
 	GET_TYPES_CONTRACT, SUBMIT_CONTRACT,
 	getEmployesAFC, getGrid, createContract,
-	getListAssureurs,
+	getListAssureurs, setFromClient,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
 	setContract, setSelectedTaux, setSelectedRemuneration,
 	setGrid, changeFormContract,
@@ -591,9 +591,7 @@ export function* requestGetContractToUpdate() {
 						}
 					};
 
-					let dateDep = parseInt(contract.date_signature[0] + contract.date_signature[1] + contract.date_signature[2] + contract.date_signature[3], 10);
 					contract.remuneration.history.forEach(element => {
-						if (parseInt(element.annee_dep, 10) === dateDep) {
 							toUpdate.remuneration.vie = element.vie;
 							toUpdate.remuneration.ct = element.ct;
 							toUpdate.remuneration.lt = element.lt;
@@ -610,12 +608,9 @@ export function* requestGetContractToUpdate() {
 							toUpdate.remuneration.bdu = element.montant_dû;
 							toUpdate.remuneration.paye = element.montant_payé;
 							toUpdate.remuneration.dpaye = element.date_payée;
-
-						}
 					});
 
 					contract.historique_taux.forEach(element => {
-						if (parseInt(element.annee_dep, 10) === dateDep) {
 							toUpdate.historiqueTaux.diff = element.différence;
 							toUpdate.historiqueTaux.anneedep = element.annee_dep;
 							toUpdate.historiqueTaux.anneefin = element.annee_fin;
@@ -639,15 +634,19 @@ export function* requestGetContractToUpdate() {
 							toUpdate.historiqueTaux.pae = element.pae;
 							toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
 							toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
-						}
 					});
 					console.log(toUpdate);
+					store.dispatch(setFromClient({
+						idClient: contrat.idclient,
+						name: contrat.nomclient,
+						update: true
+					}));
+					store.dispatch(getGrid());
 					store.dispatch(changeFormContract({
 						intModulesToDisplay: intModulesToDisplay,
 						modulesToDisplay: modulesToDisplay,
 						contrat: toUpdate
 					}));
-					store.dispatch(getGrid());
 				} else {
 					alert('Erreur lors de la récupération du contrat');
 				}

@@ -126,6 +126,7 @@ class ModuleCreation extends React.Component {
 						<option id={"optionNull" + this.props.idComponent} value=""> -- select an option --</option>
 						{
 							//Si l'id de la modalité est dans le formState.modulesToDisplay, set disabled
+							this.props.formState.modules &&
 							this.props.formState.modules.map((element) => {
 								let isSelectedAlready = false;
 								if (this.props.formState.modulesToDisplay.length !== 0) {
