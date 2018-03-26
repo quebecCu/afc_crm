@@ -1,3 +1,30 @@
 .customer, .contrat, .supplier, .user{
   cursor: pointer;
 }
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #CAC7C7 !important;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #CAC7C7 !important;
+    opacity: 1; /* Firefox */
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: #CAC7C7 !important;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: #CAC7C7 !important;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #CAC7C7 !important;
+  opacity: 1;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #CAC7C7 !important;
+  opacity: 1;
+}

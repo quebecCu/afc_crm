@@ -418,6 +418,23 @@ export function* requestSupplier() {
 		let supplierReq = yield take(GET_SUPPLIER);
 		let id = supplierReq.id;
 
+		let resetRequiredFields = {
+			id: 0,
+			nomEntreprise: "",
+			rue: "",
+			ville: "",
+			province: "",
+			codePostal: "",
+			telephone: "",
+			extension: "",
+			code: "",
+			lilGroup: "",
+			bigGroup: "",
+			employesLilGroup: "",
+			employesBigGroup: ""
+		};
+		store.dispatch(changeRequiredSup(resetRequiredFields));
+
 		//communication avec server
 		let server = "http://localhost:3002/providers/" + id;
 		let backendUrl = window.location.host;

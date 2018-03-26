@@ -9,7 +9,7 @@ class ContractInfoPart extends React.Component {
 		this._onChangeDateEmission=this._onChangeDateEmission.bind(this);
 		this._onChangeMoisRenouv=this._onChangeMoisRenouv.bind(this);
 		this._onChangeNotes=this._onChangeNotes.bind(this);
-		this._onChangeChambreDeCommerce=this._onChangeChambreDeCommerce.bind(this); 
+		this._onChangeChambreDeCommerce=this._onChangeChambreDeCommerce.bind(this);
 		this._assureurs = this._assureurs.bind(this);
 		this.state = {addAga: false};
 	}
@@ -20,9 +20,9 @@ class ContractInfoPart extends React.Component {
 
 	_onChangeAGA(event){
 		if (event.target.value == 9999){
-			this.state.addAga = true; 
+			this.state.addAga = true;
 		}
-		else this.state.addAga = false; 
+		else this.state.addAga = false;
 		this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat, idAGA:event.target.value}});
 	}
 
@@ -67,7 +67,7 @@ class ContractInfoPart extends React.Component {
 
 
 	render(){
-	
+
 		return <div>
 			<h5>Renseignement généraux sur le contrat</h5>
 			<br/>
@@ -105,16 +105,16 @@ class ContractInfoPart extends React.Component {
 							return <option key={index} value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
 						})
 					}
-					<option value="9999"> Autre </option>
+					<option value="9999"><i className="fa fa-plus"></i> Autre </option>
 				</select>
 				<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
 			</div>
-			
+
 			 { /* ajouter la chambre de commerce */ }
-			 {(this.state.addAga !== false) ? 		
+			 {(this.state.addAga !== false) ?
 			<div className="form-group">
 			<label id="chambreCommerceLabel" className="col-form-label">Ajouter une chambre de commerce </label>
-				<br/>				
+				<br/>
 				<textarea
 					className="form-control"
 					placeholder="Chambre de commerce"
