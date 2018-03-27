@@ -147,7 +147,7 @@ class ContractInfoPart extends React.Component {
 				<input
 					type="textField"
 					className="form-control"
-					placeholder="AAAA-MM"
+					placeholder="AAAA-MM-JJ"
 					id="dateEmission"
 					value={this.props.formState.contrat.dateEmission}
 					onChange={this._onChangeDateEmission}

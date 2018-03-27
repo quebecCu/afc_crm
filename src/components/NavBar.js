@@ -11,6 +11,7 @@ import {addSubContractNav, addSubCustomerNav, addSubSupplierNav, addSubUserNav} 
 import {getClientRequest} from "../actions/crmClientList";
 import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
 import {getSupplier} from "../actions/crmGridLayoutSuppliers";
+import logo from './Logo-bon.png';  
 
 class NavBar extends Component {
 	constructor(props) {
@@ -21,8 +22,11 @@ class NavBar extends Component {
 		const { location } = this.props
 		return (
 		  <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-		    <span className="navbar-brand">AFC inc.</span>
+		    <span className="navbar-brand">				
+				<img src={logo} alt={"logo"}/> 
+				</span>
 		    <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				 
 		      <span className="navbar-toggler-icon"></span>
 		    </button>
 		    <div className="collapse navbar-collapse" id="navbarResponsive">

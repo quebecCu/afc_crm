@@ -38,7 +38,7 @@ export function * submitContract() {
 
 		let {
 			idClient, idRepresentant,
-			idAssureur, idAGA, numPolice,
+			idAssureur, idAGA, chambreDeCommerce, numPolice,
 			dateEmission, moisRenouv, notes,
 			historiqueTaux, remuneration,
 			modulesChoisis
@@ -71,6 +71,7 @@ export function * submitContract() {
 			numPolice: numPolice,
 			dateEmission: dateEmission,
 			moisRenouv: moisRenouv,
+			chambreDeCommerce:chambreDeCommerce,
 			notes: notes,
 			historiqueTaux: historiqueTaux,
 			remuneration: remuneration,
