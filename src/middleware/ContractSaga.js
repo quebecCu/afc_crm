@@ -537,6 +537,7 @@ export function* requestGetContractToUpdate() {
 						idAGA: contract.idchambrecommerce,//LOOOOP,
 						idContract: contract.idcontrat,
 						idClient: contract.idClient,
+						idRepresentant: contract.idrepresentant,
 						modulesChoisis: modulesToUpdate,
 						modulesInitiaux: modulesToUpdate,
 						numPolice: contract.police,
@@ -637,8 +638,8 @@ export function* requestGetContractToUpdate() {
 					});
 					console.log(toUpdate);
 					store.dispatch(setFromClient({
-						idClient: contrat.idclient,
-						name: contrat.nomclient,
+						idClient: contract.idclient,
+						name: contract.nomclient,
 						update: true
 					}));
 					store.dispatch(getGrid());
