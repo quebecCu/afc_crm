@@ -13,9 +13,9 @@ class ModuleCreation extends React.Component {
 	//Si on vient d'une creation de contrat classique rien n'est prérempli
 	//si on est sur un update on prérempli les modules
 	componentDidMount() {
-		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis), 10);
+		let modulesChoisis = this.props.formState.contrat.modulesChoisis;
 
-		if (this.props.view === "updatecontract" && this.props.idComponent < modulesChoisis.length) {
+		if (this.props.update === true && this.props.idComponent < modulesChoisis.length) {
 
 			this.notes = modulesChoisis[this.props.idComponent].module_notes;
 			this.value = parseInt(modulesChoisis[this.props.idComponent].idModule, 10);
@@ -137,17 +137,18 @@ class ModuleCreation extends React.Component {
 									}
 								}
 								if (isSelectedAlready) {
-									return (<option
-										key={element.idModule}
-										id={element.idModule}
-										value={element.idModule}
-										disabled
-
-									>
-										{
-											element.nom
-										}
-									</option>)
+									return (
+										<option
+											key={element.idModule}
+											id={element.idModule}
+											value={element.idModule}
+											disabled
+										>
+											{
+												element.nom
+											}
+										</option>
+									)
 								}
 								else {
 									return (<option

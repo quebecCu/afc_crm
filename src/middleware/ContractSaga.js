@@ -291,6 +291,86 @@ export function* requestGrid() {
 	}
 }
 
+export function* requestGridUpdate() {
+	while (true) {
+		let user = yield take(GET_GRID);
+		let facDisplay = user.update;
+		let server = "http://localhost:3002/attributesManagement/contract";
+
+		//communication avec server
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/contract';
+
+		axios.get(backendUrl, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					let grids = response.data.message;
+
+					if(!!facDisplay) {
+						let facultatif = [];
+						grids.attributes.forEach(champ => {
+							let duplicate = false;
+							facDisplay.forEach(champ2 => {
+								if(champ2.idRow === champ.idattrcontratcoll) {
+									duplicate = true;
+									facultatif.push({
+										...champ,
+										value: champ2.valeur
+									});
+								}
+							});
+							if(!duplicate) {
+								facultatif.push({
+									...champ,
+									value: ''
+								});
+							}
+						});
+						store.dispatch(setGrid(facultatif));
+					}
+					else {
+						let grid = grids.attributes.map(champ => {
+							return {...champ, value: ''};
+						});
+						store.dispatch(setGrid(grid));
+					}
+					let bigLayout = grids.menus.map(menu => {
+						return {
+							i: menu.idcontratcollmenu.toString(),
+							x: menu.posx,
+							y: menu.posy,
+							w: menu.width,
+							h: menu.height,
+							minW: menu.minwidth,
+							static: true
+						};
+					});
+					store.dispatch(changeBigLayout(bigLayout));
+
+					let lilLayout = grids.attributes.map(champ => {
+						return {
+							i: champ.idattrcontratcoll.toString(),
+							x: champ.posx,
+							y: champ.posy,
+							w: champ.width,
+							h: champ.height,
+							minW: champ.minwidth,
+							static: true
+						};
+					});
+					store.dispatch(changeLilLayout(lilLayout));
+					store.dispatch(sendingRequestColl());
+					store.dispatch(getTypesContract());
+				} else {
+					alert('Erreur lors du chargement des grids');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
 export function* requestUpdateGridLayout() {
 	while (true) {
 		let layouts = yield take(UPDATE_POS_LAYOUT);
@@ -545,110 +625,65 @@ export function* requestGetContractToUpdate() {
 						dateEmission: contract.date_signature,
 						moisRenouv: contract.mois_renouvellement,
 						notes: contract.notes,
-						historiqueTaux: { //Aller chercher la bonne année?
-							diff: '',
-							annee_dep: '',
-							annee_fin: '',
-							vie: '',
-							dma: '',
-							pac: '',
-							ct: '',
-							lt: '',
-							amc_ind: '',
-							amc_mono: '',
-							amc_couple: '',
-							amc_fam: '',
-							dent_ind: '',
-							dent_mono: '',
-							dent_couple: '',
-							dent_fam: '',
-							mg_ind: '',
-							mg_mono: '',
-							mg_couple: '',
-							mg_fam: '',
-							pae: '',
-							prime_ms: '',
-							prime_an: ''
-						},
-						remuneration: { //idem avec année depart et annee fin ?
-							vie: '',
-							ct: '',
-							lt: '',
-							amc: '',
-							dent: '',
-							mg: '',
-							pae: '',
-							notes: '',
-							recu: '',
-							base: '',
-							boni: '',
-							total: '',
-							gtotal: '',
-							idConseiller: '',
-							split: '',
-							bdu: '',
-							paye: '',
-							dpaye: '',
-							solde: ''
-						}
+						historiqueTaux: contract.historique_taux,
+						remuneration: contract.remuneration.history
 					};
 
-					contract.remuneration.history.forEach(element => {
-							toUpdate.remuneration.vie = element.vie;
-							toUpdate.remuneration.ct = element.ct;
-							toUpdate.remuneration.lt = element.lt;
-							toUpdate.remuneration.dent = element.dentaire;
-							toUpdate.remuneration.mg = element.mg;
-							toUpdate.remuneration.pae = element.pae;
-							toUpdate.remuneration.notes = element.notes;
-							toUpdate.remuneration.recu = element.date_payée_base;
-							toUpdate.remuneration.base = element.montant_payé_base;
-							toUpdate.remuneration.boni = element.montant_payé_boni;
-							toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
-							toUpdate.remuneration.total = element.rémunération_totale;
-							toUpdate.remuneration.idConseiller = element.idconseiller;
-							toUpdate.remuneration.bdu = element.montant_dû;
-							toUpdate.remuneration.paye = element.montant_payé;
-							toUpdate.remuneration.dpaye = element.date_payée;
-					});
-
-					contract.historique_taux.forEach(element => {
-							toUpdate.historiqueTaux.diff = element.différence;
-							toUpdate.historiqueTaux.anneedep = element.annee_dep;
-							toUpdate.historiqueTaux.anneefin = element.annee_fin;
-							toUpdate.historiqueTaux.vie = element.vie;
-							toUpdate.historiqueTaux.dma = element.dma;
-							toUpdate.historiqueTaux.pac = element.pac;
-							toUpdate.historiqueTaux.ct = element.ct;
-							toUpdate.historiqueTaux.lt = element.lt;
-							toUpdate.historiqueTaux.amc_ind = element.amc_ind;
-							toUpdate.historiqueTaux.amc_mono = element.amc_mono;
-							toUpdate.historiqueTaux.amc_couple = element.amc_couple;
-							toUpdate.historiqueTaux.amc_fam = element.amc_fam;
-							toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
-							toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
-							toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
-							toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
-							toUpdate.historiqueTaux.mg_ind = element.mg_ind;
-							toUpdate.historiqueTaux.mg_mono = element.mg_mono;
-							toUpdate.historiqueTaux.mg_couple = element.mg_couple;
-							toUpdate.historiqueTaux.mg_fam = element.mg_fam;
-							toUpdate.historiqueTaux.pae = element.pae;
-							toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
-							toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
-					});
-					console.log(toUpdate);
+					// contract.remuneration.history.forEach(element => {
+					// 		toUpdate.remuneration.vie = element.vie;
+					// 		toUpdate.remuneration.ct = element.ct;
+					// 		toUpdate.remuneration.lt = element.lt;
+					// 		toUpdate.remuneration.dent = element.dentaire;
+					// 		toUpdate.remuneration.mg = element.mg;
+					// 		toUpdate.remuneration.pae = element.pae;
+					// 		toUpdate.remuneration.notes = element.notes;
+					// 		toUpdate.remuneration.recu = element.date_payée_base;
+					// 		toUpdate.remuneration.base = element.montant_payé_base;
+					// 		toUpdate.remuneration.boni = element.montant_payé_boni;
+					// 		toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
+					// 		toUpdate.remuneration.total = element.rémunération_totale;
+					// 		toUpdate.remuneration.idConseiller = element.idconseiller;
+					// 		toUpdate.remuneration.bdu = element.montant_dû;
+					// 		toUpdate.remuneration.paye = element.montant_payé;
+					// 		toUpdate.remuneration.dpaye = element.date_payée;
+					// });
+					//
+					// contract.historique_taux.forEach(element => {
+					// 		toUpdate.historiqueTaux.diff = element.différence;
+					// 		toUpdate.historiqueTaux.anneedep = element.annee_dep;
+					// 		toUpdate.historiqueTaux.anneefin = element.annee_fin;
+					// 		toUpdate.historiqueTaux.vie = element.vie;
+					// 		toUpdate.historiqueTaux.dma = element.dma;
+					// 		toUpdate.historiqueTaux.pac = element.pac;
+					// 		toUpdate.historiqueTaux.ct = element.ct;
+					// 		toUpdate.historiqueTaux.lt = element.lt;
+					// 		toUpdate.historiqueTaux.amc_ind = element.amc_ind;
+					// 		toUpdate.historiqueTaux.amc_mono = element.amc_mono;
+					// 		toUpdate.historiqueTaux.amc_couple = element.amc_couple;
+					// 		toUpdate.historiqueTaux.amc_fam = element.amc_fam;
+					// 		toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
+					// 		toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
+					// 		toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
+					// 		toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
+					// 		toUpdate.historiqueTaux.mg_ind = element.mg_ind;
+					// 		toUpdate.historiqueTaux.mg_mono = element.mg_mono;
+					// 		toUpdate.historiqueTaux.mg_couple = element.mg_couple;
+					// 		toUpdate.historiqueTaux.mg_fam = element.mg_fam;
+					// 		toUpdate.historiqueTaux.pae = element.pae;
+					// 		toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
+					// 		toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
+					// });
 					store.dispatch(setFromClient({
 						idClient: contract.idclient,
 						name: contract.nomclient,
 						update: true
 					}));
-					store.dispatch(getGrid());
 					store.dispatch(changeFormContract({
 						intModulesToDisplay: intModulesToDisplay,
 						modulesToDisplay: modulesToDisplay,
 						contrat: toUpdate
 					}));
+					store.dispatch(getGrid(facDisplay));
 				} else {
 					alert('Erreur lors de la récupération du contrat');
 				}

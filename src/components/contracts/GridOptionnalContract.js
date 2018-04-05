@@ -27,7 +27,7 @@ class GridOptionnalContract extends React.Component {
                   <br/>
                   {
           					element.libelletype === 'Booléen' &&
-          					<select className="form-control" id={element.label} name={element.label}
+          					<select className="form-control" id={element.label} value={element.value} name={element.label}
           							required onChange={this._handleChange}>
           						<option value="">-- Veuillez choisir une valeur --</option>
           						<option value="Oui">Oui</option>
