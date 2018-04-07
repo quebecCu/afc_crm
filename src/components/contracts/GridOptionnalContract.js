@@ -19,14 +19,15 @@ class GridOptionnalContract extends React.Component {
 		return <div className="container">
         <div className="row">
           {
+						this.props.formState.facultatif &&
             this.props.formState.facultatif.map(element => {
-              return <div className="col-xs-12 col-md-6">
+              return <div key={element.label} className="col-xs-12 col-md-6">
                 <div className="form-group">
                   <label id="representantLabel" className="col-form-label">{ element.label }</label>
                   <br/>
                   {
           					element.libelletype === 'Booléen' &&
-          					<select className="form-control" id={element.label} name={element.label}
+          					<select className="form-control" id={element.label} value={element.value} name={element.label}
           							required onChange={this._handleChange}>
           						<option value="">-- Veuillez choisir une valeur --</option>
           						<option value="Oui">Oui</option>

@@ -49,17 +49,19 @@ class ContractInfoPart extends React.Component {
 	_assureurs() {
 		let assureurs = [];
 
-		this.props.formState.listAssureurs.forEach( (element, index) => {
-			let duplicate = false;
-			this.props.formState.listAssureurs.forEach((element2, index2)=> {
-				if(element.id === element2.id && index > index2) {
-					duplicate = true;
+		if (this.props.formState.listAssureurs){
+			this.props.formState.listAssureurs.forEach( (element, index) => {
+				let duplicate = false;
+				this.props.formState.listAssureurs.forEach((element2, index2)=> {
+					if(element.id === element2.id && index > index2) {
+						duplicate = true;
+					}
+				});
+				if(!duplicate) {
+					assureurs.push(<option key={index} value={element.id}>{element.nom}</option>);
 				}
 			});
-			if(!duplicate) {
-				assureurs.push(<option key={index} value={element.id}>{element.nom}</option>);
-			}
-		});
+		}
 
 		return assureurs;
 	}
@@ -97,33 +99,36 @@ class ContractInfoPart extends React.Component {
 					id="AGA"
 					name="AGA"
 					className="form-control"
+					value={this.props.formState.contrat.idAGA}
 					onChange={this._onChangeAGA}
 				>
 					<option selected disabled value=""> -- Veuillez sélectionner une valeur -- </option>
 					{
+						this.props.formState.AGA &&
 						this.props.formState.AGA.map((aga, index) => {
 							return <option key={index} value={aga.idchambrecommerce}>{aga.libellechambrecommerce}</option>
 						})
 					}
-					<option value="9999"><i className="fa fa-plus"></i> Autre </option>
+					<option value="9999"> Ajouter une chambre de commerce </option>
 				</select>
+				
 				<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
 			</div>
 
 			 { /* ajouter la chambre de commerce */ }
 			 {(this.state.addAga !== false) ?
-			<div className="form-group">
-			<label id="chambreCommerceLabel" className="col-form-label">Ajouter une chambre de commerce </label>
-				<br/>
-				<textarea
-					className="form-control"
-					placeholder="Chambre de commerce"
-					id="chambreDeCommerce"
-					onChange={this._onChangeChambreDeCommerce}
-				/>
-			</div>
-			:null }
-			{/* fin ajouter la chambre de commerce */ }
+				<div className="form-group">
+				<label id="chambreCommerceLabel" className="col-form-label">Ajouter une chambre de commerce </label>
+					<br/>
+					<textarea
+						className="form-control"
+						placeholder="Chambre de commerce"
+						id="chambreDeCommerce"
+						onChange={this._onChangeChambreDeCommerce}
+					/>
+				</div>
+				:null }
+				{/* fin ajouter la chambre de commerce */ }
 
 			<div className="form-group">
 				<label id="numPoliceLabel" className="col-form-label">Numéro de police</label>

@@ -19,7 +19,6 @@ class ContractClientPart extends React.Component {
 		});
 	}
 
-	
 	_filterClients() {
 		return this.props.clients.filter( (element, index) => {
 			let duplicate = false;
@@ -33,61 +32,64 @@ class ContractClientPart extends React.Component {
 	}
 
 	render() {
-		return <div>
-			<h5>Informations sur le client</h5>
-			<br/>
-			<div className="form-group">
-				<label id="nomClientLabel" className="col-form-label">Nom client</label>
+		return (
+			<div>
+				<h5>Informations sur le client</h5>
 				<br/>
-				<div>
-					{
-						!this.props.fromClient.idClient &&
-						<SuggestionClients clients={this._filterClients()}
-										   getClient={this.props.getClient}
-										   changeForm={this.props.changeForm}
-										   formState={this.props.formState}
-						/>
-					}
-					{
-						this.props.fromClient.idClient && this.props.fromClient.update &&
-						<SuggestionClients clients={this._filterClients()}
-										   getClient={this.props.getClient}
-										   client={this.props.fromClient}
-										   changeForm={this.props.changeForm}
-										   formState={this.props.formState}
-						/>
-					}
-					{
-						this.props.fromClient.idClient && !this.props.fromClient.update &&
-						<input type="textField"
-							   className="form-control col-sm-8"
-							   value={this.props.fromClient.name}
-							   id="nomClient"
-							   disabled
-						/>
-					}
+				<div className="form-group">
+					<label id="nomClientLabel" className="col-form-label">Nom client</label>
+					<br/>
+					<div>
+						{
+							!this.props.fromClient.idClient &&
+
+							<SuggestionClients clients={this._filterClients()}
+											   getClient={this.props.getClient}
+											   changeForm={this.props.changeForm}
+											   formState={this.props.formState}
+							/>
+						}
+						{
+							this.props.fromClient.idClient && this.props.fromClient.update &&
+							<SuggestionClients clients={this._filterClients()}
+											   getClient={this.props.getClient}
+											   client={this.props.fromClient}
+											   changeForm={this.props.changeForm}
+											   formState={this.props.formState}
+							/>
+						}
+						{
+							this.props.fromClient.idClient && !this.props.fromClient.update &&
+							<input type="textField"
+								   className="form-control col-sm-8"
+								   value={this.props.fromClient.name}
+								   id="nomClient"
+								   disabled
+							/>
+						}
+					</div>
+				</div>
+				<div className="form-group">
+					<label id="representantLabel" className="col-form-label">Représentant (chez AFC)</label>
+					<br/>
+					<select
+						id="representant"
+						name="representant"
+						className="form-control"
+						value={this.props.formState.contrat.idRepresentant}
+						onChange={this._onChangeRepresentant}
+					>
+						<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
+						{
+							this.props.formState.employesAFC &&
+							this.props.formState.employesAFC.map((employe, index) => {
+								return <option key={index} value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
+							})
+						}
+					</select>
 				</div>
 			</div>
-
-			<div className="form-group">
-				<label id="representantLabel" className="col-form-label">Représentant (chez AFC)</label>
-				<br/>
-				<select
-					id="representant"
-					name="representant"
-					className="form-control"
-					value={this.props.formState.contrat.idRepresentant}
-					onChange={this._onChangeRepresentant}
-				>
-					<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
-					{
-						this.props.formState.employesAFC.map((employe, index) => {
-							return <option key={index} value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
-						})
-					}
-				</select>
-			</div>
-		</div>;
+		);
 	}
 }
 

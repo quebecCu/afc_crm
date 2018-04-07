@@ -183,7 +183,7 @@ let initialState = {
 	      }
 	   ]
 	},
-	chambre:{}, 
+	chambre:{},
 	selectedTaux: {},
 	selectedRemuneration: {},
 	listContracts: [],
@@ -214,6 +214,51 @@ let initialState = {
 		listAssureurs:[],
 		facultatif:[],
 		modules:[],
+		historiqueToAdd: {
+			annee_dep: '',
+			annee_fin: '',
+			diff: '',
+			vie: '',
+			dma: '',
+			pac: '',
+			ct: '',
+			lt: '',
+			amc_ind: '',
+			amc_mono: '',
+			amc_couple: '',
+			amc_fam: '',
+			dent_ind: '',
+			dent_mono: '',
+			dent_couple: '',
+			dent_fam: '',
+			mg_ind: '',
+			mg_mono: '',
+			mg_couple: '',
+			mg_fam: '',
+			pae: '',
+			prime_ms: '',
+			prime_an: ''
+		},
+		remunerationToAdd: {
+			vie:'',
+			ct:'',
+			lt:'',
+			amc:'',
+			dent:'',
+			mg:'',
+			pae:'',
+			notes:'',
+			recu:'',
+			base:'',
+			boni:'',
+			total:'',
+			gtotal:'',
+			idConseiller:'',
+			split:'',
+			bdu:'',
+			paye:'',
+			dpaye:'',
+		},
 		contrat:{
 			idAssureur: '',
 			idAGA: '',
@@ -229,13 +274,15 @@ let initialState = {
 				modalites:[{idValeur:1,idModalite:5,valeur:"edrg"},
 					{idValeur:1,idModalite:4,valeur:23}]}
 				],
-			chambreDeCommerce:'',	
+			chambreDeCommerce:'',
 			numPolice:'',
 			dateEmission:'',
 			moisRenouv:'',
 			notes:'',
 			idRepresentant: '',
-			historiqueTaux: {
+			historiqueTaux: [{
+				annee_dep: '',
+				annee_fin: '',
 				diff: '',
 				vie: '',
 				dma: '',
@@ -257,8 +304,8 @@ let initialState = {
 				pae: '',
 				prime_ms: '',
 				prime_an: ''
-			},
-		remuneration:{
+			}],
+		remuneration:[{
 			vie:'',
 			ct:'',
 			lt:'',
@@ -277,7 +324,7 @@ let initialState = {
 			bdu:'',
 			paye:'',
 			dpaye:'',
-			}
+		}]
 
 		}
 	},
@@ -289,11 +336,11 @@ export default function reducer (state = initialState, action){
 		case CHANGE_VIEW_CONTRACT:
 			return {...state, view: action.newView, errors:''};
 		case CHANGE_FORM_CONTRACT:
-			return {...state, formState: action.newForm, errors:'' };
+			return {...state, formState:{...state.formState, intModulesToDisplay:action.newForm.intModulesToDisplay, modulesToDisplay:action.newForm.modulesToDisplay, contrat:action.newForm.contrat, facultatif:action.newForm.facultatif}, errors:'' };
 		case UPDATE_AGA:
 			return {...state, formState:{...state.formState, AGA:action.listAGA}, errors:'' };
-		/* ADD AGA */  
-	
+		/* ADD AGA */
+
 		case UPDATE_EMPLOYES_AFC:
 			return {...state, formState:{...state.formState, employesAFC:action.listEmployes}, errors:'' };
 		case UPDATE_LIST_ASSUREURS:
