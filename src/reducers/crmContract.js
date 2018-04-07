@@ -161,12 +161,12 @@ let initialState = {
 	      {
 	         "libelle":"Assurance Vie - Adhérent et personnes à charge",
 	         "id":1,
-	         "module_notes":"Voici un exemple de module",
+	         "module_notes":"",
 	         "subscriptions":[
 	            {
 	               "libelle":"Formule",
 	               "id":2,
-	               "souscription_notes":"Voici un exmeple de souscription",
+	               "souscription_notes":"",
 	               "description":"Formule",
 	               "ext":null,
 	               "valeur":"1x salaire"
@@ -174,7 +174,7 @@ let initialState = {
 	            {
 	               "libelle":"Maximum SP",
 	               "id":3,
-	               "souscription_notes":"Yolooo",
+	               "souscription_notes":"",
 	               "description":"Maximum sans preuve",
 	               "ext":null,
 	               "valeur":"7500"

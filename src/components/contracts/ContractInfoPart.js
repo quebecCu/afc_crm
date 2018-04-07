@@ -91,7 +91,7 @@ class ContractInfoPart extends React.Component {
 				<p id="assureurHelp" className="help-block text-danger">Sélectionner un assureur</p>
 			</div>
 			<div className="form-group">
-				<label id="AGALabel" className="col-form-label">AGA</label>
+				<label id="AGALabel" className="col-form-label">AGA (Choisir autre si vous voulez ajouter une chambre de commerce)</label>
 				<br/>
 				<select
 					id="AGA"

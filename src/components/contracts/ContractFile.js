@@ -350,6 +350,9 @@ class ContractFile extends React.Component {
 											<div className="col-md-10 col-xs-12">
 												<div className="row">
 													<div className="col-sm-6">
+														{(selectedTaux.assureur != undefined) ?
+														this.renderStaticAttribute("Assureur",selectedTaux.assureur,6) :null
+														}
 														{this.renderStaticAttribute("Année de début",selectedTaux.annee_dep,6)}
 														{this.renderStaticAttribute("Nombre d'employés",selectedTaux.nombre_employés,6)}
 														{this.renderStaticAttribute("Différence",selectedTaux.différence,6)}

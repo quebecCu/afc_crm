@@ -567,7 +567,8 @@ export function* requestGetContractToUpdate() {
 							mg_fam: '',
 							pae: '',
 							prime_ms: '',
-							prime_an: ''
+							prime_an: '', 
+							assureur: ''
 						},
 						remuneration: { //idem avec année depart et annee fin ?
 							vie: '',
