@@ -2,7 +2,7 @@ import React from 'react';
 import ContractInput from './ContractInput';
 
 class ContractTauxContainer extends React.Component{
-	
+
 	render(){
 		return <div>
 			<div className="container">
@@ -28,7 +28,7 @@ class ContractTauxContainer extends React.Component{
 				</ul>
 				<div className="tab-content" id="tabTauxContent">
 				{
-					this.props.formState.contrat.historiqueTaux && 
+					this.props.formState.contrat.historiqueTaux &&
 					this.props.formState.contrat.historiqueTaux.map((historique, index) => {
 						return (
 							<div key={index} className="tab-pane fade show" id={"taux-" + historique.annee_dep} role="tabpanel" aria-labelledby={historique.annee_dep + "-taux-tab"}>
@@ -196,7 +196,7 @@ class ContractTauxContainer extends React.Component{
 							</div>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>;
 

@@ -7,52 +7,58 @@ class ModuleCreation extends React.Component {
 		this._onChangeModule = this._onChangeModule.bind(this);
 		this._onChangeNotes = this._onChangeNotes.bind(this);
 		this._handleClickMoins = this._handleClickMoins.bind(this);
-
-	}
-
-	//Si on vient d'une creation de contrat classique rien n'est prérempli
-	//si on est sur un update on prérempli les modules
-	componentDidMount() {
-		let modulesChoisis = this.props.formState.contrat.modulesChoisis;
-
-		if (this.props.update === true && this.props.idComponent < modulesChoisis.length) {
-
-			this.notes = modulesChoisis[this.props.idComponent].module_notes;
-			this.value = parseInt(modulesChoisis[this.props.idComponent].idModule, 10);
-			this.idModule = this.value;
-			this.isSelected = true;
+		let isSelected = false;
+		if (this.props.module){
+			isSelected = true;
 		}
-
+		this.state = {
+			isSelected: isSelected
+		}
 	}
 
 	_onChangeModule(event) {
-		// SIIII la taille de modulesChoisis est egale a l'id du component, ça veut dire que le module a pas encore été sélectionne
-		// du coup, au premier click, on push le module, la taille augmente et aux prochains clics, ça modifie le tableau
-		// à la position de props.idComponent
 
-
-		let modulesContrat = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis));
-		let arrayDaffichage = JSON.parse(JSON.stringify(this.props.formState.modulesToDisplay));
-
-		if (this.props.idComponent === modulesContrat.length) {
-			modulesContrat.push({idModule: event.target.value, module_notes: "", modalites: []});
-			arrayDaffichage.push(event.target.value);
-		}
-		//else if idComponent > contrat.length et que ça créerait un null si on le push a la place de idcomponent...
-		else {
-			modulesContrat[this.props.idComponent] = {idModule: event.target.value, modalites: []};
-			arrayDaffichage[this.props.idComponent] = event.target.value;
+		let moduleModifie = {
+			idModule: "",
+			idDomaine: event.target.value,
+			module_notes: "",
+			modalites: []
 		}
 
+		let oldDomaine = this.props.module.idDomaine;
+		let idModuleToRemove = this.props.module.idModule;
+		let modulesSupprimes = this.props.formState.contrat.modulesSupprimes;
+		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let modulesAlreadySelected = this.props.formState.contrat.modulesAlreadySelected;
+		let idModuleDansContrat;
 
-		this.idModule = event.target.value;
-		this.value = this.idModule;
-		this.isSelected = true;
+		if(oldDomaine !== ""){
+			for (let i = 0; i < modulesInitiaux.length; i++) {
+				if (modulesInitiaux[i].idDomaine === oldDomaine) {
+					idModuleDansContrat = i;
+				}
+			}
 
-		document.getElementById("optionNull" + this.props.idComponent).setAttribute('disabled', true);
+			modulesAlreadySelected.splice(modulesAlreadySelected.indexOf(oldDomaine), 1);
+			modulesAlreadySelected.push(parseInt(event.target.value));
+
+			if (idModuleToRemove !== ""){
+				modulesSupprimes.push(idModuleToRemove);
+			}
+			modulesInitiaux[idModuleDansContrat] = moduleModifie;
+		}else{
+			modulesAlreadySelected.push(parseInt(event.target.value));
+			modulesInitiaux[modulesInitiaux.length - 1] = moduleModifie;
+		}
+
 		this.props.changeForm({
-			...this.props.formState, contrat: {...this.props.formState.contrat, modulesChoisis: modulesContrat},
-			modulesToDisplay: arrayDaffichage
+			...this.props.formState,
+			contrat: {
+				...this.props.formState.contrat,
+				modulesInitiaux: modulesInitiaux,
+				modulesSupprimes: modulesSupprimes,
+				modulesAlreadySelected: modulesAlreadySelected
+			}
 		});
 
 
@@ -70,70 +76,62 @@ class ModuleCreation extends React.Component {
 
 
 	_handleClickMoins(event) {
-		//on get la position de l'ID du module dans le modulesToDisplay pour le dégager du tableau
+		let oldDomaine = this.props.module.idDomaine;
+		let idModuleToRemove = this.props.module.idModule;
+		let modulesSupprimes = this.props.formState.contrat.modulesSupprimes;
+		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let modulesAlreadySelected = this.props.formState.contrat.modulesAlreadySelected;
+		let idModuleDansContrat;
 
+		if(oldDomaine !== ""){
+			for (let i = 0; i < modulesInitiaux.length; i++) {
+				if (modulesInitiaux[i].idDomaine === oldDomaine) {
+					idModuleDansContrat = i;
+				}
+			}
 
-		let newInt = parseInt(JSON.parse(JSON.stringify(this.props.formState.intModulesToDisplay)), 10) - 1;
-		let modulesToDisplay = JSON.parse(JSON.stringify(this.props.formState.modulesToDisplay), 10);
-		modulesToDisplay.splice(event.target.id, 1);
-		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis), 10);
-		modulesChoisis.splice(event.target.id, 1);
+			modulesAlreadySelected.splice(modulesAlreadySelected.indexOf(oldDomaine), 1);
+			if (idModuleToRemove !== ""){
+				modulesSupprimes.push(idModuleToRemove);
+			}
+			modulesInitiaux.splice(idModuleDansContrat, 1);
+		}else{
+			modulesInitiaux.splice(modulesInitiaux.length - 1);
+		}
+
 		this.props.changeForm({
-			...this.props.formState, intModulesToDisplay: newInt, modulesToDisplay: modulesToDisplay,
-			contrat: {...this.props.formState.contrat, modulesChoisis: modulesChoisis}
+			...this.props.formState,
+			contrat: {
+				...this.props.formState.contrat,
+				modulesInitiaux: modulesInitiaux,
+				modulesSupprimes: modulesSupprimes,
+				modulesAlreadySelected: modulesAlreadySelected
+			}
 		});
-
-
-		if ((modulesChoisis.length > 1) && (event.target.id !== modulesChoisis.length - 1) && !(document.getElementById("module" + (modulesChoisis.length)).value === "")) {
-			for (let i = 1; i < modulesChoisis.length; i++) {
-				this.value = modulesChoisis[i].idModule;
-				this.idModule = modulesChoisis[i].idModule;
-				this.isSelected = true
-			}
-		}
-		else if (modulesChoisis.length > 1 && event.target.id !== modulesChoisis.length - 1 &&
-			(document.getElementById("module" + (modulesChoisis.length)).value === "")) {
-			for (let i = 1; i < modulesChoisis.length; i++) {
-				this.value = modulesChoisis[i].idModule;
-				this.idModule = modulesChoisis[i].idModule;
-				this.isSelected = true;
-			}
-
-			this.value = "";
-			this.isSelected = false
-
-		}
-		else {
-			this.value = "";
-			this.isSelected = false;
-		}
-
 	}
 
 	//select list sur les types de module. Une fois le module sélec, ca va loop dans ses modalités
 	render() {
 		return <div className="col-sm-6">
-			<div className="card">
+			<div className="card" style={{marginBottom: '5px'}}>
 				<div className="card-header">Module</div>
 			  <div className="card-body">
 					<select
-						id={"module" + this.props.idComponent}
+						id={"module" + this.props.module.idModule}
 						name="module"
 						className="form-control"
 						onChange={this._onChangeModule}
-						value={this.value}
+						value={this.props.module.idDomaine}
 					>
-						<option id={"optionNull" + this.props.idComponent} value=""> -- select an option --</option>
+						<option id={"optionNull" + this.props.idComponent} value="" disabled> -- select an option --</option>
 						{
 							//Si l'id de la modalité est dans le formState.modulesToDisplay, set disabled
 							this.props.formState.modules &&
 							this.props.formState.modules.map((element) => {
 								let isSelectedAlready = false;
-								if (this.props.formState.modulesToDisplay.length !== 0) {
-									for (let i = 0; i < this.props.formState.modulesToDisplay.length; i++) {
-										if (parseInt(this.props.formState.modulesToDisplay[i], 10) === element.idModule) {
-											isSelectedAlready = true;
-										}
+								for (let i = 0; i < this.props.formState.contrat.modulesAlreadySelected.length; i++) {
+									if (this.props.formState.contrat.modulesAlreadySelected[i] === element.idModule) {
+										isSelectedAlready = true;
 									}
 								}
 								if (isSelectedAlready) {
@@ -167,22 +165,19 @@ class ModuleCreation extends React.Component {
 							})}
 					</select>
 					{
-						(this.isSelected && this.value !== "") &&
-						<div className="d-flex flex-wrap">
-							<ModalitesDisplay idModule={this.idModule} view={this.props.view}
+						(this.state.isSelected && this.props.module.idDomaine !== "") &&
+
+							<ModalitesDisplay idModule={this.props.module.idDomaine} module={this.props.module}
 											  formState={this.props.formState} changeForm={this.props.changeForm}/>
-						</div>
 					}
-					<textarea id={"textarea" + this.props.idComponent} placeholder="Notes relatives au module "
-							  value={this.notes}
+					<textarea id={"textarea" + this.props.module.idModule} placeholder="Notes relatives au module"
+							  value={this.props.module.module_notes}
 							  onChange={this._onChangeNotes} className="form-control"
 					/>
-					{
-						(this.props.idComponent !== 0) &&
-						<div style={{width: 50}}>
-							<button id={this.props.idComponent} onClick={this._handleClickMoins} className="btn btn-danger">Supprimer ce module</button>
-						</div>
-					}
+					<br/>
+					<div className="text-center">
+						<button id={this.props.idComponent} onClick={this._handleClickMoins} className="btn btn-danger">Supprimer ce module</button>
+					</div>
 			  </div>
 			</div>
 		</div>

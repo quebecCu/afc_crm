@@ -3,7 +3,7 @@ import {take, fork} from 'redux-saga/effects';
 import {
 	changeBigLayout, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract,
 	GET_AGA, GET_CONTRACT, GET_CONTRACT_TO_UPDATE, GET_EMPLOYES_AFC, GET_GRID, GET_LIST_ASSUREURS, GET_LIST_CONTRACTS, GET_MODULES,
-	GET_TYPES_CONTRACT, SUBMIT_CONTRACT,
+	GET_TYPES_CONTRACT, SUBMIT_CONTRACT, UPDATE_CONTRACT,
 	getEmployesAFC, getGrid, createContract,
 	getListAssureurs, setFromClient,
 	getModules, getTypesContract, SEND_DELETE_FIELD_CONTRACT, SEND_NEW_FIELD_CONTRACT, SEND_UPDATE_FIELD_CONTRACT,
@@ -34,6 +34,73 @@ export function * submitContract() {
 	while (true) {
 
 		let formState = yield take(SUBMIT_CONTRACT);
+		console.log(formState);
+
+		let {
+			idClient, idRepresentant,
+			idAssureur, idAGA, chambreDeCommerce, numPolice,
+			dateEmission, moisRenouv, notes,
+			historiqueTaux, remuneration,
+			modulesChoisis
+		} = formState.contract.contrat;
+
+		let {
+			facultatif
+		} = formState.contract;
+
+
+		var tokenToSend = localStorage.getItem("cookieSession");
+		if (tokenToSend === undefined)
+			tokenToSend = "";
+		var config = {
+			headers: {
+				"Authorization": tokenToSend
+			}
+		};
+
+		//communication avec server
+		var server = "http://localhost:3002/collectiveContracts/create";
+		var backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/create';
+
+		axios.post(backendUrl, {
+			idClient: idClient,
+			idRepresentant: idRepresentant,
+			idAssureur: idAssureur,
+			idAGA: idAGA,
+			numPolice: numPolice,
+			dateEmission: dateEmission,
+			moisRenouv: moisRenouv,
+			chambreDeCommerce:chambreDeCommerce,
+			notes: notes,
+			historiqueTaux: historiqueTaux,
+			remuneration: remuneration,
+			modulesChoisis: modulesChoisis,
+			facultatif: facultatif
+		}, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					alert('Le contrat a été créé avec succès');
+					history.push('/dashboard/collective/contracts');
+				}
+				else if (response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
+					alert('Erreur lors de la création du contrat');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+export function * updateContrat() {
+
+	while (true) {
+
+		let formState = yield take(UPDATE_CONTRACT);
 		console.log(formState);
 
 		let {
@@ -586,9 +653,12 @@ export function* requestGetContractToUpdate() {
 					let modulesChoisis = contract.souscriptions;
 					let modulesToUpdate = [];
 					let intModulesToDisplay = modulesChoisis.length;
+					let modulesAlreadySelected = [];
+
 					let modulesToDisplay = [];
 					modulesChoisis.forEach((element, index) => {
 						modulesToDisplay.push(element.id.toString());
+						modulesAlreadySelected.push(element.iddomaine);
 						let modalitesToUpdate = [];
 						element.subscriptions.forEach(subs => {
 							/*let subsToPush={
@@ -607,6 +677,7 @@ export function* requestGetContractToUpdate() {
 						//let toPush={idModule:element.id, module_notes:element.module_notes, modalites:modalitesToUpdate};
 						modulesToUpdate.push({
 							idModule: element.id,
+							idDomaine: element.iddomaine,
 							module_notes: element.module_notes,
 							modalites: modalitesToUpdate
 						});
@@ -619,8 +690,9 @@ export function* requestGetContractToUpdate() {
 						idContract: contract.idcontrat,
 						idClient: contract.idClient,
 						idRepresentant: contract.idrepresentant,
-						modulesChoisis: modulesToUpdate,
+						modulesSupprimes: [],
 						modulesInitiaux: modulesToUpdate,
+						modulesAlreadySelected: modulesAlreadySelected,
 						numPolice: contract.police,
 						dateEmission: contract.date_signature,
 						moisRenouv: contract.mois_renouvellement,
@@ -629,51 +701,6 @@ export function* requestGetContractToUpdate() {
 						historiqueTaux: contract.historique_taux,
 						remuneration: contract.remuneration.history
 					};
-
-					// contract.remuneration.history.forEach(element => {
-					// 		toUpdate.remuneration.vie = element.vie;
-					// 		toUpdate.remuneration.ct = element.ct;
-					// 		toUpdate.remuneration.lt = element.lt;
-					// 		toUpdate.remuneration.dent = element.dentaire;
-					// 		toUpdate.remuneration.mg = element.mg;
-					// 		toUpdate.remuneration.pae = element.pae;
-					// 		toUpdate.remuneration.notes = element.notes;
-					// 		toUpdate.remuneration.recu = element.date_payée_base;
-					// 		toUpdate.remuneration.base = element.montant_payé_base;
-					// 		toUpdate.remuneration.boni = element.montant_payé_boni;
-					// 		toUpdate.remuneration.split = element.pourcentage_payable_en_pourcent;
-					// 		toUpdate.remuneration.total = element.rémunération_totale;
-					// 		toUpdate.remuneration.idConseiller = element.idconseiller;
-					// 		toUpdate.remuneration.bdu = element.montant_dû;
-					// 		toUpdate.remuneration.paye = element.montant_payé;
-					// 		toUpdate.remuneration.dpaye = element.date_payée;
-					// });
-					//
-					// contract.historique_taux.forEach(element => {
-					// 		toUpdate.historiqueTaux.diff = element.différence;
-					// 		toUpdate.historiqueTaux.anneedep = element.annee_dep;
-					// 		toUpdate.historiqueTaux.anneefin = element.annee_fin;
-					// 		toUpdate.historiqueTaux.vie = element.vie;
-					// 		toUpdate.historiqueTaux.dma = element.dma;
-					// 		toUpdate.historiqueTaux.pac = element.pac;
-					// 		toUpdate.historiqueTaux.ct = element.ct;
-					// 		toUpdate.historiqueTaux.lt = element.lt;
-					// 		toUpdate.historiqueTaux.amc_ind = element.amc_ind;
-					// 		toUpdate.historiqueTaux.amc_mono = element.amc_mono;
-					// 		toUpdate.historiqueTaux.amc_couple = element.amc_couple;
-					// 		toUpdate.historiqueTaux.amc_fam = element.amc_fam;
-					// 		toUpdate.historiqueTaux.dent_ind = element.dentaire_ind;
-					// 		toUpdate.historiqueTaux.dent_mono = element.dentaire_mono;
-					// 		toUpdate.historiqueTaux.dent_couple = element.dentaire_couple;
-					// 		toUpdate.historiqueTaux.dent_fam = element.dentaire_fam;
-					// 		toUpdate.historiqueTaux.mg_ind = element.mg_ind;
-					// 		toUpdate.historiqueTaux.mg_mono = element.mg_mono;
-					// 		toUpdate.historiqueTaux.mg_couple = element.mg_couple;
-					// 		toUpdate.historiqueTaux.mg_fam = element.mg_fam;
-					// 		toUpdate.historiqueTaux.pae = element.pae;
-					// 		toUpdate.historiqueTaux.prime_ms = element.prime_mensuelle;
-					// 		toUpdate.historiqueTaux.prime_an = element.prime_annuelle;
-					// });
 					store.dispatch(setFromClient({
 						idClient: contract.idclient,
 						name: contract.nomclient,

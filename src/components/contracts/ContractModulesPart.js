@@ -7,7 +7,7 @@ class ContractModulesPart extends React.Component{
 		this._handleClickPlus=this._handleClickPlus.bind(this);
 		this._modulesToReturn=this._modulesToReturn.bind(this);
 		let update;
-		if (this.props.idContrat !== undefined){
+		if (this.props.idContract !== undefined){
 			update = true;
 		}else{
 			update = false;
@@ -15,85 +15,73 @@ class ContractModulesPart extends React.Component{
 		this.state = {update: update};
 	}
 
-
+	_canAdd(){
+		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let nbModulesMax = this.props.formState.modules.length;
+		if (modulesInitiaux.length === 0){
+			return true;
+		}else if (modulesInitiaux.length === nbModulesMax){
+			return false;
+		}else{
+			if (modulesInitiaux[modulesInitiaux.length-1].idDomaine === ""){
+				return false;
+			}else{
+				return true;
+			}
+		}
+	}
 
 	//Si le state contrat a sélectionné un module, affichage d'un module
 	// Si le state contrat a déjà des modules, loop dedans pour les afficher
 	_handleClickPlus(event){
-
-		let newInt = this.props.formState.intModulesToDisplay + 1 ;
-		this.props.changeForm({...this.props.formState, intModulesToDisplay:newInt});
+		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let newModule = {
+			idModule: "",
+			idDomaine: "",
+			module_notes: "",
+			modalites: []
+		}
+		modulesInitiaux.push(newModule);
+		this.props.changeForm({
+			...this.props.formState,
+			contrat: {
+				...this.props.formState.contrat,
+				modulesInitiaux: modulesInitiaux,
+			}
+		});
 	}
 
 
 	_modulesToReturn(){
-		let array = [];
-		for(let i = 0; i < this.props.formState.intModulesToDisplay; i++){
-			array[i] = i;
-		}
-		let toReturn = array.map(element=>{
-			if(element!==0){
-				return (
-
-						<ModuleCreation id={"module"+element} key = {element} idComponent = {element}
-										formState = {this.props.formState}
-										update={this.state.update}
-										changeForm = {this.props.changeForm}/>
-
-
-				)
-			}
-			else {
-				return "";
-			}
-		});
-		return toReturn;
-	}
-	
-	_modulesToAdd(){
-		let array = [];
-		for(let i = 0; i < this.props.formState.intModulesToAdd; i++){
-			array[i] = i;
-		}
-		let toReturn = array.map(element=>{
-			if(element!==0){
-				return (
-
-						<ModuleCreation id={"module"+element} key = {element} idComponent = {element}
-										formState = {this.props.formState}
-										update={this.state.update}
-										changeForm = {this.props.changeForm}/>
-
-
-				)
-			}
-			else {
-				return "";
-			}
+		let toReturn = [];
+		this.props.formState.contrat.modulesInitiaux.forEach((module,index) => {
+				toReturn.push(<ModuleCreation id={"module"+index} key={index} module={module}
+								formState = {this.props.formState}
+								update={this.state.update}
+								changeForm = {this.props.changeForm}/>)
 		});
 		return toReturn;
 	}
 
 	render(){
 		let toReturn = this._modulesToReturn();
-		let toAdd = this._modulesToAdd();
 		return <div className="row">
 			{
 				toReturn
 			}
 			{
-				toAdd
-			}
-			<div className="col-sm-6">
-				<div onClick={this._handleClickPlus} id="addModule" className="card text-white bg-info mb-3">
-					<div className="card-body text-center">
-						<h5 className="card-title">
-							<i className="fa fa-plus"></i><br/>
-							Ajouter un module
-						</h5>
+				this._canAdd() && <div className="col-sm-6">
+						<div onClick={this._handleClickPlus} id="addModule" className="card text-white bg-info mb-3">
+							<div className="card-body text-center">
+								<h5 className="card-title">
+									<i className="fa fa-plus"></i><br/>
+									Ajouter un module
+								</h5>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+
+			}
 		</div>
 	}
 }

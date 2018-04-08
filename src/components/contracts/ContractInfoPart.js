@@ -111,7 +111,7 @@ class ContractInfoPart extends React.Component {
 					}
 					<option value="9999"> Ajouter une chambre de commerce </option>
 				</select>
-				
+
 				<p id="AGAHelp" className="help-block text-danger">Sélectionner un AGA</p>
 			</div>
 

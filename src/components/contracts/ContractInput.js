@@ -17,7 +17,7 @@ class ContractInput extends React.Component{
 		else{
 			this.type = "number";
 		}
-		
+
 
 	}
 
@@ -42,7 +42,9 @@ class ContractInput extends React.Component{
 				let value = remuneration[titreChamp];
 				return value;
 			}else{
-				return "";
+				let remuneration = this.props.formState.remunerationToAdd;
+				let value = remuneration[titreChamp];
+				return value;
 			}
 		}
 
@@ -70,23 +72,35 @@ class ContractInput extends React.Component{
 					historiqueTaux["prime_an"] = parseInt(event.target.value, 10)*12;
 				}
 				this.props.changeForm({
-					...this.props.formState, 
-					historiqueToAdd:{
-						...this.props.formState.contrat,
-						historiqueToAdd: historiqueTaux
-					}
+					...this.props.formState,
+					historiqueToAdd: historiqueTaux
 				});
 				this._checkValues(historiqueTaux[titreChamp]);
 			}
 		}else{
-			let remuneration = this.props.formState.contrat.remuneration;
-			remuneration[titreChamp] = event.target.value;
-			if(titreChamp === "bdu" || titreChamp === "paye"){
-				remuneration["solde"] = remuneration.bdu - remuneration.paye;
+			if (this.props.idRemuneration !== undefined){
+				let remunerations = this.props.formState.contrat.remuneration;
+				let remuneration = remunerations[this.props.idRemuneration];
+				remuneration[titreChamp] = event.target.value;
+				if(titreChamp==="prime_ms"){
+					remuneration["prime_an"] = parseInt(event.target.value, 10)*12;
+				}
+				remunerations[this.props.idHistorique] = remuneration;
+				this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,
+					remuneration: remunerations}});
+				this._checkValues(remuneration[titreChamp]);
+			}else{
+				let remuneration = this.props.formState.remunerationToAdd;
+				remuneration[titreChamp] = event.target.value;
+				if(titreChamp==="prime_ms"){
+					remuneration["prime_an"] = parseInt(event.target.value, 10)*12;
+				}
+				this.props.changeForm({
+					...this.props.formState,
+					remunerationToAdd: remuneration
+				});
+				this._checkValues(remuneration[titreChamp]);
 			}
-			this.props.changeForm({...this.props.formState, contrat:{...this.props.formState.contrat,
-				remuneration:remuneration}});
-			this._checkValues(remuneration[titreChamp]);
 		}
 	}
 

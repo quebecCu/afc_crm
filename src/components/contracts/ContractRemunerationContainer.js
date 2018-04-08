@@ -44,7 +44,7 @@ class ContractRemunerationContainer extends React.Component {
 				</ul>
 				<div className="tab-content" id="tabRemunerationContent">
 				{
-					this.props.formState.contrat.remuneration && 
+					this.props.formState.contrat.remuneration &&
 					this.props.formState.contrat.remuneration.map((singleRemuneration, index) => {
 						return (
 							<div key={index} className="tab-pane fade show" id={"remuneration-" + singleRemuneration.annee_dep} role="tabpanel" aria-labelledby={singleRemuneration.annee_dep + "-remuneration-tab"}>
@@ -107,7 +107,7 @@ class ContractRemunerationContainer extends React.Component {
 												>
 													<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
 													{
-														this.props.formState.employesAFC && 
+														this.props.formState.employesAFC &&
 														this.props.formState.employesAFC.map((employe, index) => {
 															return <option key={index}
 																		   value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
@@ -199,7 +199,7 @@ class ContractRemunerationContainer extends React.Component {
 										>
 											<option disabled selected value=""> -- Veuillez sélectionner une valeur --</option>
 											{
-												this.props.formState.employesAFC && 
+												this.props.formState.employesAFC &&
 												this.props.formState.employesAFC.map((employe, index) => {
 													return <option key={index}
 																	 value={employe.idemploye}>{employe.prenom} {employe.nom}</option>
