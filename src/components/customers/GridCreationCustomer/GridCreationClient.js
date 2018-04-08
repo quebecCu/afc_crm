@@ -18,7 +18,7 @@ export class GridCreationClient extends Component {
     render() {
         return (
           <div>
-						<h1 className="text-center">Assurances collectives</h1>
+					<h1 className="text-center">Assurances collectives</h1>
 						<div className="card mb-3">
 							<div className="card-header">
 								<i className="fa fa-file-o"></i> {this.props.title}

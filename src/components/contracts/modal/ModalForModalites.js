@@ -15,7 +15,6 @@ class ModalForModalites extends React.Component {
 			});
 		});
 		this.props.changeFormContract(formState);
-
 	}
 
 	render() {

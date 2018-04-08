@@ -11,13 +11,7 @@ class HistoriqueContainer extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			historique: [{date: "20/09/2017", nom: "Kim", type: "Individuelle"}, {
-				date: "18/09/2017",
-				nom: "Co",
-				type: "Collective"
-			}],
-		};
+		
 		this.handleClickF0 = this.handleClickF0.bind(this);
 		this.handleClickF1 = this.handleClickF1.bind(this);
 		this.handleClickF2 = this.handleClickF2.bind(this);
@@ -139,11 +133,12 @@ class HistoriqueContainer extends Component {
 						<tr>
 							<th>Date</th>
 							<th>Nom</th>
-							<th>Type</th>
 						</tr>
 						</thead>
-						<DossiersComponent historique={this.state.historique} history={this.props.history}
+
+						<DossiersComponent historique={this.props.historique} history={this.props.history}
 										   handleClick={this.props.changeViewDashboard}/>
+										   
 					</table>
 				);
 				break;
@@ -170,6 +165,7 @@ class HistoriqueContainer extends Component {
 					<div style={{overflow: 'auto', height: '300px',}}>
 						<table id="PageFournisseursTable" className="table">
 							<thead>
+
 							<tr>
 								<th onClick={this.handleClickF0}>Nom de l'assurance</th>
 								<th onClick={this.handleClickF1}>Nombre d'employés petits groupes</th>
@@ -177,6 +173,7 @@ class HistoriqueContainer extends Component {
 								<th onClick={this.handleClickF3}>Nom contact</th>
 								<th onClick={this.handleClickF4}>Code</th>
 							</tr>
+
 							</thead>
 							<DossiersComponent fournisseur={this.props.dossiersState}
 											   handleClick={this.props.getViewSuppliers}
