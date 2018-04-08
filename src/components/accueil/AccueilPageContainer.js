@@ -5,15 +5,24 @@ import PageAccueil from './PageAccueil';
 
 import {loginRequest, changeForm} from '../../actions/crmLogin'
 
+import {getHistory} from '../../actions/crmHistory'
+
+
+
 class AccueilPageContainer extends Component {
+	
+	constructor(props){
+		super(props);
+    	this.props.getHistory(); 
+  	}
 
 	render() {
-		let {formState} = this.props.crmLogin;
+		let {historique} = this.props.crmHistory;
 		//gestion derreur sur la div login
 
 		return (
 			<PageAccueil
-				formState={formState}
+				historique={historique}
 			/>
 		)
 	}
@@ -24,7 +33,7 @@ class AccueilPageContainer extends Component {
 function mapStateToProps(state) {
 
 	return {
-		crmLogin: state.crmLogin
+		crmHistory: state.crmHistory,
 	}
 }
 
@@ -37,7 +46,11 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		changeForm: (newFormState) => {
 			dispatch(changeForm(newFormState))
-		}
+		},
+		getHistory: () => {
+			dispatch(getHistory());
+		},
+
 	}
 };
 

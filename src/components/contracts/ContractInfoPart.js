@@ -66,8 +66,6 @@ class ContractInfoPart extends React.Component {
 		return assureurs;
 	}
 
-
-
 	render(){
 
 		return <div>

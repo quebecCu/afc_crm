@@ -32,11 +32,12 @@ export function * loginFlow (){
 				let _cookie = response.data.message.cookie;
 				let _iduser = response.data.message.iduser;
 
-				let formStateAdm ={_auth:{
+				let formStateAdm = {_auth:{
 					cookie:_cookie,
 					isAdmin: _isAdmin
 				}};
-
+				
+				localStorage.setItem("idUser" , _iduser);	
 				localStorage.setItem("cookieSession" ,_cookie);
 				localStorage.setItem("username", username);
 				localStorage.setItem("isAdmin", _isAdmin);

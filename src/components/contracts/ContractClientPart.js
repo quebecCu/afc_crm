@@ -69,6 +69,8 @@ class ContractClientPart extends React.Component {
 						}
 					</div>
 				</div>
+				
+						
 				<div className="form-group">
 					<label id="representantLabel" className="col-form-label">Représentant (chez AFC)</label>
 					<br/>
@@ -88,6 +90,7 @@ class ContractClientPart extends React.Component {
 						}
 					</select>
 				</div>
+
 			</div>
 		);
 	}

@@ -17,6 +17,7 @@ import crmSuppliersContainer from './crmSuppliersContainer';
 import crmGridSuppliersLayout from './crmGridSuppliersLayout';
 import crmContract from './crmContract';
 import crmContacts from './crmContacts';
+import crmHistory from './crmHistory';
 // TODO les autres reducers a rajouter ici
 
 
@@ -37,7 +38,8 @@ const appReducer = combineReducers({
 	crmSuppliersContainer,
 	crmGridSuppliersLayout,
 	crmContract,
-	crmContacts
+	crmContacts, 
+	crmHistory
 });
 
 const rootReducer = (state, action) => {

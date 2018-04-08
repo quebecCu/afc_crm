@@ -12,7 +12,8 @@ class PageAccueil extends Component {
               <p className="lead">Bienvenue sur votre page d'accueil.</p>
             </div>
             <h2 className="titre-historique">Derniers dossiers consultés</h2>
-            <HistoriqueContainer page='PageAccueil' history={this.props.history}/>
+            <HistoriqueContainer page='PageAccueil' historique={this.props.historique}/>
+          
           </div>
         );
     }
