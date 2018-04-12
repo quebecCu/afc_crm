@@ -131,8 +131,9 @@ class HistoriqueContainer extends Component {
 					<table className="table">
 						<thead>
 						<tr>
-							<th>Date</th>
-							<th>Nom</th>
+							<th>Date consultation</th>
+							<th>Nom client</th>
+							<th>Lien</th>
 						</tr>
 						</thead>
 

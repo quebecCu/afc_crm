@@ -595,18 +595,12 @@ export function* requestGetContract() {
 
 			axios.post(backendUrl2, {
 				idUser: idUser,
-				idClient: id
+				idContrat: id
 			}, 
 			config)
 				.then(function (response) {
 					if (!!response.data.status && response.data.status === "success") {
 						console.log("L'accès au contrat a été ajouté! ");
-						/*store.dispatch(changeUpdateFieldContract({
-							name: '',
-							description: '',
-							id: ''
-						}));
-						store.dispatch(getGrid());*/
 					}
 					else if (response.data.status === "fail") {
 						alert(response.data.message);

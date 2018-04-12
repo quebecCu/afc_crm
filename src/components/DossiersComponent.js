@@ -57,8 +57,9 @@ class DossiersComponent extends Component {
 				{this.props.historique.map(element => {
 					return (
 						<tr onClick={this.handleClick.bind(this)} key={element.nom}>
-							<td>{element.date_acces}</td>
-							<td>{element.iduser}</td>
+							<td>{element.date_acces} </td>
+							<td>{element.nomclient} </td>
+							<td><a href= {element.url}>{element.url} </a></td>
 						</tr>
 					);
 				})}
