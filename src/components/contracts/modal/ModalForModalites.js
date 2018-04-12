@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {changeFormContract} from "../../actions/crmContract";
+import {changeFormContract} from "../../../actions/crmContract";
 
 class ModalForModalites extends React.Component {
 
@@ -18,7 +18,7 @@ class ModalForModalites extends React.Component {
 	}
 
 	render() {
-		let modules = this.props.crmContract.formState.contrat.modulesChoisis;
+		let modules = this.props.crmContract.formState.contrat.modulesInitiaux;
 		return (
 			<div>
 				{

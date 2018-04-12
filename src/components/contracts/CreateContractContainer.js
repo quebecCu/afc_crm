@@ -8,14 +8,14 @@ import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getGrid, createContract, getContractToUpdate,
+	getGrid, createContract, getContractToUpdate, setFromClient,
 	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../../actions/crmContract";
 import GridOptionnalContract from "./GridOptionnalContract";
 import {bindClientData, getClientRequest} from "../../actions/crmClientList";
 import {sendingRequestColl} from "../../actions/crmRechercheCollective";
 import LoadingAnimation from "../LoadingAnimation";
-import ModalForModalites from "../modal/ModalForModalites";
+import ModalForModalites from "./modal/ModalForModalites";
 import {changeLoadingValidation} from "../../actions/crmDashboard";
 
 class CreateContractContainer extends React.Component {
@@ -42,7 +42,7 @@ class CreateContractContainer extends React.Component {
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		if (!this.props.idContract) {
-		
+
 			let historiqueTaux = {
 				annee_dep: '',
 				annee_fin: '',
@@ -68,70 +68,53 @@ class CreateContractContainer extends React.Component {
 				prime_ms: '',
 				prime_an: ''
 			};
-			
+			let remunerationToAdd: {
+				vie:'',
+				ct:'',
+				lt:'',
+				amc:'',
+				dent:'',
+				mg:'',
+				pae:'',
+				notes:'',
+				recu:'',
+				base:'',
+				boni:'',
+				total:'',
+				gtotal:'',
+				idConseiller:'',
+				split:'',
+				bdu:'',
+				paye:'',
+				dpaye:'',
+			};
 			this.props.getGrid();
+			this.props.setFromClient({
+				idClient: '',
+				name: '',
+				update: false
+			});
 			this.props.changeForm({
-				...formState, 
-				intModulesToDisplay: 1, 
+				...formState,
+				intModulesToDisplay: 1,
 				modulesToDisplay: [],
 				historiqueToAdd: historiqueTaux,
+				remunerationToAdd: remunerationToAdd,
 				contrat: {
 					...formState.contrat,
 					idAssureur: '',
 					idAGA: '',
-					modulesChoisis: [],
+					modulesSupprimes: [],
+					modulesInitiaux: [],
+					modulesAlreadySelected: [],
 					numPolice: '',
 					dateEmission: '',
 					moisRenouv: '',
 					notes: '',
 					idContract:'',
 					idRepresentant: '',
-					historiqueTaux: [{
-						diff: '',
-						annee_dep: '',
-						annee_fin: '',
-						vie: '',
-						dma: '',
-						pac: '',
-						ct: '',
-						lt: '',
-						amc_ind: '',
-						amc_mono: '',
-						amc_couple: '',
-						amc_fam: '',
-						dent_ind: '',
-						dent_mono: '',
-						dent_couple: '',
-						dent_fam: '',
-						mg_ind: '',
-						mg_mono: '',
-						mg_couple: '',
-						mg_fam: '',
-						pae: '',
-						prime_ms: '',
-						prime_an: ''
-					}],
-					remuneration: [{
-						vie: '',
-						ct: '',
-						lt: '',
-						amc: '',
-						dent: '',
-						mg: '',
-						pae: '',
-						notes: '',
-						recu: '',
-						base: '',
-						boni: '',
-						total: '',
-						gtotal: '',
-						idConseiller: '',
-						split: '',
-						bdu: '',
-						paye: '',
-						dpaye: '',
-						solde: ''
-					}]
+					historiqueTaux: [],
+					remuneration: []
 				}
 			})
 		} else {
@@ -203,87 +186,19 @@ class CreateContractContainer extends React.Component {
 		let {formState} = this.props.crmContract;
 		//let isValid = this._validateForm();
 		//si on est sur un update, on vérifie les tableaux initiaux/modifié pour envoyer au backend du toupdate, todelete ou tocreate
-		if (this.props.idContract) {
-			let modulesInitiaux = JSON.parse(JSON.stringify(formState.contrat.modulesInitiaux));
-			let modulesModifies = JSON.parse(JSON.stringify(formState.contrat.modulesChoisis));
-			let modulesToUpdate = [];
-			let modulesToDelete = [];
-			let modulesToCreate = [];
-			//D'abord on check les modules a update pis ceux à delete (si ds initialModules qqchose n'est pas contenu dans les modules
-			//a update, on le supprime
-			modulesInitiaux.forEach((element) => {
-				let contains = false;
-				let newElement = element;
 
-				modulesModifies.forEach(el => {
-					if (parseInt(el.idModule, 10) === parseInt(element.idModule, 10)) {
-						contains = true;
-						let modalitesInitiales = element.modalites;
-						let modalitesModifiees = el.modalites;
-
-						//on crée l'objet monstrueux <3 (dans chaque module a update on regarde les modalités à suppr/créer/update
-						let modalitesToCreate = [];
-						let modalitesToUpdate = [];
-						let modalitesToDelete = [];
-						modalitesInitiales.forEach(modInit => {
-							let cont = false;
-							modalitesModifiees.forEach(modMod => {
-								if (parseInt(modInit.idModalite, 10) === parseInt(modMod.idModalite, 10)) {
-									cont = true;
-									modalitesToUpdate.push(modMod);
-								}
-
-							});
-							if (!cont) {
-								modalitesToDelete.push(modInit.idModalite);
-							}
-						});
-						//idem now pour les modalites a créer on parcourt dans l'autre senssss :)
-						modalitesModifiees.forEach(modMod => {
-							let cont = false;
-							modalitesInitiales.forEach(modInit => {
-								if (parseInt(modMod.idModalite, 10) === parseInt(modInit.idModalite, 10)) {
-									cont = true;
-								}
-							});
-							if (!cont) {
-								modalitesToCreate.push(modMod);
-							}
-						});
-						delete newElement["modalites"];
-						newElement["modalitesToCreate"] = modalitesToCreate;
-						newElement["modalitesToUpdate"] = modalitesToUpdate;
-						newElement["modalitesToDelete"] = modalitesToDelete;
-
-					}
-				});
-				if (contains) {
-					//on donne a l'élément modalitesToUpdate,toCreate et toDelete
-
-					modulesToUpdate.push(newElement);
-				}
-				else {
-					modulesToDelete.push(element.idModule);
-				}
-			});
-			//Now on loop dans l'autre sens pour savoir les modules à créer
-			modulesModifies.forEach(element => {
-				let contains = false;
-				modulesInitiaux.forEach(el => {
-					if (parseInt(el.idModule, 10) === parseInt(element.idModule, 10)) {
-						contains = true;
-					}
-				});
-				if (!contains) {
-					modulesToCreate.push(element);
-				}
-			});
-
-		}
 
 		this._validateForm();
 		//Si on est en create, on crée le bordel sinan na
-		if(!this.props.idContract){
+		if (this.props.idContract) {
+
+		}else{
+			if (formState.historiqueToAdd.annee_dep !== ""){
+				formState.contrat.historiqueTaux.push(formState.historiqueToAdd);
+			}
+			if (formState.remunerationToAdd.annee_dep !== ""){
+				formState.contrat.remuneration.push(formState.remunerationToAdd);
+			}
 			this.props.createContract(formState);
 		}
 	}
@@ -535,6 +450,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		createContract: (contract) =>{
 			dispatch(createContract(contract));
+		},
+		setFromClient: (fromClient) => {
+			dispatch(setFromClient(fromClient));
 		},
 		changeForm: (newFormState) => {
 			dispatch(changeFormContract(newFormState));

@@ -264,16 +264,9 @@ let initialState = {
 			idAGA: '',
 			libelleAGA: '',
 			idClient: '',
-			modulesChoisis: [{
-				idModule: "4",
-				modalites:[{idValeur:23,idModalite:10,valeur:"0 jours"},
-					{idValeur:26,idModalite:12,valeur:"16 semaines"}]
-
-			},
-				{idModule:"1",
-				modalites:[{idValeur:1,idModalite:5,valeur:"edrg"},
-					{idValeur:1,idModalite:4,valeur:23}]}
-				],
+			modulesSupprimes: [],
+			modulesInitiaux: [],
+			modulesAlreadySelected: [],
 			chambreDeCommerce:'',
 			numPolice:'',
 			dateEmission:'',
@@ -325,7 +318,6 @@ let initialState = {
 			paye:'',
 			dpaye:'',
 		}]
-
 		}
 	},
 	errors: '',
