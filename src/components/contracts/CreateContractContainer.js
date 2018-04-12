@@ -8,7 +8,7 @@ import ContractTauxContainer from './ContractTauxContainer';
 import ContractRemunerationContainer from './ContractRemunerationContainer';
 import {
 	changeBigLayout, changeFormContract, changeLilLayout, changeNewFieldContract, changeUpdateFieldContract, getAGA,
-	getGrid, createContract, getContractToUpdate, setFromClient,
+	getGrid, createContract, updateContract, getContractToUpdate, setFromClient,
 	sendDeleteFieldContract, sendNewFieldContract, sendUpdateFieldContract, setGrid, updatePosLayout
 } from "../../actions/crmContract";
 import GridOptionnalContract from "./GridOptionnalContract";
@@ -191,7 +191,13 @@ class CreateContractContainer extends React.Component {
 		this._validateForm();
 		//Si on est en create, on crée le bordel sinan na
 		if (this.props.idContract) {
-
+			if (formState.historiqueToAdd.annee_dep !== ""){
+				formState.contrat.historiqueTaux.push(formState.historiqueToAdd);
+			}
+			if (formState.remunerationToAdd.annee_dep !== ""){
+				formState.contrat.remuneration.push(formState.remunerationToAdd);
+			}
+			this.props.updateContract(formState);
 		}else{
 			if (formState.historiqueToAdd.annee_dep !== ""){
 				formState.contrat.historiqueTaux.push(formState.historiqueToAdd);
@@ -450,6 +456,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		createContract: (contract) =>{
 			dispatch(createContract(contract));
+		},
+		updateContract: (contract) =>{
+			dispatch(updateContract(contract));
 		},
 		setFromClient: (fromClient) => {
 			dispatch(setFromClient(fromClient));

@@ -13,7 +13,7 @@ import {
 	updateAGA, updateEmployesAFC, updateListAssureurs,
 } from '../actions/crmContract';
 
-import {GET_HISTORY_REQUEST,setHistory} from '../actions/crmHistory'; 
+import {GET_HISTORY_REQUEST,setHistory} from '../actions/crmHistory';
 
 import axios from 'axios';
 import {store} from '../store';
@@ -43,7 +43,7 @@ export function * getHistoryy(){
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					
+
 					store.dispatch(setHistory(response.data.message));
 				} else {
 					alert('Erreur lors du chargement des AGAs');
@@ -121,24 +121,30 @@ export function * submitContract() {
 	}
 }
 
-export function * updateContrat() {
+export function * updateContract() {
 
 	while (true) {
 
 		let formState = yield take(UPDATE_CONTRACT);
 		console.log(formState);
 
-		let {
-			idClient, idRepresentant,
-			idAssureur, idAGA, chambreDeCommerce, numPolice,
-			dateEmission, moisRenouv, notes,
-			historiqueTaux, remuneration,
-			modulesChoisis
-		} = formState.contract.contrat;
+		let obligatoire = {
+			idClient: formState.contract.contrat.idClient,
+			idRepresentant: formState.contract.contrat.idRepresentant,
+			idAssureur: formState.contract.contrat.idAssureur,
+			idAGA: formState.contract.contrat.idAGA,
+			numPolice: formState.contract.contrat.idClient,
+			date_signature: formState.contract.contrat.dateEmission,
+			moisRenouv: formState.contract.contrat.idClient,
+			notes: formState.contract.contrat.idClient
+		};
 
-		let {
-			facultatif
-		} = formState.contract;
+		let historiqueTaux = formState.contract.contrat.historiqueTaux;
+		let remunerations = formState.contract.contrat.remuneration;
+
+		let facultatif = {
+			facultatif: formState.contract.facultatif
+		};
 
 
 		var tokenToSend = localStorage.getItem("cookieSession");
@@ -151,39 +157,47 @@ export function * updateContrat() {
 		};
 
 		//communication avec server
-		var server = "http://localhost:3002/collectiveContracts/create";
+		var server = "http://localhost:3002/";
 		var backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/create';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/';
 
-		axios.post(backendUrl, {
-			idClient: idClient,
-			idRepresentant: idRepresentant,
-			idAssureur: idAssureur,
-			idAGA: idAGA,
-			numPolice: numPolice,
-			dateEmission: dateEmission,
-			moisRenouv: moisRenouv,
-			chambreDeCommerce:chambreDeCommerce,
-			notes: notes,
-			historiqueTaux: historiqueTaux,
-			remuneration: remuneration,
-			modulesChoisis: modulesChoisis,
-			facultatif: facultatif
-		}, config)
+		var obligBackendUrl = backendUrl + "collectiveContracts/updateContractObligatoire/" + obligatoire.idClient;
+		var historiqueBackendUrl = backendUrl + "updateHistoriqueTaux" + obligatoire.idClient;
+
+		axios.post(obligBackendUrl, obligatoire, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					alert('Le contrat a été créé avec succès');
+					console.log('Infos général du contrat updated avec succès');
 					history.push('/dashboard/collective/contracts');
 				}
 				else if (response.data.status === "fail") {
 					alert(response.data.message);
 				}
 				else {
-					alert('Erreur lors de la création du contrat');
+					alert('Erreur lors de la création du contrat, Information Général');
 				}
 			})
 			.catch(function (error) {
 				console.log(error);
+			});
+
+			historiqueTaux.forEach(function(historique) {
+				axios.post(obligBackendUrl, historique, config)
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Infos général du contrat updated avec succès');
+							history.push('/dashboard/collective/contracts');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
 			});
 	}
 }
@@ -636,12 +650,12 @@ export function* requestGetContract() {
 	while (true) {
 		let contract = yield take(GET_CONTRACT);
 		let id = contract.idContract;
-		
+
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/" + id;
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/'+id;
-		
+
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
@@ -649,21 +663,21 @@ export function* requestGetContract() {
 					store.dispatch(setSelectedTaux(response.data.message.historique_taux[0]));
 					store.dispatch(setSelectedRemuneration(response.data.message.remuneration.history[0]));
 					store.dispatch(getGrid());
-					
 
-			/* Ajouter l'accès au contrat dans la table history */ 
-			let idUser= localStorage.getItem('idUser'); 
+
+			/* Ajouter l'accès au contrat dans la table history */
+			let idUser= localStorage.getItem('idUser');
 
 			//communication avec server
 			let server2 = "http://localhost:3002/collectiveContracts/ajouterDansHistory/";
 			let backendUrl2 = window.location.host;
 			backendUrl2 = backendUrl2 === 'localhost:3000' ? server2 : "http://localhost:3002/collectiveContracts/ajouterDansHistory/";
-			
+
 
 			axios.post(backendUrl2, {
 				idUser: idUser,
 				idContrat: id
-			}, 
+			},
 			config)
 				.then(function (response) {
 					if (!!response.data.status && response.data.status === "success") {
@@ -678,10 +692,10 @@ export function* requestGetContract() {
 				})
 				.catch(function (error) {
 					console.log(error);
-				});	
-				/* Fin de l'ajout dans history */	
+				});
+				/* Fin de l'ajout dans history */
 
-				} 
+				}
 				else {
 					alert('Erreur lors de la récupération du contrat');
 				}
@@ -689,7 +703,7 @@ export function* requestGetContract() {
 			.catch(function (error) {
 				console.log(error);
 			});
-		
+
 	}
 }
 
@@ -796,6 +810,6 @@ export function* ContractsFlow() {
 	yield fork(requestGetContract);
 	yield fork(requestGetContractToUpdate);
 	yield fork(submitContract);
-	yield fork(submitContract);
-	yield fork(getHistoryy);  
+	yield fork(updateContract);
+	yield fork(getHistoryy);
 }
