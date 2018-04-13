@@ -162,7 +162,8 @@ export function * updateContract() {
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/';
 
 		var obligBackendUrl = backendUrl + "collectiveContracts/updateContractObligatoire/" + obligatoire.idClient;
-		var historiqueBackendUrl = backendUrl + "updateHistoriqueTaux" + obligatoire.idClient;
+		var historiqueBackendUrl = backendUrl + "updateHistoriqueTaux";
+		var remunerationBackendUrl = backendUrl + "updateRenumeration";
 
 		axios.post(obligBackendUrl, obligatoire, config)
 			.then(function (response) {
@@ -182,17 +183,34 @@ export function * updateContract() {
 			});
 
 			historiqueTaux.forEach(function(historique) {
-				axios.post(obligBackendUrl, historique, config)
+				axios.post(historiqueBackendUrl, historique, config)
 					.then(function (response) {
 						if (!!response.data.status && response.data.status === "success") {
 							console.log('Infos général du contrat updated avec succès');
-							history.push('/dashboard/collective/contracts');
 						}
 						else if (response.data.status === "fail") {
 							alert(response.data.message);
 						}
 						else {
 							alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			});
+
+			remunerations.forEach(function(remuneration) {
+				axios.post(remunerationBackendUrl, remuneration, config)
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Infos général du contrat updated avec succès');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Historique Taux année' + remuneration.annee_dep);
 						}
 					})
 					.catch(function (error) {
