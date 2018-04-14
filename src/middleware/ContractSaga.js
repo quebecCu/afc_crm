@@ -129,7 +129,7 @@ export function * updateContract() {
 		console.log(formState);
 
 		let obligatoire = {
-			idClient: formState.contract.contrat.idClient,
+			idContrat: formState.contract.contrat.idContract,
 			idRepresentant: formState.contract.contrat.idRepresentant,
 			idAssureur: formState.contract.contrat.idAssureur,
 			idAGA: formState.contract.contrat.idAGA,
@@ -161,7 +161,7 @@ export function * updateContract() {
 		var backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/';
 
-		var obligBackendUrl = backendUrl + "collectiveContracts/updateContractObligatoire/" + obligatoire.idClient;
+		var obligBackendUrl = backendUrl + "collectiveContracts/updateContractObligatoire/" + obligatoire.idContrat;
 		var historiqueBackendUrl = backendUrl + "updateHistoriqueTaux";
 		var remunerationBackendUrl = backendUrl + "updateRenumeration";
 
