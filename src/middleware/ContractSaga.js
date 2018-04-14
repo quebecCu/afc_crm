@@ -182,7 +182,7 @@ export function * updateContract() {
 				console.log(error);
 			});
 
-			historiqueTaux.forEach(function(historique) {
+		/*	historiqueTaux.forEach(function(historique) {
 				axios.post(historiqueBackendUrl, historique, config)
 					.then(function (response) {
 						if (!!response.data.status && response.data.status === "success") {
@@ -216,7 +216,7 @@ export function * updateContract() {
 					.catch(function (error) {
 						console.log(error);
 					});
-			});
+			});*/
 	}
 }
 
