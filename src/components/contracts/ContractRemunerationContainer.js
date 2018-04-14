@@ -48,6 +48,14 @@ class ContractRemunerationContainer extends React.Component {
 					this.props.formState.contrat.remuneration.map((singleRemuneration, index) => {
 						return (
 							<div key={index} className="tab-pane fade show" id={"remuneration-" + singleRemuneration.annee_dep} role="tabpanel" aria-labelledby={singleRemuneration.annee_dep + "-remuneration-tab"}>
+								<div className="row justify-content-md-center">
+									<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="annee_dep"
+												   description="Année de départ" part="remuneration" idRemuneration={index}
+												   formState={this.props.formState} changeForm={this.props.changeForm}/>
+									<ContractInput titre="Année de fin" unite="" format="AAAA" titreChamp="annee_fin"
+												   description="Année de départ" part="remuneration" idRemuneration={index}
+												   formState={this.props.formState} changeForm={this.props.changeForm}/>
+								</div>
 								<div className="row">
 									<div className="col-xs-12 col-sm-6 col-md-4">
 										<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie"
@@ -141,6 +149,14 @@ class ContractRemunerationContainer extends React.Component {
 					})
 				}
 					<div className="tab-pane fade show" id="remuneration-new" role="tabpanel" aria-labelledby="new-remuneration-tab">
+						<div className="row justify-content-md-center">
+							<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="annee_dep"
+										description="Année de départ" part="remuneration"
+										formState={this.props.formState} changeForm={this.props.changeForm}/>
+							<ContractInput titre="Année de fin" unite="" format="AAAA" titreChamp="annee_fin"
+										description="Année de départ" part="remuneration"
+										formState={this.props.formState} changeForm={this.props.changeForm}/>
+						</div>
 						<div className="row">
 							<div className="col-xs-12 col-sm-6 col-md-4">
 								<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie"

@@ -133,10 +133,10 @@ export function * updateContract() {
 			idRepresentant: formState.contract.contrat.idRepresentant,
 			idAssureur: formState.contract.contrat.idAssureur,
 			idAGA: formState.contract.contrat.idAGA,
-			numPolice: formState.contract.contrat.idClient,
+			numPolice: formState.contract.contrat.numPolice,
 			date_signature: formState.contract.contrat.dateEmission,
-			moisRenouv: formState.contract.contrat.idClient,
-			notes: formState.contract.contrat.idClient
+			moisRenouv: formState.contract.contrat.moisRenouv,
+			notes: formState.contract.contrat.notes
 		};
 
 		let historiqueTaux = formState.contract.contrat.historiqueTaux;
@@ -162,10 +162,10 @@ export function * updateContract() {
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/';
 
 		var obligBackendUrl = backendUrl + "collectiveContracts/updateContractObligatoire/" + obligatoire.idContrat;
-		var historiqueBackendUrl = backendUrl + "updateHistoriqueTaux";
-		var remunerationBackendUrl = backendUrl + "updateRenumeration";
+		var historiqueBackendUrl = backendUrl + "collectiveContracts/updateHistoriqueTaux";
+		var remunerationBackendUrl = backendUrl + "collectiveContracts/updateRenumeration";
 
-		axios.post(obligBackendUrl, obligatoire, config)
+	/*	axios.post(obligBackendUrl, obligatoire, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					console.log('Infos général du contrat updated avec succès');
@@ -181,27 +181,29 @@ export function * updateContract() {
 			.catch(function (error) {
 				console.log(error);
 			});
-
-		/*	historiqueTaux.forEach(function(historique) {
-				axios.post(historiqueBackendUrl, historique, config)
-					.then(function (response) {
-						if (!!response.data.status && response.data.status === "success") {
-							console.log('Infos général du contrat updated avec succès');
-						}
-						else if (response.data.status === "fail") {
-							alert(response.data.message);
-						}
-						else {
-							alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
-						}
-					})
-					.catch(function (error) {
-						console.log(error);
-					});
-			});
-
-			remunerations.forEach(function(remuneration) {
-				axios.post(remunerationBackendUrl, remuneration, config)
+*/
+			// historiqueTaux.forEach(function(historique) {
+			// 	axios.post(historiqueBackendUrl, historique, config)
+			// 		.then(function (response) {
+			// 			if (!!response.data.status && response.data.status === "success") {
+			// 				console.log('Infos général du contrat updated avec succès');
+			// 			}
+			// 			else if (response.data.status === "fail") {
+			// 				alert(response.data.message);
+			// 			}
+			// 			else {
+			// 				alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
+			// 			}
+			// 		})
+			// 		.catch(function (error) {
+			// 			console.log(error);
+			// 		});
+			// });
+			//
+			 	remunerations.forEach(function(remuneration) {
+				remuneration.idclient = formState.contract.idClient;
+				remuneration.idfournisseur = formState.contract.contrat.idAssureur;
+			 	axios.get(remunerationBackendUrl, remuneration, config )
 					.then(function (response) {
 						if (!!response.data.status && response.data.status === "success") {
 							console.log('Infos général du contrat updated avec succès');
@@ -216,7 +218,8 @@ export function * updateContract() {
 					.catch(function (error) {
 						console.log(error);
 					});
-			});*/
+			});
+
 	}
 }
 

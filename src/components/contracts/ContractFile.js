@@ -336,7 +336,14 @@ class ContractFile extends React.Component {
 											<div className="col-md-2 col-xs-12">
 												<div className="dropdown">
 													<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														{selectedTaux.annee_dep} - {selectedTaux.annee_fin}
+														
+													{
+														selectedTaux.annee_dep && selectedTaux.annee_fin &&
+														<div>
+															{selectedTaux.annee_dep} - {selectedTaux.annee_fin} 
+														</div>
+													}
+
 													</button>
 												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 												    {

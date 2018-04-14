@@ -240,6 +240,8 @@ let initialState = {
 			prime_an: ''
 		},
 		remunerationToAdd: {
+			annee_dep: '',
+			annee_fin: '',
 			vie:'',
 			ct:'',
 			lt:'',

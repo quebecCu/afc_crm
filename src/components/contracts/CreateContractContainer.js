@@ -41,53 +41,56 @@ class CreateContractContainer extends React.Component {
 
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
+		let historiqueTaux = {
+			annee_dep: '',
+			annee_fin: '',
+			diff: '',
+			vie: '',
+			dma: '',
+			pac: '',
+			ct: '',
+			lt: '',
+			amc_ind: '',
+			amc_mono: '',
+			amc_couple: '',
+			amc_fam: '',
+			dent_ind: '',
+			dent_mono: '',
+			dent_couple: '',
+			dent_fam: '',
+			mg_ind: '',
+			mg_mono: '',
+			mg_couple: '',
+			mg_fam: '',
+			pae: '',
+			prime_ms: '',
+			prime_an: ''
+		};
+		let remunerationToAdd = {
+			annee_dep: '',
+			annee_fin: '',
+			vie:'',
+			ct:'',
+			lt:'',
+			amc:'',
+			dent:'',
+			mg:'',
+			pae:'',
+			notes:'',
+			recu:'',
+			base:'',
+			boni:'',
+			total:'',
+			gtotal:'',
+			idConseiller:'',
+			split:'',
+			bdu:'',
+			paye:'',
+			dpaye:'',
+		};
 		if (!this.props.idContract) {
 
-			let historiqueTaux = {
-				annee_dep: '',
-				annee_fin: '',
-				diff: '',
-				vie: '',
-				dma: '',
-				pac: '',
-				ct: '',
-				lt: '',
-				amc_ind: '',
-				amc_mono: '',
-				amc_couple: '',
-				amc_fam: '',
-				dent_ind: '',
-				dent_mono: '',
-				dent_couple: '',
-				dent_fam: '',
-				mg_ind: '',
-				mg_mono: '',
-				mg_couple: '',
-				mg_fam: '',
-				pae: '',
-				prime_ms: '',
-				prime_an: ''
-			};
-			let remunerationToAdd: {
-				vie:'',
-				ct:'',
-				lt:'',
-				amc:'',
-				dent:'',
-				mg:'',
-				pae:'',
-				notes:'',
-				recu:'',
-				base:'',
-				boni:'',
-				total:'',
-				gtotal:'',
-				idConseiller:'',
-				split:'',
-				bdu:'',
-				paye:'',
-				dpaye:'',
-			};
+			
 			this.props.getGrid();
 			this.props.setFromClient({
 				idClient: '',
@@ -118,6 +121,11 @@ class CreateContractContainer extends React.Component {
 				}
 			})
 		} else {
+			this.props.changeForm({
+				...formState,
+				historiqueToAdd: historiqueTaux,
+				remunerationToAdd: remunerationToAdd
+			})
 			this.props.getContractToUpdate(this.props.idContract);
 		}
 
@@ -183,7 +191,7 @@ class CreateContractContainer extends React.Component {
 	}
 
 	_onClickValidate(event) {
-		let {formState} = this.props.crmContract;
+		let {formState, fromClient} = this.props.crmContract;
 		//let isValid = this._validateForm();
 		//si on est sur un update, on vérifie les tableaux initiaux/modifié pour envoyer au backend du toupdate, todelete ou tocreate
 
@@ -197,6 +205,7 @@ class CreateContractContainer extends React.Component {
 			if (formState.remunerationToAdd.annee_dep !== ""){
 				formState.contrat.remuneration.push(formState.remunerationToAdd);
 			}
+			formState.idClient = fromClient.idClient;
 			this.props.updateContract(formState);
 		}else{
 			if (formState.historiqueToAdd.annee_dep !== ""){
