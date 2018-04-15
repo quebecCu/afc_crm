@@ -221,7 +221,7 @@ class ListContractsComponent extends React.Component {
 								</thead>
 								<tbody>
 								{
-
+									listContracts &&
 									listContracts.map((contract, index) => {
 										return (
 										<tr className="contrat" onClick={this.handleClickContrat.bind(this, match, history, contract)}  key={index}>
