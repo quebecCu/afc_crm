@@ -66,9 +66,12 @@ export function * submitContract() {
 			idClient, idRepresentant,
 			idAssureur, idAGA, chambreDeCommerce, numPolice,
 			dateEmission, moisRenouv, notes,
-			historiqueTaux, remuneration,
-			modulesChoisis
+			modulesToCreate
 		} = formState.contract.contrat;
+
+		let {
+			historiqueToAdd, remunerationToAdd
+		} = formState.contract;
 
 		let {
 			facultatif
@@ -98,9 +101,9 @@ export function * submitContract() {
 			moisRenouv: moisRenouv,
 			chambreDeCommerce:chambreDeCommerce,
 			notes: notes,
-			historiqueTaux: historiqueTaux,
-			remuneration: remuneration,
-			modulesChoisis: modulesChoisis,
+			historiqueTaux: historiqueToAdd,
+			remuneration: remunerationToAdd,
+			modulesChoisis: modulesToCreate,
 			facultatif: facultatif
 		}, config)
 			.then(function (response) {
@@ -293,42 +296,42 @@ export function * updateContract() {
 				});
 		});
 
-		modulesToUpdate.forEach(function(moduleToUpdate) {
-			axios.post(modulesToUpdateBackendUrl, config)
-				.then(function (response) {
-					if (!!response.data.status && response.data.status === "success") {
-						console.log('Module ' + moduleToUpdate.idModule + ' successfully updated');
-					}
-					else if (response.data.status === "fail") {
-						alert(response.data.message);
-					}
-					else {
-						alert('Erreur lors de la modification des modules, Module #' + moduleToUpdate.idModule);
-					}
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		});
+		// modulesToUpdate.forEach(function(moduleToUpdate) {
+		// 	axios.post(modulesToUpdateBackendUrl, config)
+		// 		.then(function (response) {
+		// 			if (!!response.data.status && response.data.status === "success") {
+		// 				console.log('Module ' + moduleToUpdate.idModule + ' successfully updated');
+		// 			}
+		// 			else if (response.data.status === "fail") {
+		// 				alert(response.data.message);
+		// 			}
+		// 			else {
+		// 				alert('Erreur lors de la modification des modules, Module #' + moduleToUpdate.idModule);
+		// 			}
+		// 		})
+		// 		.catch(function (error) {
+		// 			console.log(error);
+		// 		});
+		// });
 
-		modulesToCreate.forEach(function(moduleToCreate) {
-			moduleToCreate.idContrat = formState.contract.contrat.idContract;
-			axios.post(modulesToCreateBackendUrl, moduleToCreate, config)
-				.then(function (response) {
-					if (!!response.data.status && response.data.status === "success") {
-						console.log('Module successfully created');
-					}
-					else if (response.data.status === "fail") {
-						alert(response.data.message);
-					}
-					else {
-						alert('Erreur lors de l\'ajout du module ');
-					}
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		});
+		// modulesToCreate.forEach(function(moduleToCreate) {
+		// 	moduleToCreate.idContrat = formState.contract.contrat.idContract;
+		// 	axios.post(modulesToCreateBackendUrl, moduleToCreate, config)
+		// 		.then(function (response) {
+		// 			if (!!response.data.status && response.data.status === "success") {
+		// 				console.log('Module successfully created');
+		// 			}
+		// 			else if (response.data.status === "fail") {
+		// 				alert(response.data.message);
+		// 			}
+		// 			else {
+		// 				alert('Erreur lors de l\'ajout du module ');
+		// 			}
+		// 		})
+		// 		.catch(function (error) {
+		// 			console.log(error);
+		// 		});
+		// });
 
 
 	}

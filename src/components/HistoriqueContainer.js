@@ -11,7 +11,7 @@ class HistoriqueContainer extends Component {
 
 	constructor(props) {
 		super(props);
-		
+
 		this.handleClickF0 = this.handleClickF0.bind(this);
 		this.handleClickF1 = this.handleClickF1.bind(this);
 		this.handleClickF2 = this.handleClickF2.bind(this);
@@ -128,19 +128,21 @@ class HistoriqueContainer extends Component {
 		switch (this.props.page) {
 			case 'PageAccueil':
 				this.table = (
-					<table className="table">
+				<div className="table-responsive">
+					<table id="HistoriqueTable" className="table table-bordered table-hover">
 						<thead>
 						<tr>
 							<th>Date consultation</th>
 							<th>Nom client</th>
-							<th>Lien</th>
+							<th>Num&eacute;ro de police</th>
 						</tr>
 						</thead>
 
 						<DossiersComponent historique={this.props.historique} history={this.props.history}
 										   handleClick={this.props.changeViewDashboard}/>
-										   
+
 					</table>
+				</div>
 				);
 				break;
 			case 'PageCollectivesClients':

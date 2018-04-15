@@ -1,4 +1,4 @@
-.customer, .contrat, .supplier, .user, #addModule{
+.customer, .contrat, .supplier, .user, #addModule, .historique {
   cursor: pointer;
 }
 
