@@ -274,7 +274,7 @@ export function * updateContract() {
 		// 			});
 		// 	}
 
-		modulesToDelete.forEach(function(moduleToDelete) {
+	/*	modulesToDelete.forEach(function(moduleToDelete) {
 			let url = modulesToDeleteBackendUrl + moduleToDelete;
 			axios.delete(url, config)
 				.then(function (response) {
@@ -292,9 +292,9 @@ export function * updateContract() {
 					console.log(error);
 				});
 		});
-
+*/
 		modulesToUpdate.forEach(function(moduleToUpdate) {
-			axios.post(modulesToUpdateBackendUrl, config)
+			axios.post(modulesToUpdateBackendUrl, moduleToUpdate, config)
 				.then(function (response) {
 					if (!!response.data.status && response.data.status === "success") {
 						console.log('Module ' + moduleToUpdate.idModule + ' successfully updated');
@@ -310,7 +310,7 @@ export function * updateContract() {
 					console.log(error);
 				});
 		});
-
+/*
 		modulesToCreate.forEach(function(moduleToCreate) {
 			moduleToCreate.idContrat = formState.contract.contrat.idContract;
 			axios.post(modulesToCreateBackendUrl, moduleToCreate, config)
@@ -329,7 +329,7 @@ export function * updateContract() {
 					console.log(error);
 				});
 		});
-
+*/
 
 	}
 }
