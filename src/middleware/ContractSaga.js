@@ -66,9 +66,12 @@ export function * submitContract() {
 			idClient, idRepresentant,
 			idAssureur, idAGA, chambreDeCommerce, numPolice,
 			dateEmission, moisRenouv, notes,
-			historiqueTaux, remuneration,
-			modulesChoisis
+			modulesToCreate
 		} = formState.contract.contrat;
+
+		let {
+			historiqueToAdd, remunerationToAdd
+		} = formState.contract;
 
 		let {
 			facultatif
@@ -98,9 +101,9 @@ export function * submitContract() {
 			moisRenouv: moisRenouv,
 			chambreDeCommerce:chambreDeCommerce,
 			notes: notes,
-			historiqueTaux: historiqueTaux,
-			remuneration: remuneration,
-			modulesChoisis: modulesChoisis,
+			historiqueTaux: historiqueToAdd,
+			remuneration: remunerationToAdd,
+			modulesChoisis: modulesToCreate,
 			facultatif: facultatif
 		}, config)
 			.then(function (response) {
@@ -179,102 +182,102 @@ export function * updateContract() {
 		var modulesToDeleteBackendUrl = backendUrl + "collectiveContracts/module/";
 		var modulesToCreateBackendUrl = backendUrl + "collectiveContracts/ajouterModule";
 
-		// axios.post(obligBackendUrl, obligatoire, config)
-		// 	.then(function (response) {
-		// 		if (!!response.data.status && response.data.status === "success") {
-		// 			console.log('Infos général du contrat updated avec succès');
-		// 			history.push('/dashboard/collective/contracts');
-		// 		}
-		// 		else if (response.data.status === "fail") {
-		// 			alert(response.data.message);
-		// 		}
-		// 		else {
-		// 			alert('Erreur lors de la création du contrat, Information Général');
-		// 		}
-		// 	})
-		// 	.catch(function (error) {
-		// 		console.log(error);
-		// 	});
-		//
-		// 	historiqueTaux.forEach(function(historique) {
-		// 		historique.idclient = formState.contract.idClient;
-		// 		historique.idfournisseur = formState.contract.contrat.idAssureur;
-		// 		axios.post(historiqueBackendUrl, historique, config)
-		// 			.then(function (response) {
-		// 				if (!!response.data.status && response.data.status === "success") {
-		// 					console.log('Infos général du contrat updated avec succès');
-		// 				}
-		// 				else if (response.data.status === "fail") {
-		// 					alert(response.data.message);
-		// 				}
-		// 				else {
-		// 					alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
-		// 				}
-		// 			})
-		// 			.catch(function (error) {
-		// 				console.log(error);
-		// 			});
-		// 	});
-		// 	if(historiqueToAdd.annee_dep != "" && historiqueToAdd.annee_dep != undefined){
-		// 		historiqueToAdd.idclient = formState.contract.idClient;
-		// 		historiqueToAdd.idfournisseur = formState.contract.contrat.idAssureur;
-		// 	 	axios.post(historiqueToAddBackendUrl, historiqueToAdd, config )
-		// 			.then(function (response) {
-		// 				if (!!response.data.status && response.data.status === "success") {
-		// 					console.log('Remuneration ' + historiqueToAdd.annee_dep + ' updated avec succès');
-		// 				}
-		// 				else if (response.data.status === "fail") {
-		// 					alert(response.data.message);
-		// 				}
-		// 				else {
-		// 					alert('Erreur lors de la création du contrat, Remuneration année ' + historiqueToAdd.annee_dep);
-		// 				}
-		// 			})
-		// 			.catch(function (error) {
-		// 				console.log(error);
-		// 			});
-		// 	}
-		//
-		 	// remunerations.forEach(function(remuneration) {
-			// 	remuneration.idclient = formState.contract.idClient;
-			// 	remuneration.idfournisseur = formState.contract.contrat.idAssureur;
-			//  	axios.post(remunerationBackendUrl, remuneration, config )
-			// 		.then(function (response) {
-			// 			if (!!response.data.status && response.data.status === "success") {
-			// 				console.log('Remuneration ' + remuneration.annee_dep + ' updated avec succès');
-			// 			}
-			// 			else if (response.data.status === "fail") {
-			// 				alert(response.data.message);
-			// 			}
-			// 			else {
-			// 				alert('Erreur lors de la création du contrat, Remuneration année ' + remuneration.annee_dep);
-			// 			}
-			// 		})
-			// 		.catch(function (error) {
-			// 			console.log(error);
-			// 		});
-			// });
-		// 	if(remunerationToAdd.annee_dep != "" && remunerationToAdd.annee_dep != undefined){
-		// 		remunerationToAdd.idclient = formState.contract.idClient;
-		// 		remunerationToAdd.idfournisseur = formState.contract.contrat.idAssureur;
-		// 	 	axios.post(remunerationToAddBackendUrl, remunerationToAdd, config )
-		// 			.then(function (response) {
-		// 				if (!!response.data.status && response.data.status === "success") {
-		// 					console.log('Remuneration ' + remunerationToAdd.annee_dep + ' updated avec succès');
-		// 				}
-		// 				else if (response.data.status === "fail") {
-		// 					alert(response.data.message);
-		// 				}
-		// 				else {
-		// 					alert('Erreur lors de la création du contrat, Remuneration année ' + remunerationToAdd.annee_dep);
-		// 				}
-		// 			})
-		// 			.catch(function (error) {
-		// 				console.log(error);
-		// 			});
-		// 	}
+		axios.post(obligBackendUrl, obligatoire, config)
+			.then(function (response) {
+				if (!!response.data.status && response.data.status === "success") {
+					console.log('Infos général du contrat updated avec succès');
+					history.push('/dashboard/collective/contracts');
+				}
+				else if (response.data.status === "fail") {
+					alert(response.data.message);
+				}
+				else {
+					alert('Erreur lors de la création du contrat, Information Général');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+		
+			historiqueTaux.forEach(function(historique) {
+				historique.idclient = formState.contract.idClient;
+				historique.idfournisseur = formState.contract.contrat.idAssureur;
+				axios.post(historiqueBackendUrl, historique, config)
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Infos général du contrat updated avec succès');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			});
+			if(historiqueToAdd.annee_dep != "" && historiqueToAdd.annee_dep != undefined){
+				historiqueToAdd.idclient = formState.contract.idClient;
+				historiqueToAdd.idfournisseur = formState.contract.contrat.idAssureur;
+			 	axios.post(historiqueToAddBackendUrl, historiqueToAdd, config )
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Remuneration ' + historiqueToAdd.annee_dep + ' updated avec succès');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Remuneration année ' + historiqueToAdd.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			}
+		
+		 	remunerations.forEach(function(remuneration) {
+				remuneration.idclient = formState.contract.idClient;
+				remuneration.idfournisseur = formState.contract.contrat.idAssureur;
+			 	axios.post(remunerationBackendUrl, remuneration, config )
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Remuneration ' + remuneration.annee_dep + ' updated avec succès');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Remuneration année ' + remuneration.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			});
+			if(remunerationToAdd.annee_dep != "" && remunerationToAdd.annee_dep != undefined){
+				remunerationToAdd.idclient = formState.contract.idClient;
+				remunerationToAdd.idfournisseur = formState.contract.contrat.idAssureur;
+			 	axios.post(remunerationToAddBackendUrl, remunerationToAdd, config )
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Remuneration ' + remunerationToAdd.annee_dep + ' updated avec succès');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Remuneration année ' + remunerationToAdd.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			}
 
-	/*	modulesToDelete.forEach(function(moduleToDelete) {
+		modulesToDelete.forEach(function(moduleToDelete) {
 			let url = modulesToDeleteBackendUrl + moduleToDelete;
 			axios.delete(url, config)
 				.then(function (response) {
@@ -292,9 +295,10 @@ export function * updateContract() {
 					console.log(error);
 				});
 		});
-*/
+
+
 		modulesToUpdate.forEach(function(moduleToUpdate) {
-			axios.post(modulesToUpdateBackendUrl, moduleToUpdate, config)
+			axios.post(modulesToUpdateBackendUrl, config)
 				.then(function (response) {
 					if (!!response.data.status && response.data.status === "success") {
 						console.log('Module ' + moduleToUpdate.idModule + ' successfully updated');
@@ -310,7 +314,7 @@ export function * updateContract() {
 					console.log(error);
 				});
 		});
-/*
+
 		modulesToCreate.forEach(function(moduleToCreate) {
 			moduleToCreate.idContrat = formState.contract.contrat.idContract;
 			axios.post(modulesToCreateBackendUrl, moduleToCreate, config)
@@ -329,7 +333,7 @@ export function * updateContract() {
 					console.log(error);
 				});
 		});
-*/
+
 
 	}
 }

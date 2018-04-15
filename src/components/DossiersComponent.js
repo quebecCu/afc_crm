@@ -3,8 +3,8 @@ import {withRouter} from 'react-router';
 
 class DossiersComponent extends Component {
 
-	handleClick(dossier, event) {
-		console.log("wazzah")
+	handleClick(match, history, dossier) {
+		history.push(match.url + "/collective/contracts/" + dossier.idcontrat);
 	}
 
 	handleClickClient(match, history, client) {
@@ -56,10 +56,10 @@ class DossiersComponent extends Component {
 				<tbody>
 				{this.props.historique.map(element => {
 					return (
-						<tr onClick={this.handleClick.bind(this)} key={element.nom}>
+						<tr className="historique" onClick={this.handleClick.bind(this, match, history, element)} key={element.nom}>
 							<td>{element.date_acces} </td>
 							<td>{element.nomclient} </td>
-							<td><a href= {element.url}>{element.url} </a></td>
+							<td><a href= {element.url}>{element.police} </a></td>
 						</tr>
 					);
 				})}
