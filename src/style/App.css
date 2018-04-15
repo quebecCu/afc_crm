@@ -1,23 +1,30 @@
-
-
-.App {
-  text-align: center;
+.customer, .contrat, .supplier, .user, #addModule, .historique {
+  cursor: pointer;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #CAC7C7 !important;
 }
 
-.App-header {
-  padding: 50px;
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #CAC7C7 !important;
+    opacity: 1; /* Firefox */
 }
 
-.App-intro {
-  font-size: large;
+::-moz-placeholder { /* Firefox 19+ */
+  color: #CAC7C7 !important;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+:-moz-placeholder { /* Firefox 18- */
+  color: #CAC7C7 !important;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #CAC7C7 !important;
+  opacity: 1;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #CAC7C7 !important;
+  opacity: 1;
 }

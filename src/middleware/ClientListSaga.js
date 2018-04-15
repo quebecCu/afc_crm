@@ -18,13 +18,35 @@ export function* getClient() {
 			}
 		};
 
+		store.dispatch(bindClientData(
+			{
+				facultatif: [],
+				optionnalFields: [],
+				idclient:0,
+				provenance:"",
+				etat:"",
+				releve:"",
+				forme_type:"",
+				nom:"",
+				tel_principal:"",
+				ext_tel_principal:"",
+				date_creation:"",
+				prospect:"",
+				notes:"",
+				rue:"",
+				province: "",
+				codepostal: "",
+				ville: ""
+			}
+		));
+
 		let clientReq = yield take(GET_CLIENT_REQ);
 		let id = clientReq.idClient;
 
 		//communication avec server
 		let server = "http://localhost:3002/clients/" + id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/' + id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/' + id;
 
 
 		axios.get(backendUrl, config)

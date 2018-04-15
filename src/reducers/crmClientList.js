@@ -4,7 +4,8 @@ import {
 
 let initialState = {
 	client: {
-		facultatif: []
+		facultatif: [],
+		optionnalFields: []
 	},
 	errors: '',
 };

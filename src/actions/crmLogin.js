@@ -6,7 +6,7 @@ export const SENDING_REQUEST = 'SENDING_REQUEST';
 export const LOGOUT = 'LOGOUT';
 export const SET_AUTH = 'SET_AUTH';
 export const LOGIN = 'LOGIN';
-
+export const CHECK_IF_LOGGED = 'CHECK_IF_LOGGED';
 
 export function changeForm (newFormState){
 	return {type: CHANGE_FORM, newFormState}
@@ -28,8 +28,10 @@ export function login (isAdminState) {
 	return {type: LOGIN , isAdminState}
 }
 
+export function checkIfLogged (isAdminState) {
+	return {type: CHECK_IF_LOGGED , isAdminState}
+}
+
 export function logout (newFormState){
 	return {type: LOGOUT, newFormState}
 }
-
-

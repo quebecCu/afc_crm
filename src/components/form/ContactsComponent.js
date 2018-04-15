@@ -72,7 +72,7 @@ class ContactsComponent extends Component   {
 	render() {
 		return(
 			<div>
-				<h4>Contact {this.props.idContact + 1} <span className="fa fa-minus-square" onClick={this._deleteContact}/></h4>
+				<h4>Contact {this.props.idContact + 1} <button className="btn btn-sm btn-danger" onClick={this._deleteContact}><i className="fa fa-minus-square"></i> Supprimer ce contact</button></h4>
 				<div className="form-group row">
 					<div className="col-4">
 						<label htmlFor="prenom" className="control-label">Prénom</label>
@@ -108,7 +108,7 @@ class ContactsComponent extends Component   {
 						</select>
 					</div>
 					{
-						this.props.view === 'collIns' &&
+						this.props.isClient === 'true' &&
 						<div className="col-6">
 							<label className="control-label " htmlFor="decideur">Décideur</label>
 							<select className="form-control" id="decideur" name="decideur"
@@ -124,13 +124,15 @@ class ContactsComponent extends Component   {
 						<label htmlFor="numTel" className="control-label">Numéro de téléphone principal</label>
 						<input type="text" className="form-control" id="numTel"
 							   name="numTel" value={this.props.formState.num_tel_principal}
-							   onChange={this._changeNumTel}/>
+							   onChange={this._changeNumTel}
+							   placeholder="(819)-0000-000"/>
 					</div>
 					<div className="col-4">
 						<label htmlFor="extTel" className="control-label">Extension du téléphone</label>
 						<input type="text" className="form-control" id="extTel"
 							   name="extTel" value={this.props.formState.ext_tel_principal}
-							   onChange={this._changeExtTel}/>
+							   onChange={this._changeExtTel}
+							   placeholder="numero de poste ex: 1234"/>
 					</div>
 					<div className="col-4">
 						<label htmlFor="mail" className="control-label">Mail</label>

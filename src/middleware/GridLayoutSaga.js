@@ -5,11 +5,11 @@ import {
 	requestGrid, GET_CHAMP_TYPES, updateChampTypes, GET_ACTIVITES, updateActivites, GET_ETATS, GET_PROVENANCES,
 	UPDATE_POSITIONS, updateEtats, updateProvenances, getReleves, getChampTypes, getEtats,
 	getActivites, getProvenances, UPDATE_FIELD, DELETE_FIELD, changeUpdateField, changeNewField, GET_GRID_MODIFY,
-	getGridModify, changeRequiredFields, DELETE_CUSTOMER
+	getGridModify, changeRequiredFields, DELETE_CUSTOMER,GET_PROVINCES,UPDATE_PROVINCES,getProvinces, updateProvinces
 } from '../actions/crmGridLayout';
 import axios from 'axios';
 import {store} from '../store';
-import {changeViewCollective} from "../actions/crmCollectiveContainer";
+import { history } from '../store.js';
 import {changeLoading, changeLoadingValidation} from "../actions/crmDashboard";
 
 
@@ -23,6 +23,96 @@ let config ={
 		}
 };
 
+
+
+
+
+//Envoie les champs au back-end (Création d'un client)
+export function * sendFile() {
+	while(true) {
+		let file = yield take(CREATE_CUSTOMER_FILE);
+		let {
+			grid,
+			requiredFields,
+			arrayContacts
+		} = file.file;
+		let facultatif = grid.map(champ => {
+			return {id: champ.idattrentreprise, value: champ.value}
+		});
+
+		//communication avec server
+		let server = "http://localhost:3002/clients/create";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/create';
+
+		axios.post(backendUrl, {
+			idreleve: requiredFields.releve,
+			nom: requiredFields.nomEntreprise,
+			tel_princ: requiredFields.telephone,
+			ext_tel_princ: requiredFields.extension,
+			idactivite: requiredFields.activite,
+			rue: requiredFields.rue,
+			ville: requiredFields.ville,
+			province: requiredFields.province,
+			codepostal: requiredFields.codePostal,
+			idetat: requiredFields.etat,
+			idprovenance: requiredFields.provenance,
+			prospect: requiredFields.prospect,
+			notes: requiredFields.notes,
+			facultatif: facultatif,
+			newcontacts: arrayContacts
+		},config)
+			.then(function (response) {
+				store.dispatch(changeLoadingValidation(false));
+				if (!!response.data.status && response.data.status === "success") {
+					alert('La fiche client a été créée avec succès');
+					history.push('/dashboard/collective/clients');
+				}
+				else if (response.data.status === "fail") {
+
+					// Modification de soumar
+
+					if (requiredFields.ville.length>50){
+						alert ("La longueur de ville doit être inférieur à 50!");
+					}
+
+					else
+					if (requiredFields.codePostal.length>7){
+						alert ("La longueur du code postal doit être inférieur à 7!");
+					}
+
+					else
+					if (requiredFields.telephone.length>20){
+						alert ("La longueur du nunéro de téléphone doit être inférieur à 20!");
+					}
+
+					else
+					if (requiredFields.extension.length>5){
+						alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!");
+					}
+
+					else{
+						alert(response.data.message);
+					}
+					//Fin modification de Soumar
+
+				}
+				else {
+					alert('Erreur lors de la création de la fiche client');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+
+
+
+
+
+
 //Récupère les champs du back-end
 export function * getGridLayout (){
 	while(true){
@@ -33,7 +123,7 @@ export function * getGridLayout (){
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/customer";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/customer';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/customer';
 
 		axios.get(backendUrl,config)
 			.then(function (response) {
@@ -91,14 +181,49 @@ export function * requestReleves (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/statementSendingModes";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/statementSendingModes';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/statementSendingModes';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if(!!response.data.message && response.data.status === "success"){
 					store.dispatch(updateReleves(response.data.message));
 					if(view.id) {
-						store.dispatch(getChampTypes({id: view.id.id, releves: response.data.message, grid: view.id.grid}))
+						store.dispatch(getProvinces({id: view.id.id,
+													releves: response.data.message,
+													grid: view.id.grid}))
+					}
+					else {
+						store.dispatch(getProvinces())
+					}
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+}
+
+
+
+//Récupère les valeurs de la liste des provinces
+export function * requestProvinces (){
+	while(true){
+
+		let view = yield take(GET_PROVINCES);
+		//communication avec server
+		let server = "http://localhost:3002/clients/provinces";
+		let backendUrl = window.location.host;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/provinces';
+
+		axios.get(backendUrl, config)
+			.then(function (response) {
+				if(!!response.data.message && response.data.status === "success"){
+					store.dispatch(updateProvinces(response.data.message));
+					if(view.data) {
+						store.dispatch(getChampTypes({id: view.data.id,
+													 releves: view.data.releves,
+													 provinces: response.data.message,
+													  grid: view.data.grid}))
 					}
 					else {
 						store.dispatch(getChampTypes())
@@ -120,7 +245,7 @@ export function * requestChampTypes (){
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/types";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/types';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/types';
 
 		axios.get(backendUrl,config)
 			.then(function (response) {
@@ -130,6 +255,7 @@ export function * requestChampTypes (){
 						store.dispatch(getActivites({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							grid: view.data.grid
 						}));
 					}
@@ -153,7 +279,7 @@ export function * requestActivites (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/activities";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/activities';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/activities';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -163,6 +289,7 @@ export function * requestActivites (){
 						store.dispatch(getEtats({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							activites: response.data.message,
 							grid: view.data.grid
 						}));
@@ -187,7 +314,7 @@ export function * requestEtats (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/states";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/states';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/states';
 
 		axios.get(backendUrl,config)
 			.then(function (response) {
@@ -197,6 +324,7 @@ export function * requestEtats (){
 						store.dispatch(getProvenances({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							activites: view.data.activites,
 							etats: response.data.message,
 							grid: view.data.grid
@@ -222,7 +350,7 @@ export function * requestProvenances (){
 		//communication avec server
 		let server = "http://localhost:3002/clients/provenances";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/provenances';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/provenances';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -232,6 +360,7 @@ export function * requestProvenances (){
 						store.dispatch(getGridModify({
 							id: view.data.id,
 							releves: view.data.releves,
+							provinces: view.data.provinces,
 							activites: view.data.activites,
 							etats: view.data.etats,
 							provenances: response.data.message,
@@ -241,60 +370,6 @@ export function * requestProvenances (){
 					else {
 						store.dispatch(changeLoading(false));
 					}
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
-}
-
-//Envoie les champs au back-end (Création d'un client)
-export function * sendFile() {
-	while(true) {
-		let file = yield take(CREATE_CUSTOMER_FILE);
-		let {
-			grid,
-			requiredFields,
-			arrayContacts
-		} = file.file;
-		let facultatif = grid.map(champ => {
-			return {id: champ.idattrentreprise, value: champ.value}
-		});
-
-		//communication avec server
-		let server = "http://localhost:3002/clients/create";
-		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/create';
-
-		axios.post(backendUrl, {
-			idreleve: requiredFields.releve,
-			nom: requiredFields.nomEntreprise,
-			tel_princ: requiredFields.telephone,
-			ext_tel_princ: requiredFields.extension,
-			idactivite: requiredFields.activite,
-			rue: requiredFields.rue,
-			ville: requiredFields.ville,
-			province: requiredFields.province,
-			codepostal: requiredFields.codePostal,
-			idetat: requiredFields.etat,
-			idprovenance: requiredFields.provenance,
-			prospect: requiredFields.prospect,
-			notes: requiredFields.notes,
-			facultatif: facultatif,
-			newcontacts: arrayContacts
-		},config)
-			.then(function (response) {
-				store.dispatch(changeLoadingValidation(false));
-				if (!!response.data.status && response.data.status === "success") {
-					alert('La fiche client a été créée avec succès');
-					store.dispatch(changeViewCollective('customers'));
-				}
-				else if(response.data.status === "fail") {
-					alert(response.data.message);
-				}
-				else {
-					alert('Erreur lors de la création de la fiche client');
 				}
 			})
 			.catch(function (error) {
@@ -324,7 +399,7 @@ export function * updateFile() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/update";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/update';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/update';
 
 		axios.post(backendUrl, {
 			idclient: idToDisplay,
@@ -335,7 +410,7 @@ export function * updateFile() {
 			idactivite: requiredFields.activite,
 			rue: requiredFields.rue,
 			ville: requiredFields.ville,
-			province: requiredFields.province,
+			idProvince: requiredFields.province,
 			codepostal: requiredFields.codePostal,
 			idetat: requiredFields.etat,
 			idprovenance: requiredFields.provenance,
@@ -350,10 +425,34 @@ export function * updateFile() {
 				store.dispatch(changeLoadingValidation(false));
 				if (!!response.data.status && response.data.status === "success") {
 					alert('La fiche client a été modifiée avec succès');
-					store.dispatch(changeViewCollective('customers'));
+					history.push('/dashboard/collective/clients');
 				}
 				else if(response.data.status === 'fail') {
-					alert(response.data.message);
+						// Modification de soumar
+
+						if (requiredFields.ville.length>50){
+							alert ("La longueur de ville doit être inférieur à 50!");
+						}
+
+						else
+						if (requiredFields.codePostal.length>7){
+							alert ("La longueur du code postal doit être inférieur à 7!");
+						}
+
+						else
+						if (requiredFields.telephone.length>20){
+							alert ("La longueur du nunéro de téléphone doit être inférieur à 20!");
+						}
+
+						else
+						if (requiredFields.extension.length>5){
+							alert ("La longueur de l'extension du numéro de téléphone doit être inférieur à 5!");
+						}
+
+						else{
+							alert(response.data.message);
+						}
+						//Fin modification de Soumar
 				}
 				else {
 					alert('Erreur lors de la modification de la fiche client');
@@ -373,12 +472,12 @@ export function * deleteCustomerFile() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/clients/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/'+id;
 
 		axios.delete(backendUrl,config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-					store.dispatch(changeViewCollective("customers"));
+				history.push('/dashboard/collective/clients');
 					alert("Fiche client supprimé avec succès");
 				} else {
 					alert('Erreur lors de la supression d\'un client');
@@ -404,7 +503,7 @@ export function * createNewField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/create/customer";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/create/customer';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/create/customer';
 
 		axios.post(backendUrl, {
 			description: form.description,
@@ -452,7 +551,7 @@ export function * updatePositions() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer/display";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/customer/display';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/customer/display';
 
 		axios.post(backendUrl, {
 			layout: newItem,
@@ -481,7 +580,7 @@ export function * sendUpdateField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/customer";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/update/customer';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/customer';
 
 		axios.post(backendUrl, {
 			id: id,
@@ -523,7 +622,7 @@ export function * sendDeleteField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/customer/"+id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/customer/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/customer/'+id;
 
 		axios.delete(backendUrl,config)
 			.then(function (response) {
@@ -544,13 +643,13 @@ export function * sendDeleteField() {
 export function * getGridLayoutToModify() {
 	while(true) {
 		let client = yield take(GET_GRID_MODIFY);
-		let {id, releves, activites, etats, provenances, grid} = client.data;
-		let releve, activite, etat, provenance = '';
+		let {id, releves, activites, etats, provenances,provinces, grid} = client.data;
+		let releve, activite, etat, provenance, province= '';
 
 		//communication avec server
 		let server = "http://localhost:3002/clients/"+id;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://salty-scrubland-22457.herokuapp.com/attributesManagement/clients/'+id;
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/clients/'+id;
 
 		axios.get(server,config)
 			.then(function (response) {
@@ -579,6 +678,12 @@ export function * getGridLayoutToModify() {
 					releves.forEach(type => {
 						if(type.modeenvoiereleve === champs.releve) {
 							releve = type.idreleve;
+						}
+					});
+
+					provinces.forEach(type => {
+						if(type.nomProvince === champs.province) {
+							province = type.idProvince;
 						}
 					});
 
@@ -631,6 +736,7 @@ export function * GridFlow () {
 	yield fork (sendFile);
 	yield fork (updateFile);
 	yield fork (requestReleves);
+	yield fork (requestProvinces);
 	yield fork (createNewField);
 	yield fork (requestChampTypes);
 	yield fork (requestActivites);
