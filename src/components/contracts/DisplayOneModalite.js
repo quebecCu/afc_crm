@@ -19,35 +19,68 @@ class DisplayOneModalite extends React.Component {
 		};
 
 		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let modulesToCreate = this.props.formState.contrat.modulesToCreate;
 		let idModuleDansContrat;
-		for (let i = 0; i < modulesInitiaux.length; i++) {
-			if (modulesInitiaux[i].idDomaine === this.props.idModule) {
-				idModuleDansContrat = i;
-			}
-		}
-		let modalitesInitiales = this.props.formState.contrat.modulesInitiaux[idModuleDansContrat].modalites;
-		let containsIdModalite;
-		let idModaliteDansLarray;
-		for (let j = 0; j < modalitesInitiales.length; j++) {
-			if (modalitesInitiales[j].idModalite === modaliteModifiee.idModalite){
-				containsIdModalite = true;
-				idModaliteDansLarray = j;
-			}
-		}
 
-		if (modalitesInitiales.length === 0 || !containsIdModalite) {
-				modalitesInitiales.push(modaliteModifiee);
+		if (this.props.moduleInitial){
+			for (let i = 0; i < modulesInitiaux.length; i++) {
+				if (modulesInitiaux[i].idDomaine === this.props.idDomaine) {
+					idModuleDansContrat = i;
+				}
+			}
+			let modalitesInitiales = this.props.formState.contrat.modulesInitiaux[idModuleDansContrat].modalites;
+			let containsIdModalite;
+			let idModaliteDansLarray;
+			for (let j = 0; j < modalitesInitiales.length; j++) {
+				if (modalitesInitiales[j].idModalite === modaliteModifiee.idModalite){
+					containsIdModalite = true;
+					idModaliteDansLarray = j;
+				}
+			}
+
+			if (modalitesInitiales.length === 0 || !containsIdModalite) {
+					modalitesInitiales.push(modaliteModifiee);
+			}else{
+					modalitesInitiales[idModaliteDansLarray] = modaliteModifiee;
+					modulesInitiaux[idModuleDansContrat].modalites = modalitesInitiales;
+			}
+
+			this.props.changeForm({
+				...this.props.formState, contrat: {
+					...this.props.formState.contrat,
+					modulesInitiaux: modulesInitiaux
+				}
+			});
 		}else{
-				modalitesInitiales[idModaliteDansLarray] = modaliteModifiee;
-				modulesInitiaux[idModuleDansContrat].modalites = modalitesInitiales;
-		}
-
-		this.props.changeForm({
-			...this.props.formState, contrat: {
-				...this.props.formState.contrat,
-				modulesInitiaux: modulesInitiaux
+			for (let i = 0; i < modulesToCreate.length; i++) {
+				if (modulesToCreate[i].idDomaine === this.props.idDomaine) {
+					idModuleDansContrat = i;
+				}
 			}
-		});
+			let modalitesInitiales = this.props.formState.contrat.modulesToCreate[idModuleDansContrat].modalites;
+			let containsIdModalite;
+			let idModaliteDansLarray;
+			for (let j = 0; j < modalitesInitiales.length; j++) {
+				if (modalitesInitiales[j].idModalite === modaliteModifiee.idModalite){
+					containsIdModalite = true;
+					idModaliteDansLarray = j;
+				}
+			}
+
+			if (modalitesInitiales.length === 0 || !containsIdModalite) {
+					modalitesInitiales.push(modaliteModifiee);
+			}else{
+					modalitesInitiales[idModaliteDansLarray] = modaliteModifiee;
+					modulesToCreate[idModuleDansContrat].modalites = modalitesInitiales;
+			}
+
+			this.props.changeForm({
+				...this.props.formState, contrat: {
+					...this.props.formState.contrat,
+					modulesToCreate: modulesToCreate
+				}
+			});
+		}
 	}
 
 	render() {
@@ -70,7 +103,7 @@ class DisplayOneModalite extends React.Component {
 						  data-target={"#" + this.props.modalite.idModalite + "modalite"}/>
 				}
 				<input
-					id={"valeur" + this.props.modalite.idModalite + this.props.idModule}
+					id={"valeur" + this.props.modalite.idModalite + this.props.idDomaine}
 					type="textField"
 					className="form-control"
 					value={this.props.valeur}

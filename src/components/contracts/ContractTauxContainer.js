@@ -34,10 +34,10 @@ class ContractTauxContainer extends React.Component{
 							<div key={index} className="tab-pane fade show" id={"taux-" + historique.annee_dep} role="tabpanel" aria-labelledby={historique.annee_dep + "-taux-tab"}>
 								<div className="row justify-content-md-center">
 									<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="annee_dep"
-												   description="Année de départ" part="taux" idHistorique={index}
+												   description="Année de départ" part="taux" idHistorique={index} disabled
 												   formState={this.props.formState} changeForm={this.props.changeForm}/>
 									<ContractInput titre="Année de fin" unite="" format="AAAA" titreChamp="annee_fin"
-												   description="Année de départ" part="taux" idHistorique={index}
+												   description="Année de départ" part="taux" idHistorique={index} disabled
 												   formState={this.props.formState} changeForm={this.props.changeForm}/>
 								</div>
 								<div className="row">
@@ -191,7 +191,7 @@ class ContractTauxContainer extends React.Component{
 												 description="Assurance maladies graves familiale" part="taux"
 												 formState={this.props.formState} changeForm={this.props.changeForm}/>
 								<ContractInput titre="Prime annuelle" unite="$" format="X XXX.XX" titreChamp="prime_an"
-												 description="Prime mensuelle *12" part="taux"
+												 description="Prime mensuelle *12" part="taux" disabled={true}
 												 formState={this.props.formState} changeForm={this.props.changeForm}/>
 							</div>
 						</div>

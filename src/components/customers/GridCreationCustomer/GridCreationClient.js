@@ -24,6 +24,12 @@ export class GridCreationClient extends Component {
 								<i className="fa fa-file-o"></i> {this.props.title}
 							</div>
 							<div className="card-body">
+							<div className="text-right">
+								<button className="btn btn-lg btn-success" type="submit" onClick={this.props.handleSubmit}>
+									<i className="fa fa-check"/> Valider
+								</button>
+							</div>
+							<br/>
 								<div id="accordion">
 									<div className="card">
 										<div className="card-header" id="headingOne">
@@ -108,15 +114,6 @@ export class GridCreationClient extends Component {
 									</div>
 								</div>
 								<br/>
-								<div className="form-group text-center">
-									<button className="buttonload btn btn-primary" type="submit" onClick={this.props.handleSubmit}>
-										{
-											this.props.loadingValidation &&
-											<i className="fa fa-refresh fa-spin"/>
-										}
-										 Valider
-									</button>
-								</div>
 							</div>
 						</div>
           </div>

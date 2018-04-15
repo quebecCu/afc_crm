@@ -12,12 +12,13 @@ class ModuleCreation extends React.Component {
 			isSelected = true;
 		}
 		this.state = {
-			isSelected: isSelected
+			isSelected: isSelected,
+			isDisabled: this.props.moduleInitial
 		}
 	}
 
 	_onChangeModule(event) {
-
+		this.state.isDisabled = true;
 		let moduleModifie = {
 			idModule: "",
 			idDomaine: event.target.value,
@@ -25,38 +26,17 @@ class ModuleCreation extends React.Component {
 			modalites: []
 		}
 
-		let oldDomaine = this.props.module.idDomaine;
-		let idModuleToRemove = this.props.module.idModule;
-		let modulesSupprimes = this.props.formState.contrat.modulesSupprimes;
-		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let modulesToCreate = this.props.formState.contrat.modulesToCreate;
 		let modulesAlreadySelected = this.props.formState.contrat.modulesAlreadySelected;
-		let idModuleDansContrat;
 
-		if(oldDomaine !== ""){
-			for (let i = 0; i < modulesInitiaux.length; i++) {
-				if (modulesInitiaux[i].idDomaine === oldDomaine) {
-					idModuleDansContrat = i;
-				}
-			}
-
-			modulesAlreadySelected.splice(modulesAlreadySelected.indexOf(oldDomaine), 1);
-			modulesAlreadySelected.push(parseInt(event.target.value));
-
-			if (idModuleToRemove !== ""){
-				modulesSupprimes.push(idModuleToRemove);
-			}
-			modulesInitiaux[idModuleDansContrat] = moduleModifie;
-		}else{
-			modulesAlreadySelected.push(parseInt(event.target.value));
-			modulesInitiaux[modulesInitiaux.length - 1] = moduleModifie;
-		}
+		modulesAlreadySelected.push(parseInt(event.target.value));
+		modulesToCreate[modulesToCreate.length - 1] = moduleModifie;
 
 		this.props.changeForm({
 			...this.props.formState,
 			contrat: {
 				...this.props.formState.contrat,
-				modulesInitiaux: modulesInitiaux,
-				modulesSupprimes: modulesSupprimes,
+				modulesToCreate: modulesToCreate,
 				modulesAlreadySelected: modulesAlreadySelected
 			}
 		});
@@ -65,25 +45,59 @@ class ModuleCreation extends React.Component {
 	}
 
 	_onChangeNotes(event) {
-		let modulesChoisis = JSON.parse(JSON.stringify(this.props.formState.contrat.modulesChoisis), 10);
-		this.notes = event.target.value;
-		modulesChoisis[this.props.idComponent].module_notes = this.notes;
-		this.props.changeForm({
-			...this.props.formState,
-			contrat: {...this.props.formState.contrat, modulesChoisis: modulesChoisis}
-		});
+		let domaine = this.props.module.idDomaine;
+		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let modulesToCreate = this.props.formState.contrat.modulesToCreate;
+		let idModuleDansContrat;
+
+		if (this.props.moduleInitial){
+			let idModuleToRemove = this.props.module.idModule;
+			for (let i = 0; i < modulesInitiaux.length; i++) {
+				if (modulesInitiaux[i].idDomaine === domaine) {
+					modulesInitiaux[i].module_notes = event.target.value;
+				}
+			}
+
+			this.props.changeForm({
+				...this.props.formState,
+				contrat: {
+					...this.props.formState.contrat,
+					modulesInitiaux: modulesInitiaux
+				}
+			});
+		}else{
+			if(domaine !== ""){
+				let idModuleDansContrat;
+				for (let i = 0; i < modulesToCreate.length; i++) {
+					if (modulesToCreate[i].idDomaine === domaine) {
+						modulesToCreate[i].module_notes = event.target.value;
+					}
+				}
+			}else{
+				modulesToCreate[modulesToCreate.length-1].module_notes = event.target.value;
+			}
+
+			this.props.changeForm({
+				...this.props.formState,
+				contrat: {
+					...this.props.formState.contrat,
+					modulesToCreate: modulesToCreate
+				}
+			});
+		}
 	}
 
 
 	_handleClickMoins(event) {
 		let oldDomaine = this.props.module.idDomaine;
-		let idModuleToRemove = this.props.module.idModule;
-		let modulesSupprimes = this.props.formState.contrat.modulesSupprimes;
 		let modulesInitiaux = this.props.formState.contrat.modulesInitiaux;
+		let modulesToCreate = this.props.formState.contrat.modulesToCreate;
 		let modulesAlreadySelected = this.props.formState.contrat.modulesAlreadySelected;
 		let idModuleDansContrat;
 
-		if(oldDomaine !== ""){
+		if (this.props.moduleInitial){
+			let modulesSupprimes = this.props.formState.contrat.modulesSupprimes;
+			let idModuleToRemove = this.props.module.idModule;
 			for (let i = 0; i < modulesInitiaux.length; i++) {
 				if (modulesInitiaux[i].idDomaine === oldDomaine) {
 					idModuleDansContrat = i;
@@ -91,23 +105,41 @@ class ModuleCreation extends React.Component {
 			}
 
 			modulesAlreadySelected.splice(modulesAlreadySelected.indexOf(oldDomaine), 1);
-			if (idModuleToRemove !== ""){
-				modulesSupprimes.push(idModuleToRemove);
-			}
+			modulesSupprimes.push(idModuleToRemove);
 			modulesInitiaux.splice(idModuleDansContrat, 1);
+
+			this.props.changeForm({
+				...this.props.formState,
+				contrat: {
+					...this.props.formState.contrat,
+					modulesInitiaux: modulesInitiaux,
+					modulesSupprimes: modulesSupprimes,
+					modulesAlreadySelected: modulesAlreadySelected
+				}
+			});
 		}else{
-			modulesInitiaux.splice(modulesInitiaux.length - 1);
+			if(oldDomaine !== ""){
+				for (let i = 0; i < modulesToCreate.length; i++) {
+					if (modulesToCreate[i].idDomaine === oldDomaine) {
+						idModuleDansContrat = i;
+					}
+				}
+				modulesAlreadySelected.splice(modulesAlreadySelected.indexOf(oldDomaine), 1);
+				modulesToCreate.splice(idModuleDansContrat, 1);
+			}else{
+				modulesToCreate.splice(modulesToCreate.length - 1);
+			}
+
+			this.props.changeForm({
+				...this.props.formState,
+				contrat: {
+					...this.props.formState.contrat,
+					modulesToCreate: modulesToCreate,
+					modulesAlreadySelected: modulesAlreadySelected
+				}
+			});
 		}
 
-		this.props.changeForm({
-			...this.props.formState,
-			contrat: {
-				...this.props.formState.contrat,
-				modulesInitiaux: modulesInitiaux,
-				modulesSupprimes: modulesSupprimes,
-				modulesAlreadySelected: modulesAlreadySelected
-			}
-		});
 	}
 
 	//select list sur les types de module. Une fois le module sélec, ca va loop dans ses modalités
@@ -122,6 +154,7 @@ class ModuleCreation extends React.Component {
 						className="form-control"
 						onChange={this._onChangeModule}
 						value={this.props.module.idDomaine}
+						disabled={this.state.isDisabled}
 					>
 						<option id={"optionNull" + this.props.idComponent} value="" disabled> -- select an option --</option>
 						{
@@ -167,7 +200,7 @@ class ModuleCreation extends React.Component {
 					{
 						(this.state.isSelected && this.props.module.idDomaine !== "") &&
 
-							<ModalitesDisplay idModule={this.props.module.idDomaine} module={this.props.module}
+							<ModalitesDisplay moduleInitial={this.props.moduleInitial} idDomaine={this.props.module.idDomaine} module={this.props.module}
 											  formState={this.props.formState} changeForm={this.props.changeForm}/>
 					}
 					<textarea id={"textarea" + this.props.module.idModule} placeholder="Notes relatives au module"
