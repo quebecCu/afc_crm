@@ -8,10 +8,10 @@ class ModalitesDisplay extends React.Component{
 
 
 	render(){
-		let moduleToFind = this.props.idModule;
+		let domaineToFind = this.props.idDomaine;
 		let modalites = [];
 		this.props.formState.modules.forEach(element=>{
-			if(element.idModule == moduleToFind){
+			if(element.idModule == domaineToFind){
 				modalites = element.modalites;
 			}
 		});
@@ -26,8 +26,8 @@ class ModalitesDisplay extends React.Component{
 							}
 						})
 					}
-					return <DisplayOneModalite key={element.idModalite} modalite={element} valeur={value}
-									idModule={this.props.idModule} formState={this.props.formState} changeForm={this.props.changeForm}/>
+					return <DisplayOneModalite key={element.idModalite} modalite={element} valeur={value} moduleInitial={this.props.moduleInitial}
+									idDomaine={this.props.idDomaine} formState={this.props.formState} changeForm={this.props.changeForm}/>
 				})
 			}
 		</div>

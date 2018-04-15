@@ -8,15 +8,29 @@ class ContractRemunerationContainer extends React.Component {
 
 	}
 
-	_onChangeConseiller(event) {
-		this.props.changeForm({
-			...this.props.formState, contrat: {
-				...this.props.formState.contrat,
-				remuneration: {...this.props.formState.contrat.remuneration, idConseiller: event.target.value}
+	_onChangeConseiller(event, annee_dep) {
+		let formState = this.props.formState;
+		if (annee_dep){
+			let {remuneration} = formState.contrat;
+			for (let i = 0; i < formState.contrat.remuneration.length; i++){
+				if (annee_dep == formState.contrat.remuneration[i].annee_dep){
+					formState.contrat.remuneration[i].idconseiller = event.target.value;
+				}
 			}
-		});
-
-
+			this.props.changeForm({
+				...formState,
+				contrat: {
+					...formState.contrat,
+					remuneration: remuneration
+				}
+			})
+		}else{
+			let {remunerationToAdd} = formState;
+			this.props.changeForm({
+				...formState,
+				remunerationToAdd: remunerationToAdd
+			})
+		}
 	}
 
 	render() {
@@ -50,15 +64,15 @@ class ContractRemunerationContainer extends React.Component {
 							<div key={index} className="tab-pane fade show" id={"remuneration-" + singleRemuneration.annee_dep} role="tabpanel" aria-labelledby={singleRemuneration.annee_dep + "-remuneration-tab"}>
 								<div className="row justify-content-md-center">
 									<ContractInput titre="Année de départ" unite="" format="AAAA" titreChamp="annee_dep"
-												   description="Année de départ" part="remuneration" idRemuneration={index}
+												   description="Année de départ" part="remuneration" idRemuneration={index} disabled
 												   formState={this.props.formState} changeForm={this.props.changeForm}/>
 									<ContractInput titre="Année de fin" unite="" format="AAAA" titreChamp="annee_fin"
-												   description="Année de départ" part="remuneration" idRemuneration={index}
+												   description="Année de départ" part="remuneration" idRemuneration={index} disabled
 												   formState={this.props.formState} changeForm={this.props.changeForm}/>
 								</div>
 								<div className="row">
 									<div className="col-xs-12 col-sm-6 col-md-4">
-										<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie"
+										<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie_dma_pac"
 													   description="Taux de commission: Vie, DMA, PAC" part="remuneration" idRemuneration={index}
 													   formState={this.props.formState} changeForm={this.props.changeForm}/>
 										<ContractInput titre="CT" unite="%" format="XX,X" titreChamp="ct"
@@ -70,7 +84,7 @@ class ContractRemunerationContainer extends React.Component {
 										<ContractInput titre="AMC" unite="%" format="XX,X" titreChamp="amc"
 													   description="Taux de commission: AMC" part="remuneration" idRemuneration={index}
 													   formState={this.props.formState} changeForm={this.props.changeForm}/>
-										<ContractInput titre="Dentaire" unite="%" format="XX,X" titreChamp="dent"
+										<ContractInput titre="Dentaire" unite="%" format="XX,X" titreChamp="dentaire"
 													   description="Taux de commission: dentaire" part="remuneration" idRemuneration={index}
 													   formState={this.props.formState} changeForm={this.props.changeForm}/>
 										<ContractInput titre="MG" unite="%" format="XX,X" titreChamp="mg"
@@ -110,10 +124,10 @@ class ContractRemunerationContainer extends React.Component {
 													id="conseiller"
 													name="conseiller"
 													className="form-control"
-													value={singleRemuneration.idConseiller}
-													onChange={this._onChangeConseiller}
+													value={singleRemuneration.idconseiller}
+													onChange={(e) => this._onChangeConseiller(e, singleRemuneration.annee_dep)}
 												>
-													<option disabled value=""> -- Veuillez sélectionner une valeur --</option>
+													<option disabled selected value=""> -- Veuillez sélectionner une valeur --</option>
 													{
 														this.props.formState.employesAFC &&
 														this.props.formState.employesAFC.map((employe, index) => {
@@ -159,7 +173,7 @@ class ContractRemunerationContainer extends React.Component {
 						</div>
 						<div className="row">
 							<div className="col-xs-12 col-sm-6 col-md-4">
-								<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie"
+								<ContractInput titre="Vie,DMA,PAC" unite="%" format="XX,X" titreChamp="vie_dma_pac"
 												 description="Taux de commission: Vie, DMA, PAC" part="remuneration"
 												 formState={this.props.formState} changeForm={this.props.changeForm}/>
 								<ContractInput titre="CT" unite="%" format="XX,X" titreChamp="ct"
@@ -171,7 +185,7 @@ class ContractRemunerationContainer extends React.Component {
 								<ContractInput titre="AMC" unite="%" format="XX,X" titreChamp="amc"
 												 description="Taux de commission: AMC" part="remuneration"
 												 formState={this.props.formState} changeForm={this.props.changeForm}/>
-								<ContractInput titre="Dentaire" unite="%" format="XX,X" titreChamp="dent"
+								<ContractInput titre="Dentaire" unite="%" format="XX,X" titreChamp="dentaire"
 												 description="Taux de commission: dentaire" part="remuneration"
 												 formState={this.props.formState} changeForm={this.props.changeForm}/>
 								<ContractInput titre="MG" unite="%" format="XX,X" titreChamp="mg"
@@ -211,6 +225,7 @@ class ContractRemunerationContainer extends React.Component {
 											id="conseiller"
 											name="conseiller"
 											className="form-control"
+											value={this.props.formState.remunerationToAdd.idconseiller}
 											onChange={this._onChangeConseiller}
 										>
 											<option disabled selected value=""> -- Veuillez sélectionner une valeur --</option>

@@ -35,7 +35,7 @@ class Reset extends Component   {
 
 				<div className ="reset container-fluid">
 					<div className="elelment row">
-						<h2> </h2>
+						<h2> INCH ALLAH </h2>
 						<div className="element-main">
 							<h1>Mot de passe oublié</h1>
 							<p> Entrez le courriel courrespondant a votre dossier</p>

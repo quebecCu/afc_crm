@@ -42,55 +42,54 @@ class CreateContractContainer extends React.Component {
 		//si on display un blank contrat on fait un state vide de toute envie de vivre.
 		//si on display un update contrat, le state est "prérempli" de toutes les infos
 		let historiqueTaux = {
-			annee_dep: '',
-			annee_fin: '',
-			diff: '',
-			vie: '',
-			dma: '',
-			pac: '',
-			ct: '',
-			lt: '',
-			amc_ind: '',
-			amc_mono: '',
-			amc_couple: '',
-			amc_fam: '',
-			dent_ind: '',
-			dent_mono: '',
-			dent_couple: '',
-			dent_fam: '',
-			mg_ind: '',
-			mg_mono: '',
-			mg_couple: '',
-			mg_fam: '',
-			pae: '',
-			prime_ms: '',
-			prime_an: ''
+			annee_dep: undefined,
+			annee_fin: undefined,
+			diff: undefined,
+			vie: undefined,
+			dma: undefined,
+			pac: undefined,
+			ct: undefined,
+			lt: undefined,
+			amc_ind: undefined,
+			amc_mono: undefined,
+			amc_couple: undefined,
+			amc_fam: undefined,
+			dent_ind: undefined,
+			dent_mono: undefined,
+			dent_couple: undefined,
+			dent_fam: undefined,
+			mg_ind: undefined,
+			mg_mono: undefined,
+			mg_couple: undefined,
+			mg_fam: undefined,
+			pae: undefined,
+			prime_ms: undefined,
+			prime_an: undefined
 		};
 		let remunerationToAdd = {
-			annee_dep: '',
-			annee_fin: '',
-			vie:'',
-			ct:'',
-			lt:'',
-			amc:'',
-			dent:'',
-			mg:'',
-			pae:'',
-			notes:'',
-			recu:'',
-			base:'',
-			boni:'',
-			total:'',
-			gtotal:'',
-			idConseiller:'',
-			split:'',
-			bdu:'',
-			paye:'',
-			dpaye:'',
+			annee_dep: undefined,
+			annee_fin: undefined,
+			vie_dma_pac:undefined,
+			ct:undefined,
+			lt:undefined,
+			amc:undefined,
+			dent:undefined,
+			mg:undefined,
+			pae:undefined,
+			notes:undefined,
+			recu:undefined,
+			base:undefined,
+			boni:undefined,
+			total:undefined,
+			gtotal:undefined,
+			idConseiller:undefined,
+			split:undefined,
+			bdu:undefined,
+			paye:undefined,
+			dpaye:undefined,
+			solde: undefined
 		};
 		if (!this.props.idContract) {
-
-			
 			this.props.getGrid();
 			this.props.setFromClient({
 				idClient: '',
@@ -109,6 +108,7 @@ class CreateContractContainer extends React.Component {
 					idAGA: '',
 					modulesSupprimes: [],
 					modulesInitiaux: [],
+					modulesToCreate: [],
 					modulesAlreadySelected: [],
 					numPolice: '',
 					dateEmission: '',
@@ -199,21 +199,9 @@ class CreateContractContainer extends React.Component {
 		this._validateForm();
 		//Si on est en create, on crée le bordel sinan na
 		if (this.props.idContract) {
-			if (formState.historiqueToAdd.annee_dep !== ""){
-				formState.contrat.historiqueTaux.push(formState.historiqueToAdd);
-			}
-			if (formState.remunerationToAdd.annee_dep !== ""){
-				formState.contrat.remuneration.push(formState.remunerationToAdd);
-			}
 			formState.idClient = fromClient.idClient;
 			this.props.updateContract(formState);
 		}else{
-			if (formState.historiqueToAdd.annee_dep !== ""){
-				formState.contrat.historiqueTaux.push(formState.historiqueToAdd);
-			}
-			if (formState.remunerationToAdd.annee_dep !== ""){
-				formState.contrat.remuneration.push(formState.remunerationToAdd);
-			}
 			this.props.createContract(formState);
 		}
 	}
@@ -284,7 +272,14 @@ class CreateContractContainer extends React.Component {
 									&& <span> Modification d'un contrat</span>
 								}
 						</div>
+
 						<div className="card-body">
+							<div className="text-right">
+							  <button className="btn btn-lg btn-success" id="validateForm" onClick={this._onClickValidate}>
+									<i className="fa fa-check"></i> Valider
+								</button>
+							</div>
+							<br/>
 							<div id="accordion">
 							  <div className="card">
 							    <div className="card-header" id="headingOne">
@@ -438,9 +433,6 @@ class CreateContractContainer extends React.Component {
 									);
 								})
 							}
-							<div style={{padding: 20 + "px"}} className="text-center" >
-							  <button className="btn btn-primary mx-auto" id="validateForm" onClick={this._onClickValidate}>Valider</button>
-							</div>
 						</div>
 					</div>
 				</div>
