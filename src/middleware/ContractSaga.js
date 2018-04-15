@@ -164,8 +164,9 @@ export function * updateContract() {
 		var obligBackendUrl = backendUrl + "collectiveContracts/updateContractObligatoire/" + obligatoire.idContrat;
 		var historiqueBackendUrl = backendUrl + "collectiveContracts/updateHistoriqueTaux";
 		var remunerationBackendUrl = backendUrl + "collectiveContracts/updateRenumeration";
+		
 
-	/*	axios.post(obligBackendUrl, obligatoire, config)
+		axios.post(obligBackendUrl, obligatoire, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
 					console.log('Infos général du contrat updated avec succès');
@@ -181,25 +182,25 @@ export function * updateContract() {
 			.catch(function (error) {
 				console.log(error);
 			});
-*/
-			// historiqueTaux.forEach(function(historique) {
-			// 	axios.post(historiqueBackendUrl, historique, config)
-			// 		.then(function (response) {
-			// 			if (!!response.data.status && response.data.status === "success") {
-			// 				console.log('Infos général du contrat updated avec succès');
-			// 			}
-			// 			else if (response.data.status === "fail") {
-			// 				alert(response.data.message);
-			// 			}
-			// 			else {
-			// 				alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
-			// 			}
-			// 		})
-			// 		.catch(function (error) {
-			// 			console.log(error);
-			// 		});
-			// });
-			//
+
+		/*	historiqueTaux.forEach(function(historique) {
+				axios.post(historiqueBackendUrl, historique, config)
+					.then(function (response) {
+						if (!!response.data.status && response.data.status === "success") {
+							console.log('Infos général du contrat updated avec succès');
+						}
+						else if (response.data.status === "fail") {
+							alert(response.data.message);
+						}
+						else {
+							alert('Erreur lors de la création du contrat, Historique Taux année' + historique.annee_dep);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			});
+			*/
 			 	remunerations.forEach(function(remuneration) {
 				remuneration.idclient = formState.contract.idClient;
 				remuneration.idfournisseur = formState.contract.contrat.idAssureur;
@@ -219,7 +220,7 @@ export function * updateContract() {
 						console.log(error);
 					});
 			});
-
+			
 	}
 }
 

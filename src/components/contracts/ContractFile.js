@@ -1,9 +1,9 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {withRouter} from 'react-router';
-import {getClientRequest} from "../../actions/crmClientList";
-import {getSupplier} from "../../actions/crmGridLayoutSuppliers";
-import {setFromClient,getContract,setSelectedTaux,setSelectedRemuneration} from "../../actions/crmContract";
+import { connect } from "react-redux";
+import { withRouter } from 'react-router';
+import { getClientRequest } from "../../actions/crmClientList";
+import { getSupplier } from "../../actions/crmGridLayoutSuppliers";
+import { setFromClient, getContract, setSelectedTaux, setSelectedRemuneration } from "../../actions/crmContract";
 
 class ContractFile extends React.Component {
 	constructor(props) {
@@ -36,7 +36,7 @@ class ContractFile extends React.Component {
 			}
 		});
 		if (check) {
-			links.push({name: contract.nomclient, view: 'customer', idCustomer: contract.idclient});
+			links.push({ name: contract.nomclient, view: 'customer', idCustomer: contract.idclient });
 			this.props.addSubCustomerNav(links);
 		}
 		this.props.changeViewCollective("customer");
@@ -56,7 +56,7 @@ class ContractFile extends React.Component {
 			}
 		});
 		if (check) {
-			links.push({name: contract.nomfournisseur, view: 'supplierFile', idSupplier: contract.idfournisseur});
+			links.push({ name: contract.nomfournisseur, view: 'supplierFile', idSupplier: contract.idfournisseur });
 			this.props.addSubSupplierNav(links);
 		}
 		this.props.changeViewSuppliers("supplierFile");
@@ -157,7 +157,7 @@ class ContractFile extends React.Component {
 	_handleModify(event) {
 		let contract = this.props.contract;
 		this.props.clients.forEach(client => {
-			if(client.id === contract.idclient) {
+			if (client.id === contract.idclient) {
 				let fromClient =
 					{
 						idClient: client.id,
@@ -177,43 +177,43 @@ class ContractFile extends React.Component {
 		history.push(match.url + "/update");
 	}
 
-	_navigateTo(attributeType, id, history){
+	_navigateTo(attributeType, id, history) {
 		let beg;
-		if (attributeType === "usersManagement"){
+		if (attributeType === "usersManagement") {
 			beg = "/dashboard/";
-		}else{
+		} else {
 			beg = "/dashboard/collective/";
 		}
 		history.push(beg + attributeType + "/" + id);
 	}
 
 	renderLinkAttribute(attributeName, attributeValue, attributeType, id, history) {
-    return (
+		return (
 			<div className="form-group row">
 				<label htmlFor="staticEmail" className="col-sm-6 col-form-label"><strong>{attributeName}:</strong> </label>
 				<div className="col-sm-6">
 					<button type="button" className="btn btn-link" onClick={this._navigateTo.bind(this, attributeType, id, history)}>{attributeValue}</button>
 				</div>
 			</div>
-    );
-  }
+		);
+	}
 
 	renderStaticAttribute(attributeName, attributeValue, width, key) {
 		const inputStyle = {
 			padding: '6px 12px',
 		}
-    return (
+		return (
 			<div key={key} className="form-group row">
 				<label htmlFor="staticEmail" className={"col-form-label  " + (width === 6 ? "col-sm-6" : "col-sm-2")}><strong>{attributeName}:</strong> </label>
 				<div className={(width === 6 ? "col-sm-6" : "col-sm-10")}>
-					<input style={inputStyle} type="text" readOnly className="form-control-plaintext" id="aga" value={attributeValue}/>
+					<input style={inputStyle} type="text" readOnly className="form-control-plaintext" id="aga" value={attributeValue} />
 				</div>
 			</div>
-    );
-  }
+		);
+	}
 
 	render() {
-		let {contractDisplay, lilLayout, selectedTaux, selectedRemuneration} = this.props.crmContract;
+		let { contractDisplay, lilLayout, selectedTaux, selectedRemuneration } = this.props.crmContract;
 		const { match, history } = this.props;
 
 		return (
@@ -221,7 +221,7 @@ class ContractFile extends React.Component {
 				<h1 className="text-center">Assurances collectives</h1>
 				<div className="card mb-3">
 					<div className="card-header">
-		      	<i className="fa fa-file-o"></i> Contrat
+						<i className="fa fa-file-o"></i> Contrat
 					</div>
 					<div className="card-body">
 						<div className="text-right">
@@ -230,245 +230,247 @@ class ContractFile extends React.Component {
 								<button type="button" className="btn btn-danger"><i className="fa fa-close"></i> Supprimer</button>
 							</div>
 						</div>
-						<br/>
+						<br />
 						<div id="accordion">
-						  <div className="card">
-						    <div className="card-header" id="headingOne">
-						      <h5 className="mb-0">
-						        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						          Information G&eacute;n&eacute;rale
+							<div className="card">
+								<div className="card-header" id="headingOne">
+									<h5 className="mb-0">
+										<button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											Information G&eacute;n&eacute;rale
 						        </button>
-						      </h5>
-						    </div>
+									</h5>
+								</div>
 
-						    <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-						      <div className="card-body">
+								<div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+									<div className="card-body">
 										<div className="row">
 											<div className="col-sm-6">
-												{this.renderStaticAttribute("N° Police",contractDisplay.police,6)}
-												{this.renderLinkAttribute("Client",contractDisplay.nomclient,"clients",contractDisplay.idclient,history)}
-												{this.renderLinkAttribute("Assureur",contractDisplay.nomfournisseur,"suppliers",contractDisplay.idfournisseur,history)}
-												{this.props.crmLogin.isAdmin === true && this.renderLinkAttribute("Représentant",contractDisplay.nomrepresentant,"usersManagement",contractDisplay.idrepresentant,history)}
-												{this.props.crmLogin.isAdmin === false && this.renderStaticAttribute("Représentant",contractDisplay.nomrepresentant,6)}
+												{this.renderStaticAttribute("N° Police", contractDisplay.police, 6)}
+												{this.renderLinkAttribute("Client", contractDisplay.nomclient, "clients", contractDisplay.idclient, history)}
+												{this.renderLinkAttribute("Assureur", contractDisplay.nomfournisseur, "suppliers", contractDisplay.idfournisseur, history)}
+												{this.props.crmLogin.isAdmin === true && this.renderLinkAttribute("Représentant", contractDisplay.nomrepresentant, "usersManagement", contractDisplay.idrepresentant, history)}
+												{this.props.crmLogin.isAdmin === false && this.renderStaticAttribute("Représentant", contractDisplay.nomrepresentant, 6)}
 											</div>
 											<div className="col-sm-6">
-												{this.renderStaticAttribute("AGA",contractDisplay.libellechambrecommerce,6)}
-												{this.renderStaticAttribute("Date de signature",contractDisplay.date_signature,6)}
-												{this.renderStaticAttribute("Mois de renouvellement",contractDisplay.mois_renouvellement,6)}
-												{this.renderStaticAttribute("Notes",contractDisplay.notes,6)}
+												{this.renderStaticAttribute("AGA", contractDisplay.libellechambrecommerce, 6)}
+												{this.renderStaticAttribute("Date de signature", contractDisplay.date_signature, 6)}
+												{this.renderStaticAttribute("Mois de renouvellement", contractDisplay.mois_renouvellement, 6)}
+												{this.renderStaticAttribute("Notes", contractDisplay.notes, 6)}
 											</div>
 										</div>
-						      </div>
-						    </div>
-						  </div>
+									</div>
+								</div>
+							</div>
 							<div className="card">
-						    <div className="card-header" id="headingTwo">
-						      <h5 className="mb-0">
-						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-						          Informations complémentaires
+								<div className="card-header" id="headingTwo">
+									<h5 className="mb-0">
+										<button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+											Informations complémentaires
 						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-						      <div className="card-body">
+									</h5>
+								</div>
+								<div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+									<div className="card-body">
 										<div className="row">
 											{
-													contractDisplay.facultatif.map(element => {
+												contractDisplay.facultatif.map(element => {
 													return <div className="col-sm-6">
-														{this.renderStaticAttribute(element.nom,element.valeur,6,element.nom)}
+														{this.renderStaticAttribute(element.nom, element.valeur, 6, element.nom)}
 													</div>;
 												})
 											}
 										</div>
-						      </div>
+									</div>
 
-						    </div>
-						  </div>
+								</div>
+							</div>
 							<div className="card">
-						    <div className="card-header" id="headingThree">
-						      <h5 className="mb-0">
-						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-						          Souscriptions
+								<div className="card-header" id="headingThree">
+									<h5 className="mb-0">
+										<button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+											Souscriptions
 						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-						      <div className="card-body">
+									</h5>
+								</div>
+								<div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+									<div className="card-body">
 										{
 											contractDisplay.souscriptions.map((element, index) => {
 												return <div key={index}>
-													{this.renderStaticAttribute("Module",element.libelle)}
-													{this.renderStaticAttribute("Notes du module",element.module_notes)}
+													{this.renderStaticAttribute("Module", element.libelle)}
+													{this.renderStaticAttribute("Notes du module", element.module_notes)}
 													<div>
 
-															{
-																element.subscriptions.map((element2, index2) => {
-																	return <details key={index2}> <summary>{element2.libelle}</summary>
-																			<div style={{paddingLeft: "20px"}}>
-																				{this.renderStaticAttribute("Notes de la souscription",element2.souscription_notes)}
-																				{this.renderStaticAttribute("Description",element2.description)}
-																				{this.renderStaticAttribute("Ext",element2.ext)}
-																				{this.renderStaticAttribute("Valeur",element2.valeur)}
-																			</div>
-																	  </details>
-																})
-															}
+														{
+															element.subscriptions.map((element2, index2) => {
+																return <details key={index2}> <summary>{element2.libelle}</summary>
+																	<div style={{ paddingLeft: "20px" }}>
+																		{this.renderStaticAttribute("Notes de la souscription", element2.souscription_notes)}
+																		{this.renderStaticAttribute("Description", element2.description)}
+																		{this.renderStaticAttribute("Ext", element2.ext)}
+																		{this.renderStaticAttribute("Valeur", element2.valeur)}
+																	</div>
+																</details>
+															})
+														}
 													</div>
 
-													<hr/>
+													<hr />
 												</div>
 											})
 										}
-						      </div>
-						    </div>
-						  </div>
-						  <div className="card">
-						    <div className="card-header" id="headingFour">
-						      <h5 className="mb-0">
-						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-						          Historique des taux
+									</div>
+								</div>
+							</div>
+							<div className="card">
+								<div className="card-header" id="headingFour">
+									<h5 className="mb-0">
+										<button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+											Historique des taux
 						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseFour" className="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-						      <div className="card-body">
+									</h5>
+								</div>
+								<div id="collapseFour" className="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+									<div className="card-body">
 										<div className="row">
 											<div className="col-md-2 col-xs-12">
 												<div className="dropdown">
 													<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														
-													{
-														selectedTaux.annee_dep && selectedTaux.annee_fin &&
-														<div>
-															{selectedTaux.annee_dep} - {selectedTaux.annee_fin} 
-														</div>
-													}
+
+
+
+														{(selectedTaux !== undefined) ?
+															<div>
+																{selectedTaux.annee_dep} - {selectedTaux.annee_fin}
+															</div> : null
+														}
 
 													</button>
-												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												    {
+													<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														{
 															contractDisplay.historique_taux.map((element, index) => {
-																return <button key={index} onClick={this._changeSelectedTaux.bind(this,element)} className={"dropdown-item " + (element.annee_dep === selectedTaux.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
+																return <button key={index} onClick={this._changeSelectedTaux.bind(this, element)} className={"dropdown-item " + (element.annee_dep === selectedTaux.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
 															})
 														}
-												  </div>
+													</div>
 												</div>
 											</div>
 											<div className="col-md-10 col-xs-12">
 												<div className="row">
 													<div className="col-sm-6">
-														{(selectedTaux.assureur != undefined) ?
-														this.renderStaticAttribute("Assureur",selectedTaux.assureur,6) :null
+
+														{(selectedTaux.assureur != undefined && selectedTaux) ?
+															this.renderStaticAttribute("Assureur", selectedTaux.assureur, 6) : null
 														}
-														{this.renderStaticAttribute("Année de début",selectedTaux.annee_dep,6)}
-														{this.renderStaticAttribute("Nombre d'employés",selectedTaux.nombre_employés,6)}
-														{this.renderStaticAttribute("Différence",selectedTaux.différence,6)}
-														{this.renderStaticAttribute("Assurance vie",selectedTaux.vie,6)}
-														{this.renderStaticAttribute("DMA",selectedTaux.dma,6)}
-														{this.renderStaticAttribute("PAC",selectedTaux.pac,6)}
-														{this.renderStaticAttribute("CT vie",selectedTaux.ct,6)}
-														{this.renderStaticAttribute("LT",selectedTaux.lt,6)}
-														{this.renderStaticAttribute("AMC individuel",selectedTaux.amc_ind,6)}
-														{this.renderStaticAttribute("AMC mono",selectedTaux.amc_mono,6)}
-														{this.renderStaticAttribute("AMC couple",selectedTaux.amc_couple,6)}
-														{this.renderStaticAttribute("AMC famille",selectedTaux.amc_fam,6)}
+														{this.renderStaticAttribute("Année de début", selectedTaux.annee_dep, 6)}
+														{this.renderStaticAttribute("Nombre d'employés", selectedTaux.nombre_employés, 6)}
+														{this.renderStaticAttribute("Différence", selectedTaux.différence, 6)}
+														{this.renderStaticAttribute("Assurance vie", selectedTaux.vie, 6)}
+														{this.renderStaticAttribute("DMA", selectedTaux.dma, 6)}
+														{this.renderStaticAttribute("PAC", selectedTaux.pac, 6)}
+														{this.renderStaticAttribute("CT vie", selectedTaux.ct, 6)}
+														{this.renderStaticAttribute("LT", selectedTaux.lt, 6)}
+														{this.renderStaticAttribute("AMC individuel", selectedTaux.amc_ind, 6)}
+														{this.renderStaticAttribute("AMC mono", selectedTaux.amc_mono, 6)}
+														{this.renderStaticAttribute("AMC couple", selectedTaux.amc_couple, 6)}
+														{this.renderStaticAttribute("AMC famille", selectedTaux.amc_fam, 6)}
 													</div>
 													<div className="col-sm-6">
-														{this.renderStaticAttribute("Année de fin",selectedTaux.annee_fin,6)}
-														{this.renderStaticAttribute("Dentaire individuel",selectedTaux.dentaire_ind,6)}
-														{this.renderStaticAttribute("Dentaire mono",selectedTaux.dentaire_mono,6)}
-														{this.renderStaticAttribute("Dentaire couple",selectedTaux.dentaire_couple,6)}
-														{this.renderStaticAttribute("Dentaire famille",selectedTaux.dentaire_fam,6)}
-														{this.renderStaticAttribute("MG individuel",selectedTaux.mg_ind,6)}
-														{this.renderStaticAttribute("MG mono",selectedTaux.mg_mono,6)}
-														{this.renderStaticAttribute("MG couple",selectedTaux.mg_couple,6)}
-														{this.renderStaticAttribute("MG famille",selectedTaux.mg_fam,6)}
-														{this.renderStaticAttribute("PAE",selectedTaux.pae,6)}
-														{this.renderStaticAttribute("Prime mensuelle",selectedTaux.prime_mensuelle,6)}
-														{this.renderStaticAttribute("Prime annuelle",selectedTaux.prime_annuelle,6)}
+														{this.renderStaticAttribute("Année de fin", selectedTaux.annee_fin, 6)}
+														{this.renderStaticAttribute("Dentaire individuel", selectedTaux.dentaire_ind, 6)}
+														{this.renderStaticAttribute("Dentaire mono", selectedTaux.dentaire_mono, 6)}
+														{this.renderStaticAttribute("Dentaire couple", selectedTaux.dentaire_couple, 6)}
+														{this.renderStaticAttribute("Dentaire famille", selectedTaux.dentaire_fam, 6)}
+														{this.renderStaticAttribute("MG individuel", selectedTaux.mg_ind, 6)}
+														{this.renderStaticAttribute("MG mono", selectedTaux.mg_mono, 6)}
+														{this.renderStaticAttribute("MG couple", selectedTaux.mg_couple, 6)}
+														{this.renderStaticAttribute("MG famille", selectedTaux.mg_fam, 6)}
+														{this.renderStaticAttribute("PAE", selectedTaux.pae, 6)}
+														{this.renderStaticAttribute("Prime mensuelle", selectedTaux.prime_mensuelle, 6)}
+														{this.renderStaticAttribute("Prime annuelle", selectedTaux.prime_annuelle, 6)}
 													</div>
 												</div>
 											</div>
 										</div>
-						      </div>
-						    </div>
-						  </div>
-						  <div className="card">
-						    <div className="card-header" id="headingFive">
-						      <h5 className="mb-0">
-						        <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-						          R&eacute;mun&eacute;rations
+									</div>
+								</div>
+							</div>
+							<div className="card">
+								<div className="card-header" id="headingFive">
+									<h5 className="mb-0">
+										<button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+											R&eacute;mun&eacute;rations
 						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseFive" className="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-						      <div className="card-body">
+									</h5>
+								</div>
+								<div id="collapseFive" className="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+									<div className="card-body">
 										<div className="row">
 											<div className="col-md-2 col-xs-12">
 												<div className="dropdown">
 													<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-														{ (selectedRemuneration !== undefined) ?
-														<div>
-			 											{selectedRemuneration.annee_dep} - {selectedRemuneration.annee_fin}
-														</div>
-													: null }
+														{(selectedRemuneration !== undefined) ?
+															<div>
+																{selectedRemuneration.annee_dep} - {selectedRemuneration.annee_fin}
+															</div>
+															: null}
 
 													</button>
-												  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												    {  (selectedRemuneration !== undefined) ?
+													<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														{(selectedRemuneration !== undefined) ?
 															contractDisplay.remuneration.history.map((element, index) => {
-																return <button key={index} onClick={this._changeSelectedRemuneration.bind(this,element)} className={"dropdown-item " + (element.annee_dep === selectedRemuneration.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
+																return <button key={index} onClick={this._changeSelectedRemuneration.bind(this, element)} className={"dropdown-item " + (element.annee_dep === selectedRemuneration.annee_dep ? "active" : "")}>{element.annee_dep} - {element.annee_fin}</button>
 															}) : null
 														}
-												  </div>
+													</div>
 												</div>
 											</div>
 											<div className="col-md-10 col-xs-12">
 												<div className="row">
 													<div className="col-sm-6">
-													{ (selectedRemuneration !== undefined) ?
-													<div>
-														{this.renderStaticAttribute("Année de début",selectedRemuneration.annee_dep,6)}
-														{this.renderStaticAttribute("Vie DMA PAC",selectedRemuneration.vie_dma_pac,6)}
-														{this.renderStaticAttribute("CT",selectedRemuneration.ct,6)}
-														{this.renderStaticAttribute("LT",selectedRemuneration.lt,6)}
-														{this.renderStaticAttribute("AMC",selectedRemuneration.amc,6)}
-														{this.renderStaticAttribute("Dentaire",selectedRemuneration.dentaire,6)}
-														{this.renderStaticAttribute("MG",selectedRemuneration.mg,6)}
-														{this.renderStaticAttribute("PAE",selectedRemuneration.pae,6)}
-														{this.renderStaticAttribute("Date payé base",selectedRemuneration.date_payée_base,6)}
-														{this.renderStaticAttribute("Montant payé base",selectedRemuneration.montant_payé_base,6)}
-														{this.renderStaticAttribute("Montant payé boni",selectedRemuneration.montant_payé_boni,6)}
-														</div>
-													:null
-													}
+														{(selectedRemuneration !== undefined) ?
+															<div>
+																{this.renderStaticAttribute("Année de début", selectedRemuneration.annee_dep, 6)}
+																{this.renderStaticAttribute("Vie DMA PAC", selectedRemuneration.vie_dma_pac, 6)}
+																{this.renderStaticAttribute("CT", selectedRemuneration.ct, 6)}
+																{this.renderStaticAttribute("LT", selectedRemuneration.lt, 6)}
+																{this.renderStaticAttribute("AMC", selectedRemuneration.amc, 6)}
+																{this.renderStaticAttribute("Dentaire", selectedRemuneration.dentaire, 6)}
+																{this.renderStaticAttribute("MG", selectedRemuneration.mg, 6)}
+																{this.renderStaticAttribute("PAE", selectedRemuneration.pae, 6)}
+																{this.renderStaticAttribute("Date payé base", selectedRemuneration.date_payée_base, 6)}
+																{this.renderStaticAttribute("Montant payé base", selectedRemuneration.montant_payé_base, 6)}
+																{this.renderStaticAttribute("Montant payé boni", selectedRemuneration.montant_payé_boni, 6)}
+															</div>
+															: null
+														}
 													</div>
 													<div className="col-sm-6">
-													{ (selectedRemuneration !== undefined) ?
-														<div>
-														{this.renderStaticAttribute("Année de fin",selectedRemuneration.annee_fin,6)}
-														{this.renderStaticAttribute("Pourcentage payable en pourcent",selectedRemuneration.pourcentage_payable_en_pourcent,6)}
-														{this.renderStaticAttribute("Montant dû",selectedRemuneration.montant_dû,6)}
-														{this.renderStaticAttribute("Montant payé",selectedRemuneration.montant_payé,6)}
-														{this.renderStaticAttribute("Rémunération totale",selectedRemuneration.rémunération_totale,6)}
-														{this.renderStaticAttribute("Date payée",selectedRemuneration.date_payée,6)}
-														{this.renderStaticAttribute("Notes",selectedRemuneration.notes,6)}
-														{this.renderStaticAttribute("Solde",selectedRemuneration.solde,6)}
-														{this.renderStaticAttribute("Conseiller n°",selectedRemuneration.idconseiller,6)}
-														{this.renderStaticAttribute("Nom conseiller",selectedRemuneration.nomconseiller,6)}
-														{this.renderStaticAttribute("Prénom conseiller",selectedRemuneration.prenomconseiller,6)}
-														</div>
-													:null
-													}
+														{(selectedRemuneration !== undefined) ?
+															<div>
+																{this.renderStaticAttribute("Année de fin", selectedRemuneration.annee_fin, 6)}
+																{this.renderStaticAttribute("Pourcentage payable en pourcent", selectedRemuneration.pourcentage_payable_en_pourcent, 6)}
+																{this.renderStaticAttribute("Montant dû", selectedRemuneration.montant_dû, 6)}
+																{this.renderStaticAttribute("Montant payé", selectedRemuneration.montant_payé, 6)}
+																{this.renderStaticAttribute("Rémunération totale", selectedRemuneration.rémunération_totale, 6)}
+																{this.renderStaticAttribute("Date payée", selectedRemuneration.date_payée, 6)}
+																{this.renderStaticAttribute("Notes", selectedRemuneration.notes, 6)}
+																{this.renderStaticAttribute("Solde", selectedRemuneration.solde, 6)}
+																{this.renderStaticAttribute("Conseiller n°", selectedRemuneration.idconseiller, 6)}
+																{this.renderStaticAttribute("Nom conseiller", selectedRemuneration.nomconseiller, 6)}
+																{this.renderStaticAttribute("Prénom conseiller", selectedRemuneration.prenomconseiller, 6)}
+															</div>
+															: null
+														}
 													</div>
 
 												</div>
 											</div>
 										</div>
-						      </div>
-						    </div>
-						  </div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
