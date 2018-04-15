@@ -647,7 +647,7 @@ export function * getGridLayoutToModify() {
 		let releve, activite, etat, provenance, province= '';
 
 		//communication avec server
-		let server = "http://localhost:3002/clients/"+id;
+		let server = "http://localhost:3002/attributesManagement/clients/"+id;
 		let backendUrl = window.location.host;
 		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/clients/'+id;
 
