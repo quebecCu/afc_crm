@@ -1,5 +1,5 @@
 import React from 'react';
-import GridMethodOnFieldContract from "../form/GridMethodOnFieldContract";
+import GridMethodOnFieldContract from "./form/GridMethodOnFieldContract";
 
 class GridOptionnalContract extends React.Component {
 	_container: HTMLElement;
@@ -11,8 +11,17 @@ class GridOptionnalContract extends React.Component {
 	  };
 	}
 
-	_handleChange(list) {
-		this.props.setGrid(list);
+	_handleChange(event) {
+		let grid = this.props.formState.facultatif;
+		let facultatif = grid.map(champ => {
+			if(event.target.id === champ.label) {
+				return {...champ, value: event.target.value};
+			}
+			else {
+				return champ;
+			}
+		});
+		this.props.setGrid(facultatif);
 	}
 
 	render(){
