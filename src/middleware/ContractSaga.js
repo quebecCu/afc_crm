@@ -298,7 +298,7 @@ export function * updateContract() {
 
 
 		modulesToUpdate.forEach(function(moduleToUpdate) {
-			axios.post(modulesToUpdateBackendUrl, config)
+			axios.post(modulesToUpdateBackendUrl, moduleToUpdate,  config)
 				.then(function (response) {
 					if (!!response.data.status && response.data.status === "success") {
 						console.log('Module ' + moduleToUpdate.idModule + ' successfully updated');
