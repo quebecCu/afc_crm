@@ -341,7 +341,7 @@ export function* requestAGA() {
 		//communication avec server
 		let server = "http://localhost:3002/clients/aga";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/clients/aga';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -365,7 +365,7 @@ export function* requestlistContracts() {
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -388,7 +388,7 @@ export function* requestAFC() {
 		//communication avec server
 		let server = "http://localhost:3002/collectiveContracts/employesafc";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/employesafc';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -412,7 +412,7 @@ export function* requestFourniseurs() {
 		//communication avec server
 		let server = "http://localhost:3002/providers";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/users/getRoles';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/providers';
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
@@ -718,7 +718,7 @@ export function* requestSendUpdateField() {
 		//communication avec server
 		let server = "http://localhost:3002/attributesManagement/update/contract";
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagementupdate/contract';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/attributesManagement/update/contract';
 
 
 		axios.post(backendUrl, {
@@ -803,7 +803,7 @@ export function* requestGetContract() {
 			//communication avec server
 			let server2 = "http://localhost:3002/collectiveContracts/ajouterDansHistory/";
 			let backendUrl2 = window.location.host;
-			backendUrl2 = backendUrl2 === 'localhost:3000' ? server2 : "http://localhost:3002/collectiveContracts/ajouterDansHistory/";
+			backendUrl2 = backendUrl2 === 'localhost:3000' ? server2 : "https://afr-crm2.herokuapp.com/collectiveContracts/ajouterDansHistory/";
 
 
 			axios.post(backendUrl2, {
