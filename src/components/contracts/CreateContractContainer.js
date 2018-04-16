@@ -320,15 +320,15 @@ class CreateContractContainer extends React.Component {
 							    <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
 							      <div className="card-body">
 											<GridOptionnalContract
-																   formState={formState}
-																   isAdmin={isAdmin}
-																   newField={newField}
-																   types={types}
-																   changeNewField={this.props.changeNewFieldContract}
-																   setGrid={this.props.setGrid}
-																   changeLilLayout={this.props.changeLilLayout}
-																   updatePosLayout={this.props.updatePosLayout}
-																   handleSubmitChamp={this._handleSubmitChamp}
+													   formState={formState}
+													   isAdmin={isAdmin}
+													   newField={newField}
+													   types={types}
+													   changeNewField={this.props.changeNewFieldContract}
+													   setGrid={this.props.setGrid}
+													   changeLilLayout={this.props.changeLilLayout}
+													   updatePosLayout={this.props.updatePosLayout}
+													   handleSubmitChamp={this._handleSubmitChamp}
 											/>
 							      </div>
 							    </div>

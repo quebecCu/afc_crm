@@ -70,11 +70,7 @@ export function * submitContract() {
 		} = formState.contract.contrat;
 
 		let {
-			historiqueToAdd, remunerationToAdd
-		} = formState.contract;
-
-		let {
-			facultatif
+			facultatif, historiqueToAdd, remunerationToAdd
 		} = formState.contract;
 
 		var tokenToSend = localStorage.getItem("cookieSession");
@@ -198,7 +194,7 @@ export function * updateContract() {
 			.catch(function (error) {
 				console.log(error);
 			});
-		
+
 			historiqueTaux.forEach(function(historique) {
 				historique.idclient = formState.contract.idClient;
 				historique.idfournisseur = formState.contract.contrat.idAssureur;
@@ -237,7 +233,7 @@ export function * updateContract() {
 						console.log(error);
 					});
 			}
-		
+
 		 	remunerations.forEach(function(remuneration) {
 				remuneration.idclient = formState.contract.idClient;
 				remuneration.idfournisseur = formState.contract.contrat.idAssureur;
