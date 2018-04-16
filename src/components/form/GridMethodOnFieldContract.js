@@ -36,11 +36,17 @@ class GridMethodOnFieldContract extends Component {
 							   value={this.props.newField.name} required/>
 					</div>
 					<div className="form-group">
-						<label htmlFor="champDescription" className="control-label">Description du nouveau champ </label>
+						<label htmlFor="champDescription" className="control-label">Description du nouveau champp </label>
 						<input type="text" name="champDescription" id="champDescription"
 							   className="form-control" onChange={this._changeDescription}
 							   value={this.props.newField.description} required/>
 					</div>
+
+					<div>
+							
+
+					</div>
+
 					<div className="form-group">
 						<label className="control-label" htmlFor="champType">Type du nouveau champ</label>
 						<select className="form-control" id="champType" name="champType"
