@@ -803,7 +803,7 @@ export function* requestGetContract() {
 			//communication avec server
 			let server2 = "http://localhost:3002/collectiveContracts/ajouterDansHistory/";
 			let backendUrl2 = window.location.host;
-			backendUrl2 = backendUrl2 === 'localhost:3000' ? server2 : "http://localhost:3002/collectiveContracts/ajouterDansHistory/";
+			backendUrl2 = backendUrl2 === 'localhost:3000' ? server2 : "https://afr-crm2.herokuapp.com/collectiveContracts/ajouterDansHistory/";
 
 
 			axios.post(backendUrl2, {
