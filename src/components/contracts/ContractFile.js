@@ -432,16 +432,16 @@ class ContractFile extends React.Component {
 														{(selectedRemuneration !== undefined) ?
 															<div>
 																{this.renderStaticAttribute("Année de début", selectedRemuneration.annee_dep, 6)}
-																{this.renderStaticAttribute("Vie DMA PAC", selectedRemuneration.vie_dma_pac, 6)}
+																{this.renderStaticAttribute("Vie DMA PAC", selectedRemuneration.vie, 6)}
 																{this.renderStaticAttribute("CT", selectedRemuneration.ct, 6)}
 																{this.renderStaticAttribute("LT", selectedRemuneration.lt, 6)}
 																{this.renderStaticAttribute("AMC", selectedRemuneration.amc, 6)}
-																{this.renderStaticAttribute("Dentaire", selectedRemuneration.dentaire, 6)}
+																{this.renderStaticAttribute("Dentaire", selectedRemuneration.dent, 6)}
 																{this.renderStaticAttribute("MG", selectedRemuneration.mg, 6)}
 																{this.renderStaticAttribute("PAE", selectedRemuneration.pae, 6)}
-																{this.renderStaticAttribute("Date payé base", selectedRemuneration.date_payée_base, 6)}
-																{this.renderStaticAttribute("Montant payé base", selectedRemuneration.montant_payé_base, 6)}
-																{this.renderStaticAttribute("Montant payé boni", selectedRemuneration.montant_payé_boni, 6)}
+																{this.renderStaticAttribute("Date payé base", selectedRemuneration.recu, 6)}
+																{this.renderStaticAttribute("Montant payé base", selectedRemuneration.base, 6)}
+																{this.renderStaticAttribute("Montant payé boni", selectedRemuneration.boni, 6)}
 															</div>
 															: null
 														}
@@ -450,13 +450,13 @@ class ContractFile extends React.Component {
 														{(selectedRemuneration !== undefined) ?
 															<div>
 																{this.renderStaticAttribute("Année de fin", selectedRemuneration.annee_fin, 6)}
-																{this.renderStaticAttribute("Pourcentage payable en pourcent", selectedRemuneration.pourcentage_payable_en_pourcent, 6)}
-																{this.renderStaticAttribute("Montant dû", selectedRemuneration.montant_dû, 6)}
-																{this.renderStaticAttribute("Montant payé", selectedRemuneration.montant_payé, 6)}
-																{this.renderStaticAttribute("Rémunération totale", selectedRemuneration.rémunération_totale, 6)}
-																{this.renderStaticAttribute("Date payée", selectedRemuneration.date_payée, 6)}
+																{this.renderStaticAttribute("Pourcentage payable en pourcent", selectedRemuneration.split, 6)}
+																{this.renderStaticAttribute("Montant dû", selectedRemuneration.bdu, 6)}
+																{this.renderStaticAttribute("Montant payé", selectedRemuneration.paye, 6)}
+																{this.renderStaticAttribute("Rémunération totale", selectedRemuneration.total, 6)}
+																{this.renderStaticAttribute("Date payée", selectedRemuneration.dpaye, 6)}
 																{this.renderStaticAttribute("Notes", selectedRemuneration.notes, 6)}
-																{this.renderStaticAttribute("Solde", selectedRemuneration.solde, 6)}
+																{this.renderStaticAttribute("Solde", selectedRemuneration.sol, 6)}
 																{this.renderStaticAttribute("Conseiller n°", selectedRemuneration.idconseiller, 6)}
 																{this.renderStaticAttribute("Nom conseiller", selectedRemuneration.nomconseiller, 6)}
 																{this.renderStaticAttribute("Prénom conseiller", selectedRemuneration.prenomconseiller, 6)}
