@@ -255,7 +255,7 @@ class ContractFile extends React.Component {
 												{this.renderStaticAttribute("AGA", contractDisplay.libellechambrecommerce, 6)}
 												{this.renderStaticAttribute("Date de signature", contractDisplay.date_signature, 6)}
 												{this.renderStaticAttribute("Mois de renouvellement", contractDisplay.mois_renouvellement, 6)}
-												{this.renderStaticAttribute("Notes", contractDisplay.notes, 6)}
+												{this.renderStaticAttribute("Notes", contractDisplay.notes,6)}
 											</div>
 										</div>
 									</div>
