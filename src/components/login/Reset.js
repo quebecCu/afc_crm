@@ -94,7 +94,7 @@ class Reset extends Component   {
 						<br/>
 						<div className="google-map">
 							<GoogleMap
-								  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+								  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AAIzaSyA4iwA6qMR9MAAqj_C77Fgcw2-QqWojCIs&v=3.exp&libraries=geometry,drawing,places"
 								  loadingElement={<div style={{ height: `100%` }} />}
 								  containerElement={<div style={{ height: `270px` }} />}
 								  mapElement={<div style={{ height: `100%` }} />}
