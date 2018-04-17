@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import DossiersComponent from "./DossiersComponent";
-import '../style/PageAccueil.css';
-import {changeViewDashboard} from "../actions/crmDashboard";
 import {connect} from "react-redux";
-import {changeViewSuppliers} from "../actions/crmSuppliersContainer";
-import {getSupplier} from "../actions/crmGridLayoutSuppliers";
-import {addSubSupplierNav, displaySubSupplierNav} from "../actions/crmNavBar";
+import DossiersComponent from "./DossiersComponent";
+import '../../style/PageAccueil.css';
+import {changeViewDashboard} from "../../actions/crmDashboard";
+import {changeViewSuppliers} from "../../actions/crmSuppliersContainer";
+import {getSupplier} from "../../actions/crmGridLayoutSuppliers";
+import {addSubSupplierNav, displaySubSupplierNav} from "../../actions/crmNavBar";
 
 class HistoriqueContainer extends Component {
 

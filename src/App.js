@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router-dom'
 import {ConnectedRouter} from 'react-router-redux';
-import {PrivateRoute, PublicRoute} from "./components/CustomRoute";
+import {PrivateRoute, PublicRoute} from "./components/shared/CustomRoute";
 import ErrorPage from "./components/ErrorPage";
 import DashboardContainer from "./components/DashboardContainer";
-import LoginPage from "./components/LoginPage";
-import ResetPage from "./components/ResetPage";
-import ResetPagePassword from "./components/ResetPagePasswordContainer";
+import LoginPage from "./components/login/LoginPage";
+import ResetPage from "./components/login/ResetPage";
+import ResetPagePassword from "./components/login/ResetPagePasswordContainer";
 import {history, store} from './store.js';
 import {checkIfLogged} from './actions/crmLogin';
 import './style/App.css'

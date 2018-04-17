@@ -1,11 +1,11 @@
 /** Imports **/
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {changeForm, resetRequest} from '../actions/crmResetPassword'
-import ResetPagePassword from '../components/form/ResetPagePassword';
+import {changeForm, resetRequest} from '../../actions/crmResetPassword'
+import ResetPagePassword from './ResetPagePassword';
 
 /** Styles **/
-import '../style/Reset.css';
+import '../../style/Reset.css';
 
 /** Container Reset Password **/
 class ResetPagePasswordContainer extends Component {

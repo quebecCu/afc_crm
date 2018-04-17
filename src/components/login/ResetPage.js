@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 //import Login from './Login';
 import { connect  } from 'react-redux';
-import Reset from '../components/form/Reset';
+import Reset from './Reset';
 
-import '../style/Reset.css';
-/// TODO 
-import {resetRequest, changeForm} from '../actions/crmReset'
+import '../../style/Reset.css';
+/// TODO
+import {resetRequest, changeForm} from '../../actions/crmReset'
 
 class ResetPage extends Component   {
-	
+
 	render() {
 		let { formState , isLoading, error } = this.props.crmReset;
 		return(
@@ -24,7 +24,7 @@ class ResetPage extends Component   {
 // les fonctions redux
 //valeurs
 function mapStateToProps (state) {
-	
+
 	return{
 		crmReset: state.crmReset
 	}
@@ -32,14 +32,14 @@ function mapStateToProps (state) {
 
 //fonctions
 const  mapDispatchToProps = (dispatch) => {
-	
+
 	return{
 		resetRequest: (formData) => {
 			dispatch(resetRequest(formData))
 		},
 		changeForm : (newFormState) => {
 			dispatch(changeForm(newFormState))
-		}		
+		}
 	}
 }
 

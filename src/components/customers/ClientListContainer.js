@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DossiersComponent from "../DossiersComponent";
+import DossiersComponent from "../shared/DossiersComponent";
 import {getClientRequest} from "../../actions/crmClientList";
 import '../../style/PageAccueil.css';
 import {connect} from "react-redux";

@@ -1,22 +1,22 @@
 import React from 'react';
 import { Redirect, Route } from "react-router-dom";
-import { store } from "../store";
+import { store } from "../../store";
 import { take, fork, put } from 'redux-saga/effects';
 import {
 	LOGIN_REQUEST, SENDING_REQUEST, CLEAR_SESSION, LOGOUT, SET_AUTH, login, LOGIN, logout
-} from '../actions/crmLogin';
-import { changeLoadingLogin } from "../actions/crmDashboard";
+} from '../../actions/crmLogin';
+import { changeLoadingLogin } from "../../actions/crmDashboard";
 
-import { changeLoading } from "../actions/crmDashboard";
+import { changeLoading } from "../../actions/crmDashboard";
 
 import {
 	GET_DEFAULTPERMS, GET_OPERATIONS, SUBMIT_USER, GET_ROLES, UPDATE_USER,
 	updateDefaultPerms, updateOperations, updateRoles,
-} from '../actions/crmCreateUser';
+} from '../../actions/crmCreateUser';
 
 import {
 	GET_LIST_USERS, REQUEST_USER_BY_ID, DELETE_USER, updateUsers, updateUserToDisplay, getListUser
-} from '../actions/crmUserManagement';
+} from '../../actions/crmUserManagement';
 
 import axios from 'axios';
 

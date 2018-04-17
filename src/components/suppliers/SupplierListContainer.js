@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import DossiersComponent from "../DossiersComponent";
+import DossiersComponent from "../shared/DossiersComponent";
 import {changeViewDashboard} from "../../actions/crmDashboard";
 import {changeViewSuppliers} from "../../actions/crmSuppliersContainer";
 import {getSupplier} from "../../actions/crmGridLayoutSuppliers";

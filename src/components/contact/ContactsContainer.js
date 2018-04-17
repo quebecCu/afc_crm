@@ -3,8 +3,8 @@ import { connect  } from 'react-redux';
 import {
 	addArrayContacts, changeFormState, deleteContact, getContacts, getPostesContacts,
 	getPostesContactsSup
-} from "../actions/crmContacts";
-import ContactsComponent from "./form/ContactsComponent";
+} from "../../actions/crmContacts";
+import ContactsComponent from "./ContactsComponent";
 
 class ContactsContainer extends Component   {
 	constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../style/LoadingAnimation.css';
+import '../../style/LoadingAnimation.css';
 
 class LoadingAnimation extends Component {
 

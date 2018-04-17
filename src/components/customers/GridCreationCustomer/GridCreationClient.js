@@ -5,14 +5,12 @@ import '../../../style/GridCreationClient.css';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import GridRequiredFormCustomer from "./GridRequiredFormCustomer";
 import GridMethodOnField from "./GridMethodOnField";
-import ContactsContainer from "../../ContactsContainer";
-import LoadingAnimation from "../../LoadingAnimation";
+import ContactsContainer from "../../contact/ContactsContainer";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 export class GridCreationClient extends Component {
 		constructor(props) {
 			super(props);
-			this.props.changeLoading(true);
 		}
 
     render() {

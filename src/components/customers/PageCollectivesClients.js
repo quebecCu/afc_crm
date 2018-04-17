@@ -9,7 +9,6 @@ import {
 } from '../../actions/crmRechercheCollective';
 import ClientListContainer from "./ClientListContainer";
 import {changeLoading} from "../../actions/crmDashboard";
-import LoadingAnimation from "../LoadingAnimation";
 import jsPDF from 'jspdf'
 import { autoTable } from 'jspdf-autotable';
 
@@ -65,12 +64,6 @@ class PageCollectivesClients extends Component {
 		return (
 			<div className="container-fluid">
 				<h1 className="text-center">Assurances collectives</h1>
-				{
-					loading && <LoadingAnimation/>
-
-				}
-				{
-					!loading &&
 					<div>
 						<div className="card mb-3">
 							<div className="card-header text-left">
@@ -104,7 +97,6 @@ class PageCollectivesClients extends Component {
 							</div>
 						</div>
 					</div>
-				}
 			</div>
 		);
 	}

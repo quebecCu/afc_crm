@@ -6,7 +6,7 @@ import PageFournisseurs from "./PageFournisseurs";
 import CreationFournisseur from "./GridContainerSuppliers";
 import SupplierPage from "./SupplierPage";
 import {requestGridFour} from "../../actions/crmGridLayoutSuppliers";
-import DossiersComponent from "../DossiersComponent";
+import DossiersComponent from "../shared/DossiersComponent";
 import ErrorPage from "../ErrorPage";
 
 

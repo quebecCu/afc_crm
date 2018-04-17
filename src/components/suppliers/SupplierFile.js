@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {withRouter} from 'react-router'
-import LoadingAnimation from "../LoadingAnimation";
 import {getSupplier} from "../../actions/crmGridLayoutSuppliers";
 import {changeLoading} from "../../actions/crmDashboard";
 

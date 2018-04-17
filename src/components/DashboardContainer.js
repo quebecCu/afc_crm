@@ -9,8 +9,6 @@ import ContractsContainer from "./contracts/ContractsContainer";
 import NavBar from "./NavBar";
 import ErrorPage from "./ErrorPage";
 
-import Placements from "./Placements";
-
 import GestionUser from './users/GestionUser';
 
 class DashboardContainer extends Component {
@@ -42,7 +40,6 @@ class DashboardContainer extends Component {
 				      <Route path={match.url + "/collective/suppliers"} component={SuppliersPageContainer}/>
 							<Route path={match.url + "/collective/clients"} component={CollectiveClientsContainer}/>
 							<Route path={match.url + "/collective/contracts"} component={ContractsContainer}/>
-							<Route path={match.url + "/collective/placements"} component={Placements}/>
 							{
 								this.props.crmLogin.isAdmin === true
 								&&	<Route path={match.url + "/usersManagement"} component={GestionUser}/>

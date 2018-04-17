@@ -7,7 +7,7 @@ import  '../../style/footer.css';
 //import { connect  } from 'react-redux';
 import {store} from '../../store';
 import {push} from 'react-router-redux';
-import GoogleMap from "../GoogleMaps"
+import GoogleMap from "../shared/GoogleMaps"
 //import Img from 'react-image';
 
 

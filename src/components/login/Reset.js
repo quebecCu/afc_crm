@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import  logoCo from '../../style/images/logoCompany.png';
 import '../../style/Reset.css';
-import GoogleMap from "../GoogleMaps"
+import GoogleMap from "../shared/GoogleMaps"
 
 
 class Reset extends Component   {

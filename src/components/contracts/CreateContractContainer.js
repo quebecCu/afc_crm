@@ -14,7 +14,6 @@ import {
 import GridOptionnalContract from "./GridOptionnalContract";
 import {bindClientData, getClientRequest} from "../../actions/crmClientList";
 import {sendingRequestColl} from "../../actions/crmRechercheCollective";
-import LoadingAnimation from "../LoadingAnimation";
 import ModalForModalites from "./modal/ModalForModalites";
 import {changeLoadingValidation} from "../../actions/crmDashboard";
 
@@ -253,11 +252,6 @@ class CreateContractContainer extends React.Component {
 		let {isAdmin} = this.props.crmLogin;
 		return (
 		<div>
-			{
-				this.props.loading && <LoadingAnimation/>
-			}
-			{
-				!this.props.loading &&
 				<div>
 					<h1 className="text-center">Assurances collectives</h1>
 					<div className="card mb-3">
@@ -436,7 +430,6 @@ class CreateContractContainer extends React.Component {
 						</div>
 					</div>
 				</div>
-			}
 		</div>
 	)
 	}

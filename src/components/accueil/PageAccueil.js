@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HistoriqueContainer from "../HistoriqueContainer";
+import HistoriqueContainer from "../shared/HistoriqueContainer";
 
 class PageAccueil extends Component {
 
@@ -13,7 +13,7 @@ class PageAccueil extends Component {
             </div>
             <h2 className="titre-historique">Derniers dossiers consultés</h2>
             <HistoriqueContainer page='PageAccueil' historique={this.props.historique}/>
-          
+
           </div>
         );
     }

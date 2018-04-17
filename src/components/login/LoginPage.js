@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 //import Login from './Login';
 import { connect  } from 'react-redux';
-import Login from './form/Login';
+import Login from './Login';
 
 //import '../style/Login.css';
 /// TODO
-import {loginRequest, changeForm} from '../actions/crmLogin'
-import {changeLoadingLogin} from "../actions/crmDashboard";
+import {loginRequest, changeForm} from '../../actions/crmLogin'
+import {changeLoadingLogin} from "../../actions/crmDashboard";
 
 class LoginPage extends Component   {
 

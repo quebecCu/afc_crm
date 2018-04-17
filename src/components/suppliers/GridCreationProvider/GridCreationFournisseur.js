@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import GridRequiredFormProvider from "./GridRequiredFormProvider";
 import GridMethodOnFieldProvider from "./GridMethodOnFieldProvider";
-import LoadingAnimation from "../../LoadingAnimation";
-import ContactsContainer from "../../ContactsContainer";
+import ContactsContainer from "../../contact/ContactsContainer";
 
 export class GridCreationFournisseur extends Component {
 	constructor(props) {
