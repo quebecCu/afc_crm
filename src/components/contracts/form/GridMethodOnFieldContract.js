@@ -52,10 +52,10 @@ class GridMethodOnFieldContract extends Component {
 							className="form-control" onChange={this._changeDescription}
 							value={this.props.newField.description} required />
 					</div>
-			
-			
-				
-			<div>
+
+
+
+			{/* <div>
 						<Table striped bordered condensed hover>
 							<thead>
 								<b>(Ajouter une formule mathématique pour ce champs)  </b>
@@ -73,7 +73,7 @@ class GridMethodOnFieldContract extends Component {
 								<tr>
 									<br />
 									Signe
-            <select value={this.state.signeOptions} onChange={this.handleChangeSigne}>
+            			<select value={this.state.signeOptions} onChange={this.handleChangeSigne}>
 										<option value="+">+</option>
 										<option value="-">-</option>
 										<option value="*">*</option>
@@ -88,19 +88,18 @@ class GridMethodOnFieldContract extends Component {
 									{this.props.formState.facultatif.map(facul => {
 										return <option key={facul.idattrcontratcoll} value={facul.valeur}>{facul.label}</option>
 									})}
-									</select>	
+									</select>
 
 								</tr >
 								<tr>
 									<br />
 									Résultat
-									{/*Résultat*/}
 									<input type="text" value={this.state.resultat} />
-									{/*Résultat*/}
 								</tr>
 							</tbody>
 						</Table>
 					</div>
+					 */}
 					<br />
 					<div className="form-group">
 						<label className="control-label" htmlFor="champType">Type du nouveau champ</label>
