@@ -35,15 +35,15 @@ export function * getHistoryy(){
 	while (true) {
 		yield take(GET_HISTORY_REQUEST);
 
+		let idUser= localStorage.getItem('idUser');
 		//communication avec server
-		let server = "http://localhost:3002/collectiveContracts/getHistory";
+		let server = "http://localhost:3002/collectiveContracts/getHistory/" + idUser;
 		let backendUrl = window.location.host;
-		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/getHistory';
+		backendUrl = backendUrl === 'localhost:3000' ? server : 'https://afr-crm2.herokuapp.com/collectiveContracts/getHistory/' + idUser;
 
 		axios.get(backendUrl, config)
 			.then(function (response) {
 				if (!!response.data.status && response.data.status === "success") {
-
 					store.dispatch(setHistory(response.data.message));
 				} else {
 					alert('Erreur lors du chargement des AGAs');
