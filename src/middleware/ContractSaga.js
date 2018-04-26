@@ -16,9 +16,8 @@ import {
 import {GET_HISTORY_REQUEST,setHistory} from '../actions/crmHistory';
 
 import axios from 'axios';
-import {store} from '../store';
-import crmContract from '../reducers/crmContract'
-import { history } from '../store.js';
+import {store, history} from '../store';
+import crmContract from '../reducers/crmContract';
 import {sendingRequestColl} from "../actions/crmRechercheCollective";
 
 let tokenToSend = localStorage.getItem("cookieSession");

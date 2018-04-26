@@ -115,14 +115,14 @@ class CreationFournisseur extends Component {
 	//On crée un nouveau champ !
     _handleSubmitChamp(event) {
         event.preventDefault();
-		let {grid, formNewField} = this.props.crmGridSuppliersLayout;
-		let x = (grid.length % 4)*3;
-		let y = Math.floor(grid.length/4);
+			let {grid, formNewField} = this.props.crmGridSuppliersLayout;
+			let x = (grid.length % 4)*3;
+			let y = Math.floor(grid.length/4);
 
-		document.getElementById('champNom').value = '';
-		document.getElementById('champDescription').value = '';
-		document.getElementById('champType').value = '';
-		this.props.createNewFieldSup({form: formNewField, posx: x, posy: y});
+			document.getElementById('champNom').value = '';
+			document.getElementById('champDescription').value = '';
+			document.getElementById('champType').value = '';
+			this.props.createNewFieldSup({form: formNewField, posx: x, posy: y});
     }
 
 	_handleModifyField(event) {

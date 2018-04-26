@@ -82,21 +82,16 @@ class GridMethodOnFieldProvider extends Component {
 						);
 					})
 				}
-				<div className="form-group">
-					<button onClick={this.props.handleStatic}>Ancrer les champs</button>
-					<button onClick={this.props.handleNonStatic}>Changer la position des boutons</button>
-				</div>
-
 				<hr/>
-				<form onSubmit={this.props.handleSubmitChamp} className="col-4 offset-4">
+				<form onSubmit={this.props.handleSubmitChamp} className="col-md-4 offset-md-4">
 					<div className="form-group">
-						<label htmlFor="champNom" style={{fontSize: 13}} className="control-label">Nom du nouveau champ </label>
+						<label htmlFor="champNom" className="control-label">Nom du nouveau champ </label>
 						<input type="text" name="champNom" id="champNom"
 							   className="form-control" onChange={this._changeLabel}
 							   value={this.props.formNewField.label} required/>
 					</div>
 					<div className="form-group">
-						<label htmlFor="champDescription" style={{fontSize: 13}} className="control-label">Description du nouveau champ </label>
+						<label htmlFor="champDescription" className="control-label">Description du nouveau champ </label>
 						<input type="text" name="champDescription" id="champDescription"
 							   className="form-control" onChange={this._changeDescription}
 							   value={this.props.formNewField.description} required/>

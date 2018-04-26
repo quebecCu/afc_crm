@@ -306,7 +306,7 @@ class CreateContractContainer extends React.Component {
 							    <div className="card-header" id="headingTwo">
 							      <h5 className="mb-0">
 							        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-							          Information Compl&eacute;mentaires
+							          Information Compl&eacute;mentaire
 							        </button>
 							      </h5>
 							    </div>
@@ -375,7 +375,8 @@ class CreateContractContainer extends React.Component {
 							</div>
 							<ModalForModalites/>
 							{
-								this.props.isAdmin &&
+								
+								isAdmin &&
 									formState.facultatif.map(element => {
 									return (
 										<div className="modal fade" id={element.idattrcontratcoll + "modal"}

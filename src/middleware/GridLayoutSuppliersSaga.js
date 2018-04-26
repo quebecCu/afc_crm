@@ -352,7 +352,7 @@ export function* sendUpdateField() {
 					alert(response.data.message);
 				}
 				else {
-					alert('Erreur lors de la modification des positions');
+					alert('Erreur lors de la modification du champs');
 				}
 			})
 			.catch(function (error) {

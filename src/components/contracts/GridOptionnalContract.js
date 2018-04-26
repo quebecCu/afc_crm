@@ -76,18 +76,24 @@ class GridOptionnalContract extends React.Component {
             })
           }
         </div>
-  			<hr/>
-        <div className="row">
-          <div className="col-sm-6 offset-md-3">
-      			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}
-  					   newField={this.props.newField}
-  					   formState={this.props.formState}
-  					   types={this.props.types}
-  					   handleSubmitChamp={this.props.handleSubmitChamp}
-      			/>
-        </div>
-      </div>
-		</div>;
+				{
+					this.props.isAdmin &&
+					<div>
+						<hr/>
+		        <div className="row">
+		          <div className="col-sm-4 offset-md-4">
+		      			<GridMethodOnFieldContract changeNewField={this.props.changeNewField}
+		  					   newField={this.props.newField}
+		  					   formState={this.props.formState}
+		  					   types={this.props.types}
+		  					   handleSubmitChamp={this.props.handleSubmitChamp}
+		      			/>
+		        	</div>
+			      </div>
+					</div>
+				}
+  			
+			</div>;
 	}
 }
 

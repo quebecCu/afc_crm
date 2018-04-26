@@ -55,7 +55,8 @@ class GridMethodOnFieldContract extends Component {
 
 
 
-			{/* <div>
+			{/*     Commencement des formules mathematiques, en cours de developpement....
+				<div>
 						<Table striped bordered condensed hover>
 							<thead>
 								<b>(Ajouter une formule mathématique pour ce champs)  </b>

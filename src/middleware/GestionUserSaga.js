@@ -10,9 +10,8 @@ import {
 } from '../actions/crmUserManagement';
 
 import axios from 'axios';
-import {store} from '../store';
+import {store, history} from '../store';
 import {changeLoading} from "../actions/crmDashboard";
-
 
 export function* createUser() {
 
@@ -59,6 +58,7 @@ export function* createUser() {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('L\'utilisateur a été créé avec succès');
 					store.dispatch(getListUser());
+					history.push('/dashboard/usersManagement');
 				}
 				else if (response.data.status === "fail") {
 					alert(response.data.message);
@@ -115,6 +115,7 @@ export function* updateUser() {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('L\'utilisateur a été modifié avec succès');
 					store.dispatch(getListUser());
+					history.push('/dashboard/usersManagement');
 				}
 				else if (response.data.status === "fail") {
 					alert(response.data.message);
@@ -154,6 +155,7 @@ export function* deleteUser() {
 				if (!!response.data.status && response.data.status === "success") {
 					alert('L\'utilisateur a été supprimé avec succès');
 					store.dispatch(getListUser());
+					history.push('/dashboard/usersManagement');
 				} else {
 					alert('Erreur lors de la suppression de l\'utilisateur');
 				}
